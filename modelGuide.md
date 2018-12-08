@@ -108,7 +108,7 @@ db.waypoint.insert([
     },
     {
         tripId: "o5wY1n04",
-        order: 0,
+        order: 1,
         name: "Low Water Bridge Campsite",
         lat: 47.6119700,
         lon: -122.4001840,
