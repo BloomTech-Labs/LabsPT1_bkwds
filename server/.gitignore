@@ -1,0 +1,7 @@
+node_modules/
+*.log
+*.error
+.webpack
+
+.env
+server/dist/
