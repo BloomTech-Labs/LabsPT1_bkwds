@@ -4,4 +4,4 @@ node_modules/
 .webpack
 
 .env
-server/dist/
+dist/
