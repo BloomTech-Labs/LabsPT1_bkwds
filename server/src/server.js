@@ -1,11 +1,11 @@
-import express from 'express'
-import cors from 'cors'
+import express from "express"
+import cors from "cors"
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-app.all('*', (req, res) => {
+app.all("*", (req, res) => {
   res.json({
     ok: true
   })
