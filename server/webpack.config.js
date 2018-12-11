@@ -2,6 +2,11 @@ const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const StartServerPlugin = require('start-server-webpack-plugin')
+
+require('dotenv').config()
+
+console.log('MONGO_URI', process.env.MONGO_URI)
+
 module.exports = {
   entry: ['webpack/hot/poll?1000', './src/index'],
   watch: true,
@@ -43,7 +48,12 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': { BUILD_TARGET: JSON.stringify('server') }
+      'process.env.BUILD_TARGET': JSON.stringify('server'),
+      'process.env.MONGO_URI': JSON.stringify(process.env.MONGO_URI),
+      'process.env.MONGO_ADMIN': JSON.stringify(process.env.MONGO_ADMIN),
+      'process.env.MONGO_ADMIN_PASSWORD': JSON.stringify(process.env.MONGO_ADMIN_PASSWORD),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+
     }),
     new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false })
   ],

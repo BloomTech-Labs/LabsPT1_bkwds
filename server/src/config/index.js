@@ -8,7 +8,7 @@ const baseConfig = {
     JWT_SECRET: null,
   },
   db: {
-    url: null,
+    url: process.env.MONGO_URI
   },
 }
 

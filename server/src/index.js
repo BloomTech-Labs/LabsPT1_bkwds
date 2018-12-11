@@ -1,4 +1,3 @@
-import http from 'http'
 import { createServer } from 'http'
 import config from './config'
 import app from './server'
