@@ -8,5 +8,8 @@ describe("Test server root path", () => {
       .then(response => {
         expect(response.statusCode).toBe(200)
       })
+      .catch(error => {
+        console.log(error)
+      })
   })
 })
