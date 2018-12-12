@@ -1,5 +1,5 @@
 #!/bin/sh -e
-
+yarn
 cd client
 yarn
 yarn run lint
