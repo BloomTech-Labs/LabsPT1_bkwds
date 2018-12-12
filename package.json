@@ -16,5 +16,9 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "scripts": {
+    "lint:client": "eslint client/**/*.js",
+    "lint:server": "eslint server/**/*.js"
   }
 }
