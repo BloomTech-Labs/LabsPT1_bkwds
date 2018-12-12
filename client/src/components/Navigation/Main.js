@@ -10,7 +10,7 @@ const Main = () => {
         <Route path="/" exact component={exampleComponent} />
         <Route path="/signin" exact component={exampleComponent} />
         <Route path="/signup" exact component={exampleComponent} />
-        <Route path="/trip" exact component={TripList} />
+        <Route path="/trips" exact component={TripList} />
         <Route path="/trip/:tripId" exact component={exampleComponent} />
         <Route
           path="/trip/:tripId/progress/:progressId"

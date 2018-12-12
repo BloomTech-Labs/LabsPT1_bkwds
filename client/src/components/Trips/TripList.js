@@ -5,15 +5,15 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
 class TripList extends Component {
-  componentDidMount() {
-    this.props.getExpenses()
-  }
+  //   componentDidMount() {
+  //     this.props.getExpenses()
+  //   }
 
   render() {
     return (
       <div>
         <h5>Your Trips:</h5>
-        {this.props.trips.map(trip => {
+        {/* {this.props.trips.map(trip => {
           return (
             <div>
               <Link
@@ -30,9 +30,7 @@ class TripList extends Component {
               </Link>
             </div>
           )
-        })}
-
-        {this.props.pending ? <h1>LOADING</h1> : null}
+        })} */}
       </div>
     )
   }
