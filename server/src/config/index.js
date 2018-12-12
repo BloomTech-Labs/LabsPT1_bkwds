@@ -8,7 +8,7 @@ const baseConfig = {
     JWT_SECRET: null
   },
   db: {
-    url: null
+    url: process.env.MONGO_URI
   }
 }
 
@@ -17,18 +17,18 @@ const envConfig = {}
 switch (env) {
   case "development":
   case "dev":
-    //envConfig = require('./dev').config
+    //envConfig = require("./dev").config
     break
   case "test":
   case "testing":
-    //envConfig = require('./testing').config
+    //envConfig = require("./testing").config
     break
   case "prod":
   case "production":
-    //envConfig = require('./prod').config
+    //envConfig = require("./prod").config
     break
   default:
-  //envConfig = require('./dev').config
+  //envConfig = require("./dev").config
 }
 
 export default merge(baseConfig, envConfig)

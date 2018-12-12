@@ -11,9 +11,7 @@
   },
   "scripts": {
     "start": "webpack --colors --progress",
-    "build": "",
-    "lint": "eslint \"./**/*.js\"",
-    "test": "jest"
+    "build": ""
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
@@ -26,17 +24,11 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^10.0.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^5.10.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-prettier": "^3.0.0",
-    "jest": "^23.6.0",
-    "prettier": "^1.15.3",
     "raw-loader": "^0.5.1",
     "source-map-support": "^0.5.0",
     "start-server-webpack-plugin": "^2.2.0",

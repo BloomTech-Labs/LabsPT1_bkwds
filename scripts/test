@@ -1,4 +1,5 @@
 #!/bin/sh -e
+<<<<<<< HEAD
 
 # Run linter checks for client
 cd client
@@ -13,3 +14,14 @@ yarn run lint
 
 # Run tests for server
 yarn run test
+=======
+yarn
+cd client
+yarn
+cd ..
+cd server
+yarn
+cd ..
+yarn run lint:client
+yarn run lint:server
+>>>>>>> master
