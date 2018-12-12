@@ -2,9 +2,9 @@
 yarn
 cd client
 yarn
+yarn run lint
+
 cd ..
 cd server
 yarn
-cd ..
-yarn run lint:client
-yarn run lint:server
+yarn run lint
