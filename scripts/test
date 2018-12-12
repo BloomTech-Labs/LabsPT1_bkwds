@@ -1,10 +1,15 @@
 #!/bin/sh -e
 
+# Run linter checks for client
 cd client
 yarn
 yarn run lint
+
+# Run linter checks for server
 cd ..
 cd server
 yarn
 yarn run lint
+
+# Run tests for server
 yarn run test
