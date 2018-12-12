@@ -1,8 +1,12 @@
 {
   "private": true,
   "devDependencies": {
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
     "husky": "^1.2.0",
-    "lint-staged": "^8.1.0"
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.3"
   },
   "husky": {
     "hooks": {
@@ -14,5 +18,10 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "scripts": {
+    "lint:client": "eslint client/**/*.js",
+    "lint:server": "eslint server/**/*.js"
+  },
+  "dependencies": {}
 }
