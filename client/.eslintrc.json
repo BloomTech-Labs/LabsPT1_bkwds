@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true
+  },
+  "plugins": ["prettier", "react"],
+  "extends": ["plugin:prettier/recommended", "plugin:react/recommended"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": "error",
+    "prettier/prettier": "error",
+    "react/prop-types": 0,
+    "react/no-unescaped-entities": 0,
+    "react/prefer-es6-class": "error",
+    "react/prefer-stateless-function": "error"
+  }
+}

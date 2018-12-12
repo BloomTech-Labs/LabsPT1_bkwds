@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+cd client
+yarn
+yarn run lint
+
+cd ..
+cd server
+yarn
+yarn run lint
