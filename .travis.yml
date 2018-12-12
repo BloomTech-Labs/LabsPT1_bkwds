@@ -1,0 +1,15 @@
+language: node_js
+
+node_js:
+  - "10"
+
+before_install:
+  - chmod +x scripts/test
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+script:
+  - scripts/test

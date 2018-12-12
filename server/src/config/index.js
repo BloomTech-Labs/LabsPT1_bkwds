@@ -1,11 +1,11 @@
-import merge from 'lodash.merge'
+import merge from "lodash.merge"
 
 const env = process.env.NODE_ENV
 
 const baseConfig = {
   port: 5000,
   secrets: {
-    JWT_SECRET: null,
+    JWT_SECRET: null
   },
   db: {
     url: process.env.MONGO_URI
@@ -15,21 +15,20 @@ const baseConfig = {
 const envConfig = {}
 
 switch (env) {
-  case 'development':
-  case 'dev':
-    //envConfig = require('./dev').config
+  case "development":
+  case "dev":
+    //envConfig = require("./dev").config
     break
-  case 'test':
-  case 'testing':
-    //envConfig = require('./testing').config
+  case "test":
+  case "testing":
+    //envConfig = require("./testing").config
     break
-  case 'prod':
-  case 'production':
-    //envConfig = require('./prod').config
+  case "prod":
+  case "production":
+    //envConfig = require("./prod").config
     break
   default:
-  //envConfig = require('./dev').config
+  //envConfig = require("./dev").config
 }
 
 export default merge(baseConfig, envConfig)
-
