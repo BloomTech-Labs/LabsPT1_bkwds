@@ -7,10 +7,5 @@ yarn run lint
 cd ..
 cd server
 yarn
-<<<<<<< HEAD
-cd ..
-yarn run lint:client
-yarn run lint:server
-=======
 yarn run lint
->>>>>>> master
+yarn run test
