@@ -42,11 +42,13 @@ module.exports = {
       "process.env": { BUILD_TARGET: JSON.stringify("server") },
       "process.env.MONGO_URI": JSON.stringify(process.env.MONGO_URI),
       "process.env.MONGO_ADMIN": JSON.stringify(process.env.MONGO_ADMIN),
-      "process.env.MONGO_ADMIN_PASSWORD": JSON.stringify(process.env.MONGO_ADMIN_PASSWORD),
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      "process.env.MONGO_ADMIN_PASSWORD": JSON.stringify(
+        process.env.MONGO_ADMIN_PASSWORD
+      ),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
     }),
     new webpack.BannerPlugin({
-      banner: "require("source-map-support").install();",
+      banner: "require(`source-map-support`).install();",
       raw: true,
       entryOnly: false
     })

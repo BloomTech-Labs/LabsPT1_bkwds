@@ -1,12 +1,15 @@
-import mongoose from 'mongoose'
-import config from './config'
+import mongoose from "mongoose"
+import config from "./config"
 
 mongoose.Promise = global.Promise
-mongoose.set('useCreateIndex', true)
+mongoose.set("useCreateIndex", true)
 
 export const connect = () => {
-  console.log('MONGO DB CONNECTED')
-  return mongoose.connect(config.db.url, {
-    useNewUrlParser: true,
-  })
+  console.log("MONGO DB CONNECTED")
+  return mongoose.connect(
+    config.db.url,
+    {
+      useNewUrlParser: true
+    }
+  )
 }

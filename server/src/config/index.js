@@ -9,7 +9,7 @@ const baseConfig = {
   },
   db: {
     url: process.env.MONGO_URI
-  },
+  }
 }
 
 const envConfig = {}
