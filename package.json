@@ -22,7 +22,7 @@
     ]
   },
   "scripts": {
-    "lint:client": "eslint client/**/*.js",
-    "lint:server": "eslint server/**/*.js"
+    "lint:client": "eslint client/**/*.js --ignore-path client/node_modules",
+    "lint:server": "eslint server/**/*.js --ignore-path server/node_modules"
   }
 }
