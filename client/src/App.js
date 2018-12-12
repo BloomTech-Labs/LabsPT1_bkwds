@@ -1,27 +1,22 @@
-import React from "react"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import React, { Component } from "react"
+import "./App.css"
+import "./index.css"
+import Main from "./components/Navigation/Main"
+import NavigationMenu from "./components/Navigation/NavigationMenu"
 
-const App = () => {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/" exact component={exampleComponent} />
-        <Route path="/signin" exact component={exampleComponent} />
-        <Route path="/signup" exact component={exampleComponent} />
-        <Route path="/trip" exact component={exampleComponent} />
-        <Route path="/trip/:tripId" exact component={exampleComponent} />
-        <Route
-          path="/trip/:tripId/progress/:progressId"
-          exact
-          component={exampleComponent}
-        />
-        <Route path="/trip/create" exact component={exampleComponent} />
-        <Route path="/billing" exact component={exampleComponent} />
-        <Route path="/settings" exact component={exampleComponent} />
-      </Switch>
-    </Router>
-  )
+class App extends Component {
+  render() {
+    return (
+      <div class="container">
+        <div>
+          <NavigationMenu />
+        </div>
+        <div>
+          <Main />
+        </div>
+      </div>
+    )
+  }
 }
 
-const exampleComponent = () => <span>example component</span>
 export default App

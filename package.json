@@ -14,5 +14,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "dependencies": {
+    "prettier": "^1.15.3"
   }
 }
