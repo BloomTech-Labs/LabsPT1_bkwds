@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack --colors --progress",
-    "build": "",
-    "lint": "eslint \"./**/*.js\""
+    "build": ""
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
