@@ -34,7 +34,7 @@ export const createOne = Model => (req, res, next) => {
     .catch(err => next(err))
 }
 
-export const updateOne = Model => async (req, res, next) => {
+export const updateOne = () => async (req, res, next) => {
   const docToUpdate = req.docFromId
   const update = req.body
 
@@ -44,14 +44,14 @@ export const updateOne = Model => async (req, res, next) => {
     .catch(err => next(err))
 }
 
-export const deleteOne = Model => (req, res, next) => {
+export const deleteOne = () => (req, res, next) => {
   return controllers
     .deleteOne(req.docFromId)
     .then(doc => res.status(201).json(doc))
     .catch(err => next(err))
 }
 
-export const getOne = Model => (req, res, next) => {
+export const getOne = () => (req, res, next) => {
   return controllers
     .getOne(req.docFromId)
     .then(doc => res.status(201).json(doc))
