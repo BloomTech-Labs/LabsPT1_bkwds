@@ -7,6 +7,7 @@ require("dotenv").config()
 
 module.exports = {
   entry: ["webpack/hot/poll?1000", "./src/index"],
+  mode: "development",
   watch: true,
   devtool: "sourcemap",
   target: "node",
@@ -24,8 +25,12 @@ module.exports = {
             loader: "babel-loader",
             options: {
               babelrc: false,
-              presets: [["env", { modules: false }], "stage-0"],
-              plugins: ["transform-regenerator", "transform-runtime"]
+              presets: ["@babel/preset-env"],
+              plugins: [
+                "@babel/plugin-transform-regenerator",
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-function-bind"
+              ]
             }
           }
         ],
@@ -39,16 +44,13 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      "process.env": { BUILD_TARGET: JSON.stringify("server") },
-      "process.env.MONGO_URI": JSON.stringify(process.env.MONGO_URI),
-      "process.env.MONGO_ADMIN": JSON.stringify(process.env.MONGO_ADMIN),
-      "process.env.MONGO_ADMIN_PASSWORD": JSON.stringify(
-        process.env.MONGO_ADMIN_PASSWORD
-      ),
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+      "process.env": JSON.stringify("server"),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      // 'process.env.PORT': JSON.stringify(process.env.PORT),
+      "process.env.MONGO_URI": JSON.stringify(process.env.MONGO_URI)
     }),
     new webpack.BannerPlugin({
-      banner: "require(`source-map-support`).install();",
+      banner: 'require("source-map-support").install();',
       raw: true,
       entryOnly: false
     })
