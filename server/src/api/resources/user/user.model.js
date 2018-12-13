@@ -5,10 +5,6 @@ const Schema = mongoose.Schema
 const SALT_WORK_FACTOR = 10
 
 export const schema = {
-  type: {
-    type: String,
-    default: "anonymous"
-  },
   username: {
     type: String,
     required: [true, "Username is required."]
