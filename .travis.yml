@@ -12,6 +12,8 @@ cache:
     - node_modules
 
 # services: mongodb
+env:
+  - MONGO_URI=process.env.MONGO_URI
 
 script:
   - scripts/test
