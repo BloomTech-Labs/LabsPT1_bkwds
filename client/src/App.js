@@ -56,7 +56,10 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <LayoutWrapper>
+          <LayoutWrapper
+            isLoggedIn={this.state.isLoggedIn}
+            isSignedUp={this.state.isSignedUp}
+          >
             <Route path="/" exact component={Home} />
             <Route
               path="/login"
