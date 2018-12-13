@@ -9,7 +9,7 @@ mongoose.set("useCreateIndex", true)
 export const connect = () => {
   return mongoose
     .connect(
-      config.db.url,
+      process.env.MONGO_URI,
       {
         useNewUrlParser: true
       }
