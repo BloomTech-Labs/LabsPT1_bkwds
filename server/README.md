@@ -4,6 +4,8 @@ Server for Backwoods Tracker
 
 We deploy to Heroku: https://backwoods-tracker.herokuapp.com/
 
+_Note:_ Make sure you set the environment variables in the Heroku dashboard! `MONGO_URI` should be our production database.
+
 To deploy, cd into the server folder and run these commands:
 
 ```bash
