@@ -1,4 +1,8 @@
 import mongoose from "mongoose"
+import bcrypt from "bcryptjs"
+
+const Schema = mongoose.Schema
+const SALT_WORK_FACTOR = 10
 
 export const schema = {
   type: {
@@ -17,9 +21,39 @@ export const schema = {
   password: {
     type: String,
     require: [true, "User password is required."]
-  }
+  },
+  subscribed: {
+    type: Boolean,
+    default: false
+  },
+  sub_date: {
+    type: Date
+  },
+  trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
 }
 
-const userSchema = new mongoose.Schema(schema, { timestamps: true })
+const userSchema = new Schema(schema, { timestamps: true })
 
-export const User = mongoose.model("user", userSchema, "user")
+UserSchema.pre("save", function(next) {
+  var user = this
+  if (!user.isModified("password")) return next()
+
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) return next(err)
+
+    bcrypt.hash(user.password, salt, function(err, hash) {
+      if (err) return next(err)
+      user.password = hash
+      next()
+    })
+  })
+})
+
+UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if (err) return cb(err)
+    cb(null, isMatch)
+  })
+}
+
+export const User = mongoose.model("User", userSchema, "users")
