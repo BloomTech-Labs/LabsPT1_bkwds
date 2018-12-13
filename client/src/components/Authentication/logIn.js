@@ -16,6 +16,7 @@ export default class LogIn extends React.Component {
   render() {
     return (
       <div>
+        <h3>Log In</h3>
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Label for="username">Username</Label>

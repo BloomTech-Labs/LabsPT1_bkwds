@@ -17,7 +17,7 @@ const LayoutWrapper = props => {
                 <BreadcrumbBar {...props} />
               )}
           </Col>
-          <Col id="authButton" xs="auto">
+          <Col id="authButton" xs="auto" className="d-flex align-items-start">
             {props.location.pathname !== "/signup" && (
               <Button>
                 <Link to="/signup">Sign Up</Link>
@@ -37,11 +37,11 @@ const LayoutWrapper = props => {
         </Row>
         <Row>
           {props.location.pathname !== "/" && (
-            <Col id="sidebar" xs="4">
+            <Col id="sidebar" xs="auto">
               <Sidebar {...props} />
             </Col>
           )}
-          <Col id="mainSection" xs="8">
+          <Col id="mainSection" xs="5">
             {props.children}
           </Col>
         </Row>
