@@ -34,7 +34,7 @@ export const schema = {
 
 const userSchema = new Schema(schema, { timestamps: true })
 
-UserSchema.pre("save", function(next) {
+userSchema.pre("save", function(next) {
   var user = this
   if (!user.isModified("password")) return next()
 
@@ -49,7 +49,7 @@ UserSchema.pre("save", function(next) {
   })
 })
 
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
     if (err) return cb(err)
     cb(null, isMatch)
