@@ -21,7 +21,7 @@ switch (env) {
     break
   case "test":
   case "testing":
-    //envConfig = require("./testing").config
+    envConfig = require("./testing").config
     break
   case "prod":
   case "production":
