@@ -8,4 +8,4 @@ cd ..
 cd server
 yarn
 yarn run lint
-# yarn run test
+yarn run test
