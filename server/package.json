@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/tests/setup.js",
     "verbose": true,
     "testMatch": [
-      "<rootDir>/tests/**"
+      "<rootDir>/tests/tests/**"
     ],
     "testEnvironment": "node"
   },
