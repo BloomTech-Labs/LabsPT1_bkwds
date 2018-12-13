@@ -12,7 +12,7 @@ const baseConfig = {
   }
 }
 
-const envConfig = {}
+let envConfig = {}
 
 switch (env) {
   case "development":
