@@ -31,3 +31,4 @@ const LayoutWrapper = () => {
     </Container>
   )
 }
+export default LayoutWrapper
