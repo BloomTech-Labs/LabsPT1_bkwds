@@ -6,7 +6,7 @@
   "jest": {
     "verbose": true,
     "testMatch": [
-      "<rootDir>/__tests__/**"
+      "<rootDir>/tests/**"
     ],
     "testEnvironment": "node"
   },
