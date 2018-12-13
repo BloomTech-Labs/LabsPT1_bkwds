@@ -45,9 +45,9 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify("server"),
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
       // 'process.env.PORT': JSON.stringify(process.env.PORT),
-      "process.env.MONGO_URI": JSON.stringify(process.env.MONGO_URI)
+      // "process.env.MONGO_URI": JSON.stringify(process.env.MONGO_URI)
     }),
     new webpack.BannerPlugin({
       banner: 'require("source-map-support").install();',
