@@ -7,7 +7,9 @@ export default class SignUp extends React.Component {
     password: "",
     passwordConfirm: ""
   }
-  handleSubmit = e => {}
+  handleSubmit = e => {
+    e.preventDefault()
+  }
 
   handleChange = e => {
     this.setState({

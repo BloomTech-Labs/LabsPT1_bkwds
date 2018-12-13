@@ -12,7 +12,9 @@ export default class Login extends React.Component {
     })
   }
 
-  handleSubmit = e => {}
+  handleSubmit = e => {
+    e.preventDefault()
+  }
 
   render() {
     return (
