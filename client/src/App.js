@@ -2,28 +2,33 @@ import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import LayoutWrapper from "./LayoutWrapper"
 
-const App = () => {
-  return (
-    <Router>
-      <Switch>
-        <LayoutWrapper>
-          <Route path="/" exact component={Home} />
-          <Route path="/signin" exact component={Authentication} />
-          <Route path="/signup" exact component={Authentication} />
-          <Route path="/trip" exact component={TripsView} />
-          <Route path="/trip/:tripId" exact component={TripView} />
-          <Route
-            path="/trip/:tripId/progress/:progressId"
-            exact
-            component={Progress}
-          />
-          <Route path="/trip/create" exact component={TripCreate} />
-          <Route path="/billing" exact component={Billing} />
-          <Route path="/settings" exact component={Settings} />
-        </LayoutWrapper>
-      </Switch>
-    </Router>
-  )
+class App extends React.Component {
+  state = {
+    something: ""
+  }
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <LayoutWrapper>
+            <Route path="/" exact component={Home} />
+            <Route path="/signin" exact component={Authentication} />
+            <Route path="/signup" exact component={Authentication} />
+            <Route path="/trips" exact component={TripsView} />
+            <Route path="/trips/:tripId" exact component={TripView} />
+            <Route
+              path="/trip/:tripId/progress/:progressId"
+              exact
+              component={Progress}
+            />
+            <Route path="/trip/create" exact component={TripCreate} />
+            <Route path="/billing" exact component={Billing} />
+            <Route path="/settings" exact component={Settings} />
+          </LayoutWrapper>
+        </Switch>
+      </Router>
+    )
+  }
 }
 
 const Home = () => <div>Home component here!</div>
