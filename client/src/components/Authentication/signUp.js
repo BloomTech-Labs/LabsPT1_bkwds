@@ -59,6 +59,7 @@ export default class SignUp extends React.Component {
             <Label for="passwordConfirm">Confirm Password</Label>
             <Input
               id="passwordConfirm"
+              type="password"
               value={this.state.passwordConfirm}
               onChange={this.handleChange}
               placeholder="Confirm Password"

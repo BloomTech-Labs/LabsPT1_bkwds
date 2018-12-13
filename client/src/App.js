@@ -11,7 +11,8 @@ import { LogIn, SignUp } from "./components/Authentication"
 class App extends React.Component {
   url = "https://backwoods-tracker.herokuapp.com/api/"
   state = {
-    isAuthenticated: false,
+    isLoggedIn: false,
+    isSignedUp: false,
     isError: false
   }
 
@@ -27,10 +28,10 @@ class App extends React.Component {
       .then(res => res.json())
       .then(response => {
         if (response.status === 200) {
-          this.setState({ isAuthenticated: true })
+          this.setState({ isLoggedIn: true })
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => this.setState({ isError: true }))
   }
 
   signUp = (email, username, password) => {
@@ -45,10 +46,10 @@ class App extends React.Component {
       .then(res => res.json())
       .then(response => {
         if (response.status === 200) {
-          this.setState({ isAuthenticated: true })
+          this.setState({ isSignedUp: true })
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => this.setState({ isError: true }))
   }
 
   render() {
@@ -61,7 +62,7 @@ class App extends React.Component {
               path="/login"
               exact
               render={() =>
-                this.state.isAuthenticated ? (
+                this.state.isLoggedIn ? (
                   <Redirect to="/" />
                 ) : (
                   <LogIn
@@ -74,7 +75,13 @@ class App extends React.Component {
             <Route
               path="/signup"
               exact
-              render={() => <SignUp handleSignUp={this.signUp} />}
+              render={() =>
+                this.state.isSignedUp ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <SignUp handleSignUp={this.signUp} />
+                )
+              }
             />
             <Route path="/trips" exact component={TripsView} />
             <Route path="/trips/:tripId" exact component={TripView} />
