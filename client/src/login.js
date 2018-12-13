@@ -8,7 +8,7 @@ export default class Login extends React.Component {
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.id]: e.target.value
     })
   }
 
@@ -22,14 +22,14 @@ export default class Login extends React.Component {
             placeholder="username"
             value={this.state.username}
             onChange={this.handleChange}
-            name="username"
+            id="username"
           />
 
           <input
             placeholder="password"
             value={this.state.password}
             onChange={this.handleChange}
-            name="password"
+            id="password"
           />
 
           <button>Submit</button>
