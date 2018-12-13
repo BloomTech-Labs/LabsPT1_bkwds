@@ -3,7 +3,7 @@ import merge from "lodash.merge"
 const env = process.env.NODE_ENV
 
 const baseConfig = {
-  port: 5000,
+  port: process.env.PORT || 5000,
   secrets: {
     JWT_SECRET: null
   },
@@ -25,7 +25,7 @@ switch (env) {
     break
   case "prod":
   case "production":
-    //envConfig = require("./prod").config
+    envConfig = require("./prod").config
     break
   default:
   //envConfig = require("./dev").config
