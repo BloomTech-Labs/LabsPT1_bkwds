@@ -14,4 +14,4 @@ export const schema = {
 
 const paymentSchema = new mongoose.Schema(schema, { timestamps: true })
 
-export const Payment = mongoose.model("Payment", tripSchema, "payments")
+export const Payment = mongoose.model("Payment", paymentSchema, "payments")
