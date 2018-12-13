@@ -1,0 +1,9 @@
+#layoutWrapper button {
+  display: flex;
+}
+#layoutWrapper a {
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+}

@@ -14,10 +14,10 @@
     "start": "node dist/server.js",
     "dev": "webpack --config webpack.dev.js --colors --progress",
     "lint": "eslint \"./**/*.js\"",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "clean": "rm -rf dist/",
     "build": "yarn clean && webpack --config webpack.prod.js",
-    "postinstall": "yarn build"
+    "heroku-postbuild": "yarn build"
   },
   "engines": {
     "node": "10.14.2",
