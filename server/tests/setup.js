@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-beforeAll(done => {
+beforeEach(done => {
   if (mongoose.connection.readyState === 0) {
     mongoose.connect(
       process.env.MONGO_URI,
