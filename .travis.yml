@@ -16,5 +16,3 @@ services: mongodb
 script:
   - scripts/test
 
-before_script:
-  - sleep 10
