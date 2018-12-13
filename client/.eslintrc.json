@@ -15,6 +15,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-unused-vars": "error",
     "prettier/prettier": "error",
     "react/prop-types": 0,
     "react/no-unescaped-entities": 0,

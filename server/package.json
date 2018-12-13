@@ -3,10 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "jest": {
+    "verbose": true,
+    "testMatch": [
+      "<rootDir>/__tests__/**"
+    ],
+    "testEnvironment": "node"
+  },
   "scripts": {
     "start": "node dist/server.js",
     "dev": "webpack --config webpack.dev.js --colors --progress",
     "lint": "eslint \"./**/*.js\"",
+    "test": "jest",
     "clean": "rm -rf dist/",
     "build": "yarn clean && webpack --config webpack.prod.js",
     "postinstall": "yarn build"
@@ -32,10 +40,13 @@
     "@babel/plugin-transform-runtime": "7.2.0",
     "@babel/preset-env": "7.2.0",
     "@babel/runtime": "7.2.0",
+    "babel-cli": "^6.26.0",
     "babel-loader": "8.0.4",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-0": "6.24.1",
     "eslint": "^5.10.0",
+    "jest": "^23.6.0",
+    "supertest": "^3.3.0",
     "raw-loader": "1.0.0",
     "source-map-support": "0.5.9",
     "start-server-webpack-plugin": "2.2.5",
