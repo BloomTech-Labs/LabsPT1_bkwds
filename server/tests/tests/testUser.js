@@ -22,20 +22,20 @@ describe("Test User model and routes", () => {
   //     newUser2.save()
   //     return done()
   //   })
-  test("GET all users", done => {
-    let newUser1 = new User(userOne)
-    let newUser2 = new User(userTwo)
-    newUser1.save()
-    newUser2.save()
+  //   test("GET all users", done => {
+  //     let newUser1 = new User(userOne)
+  //     let newUser2 = new User(userTwo)
+  //     newUser1.save()
+  //     newUser2.save()
 
-    request(app)
-      .get("/api/users")
-      .then(response => {
-        expect(response.statusCode).toBe(200)
-        expect(response.body.length).toEqual(2)
-        done()
-      })
-  })
+  //     request(app)
+  //       .get("/api/users")
+  //       .then(response => {
+  //         expect(response.statusCode).toBe(200)
+  //         expect(response.body.length).toEqual(2)
+  //         done()
+  //       })
+  //   })
   test("POST create new user", done => {
     request(app)
       .post("/api/users")
