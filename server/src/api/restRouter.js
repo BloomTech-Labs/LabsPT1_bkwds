@@ -4,6 +4,6 @@ import { protect, register, login } from "./auth"
 
 export const restRouter = express.Router()
 
-restRouter.use("/register", register)
-restRouter.use("/login", login)
+restRouter.route("/register").post(register)
+restRouter.route("/login").post(login)
 restRouter.use("/users", protect, userRouter)
