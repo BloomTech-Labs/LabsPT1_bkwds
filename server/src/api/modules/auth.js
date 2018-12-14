@@ -6,7 +6,8 @@ const JWT_SECRET = config.secrets.JWT_SECRET
 
 export const register = (req, res) => {
   const { username, password, email } = req.body
-  User.findOne(username)
+  console.log(username, password, email)
+  User.findOne({ username: username })
     .then(user => {
       if (user) {
         return res.status(404).send("Username already exists")
@@ -17,8 +18,12 @@ export const register = (req, res) => {
         .then(() => {
           res.status(201).send("success")
         })
-        .catch(() => {
-          res.status(500).send("registration failed")
+        .catch(err => {
+          const message = err.message
+          res.status(500).json({
+            status: "registration failed",
+            msg: message
+          })
         })
     })
     .catch(err => {
@@ -28,23 +33,24 @@ export const register = (req, res) => {
 
 export const login = (req, res) => {
   const { username, password } = req.body
-  User.findOne(username)
+  console.log(username)
+  User.findOne({ username: username })
     .then(user => {
-      if (!user) res.status(404).send("User not found")
+      console.log(user)
+      if (!user) return res.status(404).send("User does not exist")
       user.comparePassword(password, (err, isMatch) => {
         if (err) {
           return res.status(401).send("Unauthorized")
         }
         if (isMatch) {
-          let token = jwt.sign(
-            { id: user._id, password: password },
-            JWT_SECRET,
-            {
-              expiresIn: 86400 // 24 hours
-            }
-          )
+          console.log(isMatch)
+          let token = jwt.sign({ id: user._id }, JWT_SECRET, {
+            expiresIn: 86400 // 24 hours
+          })
           const payload = { user, token }
           res.status(200).json(payload)
+        } else {
+          return res.status(401).send("Invalid password")
         }
       })
     })
@@ -55,11 +61,17 @@ export const login = (req, res) => {
 
 export const protect = (req, res, next) => {
   if (!req.headers.authorization) {
-    res.status(400).send("Bad Request")
+    return res.status(400).send("Bad Request")
   }
-  const token = req.headers.authorization
-  jwt.verify(token, JWT_SECRET, err => {
-    if (err) return res.status(401).send("Unauthorized")
+  let token = req.headers.authorization
+  token = token.replace("Bearer ", "")
+  console.log(token)
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    console.log(decoded)
+    if (err) {
+      next(err)
+      return res.status(401).send("Unauthorized")
+    }
+    next()
   })
-  next()
 }
