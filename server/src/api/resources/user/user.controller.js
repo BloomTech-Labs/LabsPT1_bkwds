@@ -70,13 +70,3 @@ export const getUserTrips = (req, res) => {
       res.status(200).json(user.trips)
     })
 }
-
-// export default {
-//   getAllUsers: getAllUsers(),
-//   createUser: createUser(),
-//   getOneUser: getOneUser(),
-//   updateUser: updateUser(),
-//   deleteUser: deleteUser(),
-//   getUserTrips: getUserTrips()
-
-// }
