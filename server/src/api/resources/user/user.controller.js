@@ -27,18 +27,13 @@ export const createUser = (req, res) => {
 }
 
 export const getOneUser = (req, res) => {
-  User.findOne({ username: req.body.username })
+  console.log(req.body)
+  User.findOne({ id: req.body.id })
     .then(user => {
-      user.comparePassword(req.body.password, (err, isMatch) => {
-        if (err) throw err
-        if (isMatch) {
-          // Generate and send token here
-          res.status(200).json(user)
-        }
-      })
+      res.status(200).json(user)
     })
     .catch(err => {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     })
 }
 
