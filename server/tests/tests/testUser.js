@@ -15,14 +15,19 @@ const userTwo = {
 }
 
 describe("Test User model and routes", () => {
-  beforeEach(done => {
+  //   beforeEach(done => {
+  //     let newUser1 = new User(userOne)
+  //     let newUser2 = new User(userTwo)
+  //     newUser1.save()
+  //     newUser2.save()
+  //     return done()
+  //   })
+  test("GET all users", done => {
     let newUser1 = new User(userOne)
     let newUser2 = new User(userTwo)
     newUser1.save()
     newUser2.save()
-    return done()
-  })
-  test("GET all users", done => {
+
     request(app)
       .get("/api/users")
       .then(response => {
