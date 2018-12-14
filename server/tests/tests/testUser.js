@@ -3,11 +3,11 @@ import app from "../../src/server"
 
 // import { User } from "../../src/api/resources/user/user.model"
 
-// const userOne = {
-//   username: "TestUser1",
-//   password: "testpass",
-//   email: "email@hotmail.com"
-// }
+const userOne = {
+  username: "TestUser1",
+  password: "testpass",
+  email: "email@hotmail.com"
+}
 // const userTwo = {
 //   username: "TestUser2",
 //   password: "testpass2",
