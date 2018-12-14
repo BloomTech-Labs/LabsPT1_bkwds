@@ -14,8 +14,8 @@ export const controllers = {
     return docToDelete.remove()
   },
 
-  getOne(docToGet) {
-    return Promise.resolve(docToGet)
+  getOne(Model, id) {
+    return Model.findById(id).exec()
   },
 
   getAll(Model) {
@@ -24,6 +24,16 @@ export const controllers = {
 
   findByParam(Model, id) {
     return Model.findById(id).exec()
+  },
+
+  login(Model, username, password, cb) {
+    Model.findOne({ username }, function(err, user) {
+      if (err) cb(err)
+      user.comparePassword(password, (err, isMatch) => {
+        if (err) cb(err)
+        return cb(null, isMatch)
+      })
+    })
   }
 }
 
@@ -51,9 +61,9 @@ export const deleteOne = () => (req, res, next) => {
     .catch(err => next(err))
 }
 
-export const getOne = () => (req, res, next) => {
+export const getOne = Model => (req, res, next) => {
   return controllers
-    .getOne(req.docFromId)
+    .getOne(Model, req.params.id)
     .then(doc => res.status(201).json(doc))
     .catch(err => next(err))
 }
@@ -79,6 +89,20 @@ export const findByParam = Model => (req, res, next, id) => {
     .catch(err => next(err))
 }
 
+export const logIn = Model => (req, res, next) => {
+  controllers.login(Model, req.body.username, req.body.password, function(
+    err,
+    isMatch
+  ) {
+    if (err) next(new Error("Something wrong"))
+    if (!isMatch) {
+      res.status(401).json(isMatch)
+    } else {
+      res.status(200).json(isMatch)
+    }
+  })
+}
+
 export const generateControllers = (Model, overrides = {}) => {
   const defaults = {
     findByParam: findByParam(Model),
@@ -86,7 +110,8 @@ export const generateControllers = (Model, overrides = {}) => {
     getOne: getOne(Model),
     deleteOne: deleteOne(Model),
     updateOne: updateOne(Model),
-    createOne: createOne(Model)
+    createOne: createOne(Model),
+    login: logIn(Model)
   }
   return { ...defaults, ...overrides }
 }
