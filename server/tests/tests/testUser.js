@@ -1,18 +1,18 @@
 import request from "supertest"
 import app from "../../src/server"
 
-import { User } from "../../src/api/resources/user/user.model"
+// import { User } from "../../src/api/resources/user/user.model"
 
-const userOne = {
-  username: "TestUser1",
-  password: "testpass",
-  email: "email@hotmail.com"
-}
-const userTwo = {
-  username: "TestUser2",
-  password: "testpass2",
-  email: "email@gmail.com"
-}
+// const userOne = {
+//   username: "TestUser1",
+//   password: "testpass",
+//   email: "email@hotmail.com"
+// }
+// const userTwo = {
+//   username: "TestUser2",
+//   password: "testpass2",
+//   email: "email@gmail.com"
+// }
 
 describe("Test User model and routes", () => {
   //   beforeEach(done => {
