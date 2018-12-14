@@ -1,11 +1,21 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import DeleteModal from "../Modal"
+import axios from "axios"
 
 class TripView extends Component {
   componentDidMount() {
-    const id = this.props.match.params.id
-    this.props.getTrip(id)
+    axios
+      .get(
+        `https://backwoods-tracker.herokuapp.com/${this.state.id}`,
+        this.trip
+      )
+      .then(res => {
+        this.setState({ trip: res.data })
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
   editTrip = () => {
     this.props.startEditing(this.props.trip)

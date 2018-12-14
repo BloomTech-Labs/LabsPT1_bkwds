@@ -1,7 +1,5 @@
 import React, { Component } from "react"
-// const express = require('express')
-// const Trips = require('./TripsSchema.js')
-// const router = express.Router()
+
 import { Link } from "react-router-dom"
 
 class TripList extends Component {

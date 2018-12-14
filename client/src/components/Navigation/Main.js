@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Navigation from "./NavigationMenu"
 import TripList from "../Trips/TripList"
+import User from "../User/User"
 
 const Main = () => {
   return (
@@ -17,6 +18,8 @@ const Main = () => {
           exact
           component={exampleComponent}
         />
+        <Route path="/travelers/:userId" exact component={User} />
+
         <Route path="/trip/create" exact component={exampleComponent} />
         <Route path="/billing" exact component={exampleComponent} />
         <Route path="/settings" exact component={exampleComponent} />
