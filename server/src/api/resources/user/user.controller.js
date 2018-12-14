@@ -38,12 +38,32 @@ export const getOneUser = (req, res) => {
 }
 
 export const updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body)
+  const update = req.body
+  if (update.username)
+    return res.status(401).send("Username change not allowed")
+  if (update.password)
+    return res.status(401).send("Password cannot be changed from this endpoint")
+  if (update.trips)
+    return res
+      .status(401)
+      .send("Trips cannot be modified from User model. Use Trip model instead")
+
+  User.findOne({ _id: req.params.id })
     .then(user => {
-      res.status(204).json(user)
+      User.findOneAndUpdate({ _id: user._id }, update)
+        .then(oldUser => {
+          const payload = {
+            user: oldUser,
+            msg: "User was updated"
+          }
+          res.status(200).json(payload)
+        })
+        .catch(err => {
+          res.status(500).json(err)
+        })
     })
-    .catch(err => {
-      res.status(500).send(err)
+    .catch(() => {
+      res.status(404).send("user not found")
     })
 }
 
