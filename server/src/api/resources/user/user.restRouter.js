@@ -1,14 +1,16 @@
 import express from "express"
-import { getAllUsers, createUser } from "./user.controller"
+import * as userController from "./user.controller"
 
 export const userRouter = express.Router()
 
 userRouter
   .route("/")
-  .get(getAllUsers)
-  .post(createUser)
+  .get(userController.getAllUsers)
+  .post(userController.createUser)
 
-// userRouter.route("/:id")
-// .get(getOneUser)
-//   .put(userController.updateOne)
-//   .delete(userController.deleteOne)
+userRouter
+  .route("/:id")
+  .put(userController.updateUser)
+  .delete(userController.deleteUser)
+
+userRouter.route("/:id/trips").get(userController.getUserTrips)
