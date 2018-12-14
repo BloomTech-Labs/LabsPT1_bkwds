@@ -1,22 +1,30 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-import DeleteModal from "../Modal"
+// import DeleteModal from "../Modal"
 import axios from "axios"
 
 class TripView extends Component {
-  componentDidMount() {
-    axios
-      .get(
-        `https://backwoods-tracker.herokuapp.com/${this.state.id}`,
-        this.trip
-      )
-      .then(res => {
-        this.setState({ trip: res.data })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  constructor(props) {
+    super(props)
+    this.state = {
+      trip: {},
+      modal: false
+    }
   }
+
+  // componentDidMount() {
+  //   axios
+  //     .get(
+  //       `https://backwoods-tracker.herokuapp.com/trips/${this.state.id}`,
+  //       this.trip
+  //     )
+  //     .then(res => {
+  //       this.setState({ trip: res.data })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
   editTrip = () => {
     this.props.startEditing(this.props.trip)
     this.props.history.push(`/trips/edit/${this.props.trip.id}`)
@@ -32,28 +40,31 @@ class TripView extends Component {
       trip: this.state
     }
     return (
-      <div key={this.props.trip._id}>
-        <div className={"textLink"}>
-          <Link to={`/trip/edit/${this.props.trip.id}`} onClick={this.editTrip}>
-            <a>edit</a>
-          </Link>
-          <Link to={`/trip/delete/`}>
-            <DeleteModal
-              show={this.props.modal}
-              onClose={this.toggle}
-              deleteTrip={this.deleteTrip}
-              {...props}
-            />
-          </Link>
-        </div>
-        <div>
-          <div className={"trip-description"}>
-            <p>{this.props.trip.decription}</p>
+      <div>
+        <div key={props.trip.id}>
+          <p>{props.trip.name}</p>
+          <div className={"textLink"}>
+            <Link to={`/trip/edit/${props.trip.id}`} onClick={this.editTrip}>
+              <a>edit</a>
+            </Link>
+            <Link to={`/trip/delete/`}>
+              {/* <DeleteModal
+        //       show={this.props.modal}
+        //       onClose={this.toggle}
+        //       deleteTrip={this.deleteTrip}
+        //       {...props}
+        //     /> */}
+            </Link>
           </div>
-        </div>
-        <div>
-          <div className={"trip-amount"}>
-            <p>{this.props.trip.amount}</p>
+          <div>
+            <div className={"trip-start-end"}>
+              <p>{props.trip.start}</p>
+            </div>
+          </div>
+          <div>
+            <div className={"trip-start-end"}>
+              <p>{props.trip.end}</p>
+            </div>
           </div>
         </div>
       </div>

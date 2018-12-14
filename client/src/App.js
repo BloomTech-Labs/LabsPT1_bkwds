@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import { LayoutWrapper } from "./components/Wrapper"
 import { LogIn, SignUp } from "./components/Authentication"
 import TripList from "./components/Trips/TripList"
+import TripView from "./components/Trips/TripView"
 
 const App = () => {
   return (
@@ -29,7 +30,6 @@ const App = () => {
 }
 
 const Home = () => <div>Home component here!</div>
-const TripView = () => <div>Single Trip View component here!</div>
 const Progress = () => <div>Track and view trip progress here!</div>
 const TripCreate = () => <div>Create New Trip here!</div>
 const Billing = () => <div>Billing component here!</div>

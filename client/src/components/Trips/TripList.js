@@ -1,30 +1,34 @@
 import React, { Component } from "react"
 
 import { Link } from "react-router-dom"
+import TripCard from "./TripCard"
 
 class TripList extends Component {
+  state = {
+    trips: [
+      {
+        id: 1,
+        name: "dawsons creek",
+        start: "here",
+        end: "there"
+      },
+      {
+        id: 2,
+        name: "dawsons h",
+        start: "here",
+        end: "there"
+      }
+    ]
+  }
+
   render() {
     return (
       <div>
         <h5>Your Trips:</h5>
-        {/* {this.props.trips.map(trip => {
-          return (
-            <div>
-              <Link
-                to={`/trip/${trip.id}`}
-                className="trip-card"
-                key={trip.id}
-                trip={trip}
-              >
-                <div>
-                  <div>{trip.description.substring(0, 21)}</div>
-                  <hr className="my-2" />
-                  <div>{trip.destination}</div>
-                </div>
-              </Link>
-            </div>
-          )
-        })} */}
+
+        {this.state.trips.map(trip => (
+          <TripCard key={trip.id} trip={trip} />
+        ))}
       </div>
     )
   }
