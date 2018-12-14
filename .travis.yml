@@ -11,7 +11,8 @@ cache:
   directories:
     - node_modules
 
-# services: mongodb
+services: mongodb
+
 env:
   - MONGO_URI=$MONGO_URI
 

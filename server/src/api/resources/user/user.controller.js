@@ -2,6 +2,7 @@ import { User } from "./user.model"
 
 export const getAllUsers = (req, res) => {
   User.find({}, (err, users) => {
+    if (err) throw err
     res.send(users)
   })
 }
