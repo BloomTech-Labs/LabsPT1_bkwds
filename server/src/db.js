@@ -4,14 +4,21 @@ import config from "./config"
 mongoose.Promise = global.Promise
 mongoose.set("useCreateIndex", true)
 
-const databaseURI = config.db.url ? config.db.url : "mongodb://localhost:27017/"
+// const databaseURI = config.db.url
 
 export const connect = () => {
-  console.log("MONGO DB CONNECTED")
-  return mongoose.connect(
-    databaseURI,
-    {
-      useNewUrlParser: true
-    }
-  )
+  return mongoose
+    .connect(
+      config.db.url,
+      {
+        useNewUrlParser: true
+      }
+    )
+    .then(() => {
+      console.log("MONGO DB CONNECTED")
+    })
+    .catch(err => {
+      console.log(err)
+      console.log(`Connection failed with config ${config.db.url}`)
+    })
 }
