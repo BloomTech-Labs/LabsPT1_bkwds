@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-beforeEach(done => {
+beforeAll(done => {
   if (mongoose.connection.readyState === 0) {
     mongoose.connect(
       // process.env.MONGO_URI,
@@ -24,5 +24,6 @@ afterEach(done => {
 })
 
 afterAll(done => {
-  return done()
+  mongoose.disconnect(done)
+  // return done()
 })
