@@ -34,8 +34,7 @@ export const createUser = (req, res) => {
 }
 
 export const getOneUser = (req, res) => {
-  console.log(req.body)
-  User.findOne({ id: req.body.id })
+  User.findOne({ _id: req.params.id })
     .then(user => {
       res.status(200).json(user)
     })
@@ -45,7 +44,14 @@ export const getOneUser = (req, res) => {
 }
 
 export const updateUser = (req, res) => {
+  const id = req.params.id
   const update = req.body
+  console.log(update)
+
+  if (Object.keys(update).length === 0) {
+    return res.status(400).send("Bad Request")
+  }
+
   if (update.username)
     return res.status(401).send("Username change not allowed")
   if (update.password)
@@ -55,27 +61,21 @@ export const updateUser = (req, res) => {
       .status(401)
       .send("Trips cannot be modified from User model. Use Trip model instead")
 
-  User.findOne({ _id: req.params.id })
-    .then(user => {
-      User.findOneAndUpdate({ _id: user._id }, update)
-        .then(oldUser => {
-          const payload = {
-            user: oldUser,
-            msg: "User was updated"
-          }
-          res.status(200).json(payload)
-        })
-        .catch(err => {
-          res.status(500).json(err)
-        })
+  User.findOneAndUpdate({ _id: id }, update)
+    .then(oldUser => {
+      const payload = {
+        user: oldUser,
+        msg: "User was updated"
+      }
+      res.status(200).json(payload)
     })
-    .catch(() => {
-      res.status(404).send("user not found")
+    .catch(err => {
+      res.status(500).json(err)
     })
 }
 
 export const deleteUser = (req, res) => {
-  User.findByIdAndDelete(req.params.id)
+  User.findOneAndDelete({ _id: req.params.id })
     .then(user => {
       if (!user) return res.status(404).send("User not found")
       const payload = {
