@@ -6,7 +6,6 @@ const JWT_SECRET = config.secrets.JWT_SECRET
 
 export const register = (req, res) => {
   const { username, password, email } = req.body
-  console.log(username, password, email)
   User.findOne({ username: username })
     .then(user => {
       if (user) {
@@ -33,10 +32,8 @@ export const register = (req, res) => {
 
 export const login = (req, res) => {
   const { username, password } = req.body
-  console.log(username)
   User.findOne({ username: username })
     .then(user => {
-      console.log(user)
       if (!user) return res.status(404).send("User does not exist")
       user.comparePassword(password, (err, isMatch) => {
         if (err) {
