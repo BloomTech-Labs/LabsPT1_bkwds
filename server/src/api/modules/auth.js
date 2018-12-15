@@ -43,7 +43,6 @@ export const login = (req, res) => {
           return res.status(401).send("Unauthorized")
         }
         if (isMatch) {
-          console.log(isMatch)
           let token = jwt.sign({ id: user._id }, JWT_SECRET, {
             expiresIn: 86400 // 24 hours
           })
@@ -65,9 +64,7 @@ export const protect = (req, res, next) => {
   }
   let token = req.headers.authorization
   token = token.replace("Bearer ", "")
-  console.log(token)
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    console.log(decoded)
+  jwt.verify(token, JWT_SECRET, err => {
     if (err) {
       next(err)
       return res.status(401).send("Unauthorized")
