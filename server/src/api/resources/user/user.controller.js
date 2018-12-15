@@ -61,14 +61,16 @@ export const updateUser = (req, res) => {
 
   User.findOneAndUpdate({ _id: id }, update)
     .then(oldUser => {
-      const payload = {
-        user: oldUser,
-        msg: "User was updated"
-      }
-      res.status(200).json(payload)
+      User.findOne({ _id: oldUser.id })
+        .then(newUser => {
+          res.status(200).json(newUser)
+        })
+        .catch(() => {
+          res.status(404).json("Not Found")
+        })
     })
-    .catch(err => {
-      res.status(500).json(err)
+    .catch(() => {
+      res.status(404).json("Not Found")
     })
 }
 
