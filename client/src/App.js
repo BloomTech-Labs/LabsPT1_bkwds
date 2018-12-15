@@ -11,6 +11,7 @@ import { LogIn, SignUp } from "./components/Authentication"
 class App extends React.Component {
   url = "https://backwoods-tracker.herokuapp.com/api/"
   state = {
+    user: null,
     isLoggedIn: false,
     isSignedUp: false,
     isError: false,
@@ -18,6 +19,9 @@ class App extends React.Component {
   }
 
   logIn = (username, password) => {
+    if (!username || !password) {
+      return null
+    }
     const body = { username, password }
     fetch(this.url + "login", {
       method: "POST",
@@ -28,15 +32,19 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(response => {
-        if (response.status === 200 && response.token) {
+        if (response.user && response.token) {
           localStorage.setItem("user", JSON.stringify(response.token))
-          this.setState({ isLoggedIn: true })
+          this.setState({ isLoggedIn: true, user: response.user })
         }
       })
       .catch(error => this.setState({ isError: true, error }))
   }
 
   signUp = (email, username, password) => {
+    if (!email || !username || !password) {
+      return null
+    }
+    console.log(email, username, password)
     const body = { email, username, password }
     fetch(this.url + "register", {
       method: "POST",
@@ -45,13 +53,14 @@ class App extends React.Component {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.json())
-      .then(response => {
-        if (response.status === 201) {
+      .then(res => {
+        if (res.status === 201) {
           this.setState({ isSignedUp: true })
         }
       })
-      .catch(error => this.setState({ isError: true, error }))
+      .catch(error => {
+        this.setState({ isError: true, error })
+      })
   }
 
   signOut = () => {
