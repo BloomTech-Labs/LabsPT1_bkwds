@@ -10,6 +10,7 @@ userRouter
 
 userRouter
   .route("/:id")
+  .get(userController.getOneUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)
 

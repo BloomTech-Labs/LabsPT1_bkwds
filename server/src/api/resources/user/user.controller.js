@@ -16,10 +16,17 @@ export const createUser = (req, res) => {
     password: req.body.password,
     email: req.body.email
   })
-  newUser
-    .save()
+  User.findOne({ username: req.body.username })
     .then(user => {
-      res.status(201).json(user)
+      if (user) return res.status(400).send("User already exists")
+      newUser
+        .save()
+        .then(user => {
+          res.status(201).json(user)
+        })
+        .catch(err => {
+          res.status(500).send(err.message)
+        })
     })
     .catch(err => {
       res.status(500).send(err)
@@ -27,35 +34,55 @@ export const createUser = (req, res) => {
 }
 
 export const getOneUser = (req, res) => {
-  User.findOne({ username: req.body.username })
+  console.log(req.body)
+  User.findOne({ id: req.body.id })
     .then(user => {
-      user.comparePassword(req.body.password, (err, isMatch) => {
-        if (err) throw err
-        if (isMatch) {
-          // Generate and send token here
-          res.status(200).json(user)
-        }
-      })
+      res.status(200).json(user)
     })
     .catch(err => {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     })
 }
 
 export const updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body)
+  const update = req.body
+  if (update.username)
+    return res.status(401).send("Username change not allowed")
+  if (update.password)
+    return res.status(401).send("Password cannot be changed from this endpoint")
+  if (update.trips)
+    return res
+      .status(401)
+      .send("Trips cannot be modified from User model. Use Trip model instead")
+
+  User.findOne({ _id: req.params.id })
     .then(user => {
-      res.status(204).json(user)
+      User.findOneAndUpdate({ _id: user._id }, update)
+        .then(oldUser => {
+          const payload = {
+            user: oldUser,
+            msg: "User was updated"
+          }
+          res.status(200).json(payload)
+        })
+        .catch(err => {
+          res.status(500).json(err)
+        })
     })
-    .catch(err => {
-      res.status(500).send(err)
+    .catch(() => {
+      res.status(404).send("user not found")
     })
 }
 
 export const deleteUser = (req, res) => {
   User.findByIdAndDelete(req.params.id)
     .then(user => {
-      res.status(202).json(user)
+      if (!user) return res.status(404).send("User not found")
+      const payload = {
+        user,
+        msg: "User was deleted"
+      }
+      res.status(202).json(payload)
     })
     .catch(err => {
       res.status(500).send(err)
