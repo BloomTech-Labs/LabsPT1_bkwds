@@ -13,7 +13,8 @@ class App extends React.Component {
   state = {
     isLoggedIn: false,
     isSignedUp: false,
-    isError: false
+    isError: false,
+    error: null
   }
 
   logIn = (username, password) => {
@@ -27,16 +28,17 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 200 && response.token) {
+          localStorage.setItem("user", JSON.stringify(response.token))
           this.setState({ isLoggedIn: true })
         }
       })
-      .catch(error => this.setState({ isError: true }))
+      .catch(error => this.setState({ isError: true, error }))
   }
 
   signUp = (email, username, password) => {
     const body = { email, username, password }
-    fetch(this.url + "signup", {
+    fetch(this.url + "register", {
       method: "POST",
       body: JSON.stringify(body),
       headers: {
@@ -45,11 +47,16 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.setState({ isSignedUp: true })
         }
       })
-      .catch(error => this.setState({ isError: true }))
+      .catch(error => this.setState({ isError: true, error }))
+  }
+
+  signOut = () => {
+    localStorage.removeItem("user")
+    this.setState({ isLoggedIn: false })
   }
 
   render() {
@@ -59,6 +66,7 @@ class App extends React.Component {
           <LayoutWrapper
             isLoggedIn={this.state.isLoggedIn}
             isSignedUp={this.state.isSignedUp}
+            handleSignOut={this.signOut}
           >
             <Route path="/" exact component={Home} />
             <Route
@@ -91,11 +99,31 @@ class App extends React.Component {
             <Route
               path="/trip/:tripId/progress/:progressId"
               exact
-              component={Progress}
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : Progress
+              }
             />
-            <Route path="/trip/create" exact component={TripCreate} />
-            <Route path="/billing" exact component={Billing} />
-            <Route path="/settings" exact component={Settings} />
+            <Route
+              path="/trip/create"
+              exact
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : TripCreate
+              }
+            />
+            <Route
+              path="/billing"
+              exact
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : Billing
+              }
+            />
+            <Route
+              path="/settings"
+              exact
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : Settings
+              }
+            />
           </LayoutWrapper>
         </Switch>
       </Router>

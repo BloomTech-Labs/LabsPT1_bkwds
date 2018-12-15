@@ -29,9 +29,7 @@ const LayoutWrapper = props => {
               </Button>
             )}
             {props.isLoggedIn && (
-              <Button>
-                <Link to="/">Sign Out</Link>
-              </Button>
+              <Button onClick={props.handleSignOut}>Sign Out</Button>
             )}
           </Col>
         </Row>
