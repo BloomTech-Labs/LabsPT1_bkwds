@@ -5,14 +5,16 @@ mongoose.Promise = global.Promise
 mongoose.set("useCreateIndex", true)
 
 // const databaseURI = config.db.url
+const options = {
+  useNewUrlParser: true,
+  useFindAndModify: false
+}
 
 export const connect = () => {
   return mongoose
     .connect(
       config.db.url,
-      {
-        useNewUrlParser: true
-      }
+      options
     )
     .then(() => {
       console.log("MONGO DB CONNECTED")
