@@ -44,7 +44,6 @@ class App extends React.Component {
     if (!email || !username || !password) {
       return null
     }
-    console.log(email, username, password)
     const body = { email, username, password }
     fetch(this.url + "register", {
       method: "POST",
