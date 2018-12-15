@@ -46,12 +46,10 @@ export const getOneUser = (req, res) => {
 export const updateUser = (req, res) => {
   const id = req.params.id
   const update = req.body
-  console.log(update)
 
   if (Object.keys(update).length === 0) {
     return res.status(400).send("Bad Request")
   }
-
   if (update.username)
     return res.status(401).send("Username change not allowed")
   if (update.password)
