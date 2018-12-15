@@ -16,10 +16,17 @@ export const createUser = (req, res) => {
     password: req.body.password,
     email: req.body.email
   })
-  newUser
-    .save()
+  User.findOne({ username: req.body.username })
     .then(user => {
-      res.status(201).json(user)
+      if (user) return res.status(400).send("User already exists")
+      newUser
+        .save()
+        .then(user => {
+          res.status(201).json(user)
+        })
+        .catch(err => {
+          res.status(500).send(err.message)
+        })
     })
     .catch(err => {
       res.status(500).send(err)
@@ -70,7 +77,12 @@ export const updateUser = (req, res) => {
 export const deleteUser = (req, res) => {
   User.findByIdAndDelete(req.params.id)
     .then(user => {
-      res.status(202).json(user)
+      if (!user) return res.status(404).send("User not found")
+      const payload = {
+        user,
+        msg: "User was deleted"
+      }
+      res.status(202).json(payload)
     })
     .catch(err => {
       res.status(500).send(err)
