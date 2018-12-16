@@ -7,6 +7,7 @@ import {
 } from "react-router-dom"
 import { LayoutWrapper } from "./components/Wrapper"
 import { LogIn, SignUp } from "./components/Authentication"
+import axios from "axios"
 
 class App extends React.Component {
   url = "https://backwoods-tracker.herokuapp.com/api/"
@@ -23,16 +24,10 @@ class App extends React.Component {
       return null
     }
     const body = { username, password }
-    fetch(this.url + "login", {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
+    axios
+      .post(this.url + "login", body)
       .then(response => {
-        if (response.user && response.token) {
+        if (response.data && response.data.user && response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.token))
           this.setState({ isLoggedIn: true, user: response.user })
         }
@@ -45,13 +40,8 @@ class App extends React.Component {
       return null
     }
     const body = { email, username, password }
-    fetch(this.url + "register", {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    axios
+      .post(this.url + "register", body)
       .then(res => {
         if (res.status === 201) {
           this.setState({ isSignedUp: true })
