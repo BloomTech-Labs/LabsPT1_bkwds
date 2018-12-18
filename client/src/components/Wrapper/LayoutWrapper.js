@@ -17,25 +17,29 @@ const LayoutWrapper = props => {
                 <BreadcrumbBar {...props} />
               )}
           </Col>
-          <Col id="authButton" xs="auto">
-            <Button>
-              <Link to="/signup">Sign Up</Link>
-            </Button>
-            <Button>
-              <Link to="/login">Log In</Link>
-            </Button>
-            <Button>
-              <Link to="/">Sign Out</Link>
-            </Button>
+          <Col id="authButton" xs="auto" className="d-flex align-items-start">
+            {props.location.pathname !== "/signup" && (
+              <Button>
+                <Link to="/signup">Sign Up</Link>
+              </Button>
+            )}
+            {!props.isLoggedIn && props.location.pathname !== "/login" && (
+              <Button>
+                <Link to="/login">Log In</Link>
+              </Button>
+            )}
+            {props.isLoggedIn && (
+              <Button onClick={props.handleSignOut}>Sign Out</Button>
+            )}
           </Col>
         </Row>
         <Row>
           {props.location.pathname !== "/" && (
-            <Col id="sidebar" xs="4">
+            <Col id="sidebar" xs="auto">
               <Sidebar {...props} />
             </Col>
           )}
-          <Col id="mainSection" xs="8">
+          <Col id="mainSection" xs="5">
             {props.children}
           </Col>
         </Row>

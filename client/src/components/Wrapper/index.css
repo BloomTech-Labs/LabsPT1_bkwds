@@ -1,5 +1,10 @@
+#layoutWrapper #topMenu {
+  height: 70px;
+}
+
 #layoutWrapper button {
   display: flex;
+  margin-left: 8px;
 }
 #layoutWrapper a {
   color: white;
