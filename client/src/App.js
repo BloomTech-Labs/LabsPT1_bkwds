@@ -5,6 +5,7 @@ import {
   Route,
   Redirect
 } from "react-router-dom"
+import styled from "styled-components"
 import { LayoutWrapper } from "./components/Wrapper"
 import { LogIn, SignUp } from "./components/Authentication"
 import axios from "axios"
