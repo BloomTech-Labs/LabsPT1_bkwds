@@ -1,11 +1,13 @@
 import React from "react"
+import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import { Container, Row, Col, Button } from "reactstrap"
+import styled from "styled-components"
+
 import Nav from "../Nav"
 import Sidebar from "../Sidebar"
 import BreadcrumbBar from "../Breadcrumb"
-
-import styled from "styled-components"
+import { logout } from "../../redux/actions/auth"
 
 const LayoutStyles = styled.div`
   /* Bootstrap overrides */
@@ -29,7 +31,7 @@ const LayoutWrapper = props => {
   return (
     <LayoutStyles>
       <div id="layoutWrapper">
-        <Nav {...props} />
+        <Nav />
         <Container fluid>
           <Row id="topMenu" xs="12">
             <Col id="breadcrumb" xs="auto" className="mr-auto">
@@ -70,4 +72,15 @@ const LayoutWrapper = props => {
     </LayoutStyles>
   )
 }
-export default LayoutWrapper
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  location: state.router.location
+})
+
+const mapDispatchToProps = { handleSignOut: logout }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LayoutWrapper)

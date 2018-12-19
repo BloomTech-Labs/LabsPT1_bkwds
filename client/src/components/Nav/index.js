@@ -1,8 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import GitHubSvg from "../icons/GitHubSvg"
+import { connect } from "react-redux"
 
+import GitHubSvg from "../icons/GitHubSvg"
 import { primary } from "../constants"
 
 const NavStyles = styled.div`
@@ -81,4 +82,9 @@ const Nav = props => {
   )
 }
 
-export default Nav
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  location: state.router.location
+})
+
+export default connect(mapStateToProps)(Nav)

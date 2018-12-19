@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-import { login } from "../../redux/actions/auth"
+import { login, logout } from "../../redux/actions/auth"
 
 class Delete extends Component {
   componentDidMount() {
@@ -10,16 +10,22 @@ class Delete extends Component {
 
   login = data => this.props.login(data)
 
+  signout = () => this.props.logout()
+
   render() {
     return (
       <div>
-        <button
-          onClick={() =>
-            this.login({ username: "username", password: "password" })
-          }
-        >
-          {this.props.isLoggedIn ? "Already logged in" : "Log in"}
-        </button>
+        {this.props.isLoggedIn ? (
+          <button onClick={() => this.signout()}>Sign out</button>
+        ) : (
+          <button
+            onClick={() =>
+              this.login({ username: "username", password: "password" })
+            }
+          >
+            Log in
+          </button>
+        )}
       </div>
     )
   }
@@ -29,7 +35,7 @@ const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn
 })
 
-const mapDispatchToProps = { login }
+const mapDispatchToProps = { login, logout }
 
 export default connect(
   mapStateToProps,

@@ -1,19 +1,12 @@
 import React from "react"
-import { Route } from "react-router-dom"
+import { Route, Switch, Redirect } from "react-router-dom"
 import { ConnectedRouter } from "connected-react-router"
+import { connect } from "react-redux"
+
 import { history } from "../../store"
-
-// import { LayoutWrapper } from "../Wrapper"
-// import AppRouter from "../Router"
+import { Register, Login } from "../Auth"
+import Container from "../Container"
 import Delete from "../Delete"
-
-const App = () => (
-  <ConnectedRouter history={history}>
-    <div className="app">
-      <Route path="/" component={Delete} />
-    </div>
-  </ConnectedRouter>
-)
 
 export const Home = () => <div>Home component here!</div>
 export const TripsView = () => <div>Trips View component here!</div>
@@ -23,4 +16,56 @@ export const TripCreate = () => <div>Create New Trip here!</div>
 export const Billing = () => <div>Billing component here!</div>
 export const Settings = () => <div>Settings component here!</div>
 
-export default App
+const App = props => (
+  <ConnectedRouter history={history}>
+    <Container>
+      <Route path="/" component={Delete} />
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route
+          path="/login"
+          exact
+          render={() => (props.isLoggedIn ? <Redirect to="/" /> : <Login />)}
+        />
+        <Route
+          path="/signup"
+          exact
+          render={() =>
+            props.isSignedUp ? <Redirect to="/login" /> : <Register />
+          }
+        />
+        <Route path="/trips" exact component={TripsView} />
+        <Route path="/trips/:tripId" exact component={TripView} />
+        <Route
+          path="/trip/create"
+          exact
+          render={() =>
+            !props.isLoggedIn ? <Redirect to="/" /> : <TripCreate />
+          }
+        />
+        <Route
+          path="/billing"
+          exact
+          render={() => (!props.isLoggedIn ? <Redirect to="/" /> : <Billing />)}
+        />
+        <Route
+          path="/settings"
+          exact
+          render={() =>
+            !props.isLoggedIn ? <Redirect to="/" /> : <Settings />
+          }
+        />
+      </Switch>
+    </Container>
+  </ConnectedRouter>
+)
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  isSignedUp: state.auth.isSignedUp
+})
+
+export default connect(
+  mapStateToProps,
+  null
+)(App)
