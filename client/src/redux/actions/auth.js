@@ -64,4 +64,5 @@ export const register = ({
 export const logout = () => dispatch => {
   localStorage.removeItem("token")
   dispatch({ type: LOGOUT_SUCCESS })
+  dispatch(push("/"))
 }
