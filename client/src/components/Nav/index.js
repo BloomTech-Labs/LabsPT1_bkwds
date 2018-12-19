@@ -49,8 +49,12 @@ const NavStyles = styled.div`
 
 const UnauthenticatedLinks = ({ pathname }) => (
   <div className="unauthenticated-links">
-    {pathname === "/login" ? <Link to="/signup">Sign up</Link> : null}
-    {pathname === "/signup" ? <Link to="/login">Login</Link> : null}
+    {pathname === "/login" || pathname === "/" ? (
+      <Link to="/signup">Sign up</Link>
+    ) : null}
+    {pathname === "/signup" || pathname === "/" ? (
+      <Link to="/login">Login</Link>
+    ) : null}
   </div>
 )
 

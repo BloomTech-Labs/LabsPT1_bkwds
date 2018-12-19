@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import { Breadcrumb, BreadcrumbItem } from "reactstrap"
 import "./index.css"
 
@@ -20,4 +20,5 @@ const BreadcrumbBar = props => {
     </div>
   )
 }
-export default BreadcrumbBar
+
+export default withRouter(BreadcrumbBar)

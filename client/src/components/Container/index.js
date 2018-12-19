@@ -4,28 +4,32 @@ import styled from "styled-components"
 
 import Nav from "../Nav"
 import BreadcrumbBar from "../Breadcrumb"
+import Sidebar from "../Sidebar"
 import { logout } from "../../redux/actions/auth"
+import { isProtectedPath } from "../../redux/helpers"
 
 const ContainerStyles = styled.div`
   height: 100vh;
 `
 
-const Container = props => {
+const Container = ({ pathname, children }) => {
+  const protectedPaths = ["/", "/signup", "/login"]
+  const isHomeOrProtectedPath = isProtectedPath(pathname, protectedPaths)
   return (
     <ContainerStyles>
       <Nav />
-
-      {props.location.pathname !== "/" &&
-        props.location.pathname !== "/login" &&
-        props.location.pathname !== "/signup" && <BreadcrumbBar {...props} />}
-      {props.children}
+      {pathname !== "/" && pathname !== "/login" && pathname !== "/signup" && (
+        <BreadcrumbBar />
+      )}
+      {!isHomeOrProtectedPath && <Sidebar />}
+      {children}
     </ContainerStyles>
   )
 }
 
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  location: state.router.location
+  pathname: state.router.location.pathname
 })
 
 const mapDispatchToProps = { handleSignOut: logout }

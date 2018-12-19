@@ -6,7 +6,7 @@ import { connect } from "react-redux"
 import { history } from "../../store"
 import { Register, Login } from "../Auth"
 import Container from "../Container"
-import Delete from "../Delete"
+import FakeLogin from "../FakeLogin"
 
 export const Home = () => <div>Home component here!</div>
 export const TripsView = () => <div>Trips View component here!</div>
@@ -19,7 +19,8 @@ export const Settings = () => <div>Settings component here!</div>
 const App = props => (
   <ConnectedRouter history={history}>
     <Container>
-      <Route path="/" component={Delete} />
+      {/* REMOVE THIS COMPONENT BEFORE PUSHING TO PRODUCTION; FOR TESTING UI CHANGE FOR LOGIN ONLY */}
+      <Route path="/" component={FakeLogin} />
       <Switch>
         <Route path="/" component={Home} exact />
         <Route
