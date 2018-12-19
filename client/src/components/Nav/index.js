@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import GitHubSvg from "../icons/GitHubSvg"
 import { primary } from "../constants"
 import { logout } from "../../redux/actions/auth"
+import { isProtectedPath } from "../../redux/helpers"
 
 const NavStyles = styled.div`
   display: flex;
@@ -65,13 +66,6 @@ const AuthenticatedLinks = ({ logout }) => {
       <Link to="/settings">Settings</Link>
       <button onClick={handleLogout}>Log out</button>
     </div>
-  )
-}
-
-function isProtectedPath(pathname, pathArray) {
-  return pathArray.reduce(
-    (acc, curr) => (pathname === curr ? true : acc),
-    false
   )
 }
 
