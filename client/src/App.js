@@ -1,32 +1,132 @@
 import React from "react"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom"
 import { LayoutWrapper } from "./components/Wrapper"
 import { LogIn, SignUp } from "./components/Authentication"
-import TripList from "./components/Trips/TripList"
-import TripView from "./components/Trips/TripView"
+import axios from "axios"
 
-const App = () => {
-  return (
-    <Router>
-      <Switch>
-        <LayoutWrapper>
-          <Route path="/" exact component={Home} />
-          <Route path="/login" exact component={LogIn} />
-          <Route path="/signup" exact component={SignUp} />
-          <Route path="/trips" exact component={TripList} />
-          <Route path="/trips/:tripId" exact component={TripView} />
-          <Route
-            path="/trip/:tripId/progress/:progressId"
-            exact
-            component={Progress}
-          />
-          <Route path="/trip/create" exact component={TripCreate} />
-          <Route path="/billing" exact component={Billing} />
-          <Route path="/settings" exact component={Settings} />
-        </LayoutWrapper>
-      </Switch>
-    </Router>
-  )
+class App extends React.Component {
+  url = "https://backwoods-tracker.herokuapp.com/api/"
+  state = {
+    user: null,
+    isLoggedIn: false,
+    isSignedUp: false,
+    isError: false,
+    error: null
+  }
+
+  logIn = (username, password) => {
+    if (!username || !password) {
+      return null
+    }
+    const body = { username, password }
+    axios
+      .post(this.url + "login", body)
+      .then(response => {
+        if (response.data && response.data.user && response.data.token) {
+          localStorage.setItem("user", JSON.stringify(response.token))
+          this.setState({ isLoggedIn: true, user: response.user })
+        }
+      })
+      .catch(error => this.setState({ isError: true, error }))
+  }
+
+  signUp = (email, username, password) => {
+    if (!email || !username || !password) {
+      return null
+    }
+    const body = { email, username, password }
+    axios
+      .post(this.url + "register", body)
+      .then(res => {
+        if (res.status === 201) {
+          this.setState({ isSignedUp: true })
+        }
+      })
+      .catch(error => {
+        this.setState({ isError: true, error })
+      })
+  }
+
+  signOut = () => {
+    localStorage.removeItem("user")
+    this.setState({ isLoggedIn: false })
+  }
+
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <LayoutWrapper
+            isLoggedIn={this.state.isLoggedIn}
+            isSignedUp={this.state.isSignedUp}
+            handleSignOut={this.signOut}
+          >
+            <Route path="/" exact component={Home} />
+            <Route
+              path="/login"
+              exact
+              render={() =>
+                this.state.isLoggedIn ? (
+                  <Redirect to="/" />
+                ) : (
+                  <LogIn
+                    handleLogIn={this.logIn}
+                    isAuthenticated={this.state.isAuthenticated}
+                  />
+                )
+              }
+            />
+            <Route
+              path="/signup"
+              exact
+              render={() =>
+                this.state.isSignedUp ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <SignUp handleSignUp={this.signUp} />
+                )
+              }
+            />
+            <Route path="/trips" exact component={TripsView} />
+            <Route path="/trips/:tripId" exact component={TripView} />
+            <Route
+              path="/trip/:tripId/progress/:progressId"
+              exact
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : Progress
+              }
+            />
+            <Route
+              path="/trip/create"
+              exact
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : TripCreate
+              }
+            />
+            <Route
+              path="/billing"
+              exact
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : Billing
+              }
+            />
+            <Route
+              path="/settings"
+              exact
+              render={() =>
+                !this.state.isLoggedIn ? <Redirect to="/" /> : Settings
+              }
+            />
+          </LayoutWrapper>
+        </Switch>
+      </Router>
+    )
+  }
 }
 
 const Home = () => <div>Home component here!</div>

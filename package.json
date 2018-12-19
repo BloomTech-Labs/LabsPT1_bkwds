@@ -23,5 +23,7 @@
     "lint:client": "eslint client/**/*.js",
     "lint:server": "eslint server/**/*.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }

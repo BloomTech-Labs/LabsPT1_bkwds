@@ -4,6 +4,6 @@ export const config = {
     JWT_SECRET: null
   },
   db: {
-    url: process.env.MONGO_URI
+    url: "mongodb://127.0.0.1/backwoods"
   }
 }

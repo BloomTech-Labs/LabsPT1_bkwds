@@ -6,10 +6,16 @@ node_js:
 before_install:
   - chmod +x scripts/test
 
-# cache:
-#   yarn: true
-#   directories:
-#     - node_modules
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+services: mongodb
+
+env:
+  - MONGO_URI=$MONGO_URI
 
 script:
   - scripts/test
+

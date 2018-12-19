@@ -1,17 +1,17 @@
 import express from "express"
-import userController from "./user.controller"
+import * as userController from "./user.controller"
 
 export const userRouter = express.Router()
 
-userRouter.param("id", userController.findByParam)
-
 userRouter
   .route("/")
-  .get(userController.getAll)
-  .post(userController.createOne)
+  .get(userController.getAllUsers)
+  .post(userController.createUser)
 
 userRouter
   .route("/:id")
-  .get(userController.getOne)
-  .put(userController.updateOne)
-  .delete(userController.deleteOne)
+  .get(userController.getOneUser)
+  .put(userController.updateUser)
+  .delete(userController.deleteUser)
+
+userRouter.route("/:id/trips").get(userController.getUserTrips)

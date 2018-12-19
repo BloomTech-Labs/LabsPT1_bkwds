@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-// import DeleteModal from "../Modal"
+// import DeleteModal from "../../Modal"
 import axios from "axios"
 
 class TripView extends Component {
