@@ -27,9 +27,9 @@ class TripList extends Component {
         <h5>Your Trips:</h5>
 
         {this.state.trips.map(trip => (
-          <Link to={`/trips/${trip.name}`}>
+          <div to={`/trips/${trip.name}`}>
             <TripCard key={trip.id} trip={trip} />
-          </Link>
+          </div>
         ))}
       </div>
     )

@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-// import DeleteModal from "../../Modal"
 import axios from "axios"
 
 class TripView extends Component {
@@ -46,14 +45,6 @@ class TripView extends Component {
           <div className={"textLink"}>
             <Link to={`/trip/edit/${props.trip.id}`} onClick={this.editTrip}>
               <a>edit</a>
-            </Link>
-            <Link to={`/trip/delete/`}>
-              {/* <DeleteModal
-        //       show={this.props.modal}
-        //       onClose={this.toggle}
-        //       deleteTrip={this.deleteTrip}
-        //       {...props}
-        //     /> */}
             </Link>
           </div>
           <div>

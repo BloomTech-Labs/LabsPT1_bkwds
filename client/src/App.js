@@ -8,6 +8,8 @@ import {
 import { LayoutWrapper } from "./components/Wrapper"
 import { LogIn, SignUp } from "./components/Authentication"
 import axios from "axios"
+import TripView from "./components/Trips/TripView"
+import TripList from "./components/Trips/TripList"
 
 class App extends React.Component {
   url = "https://backwoods-tracker.herokuapp.com/api/"
@@ -92,7 +94,7 @@ class App extends React.Component {
                 )
               }
             />
-            <Route path="/trips" exact component={TripsView} />
+            <Route path="/trips" exact component={TripList} />
             <Route path="/trips/:tripId" exact component={TripView} />
             <Route
               path="/trip/:tripId/progress/:progressId"
