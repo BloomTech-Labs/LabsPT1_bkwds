@@ -36,10 +36,10 @@ const NavStyles = styled.div`
   }
 `
 
-const UnauthenticatedLinks = () => (
+const UnauthenticatedLinks = ({ pathname }) => (
   <div className="unauthenticated-links">
-    <Link to="/signup">Sign up</Link>
-    <Link to="/login">Log in</Link>
+    {pathname === "/login" ? <Link to="/signup">Sign up</Link> : null}
+    {pathname === "/signup" ? <Link to="/login">Login</Link> : null}
   </div>
 )
 
@@ -50,20 +50,27 @@ const AuthenticatedLinks = () => (
   </div>
 )
 
-const Nav = props => {
-  const { isLoggedIn } = props
-  const { pathname } = props.location
-  const isHomeOrAuthPath = ["/", "/login", "/signup"].reduce(
+function isProtectedPath(pathname, pathArray) {
+  return pathArray.reduce(
     (acc, curr) => (pathname === curr ? true : acc),
     false
   )
+}
+
+const Nav = props => {
+  const { isLoggedIn } = props
+  const { pathname } = props.location
+  const protectedPaths = ["/", "/login", "/signup"]
+  const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
 
   return (
     <NavStyles>
       <div className="logo">Backwoods Tracker</div>
       <div className="nav-links-wrapper">
         <div className="internal-links">
-          {isHomeOrAuthPath && !isLoggedIn ? <UnauthenticatedLinks /> : null}
+          {isHomeOrAuthPath && !isLoggedIn ? (
+            <UnauthenticatedLinks pathname={pathname} />
+          ) : null}
           {isLoggedIn ? <AuthenticatedLinks /> : null}
         </div>
         <div className="external-links">
