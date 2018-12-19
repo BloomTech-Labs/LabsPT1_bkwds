@@ -3,13 +3,15 @@ import { Route } from "react-router-dom"
 import { ConnectedRouter } from "connected-react-router"
 import { history } from "../../store"
 
-import { LayoutWrapper } from "../Wrapper"
+// import { LayoutWrapper } from "../Wrapper"
+// import AppRouter from "../Router"
+import Delete from "../Delete"
 
-import AppRouter from "../Router"
-
-const App = props => (
+const App = () => (
   <ConnectedRouter history={history}>
-    <div>hi connected</div>
+    <div className="app">
+      <Route path="/" component={Delete} />
+    </div>
   </ConnectedRouter>
 )
 
@@ -20,4 +22,5 @@ export const Progress = () => <div>Track and view trip progress here!</div>
 export const TripCreate = () => <div>Create New Trip here!</div>
 export const Billing = () => <div>Billing component here!</div>
 export const Settings = () => <div>Settings component here!</div>
+
 export default App
