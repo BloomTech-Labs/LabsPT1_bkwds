@@ -48,15 +48,18 @@ const UnauthenticatedLinks = () => {
 
 const Nav = props => {
   const { pathname } = props.location
+  const isHomeOrAuthPath = ["/", "/login", "/signup"].reduce(
+    (acc, curr) => (pathname === curr ? true : acc),
+    false
+  )
+
   return (
     <NavStyles>
       <div className="logo">Backwoods Tracker</div>
       <div className="nav-links-wrapper">
         <div className="internal-links">
-          {pathname === "/" && !props.isLoggedIn && <UnauthenticatedLinks />}
-          {/* {pathname !== "/" &&
-            pathname !== "/login" &&
-            pathname !== "/signup" && <BreadcrumbBar {...props} />} */}
+          {isHomeOrAuthPath && !props.isLoggedIn && <UnauthenticatedLinks />}
+          {!isHomeOrAuthPath ? <BreadcrumbBar {...props} /> : null}
         </div>
         <div className="external-links">
           <GitHubSvg width="32px" height="32px" />
