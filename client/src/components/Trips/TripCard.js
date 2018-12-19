@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { Card, CardText, CardBody, CardTitle, Button } from "reactstrap"
 
 const TripCard = ({ trip }) => {
