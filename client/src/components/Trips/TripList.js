@@ -1,6 +1,4 @@
 import React, { Component } from "react"
-
-import { Link } from "react-router-dom"
 import TripCard from "./TripCard"
 
 class TripList extends Component {
@@ -27,9 +25,7 @@ class TripList extends Component {
         <h5>Your Trips:</h5>
 
         {this.state.trips.map(trip => (
-          <div to={`/trips/${trip.name}`}>
-            <TripCard key={trip.id} trip={trip} />
-          </div>
+          <TripCard key={trip.id} trip={trip} />
         ))}
       </div>
     )

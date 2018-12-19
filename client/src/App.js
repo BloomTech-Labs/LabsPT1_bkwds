@@ -8,7 +8,7 @@ import {
 import { LayoutWrapper } from "./components/Wrapper"
 import { LogIn, SignUp } from "./components/Authentication"
 import axios from "axios"
-import TripView from "./components/Trips/TripView"
+// import TripView from "./components/Trips/TripView"
 import TripList from "./components/Trips/TripList"
 
 class App extends React.Component {
@@ -136,4 +136,6 @@ const Progress = () => <div>Track and view trip progress here!</div>
 const TripCreate = () => <div>Create New Trip here!</div>
 const Billing = () => <div>Billing component here!</div>
 const Settings = () => <div>Settings component here!</div>
+const TripView = () => <div>Tripview component here!</div>
+
 export default App
