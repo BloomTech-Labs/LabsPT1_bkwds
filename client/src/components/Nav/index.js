@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import GitHubSvg from "../icons/GitHubSvg"
-import BreadcrumbBar from "../Breadcrumb"
 
 import { primary } from "../constants"
 
@@ -37,16 +36,22 @@ const NavStyles = styled.div`
   }
 `
 
-const UnauthenticatedLinks = () => {
-  return (
-    <div>
-      <Link to="/signup">Sign up</Link>
-      <Link to="/login">Log in</Link>
-    </div>
-  )
-}
+const UnauthenticatedLinks = () => (
+  <div className="unauthenticated-links">
+    <Link to="/signup">Sign up</Link>
+    <Link to="/login">Log in</Link>
+  </div>
+)
+
+const AuthenticatedLinks = () => (
+  <div className="authenticated-links">
+    <Link to="/trips">Trips</Link>
+    <Link to="/settings">Settings</Link>
+  </div>
+)
 
 const Nav = props => {
+  const { isLoggedIn } = props
   const { pathname } = props.location
   const isHomeOrAuthPath = ["/", "/login", "/signup"].reduce(
     (acc, curr) => (pathname === curr ? true : acc),
@@ -58,8 +63,8 @@ const Nav = props => {
       <div className="logo">Backwoods Tracker</div>
       <div className="nav-links-wrapper">
         <div className="internal-links">
-          {isHomeOrAuthPath && !props.isLoggedIn && <UnauthenticatedLinks />}
-          {!isHomeOrAuthPath ? <BreadcrumbBar {...props} /> : null}
+          {isHomeOrAuthPath && !isLoggedIn ? <UnauthenticatedLinks /> : null}
+          {isLoggedIn ? <AuthenticatedLinks /> : null}
         </div>
         <div className="external-links">
           <GitHubSvg width="32px" height="32px" />
