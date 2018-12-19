@@ -14,7 +14,7 @@ import {
 
 const SERVER_URI = "https://backwoods-tracker.herokuapp.com/api/"
 
-export const login = ({ username, password }) => (dispatch, getState) => {
+export const login = ({ username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
   return axios
     .post(`${SERVER_URI}/login`, { username, password })
@@ -48,7 +48,7 @@ export const register = ({
 
   return axios
     .post(`${SERVER_URI}/register`, { email, username, pass })
-    .then(res => {
+    .then(() => {
       // DO WE NEED THIS CHECK?
       // if (res.status === 201) {
       dispatch({ type: REGISTRATION_SUCCESS })
