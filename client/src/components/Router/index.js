@@ -11,7 +11,7 @@ import { LogIn, SignUp } from "../Authentication"
 import {
   Home,
   TripView,
-  TripsView,
+  TripList,
   Progress,
   TripCreate,
   Billing,
