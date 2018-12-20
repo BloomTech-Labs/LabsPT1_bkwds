@@ -63,7 +63,7 @@ export const Button = styled.button`
     }
   }
 
-  &:hover {
+  &:hover, &:focus {
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   }
 
