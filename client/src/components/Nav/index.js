@@ -9,11 +9,13 @@ import { logout } from "../../redux/actions/auth"
 import { isProtectedPath } from "../../redux/helpers"
 
 const NavStyles = styled.div`
+  background: ${props => props.theme.white};
+  height: ${props => props.theme.navHeight};
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 66px;
   border-bottom: 2px solid rgba(23, 42, 58, 0.1);
   line-height: 0;
   .nav-links-wrapper {

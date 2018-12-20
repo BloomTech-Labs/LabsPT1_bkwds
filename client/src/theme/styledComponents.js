@@ -2,10 +2,15 @@ import styled from "styled-components"
 
 import { flexCenterMixin } from "./mixins"
 
-export const MainContainer = styled.div`
+export const GlobalStyles = styled.div`
   background: ${props => props.theme.contentBackground};
-  /* flex-grow: 2; */
+  height: 100vh;
   overflow: hidden;
+
+  span.form-error {
+    font-size: 12px;
+    color: ${props => props.theme.secondaryDark};
+  }
 `
 
 export const Card = styled.div`

@@ -4,10 +4,12 @@ import styled from "styled-components"
 import RegisterForm from "../forms/RegisterForm"
 
 const RegisterStyles = styled.div`
+  margin-top: ${props => "-" + props.theme.navHeight};
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 90px;
+  justify-content: center;
   form {
     width: 300px;
   }

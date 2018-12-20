@@ -27,7 +27,7 @@ export const theme = {
 
   // * Default Dimensions ----------------------
   sideBarWidth: 265,
-  topBarHeight: 60,
+  navHeight: "60px",
 
   // * Buttons ---------------------------------
   // Standard
