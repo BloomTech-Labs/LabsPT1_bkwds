@@ -20,6 +20,8 @@
     ]
   },
   "scripts": {
+    "client": "cd ./client && yarn start",
+    "server": "cd ./server && yarn dev",
     "lint:client": "eslint client/**/*.js",
     "lint:server": "eslint server/**/*.js"
   },
