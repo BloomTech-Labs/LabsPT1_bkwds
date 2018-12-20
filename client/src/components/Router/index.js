@@ -1,21 +1,28 @@
-import React from "react"
+import React, { Component } from "react"
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
 } from "react-router-dom"
-import { LayoutWrapper } from "./components/Wrapper"
-import { LogIn, SignUp } from "./components/Authentication"
 import axios from "axios"
-// import TripView from "./components/Trips/TripView"
-import TripList from "./components/Trips/TripList"
+import { LayoutWrapper } from "../Wrapper"
+import { LogIn, SignUp } from "../Authentication"
+import {
+  Home,
+  TripView,
+  TripsView,
+  Progress,
+  TripCreate,
+  Billing,
+  Settings
+} from "../App"
 
-class App extends React.Component {
+export default class AppRouter extends Component {
   url = "https://backwoods-tracker.herokuapp.com/api/"
   state = {
     user: null,
-    isLoggedIn: false,
+    isLoggedIn: true,
     isSignedUp: false,
     isError: false,
     error: null
@@ -60,12 +67,13 @@ class App extends React.Component {
   }
 
   render() {
+    const { isLoggedIn, isSignedUp, isAuthenticated } = this.state
     return (
       <Router>
         <Switch>
           <LayoutWrapper
-            isLoggedIn={this.state.isLoggedIn}
-            isSignedUp={this.state.isSignedUp}
+            isLoggedIn={isLoggedIn}
+            isSignedUp={isSignedUp}
             handleSignOut={this.signOut}
           >
             <Route path="/" exact component={Home} />
@@ -73,12 +81,12 @@ class App extends React.Component {
               path="/login"
               exact
               render={() =>
-                this.state.isLoggedIn ? (
+                isLoggedIn ? (
                   <Redirect to="/" />
                 ) : (
                   <LogIn
                     handleLogIn={this.logIn}
-                    isAuthenticated={this.state.isAuthenticated}
+                    isAuthenticated={isAuthenticated}
                   />
                 )
               }
@@ -87,7 +95,7 @@ class App extends React.Component {
               path="/signup"
               exact
               render={() =>
-                this.state.isSignedUp ? (
+                isSignedUp ? (
                   <Redirect to="/login" />
                 ) : (
                   <SignUp handleSignUp={this.signUp} />
@@ -99,30 +107,22 @@ class App extends React.Component {
             <Route
               path="/trip/:tripId/progress/:progressId"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : Progress
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : Progress)}
             />
             <Route
               path="/trip/create"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : TripCreate
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : TripCreate)}
             />
             <Route
               path="/billing"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : Billing
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : <Billing />)}
             />
             <Route
               path="/settings"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : Settings
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : <Settings />)}
             />
           </LayoutWrapper>
         </Switch>
@@ -130,12 +130,3 @@ class App extends React.Component {
     )
   }
 }
-
-const Home = () => <div>Home component here!</div>
-const Progress = () => <div>Track and view trip progress here!</div>
-const TripCreate = () => <div>Create New Trip here!</div>
-const Billing = () => <div>Billing component here!</div>
-const Settings = () => <div>Settings component here!</div>
-const TripView = () => <div>Tripview component here!</div>
-
-export default App
