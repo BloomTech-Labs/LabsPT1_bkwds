@@ -15,6 +15,8 @@ services: mongodb
 
 env:
   - MONGO_URI=$MONGO_URI
+  - NODE_ENV=$NODE_ENV
+  - JWT_SECRET=$JWT_SECRET
 
 script:
   - scripts/test
