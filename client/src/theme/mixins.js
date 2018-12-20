@@ -19,3 +19,8 @@ export const card = css`
   background: ${props => props.theme.primary};
   box-shadow: ${props => props.theme.boxShadow};
 `
+
+export const animations = css`
+  /* -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out; */
+`

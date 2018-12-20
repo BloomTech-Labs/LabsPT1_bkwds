@@ -4,8 +4,9 @@ const white = "#fff"
 const offWhite = "#fff4e7"
 const lightWhite = "rgba(255, 255, 255, 0.75)"
 const ghostWhite = "#f6f8fb"
-const lightGray = "rgba(255, 255, 255, 0.4)"
+const lightGray = "rgba(23,42,58,0.25)"
 const midGray = "rgba(46, 49, 72, 0.75)"
+// const lighterGray = "rgba(23,42,58,0.1)"
 // const darkGray = ""
 const offBlack = "rgb(62, 62, 62)"
 const black = "rgb(32, 34, 51)"
@@ -44,8 +45,22 @@ export const theme = {
   // Dark
   btnDarkBorderColor: primaryExtraDark,
 
+  // * Inputs ----------------------------------
+  inputBgColor: white,
+  inputTextColor: black,
+  inputBorderColor: lightGray,
+  placeholderColor: midGray,
+
   // * Color Theme Variables -------------------
   // Primary Styles
+  primary,
+  secondary,
+  tertiary,
+  primaryDark,
+  secondaryDark,
+  tertiaryDark,
+  white,
+
   contentBackground: ghostWhite,
   textColorDark: white,
   inputError: secondaryDark,
@@ -67,7 +82,6 @@ export const theme = {
   medTextLight: midGray,
   medText: lightWhite,
   lightTextOnDark: lightGray,
-  // Headers & Inputs
-  placeholderColor: midGray,
+  // Headers
   h1: 2.4
 }
