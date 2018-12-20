@@ -1,6 +1,6 @@
 import merge from "lodash.merge"
 
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV || "testing"
 
 const baseConfig = {
   port: process.env.PORT || 5000,
