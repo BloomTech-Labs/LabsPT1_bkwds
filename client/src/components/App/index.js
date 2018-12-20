@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import { Register, Login } from "../Auth"
 import Container from "../Container"
 import FakeLogin from "../FakeLogin"
+import Trips from "../Trips"
 
 export const Home = () => <div>Home component here!</div>
 export const TripsView = () => <div>Trips View component here!</div>
@@ -32,7 +33,7 @@ const App = props => (
           props.isSignedUp ? <Redirect to="/login" /> : <Register />
         }
       />
-      <Route path="/trips" exact component={TripsView} />
+      <Route path="/trips" exact component={Trips} />
       <Route path="/trips/:tripId" exact component={TripView} />
       <Route
         path="/trip/create"
