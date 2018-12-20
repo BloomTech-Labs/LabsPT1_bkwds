@@ -4,10 +4,12 @@ import styled from "styled-components"
 import { Button } from "../../theme/styledComponents"
 
 const SidebarStyles = styled.div`
-  .sidebar-links {
+  width: ${props => `${props.theme.sidebarWidth}px`};
+  height: 100vh;
+  /* .sidebar-links {
     width: ${props => `${props.theme.sidebarWidth}px`};
     height: 100vh;
-  }
+  } */
   button {
     width: 100%;
     border-radius: 0;

@@ -28,12 +28,7 @@ export const login = ({ username, password }) => dispatch => {
     })
 }
 
-export const register = ({
-  email,
-  username,
-  pass,
-  confirmPass
-}) => dispatch => {
+export const register = ({ email, username, pass }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
 
   return axios

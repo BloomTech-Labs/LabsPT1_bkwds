@@ -1,25 +1,40 @@
 import React from "react"
 import { connect } from "react-redux"
+import styled from "styled-components"
 
 import Nav from "../Nav"
-import BreadcrumbBar from "../Breadcrumb"
+// import Breadcrumbs from "../Breadcrumbs"
 import Sidebar from "../Sidebar"
-import { GlobalStyles } from "../../theme/styledComponents"
+import { GlobalStyles } from "../../theme/GlobalStyles"
 import { logout } from "../../redux/actions/auth"
 import { isProtectedPath } from "../../redux/helpers"
 
-const Container = ({ pathname, children }) => {
+const Right = styled.div`
+  background: ${props => props.theme.ghostWhite};
+  width: 100%;
+`
+
+const Container = ({ pathname, children, isLoggedIn }) => {
   const protectedPaths = ["/", "/signup", "/login"]
-  const isHomeOrProtectedPath = isProtectedPath(pathname, protectedPaths)
+  const showBreadcrumbs = !isProtectedPath(pathname, protectedPaths)
+  const showSidebar = isLoggedIn && showBreadcrumbs
+
   return (
-    <GlobalStyles>
-      <Nav />
-      {pathname !== "/" && pathname !== "/login" && pathname !== "/signup" && (
-        <BreadcrumbBar />
-      )}
-      {!isHomeOrProtectedPath && <Sidebar />}
-      {children}
-    </GlobalStyles>
+    <>
+      <GlobalStyles />
+      <div className="main-wrapper">
+        <Nav />
+        {/* {showBreadcrumbs ? <Breadcrumbs /> : null} */}
+        {showSidebar ? (
+          <div className="main-content with-sidebar">
+            <Sidebar id="sidebar" />
+            <Right id="Right">{children}</Right>
+          </div>
+        ) : (
+          <div className="main-content">{children}</div>
+        )}
+      </div>
+    </>
   )
 }
 

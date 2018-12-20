@@ -4,7 +4,7 @@ import styled from "styled-components"
 import RegisterForm from "../forms/RegisterForm"
 
 const RegisterStyles = styled.div`
-  margin-top: ${props => "-" + props.theme.navHeight};
+  /* margin-top: ${props => "-" + props.theme.navHeight}; */
   height: 100%;
   display: flex;
   flex-direction: column;

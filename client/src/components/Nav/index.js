@@ -1,78 +1,119 @@
-import React from "react"
+import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { connect } from "react-redux"
 
-import GitHubSvg from "../icons/GitHubSvg"
-import { primary } from "../constants"
 import { logout } from "../../redux/actions/auth"
 import { isProtectedPath } from "../../redux/helpers"
+import { boxShadowMixin } from "../../theme/mixins"
+
+import Dropdown from "./Dropdown"
+import GitHubSvg from "../icons/GitHubSvg"
+import UserSvg from "../icons/UserSvg"
 
 const NavStyles = styled.div`
   background: ${props => props.theme.white};
-  height: ${props => `${props.theme.navHeight}px`};
+  min-height: ${props => props.theme.navHeight};
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 2px solid rgba(23, 42, 58, 0.1);
-  line-height: 0;
+  ${boxShadowMixin};
+
   .nav-links-wrapper {
-    display: flex;
-    align-items: center;
+    width: 300px;
+    /* display: flex;
+    align-items: center; */
   }
   .logo {
-    color: ${primary};
-    font-weight: 900;
-    text-transform: uppercase;
+    color: ${props => props.theme.primary};
+    font-weight: 700;
     padding-left: 25px;
     padding-right: 25px;
-    font-size: 20px;
+    font-size: 1.75rem;
+    letter-spacing: -0.0275rem;
   }
-  a,
-  button {
+
+  ul {
+    display: flex;
+    flex-direction: row;
+  }
+
+  li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    height: 3.125rem;
     padding-left: 8px;
     padding-right: 8px;
-    color: rgba(23, 42, 58, 0.6);
-    font-size: 14px;
+    color: ${props => props.theme.midGray};
+    font-size: 1.0625rem;
+    font-weight: 400;
+    &:hover {
+      color: ${props => props.theme.primary};
+    }
   }
-  a.github-icon-link {
-    padding-right: 25px;
-  }
+
   button {
     cursor: pointer;
     border: none;
     &:hover {
       text-decoration: underline;
     }
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  ul.authenticated-links {
+    /* position: relative; */
+  }
+
+  a.github-icon-link {
+    padding: 0;
+    padding-right: 25px;
   }
 `
 
 const UnauthenticatedLinks = ({ pathname }) => (
-  <div className="unauthenticated-links">
+  <ul className="unauthenticated-links">
     {pathname === "/login" || pathname === "/" ? (
       <Link to="/signup">Sign up</Link>
     ) : null}
     {pathname === "/signup" || pathname === "/" ? (
       <Link to="/login">Login</Link>
     ) : null}
-  </div>
+  </ul>
 )
 
-const AuthenticatedLinks = ({ logout }) => {
-  const handleLogout = e => {
+class AuthenticatedLinks extends Component {
+  state = {}
+
+  handleLogout = e => {
     e.preventDefault()
-    logout()
+    this.props.logout()
   }
 
-  return (
-    <div className="authenticated-links">
-      <Link to="/trips">Trips</Link>
-      <Link to="/settings">Settings</Link>
-      <button onClick={handleLogout}>Log out</button>
-    </div>
-  )
+  render() {
+    return (
+      <ul className="authenticated-links">
+        <Dropdown hidden={false} />
+        <li>
+          <a href="/logout" onClick={this.handleLogout}>
+            Log out
+          </a>
+        </li>
+        <li>
+          <GitHubSvg width="32px" height="32px" />
+        </li>
+      </ul>
+    )
+  }
 }
 
 const Nav = props => {
@@ -85,7 +126,12 @@ const Nav = props => {
     <NavStyles>
       <div className="logo">Backwoods Tracker</div>
       <div className="nav-links-wrapper">
-        <div className="internal-links">
+        {isHomeOrAuthPath && !isLoggedIn ? (
+          <UnauthenticatedLinks pathname={pathname} />
+        ) : null}
+        {isLoggedIn ? <AuthenticatedLinks logout={props.logout} /> : null}
+      </div>
+      {/* <div className="internal-links">
           {isHomeOrAuthPath && !isLoggedIn ? (
             <UnauthenticatedLinks pathname={pathname} />
           ) : null}
@@ -94,7 +140,7 @@ const Nav = props => {
         <div className="external-links">
           <GitHubSvg width="32px" height="32px" />
         </div>
-      </div>
+      </div> */}
     </NavStyles>
   )
 }

@@ -2,23 +2,6 @@ import styled from "styled-components"
 
 import { flexCenterMixin } from "./mixins"
 
-export const GlobalStyles = styled.div`
-  background: ${props => props.theme.contentBackground};
-  height: 100vh;
-  overflow: hidden;
-
-  /* Bootstrap Overrides */
-  ol,
-  ul {
-    margin: 0;
-  }
-
-  span.form-error {
-    font-size: 12px;
-    color: ${props => props.theme.secondaryDark};
-  }
-`
-
 export const Card = styled.div`
   ${flexCenterMixin};
 `
@@ -58,39 +41,59 @@ export const Button = styled.button`
   border-radius: 5px;
   padding: 6px 12px;
 
-  background-color: ${props => props.theme.primaryDark}
-  border-color: ${props => props.theme.primaryDark}
-  &:hover, &:focus {
-    background-color: ${props => props.theme.primary}
-    border-color: ${props => props.theme.primary}
+  background-color: ${props => props.theme.primaryDark};
+  border-color: ${props => props.theme.primaryDark};
+  &:hover,
+  &:focus {
+    background-color: ${props => props.theme.primary};
+    border-color: ${props => props.theme.primary};
   }
 
   /* Styles for Link/anchor elements that might be children of Button */
-  a { 
+  a {
     color: ${props => props.theme.white};
-    &:hover { text-decoration: none; }
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   &.btn-light {
-    background-color: ${props => props.theme.primary}
-    border-color: ${props => props.theme.primary}
-    &:hover, &:focus {
-      background-color: ${props => props.theme.primaryDark}
-      border-color: ${props => props.theme.primaryDark}
+    background-color: ${props => props.theme.primary};
+    border-color: ${props => props.theme.primary};
+    &:hover,
+    &:focus {
+      background-color: ${props => props.theme.primaryDark};
+      border-color: ${props => props.theme.primaryDark};
+    }
+  }
+
+  &.btn-inverted {
+    background-color: ${props => props.theme.primaryLight};
+    border-color: ${props => props.theme.primaryLight};
+    color: ${props => props.theme.primaryDark};
+    &:hover,
+    &:focus {
+      background-color: #d7ecf7;
+      border-color: #d7ecf7;
+      /* background-color: ${props => props.theme.ghostWhite};
+      border-color: ${props => props.theme.ghostWhite}; */
     }
   }
 
   &.btn-secondary {
-    background-color: ${props => props.theme.secondary}
-    border-color: ${props => props.theme.secondary}
-    &:hover, &:focus {
-      background-color: ${props => props.theme.secondaryDark}
-      border-color: ${props => props.theme.secondaryDark}
+    background-color: ${props => props.theme.secondary};
+    border-color: ${props => props.theme.secondary};
+    &:hover,
+    &:focus {
+      background-color: ${props => props.theme.secondaryDark};
+      border-color: ${props => props.theme.secondaryDark};
     }
   }
 
-  &:hover, &:focus {
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+  &:hover,
+  &:focus {
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   }
 
   &:not(:disabled) {

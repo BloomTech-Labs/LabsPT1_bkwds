@@ -6,8 +6,8 @@ import LoginForm from "../forms/LoginForm"
 import { login } from "../../redux/actions/auth"
 
 const LoginStyles = styled.div`
-  margin-top: ${props => "-" + props.theme.navHeight};
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
