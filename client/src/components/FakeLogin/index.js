@@ -14,7 +14,7 @@ class FakeLogin extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ position: "absolute", top: 0 }}>
         {!this.props.isLoggedIn ? (
           <button
             onClick={() =>
