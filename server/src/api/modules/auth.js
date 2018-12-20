@@ -4,6 +4,8 @@ import { User } from "../resources/user/user.model"
 
 const JWT_SECRET = process.env.JWT_SECRET
 
+console.log("JWT_SECRET VARIABLE:", JWT_SECRET)
+
 export const register = (req, res) => {
   const { username, password, email } = req.body
   User.findOne({ username: username })
