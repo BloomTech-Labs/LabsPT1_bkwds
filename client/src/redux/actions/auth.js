@@ -12,12 +12,12 @@ import {
   REGISTRATION_FAILURE
 } from "./types"
 
-const SERVER_URI = "https://backwoods-tracker.herokuapp.com/api/"
+const SERVER_URI = "https://backwoods-tracker.herokuapp.com/api"
 
 export const login = ({ username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
   return axios
-    .post(`${SERVER_URI}/login`, { username, password })
+    .get(`${SERVER_URI}/login`, { username, password })
     .then(res => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.token })
 
