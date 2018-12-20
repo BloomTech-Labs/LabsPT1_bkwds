@@ -1,17 +1,14 @@
 import axios from "axios"
 import { push } from "connected-react-router"
+import { SERVER_URI } from "../../config"
 import {
   AUTH_LOADING,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
-  // LOGOUT_FAILURE,
-  PASSWORD_MATCH_ERROR,
-  PASSWORD_MATCH_SUCCESS,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE
 } from "./types"
-import { SERVER_URI } from "../../config"
 
 export const login = ({ username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
@@ -37,12 +34,6 @@ export const register = ({
   pass,
   confirmPass
 }) => dispatch => {
-  if (pass !== confirmPass) {
-    dispatch({ type: PASSWORD_MATCH_ERROR, payload: "Passwords don't match" })
-    return
-  }
-
-  dispatch({ type: PASSWORD_MATCH_SUCCESS })
   dispatch({ type: AUTH_LOADING })
 
   return axios
