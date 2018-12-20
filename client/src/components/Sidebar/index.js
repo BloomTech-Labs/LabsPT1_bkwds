@@ -1,33 +1,53 @@
 import React from "react"
 import { Link, withRouter } from "react-router-dom"
-import { ButtonGroup, Button } from "reactstrap"
-import "./index.css"
+import styled from "styled-components"
+import { Button } from "../../theme/styledComponents"
 
-const Sidebar = props => {
+const SidebarStyles = styled.div`
+  .sidebar-links {
+    width: ${props => `${props.theme.sidebarWidth}px`};
+    height: 100vh;
+  }
+  button {
+    width: 100%;
+    border-radius: 0;
+    display: flex;
+    padding: 0;
+    border-bottom: 1px solid ${props => props.theme.ghostWhite};
+    a {
+      flex: 0 0 100%;
+      padding: 6px 12px;
+    }
+  }
+`
+
+const SidebarLink = ({ to, displayName, pathname }) => (
+  <Button className={pathname === to ? "btn-light" : ""}>
+    <Link to={to}>{displayName}</Link>
+  </Button>
+)
+
+const Sidebar = ({ location }) => {
   return (
-    <div id="sidebar">
-      <ButtonGroup vertical>
-        <Button
-          color={props.location.pathname === "/trips" ? "primary" : "secondary"}
-        >
-          <Link to="/trips">Trips</Link>
-        </Button>
-        <Button
-          color={
-            props.location.pathname === "/billing" ? "primary" : "secondary"
-          }
-        >
-          <Link to="/billing">Billing</Link>
-        </Button>
-        <Button
-          color={
-            props.location.pathname === "/settings" ? "primary" : "secondary"
-          }
-        >
-          <Link to="/settings">Settings</Link>
-        </Button>
-      </ButtonGroup>
-    </div>
+    <SidebarStyles>
+      <div className="sidebar-links">
+        <SidebarLink
+          to="/trips"
+          displayName="Trips"
+          pathname={location.pathname}
+        />
+        <SidebarLink
+          to="/billing"
+          displayName="Billing"
+          pathname={location.pathname}
+        />
+        <SidebarLink
+          to="/settings"
+          displayName="Settings"
+          pathname={location.pathname}
+        />
+      </div>
+    </SidebarStyles>
   )
 }
 
