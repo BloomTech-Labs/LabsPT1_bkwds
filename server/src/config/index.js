@@ -5,7 +5,7 @@ const env = process.env.NODE_ENV
 const baseConfig = {
   port: process.env.PORT || 5000,
   secrets: {
-    JWT_SECRET: null
+    JWT_SECRET: process.env.JWT_SECRET
   },
   db: {
     url: process.env.MONGO_URI
