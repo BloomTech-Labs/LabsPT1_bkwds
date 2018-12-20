@@ -3,6 +3,7 @@ import config from "../../config"
 import { User } from "../resources/user/user.model"
 
 const JWT_SECRET = config.secrets.JWT_SECRET
+const stripe = config.stripe.instance
 
 export const register = (req, res) => {
   const { username, password, email } = req.body
@@ -11,11 +12,16 @@ export const register = (req, res) => {
       if (user) {
         return res.status(404).send("Username already exists")
       }
-      let newUser = new User({ username, password, email })
+      // create new account
+      let newUser = new User({
+        username,
+        password,
+        email
+      })
       newUser
         .save()
         .then(() => {
-          res.status(201).send("success")
+          res.status(201).send(customer.id)
         })
         .catch(err => {
           const message = err.message
@@ -56,16 +62,16 @@ export const login = (req, res) => {
 }
 
 export const protect = (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.status(400).send("Bad Request")
-  }
-  let token = req.headers.authorization
-  token = token.replace("Bearer ", "")
-  jwt.verify(token, JWT_SECRET, err => {
-    if (err) {
-      next(err)
-      return res.status(401).send("Unauthorized")
-    }
-    next()
-  })
+  // if (!req.headers.authorization) {
+  //   return res.status(400).send("Bad Request")
+  // }
+  // let token = req.headers.authorization
+  // token = token.replace("Bearer ", "")
+  // jwt.verify(token, JWT_SECRET, err => {
+  //   if (err) {
+  //     next(err)
+  //     return res.status(401).send("Unauthorized")
+  //   }
+  next()
+  // })
 }
