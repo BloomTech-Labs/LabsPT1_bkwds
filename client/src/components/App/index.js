@@ -5,9 +5,9 @@ import { connect } from "react-redux"
 import { Register, Login } from "../Auth"
 import Container from "../Container"
 import FakeLogin from "../FakeLogin"
+import LandingPage from "../LandingPage"
 import Trips from "../Trips"
 
-export const Home = () => <div>Home component here!</div>
 export const TripsView = () => <div>Trips View component here!</div>
 export const TripView = () => <div>Single Trip View component here!</div>
 export const Progress = () => <div>Track and view trip progress here!</div>
@@ -20,7 +20,7 @@ const App = props => (
     {/* REMOVE THIS COMPONENT BEFORE PUSHING TO PRODUCTION; FOR TESTING UI CHANGE FOR LOGIN ONLY */}
     <Route path="/" component={FakeLogin} />
     <Switch>
-      <Route path="/" component={Home} exact />
+      <Route path="/" component={LandingPage} exact />
       <Route
         path="/login"
         exact
