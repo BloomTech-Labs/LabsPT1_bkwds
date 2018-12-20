@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import { ButtonGroup, Button } from "reactstrap"
 import "./index.css"
 
@@ -30,4 +30,5 @@ const Sidebar = props => {
     </div>
   )
 }
-export default Sidebar
+
+export default withRouter(Sidebar)

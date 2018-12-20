@@ -1,9 +1,12 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import GitHubSvg from "../icons/GitHubSvg"
+import { connect } from "react-redux"
 
+import GitHubSvg from "../icons/GitHubSvg"
 import { primary } from "../constants"
+import { logout } from "../../redux/actions/auth"
+import { isProtectedPath } from "../../redux/helpers"
 
 const NavStyles = styled.div`
   display: flex;
@@ -25,7 +28,8 @@ const NavStyles = styled.div`
     padding-right: 25px;
     font-size: 20px;
   }
-  a {
+  a,
+  button {
     padding-left: 8px;
     padding-right: 8px;
     color: rgba(23, 42, 58, 0.6);
@@ -34,26 +38,38 @@ const NavStyles = styled.div`
   a.github-icon-link {
     padding-right: 25px;
   }
+  button {
+    cursor: pointer;
+    border: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `
 
 const UnauthenticatedLinks = ({ pathname }) => (
   <div className="unauthenticated-links">
-    {pathname === "/login" ? <Link to="/signup">Sign up</Link> : null}
-    {pathname === "/signup" ? <Link to="/login">Login</Link> : null}
+    {pathname === "/login" || pathname === "/" ? (
+      <Link to="/signup">Sign up</Link>
+    ) : null}
+    {pathname === "/signup" || pathname === "/" ? (
+      <Link to="/login">Login</Link>
+    ) : null}
   </div>
 )
 
-const AuthenticatedLinks = () => (
-  <div className="authenticated-links">
-    <Link to="/trips">Trips</Link>
-    <Link to="/settings">Settings</Link>
-  </div>
-)
+const AuthenticatedLinks = ({ logout }) => {
+  const handleLogout = e => {
+    e.preventDefault()
+    logout()
+  }
 
-function isProtectedPath(pathname, pathArray) {
-  return pathArray.reduce(
-    (acc, curr) => (pathname === curr ? true : acc),
-    false
+  return (
+    <div className="authenticated-links">
+      <Link to="/trips">Trips</Link>
+      <Link to="/settings">Settings</Link>
+      <button onClick={handleLogout}>Log out</button>
+    </div>
   )
 }
 
@@ -71,7 +87,7 @@ const Nav = props => {
           {isHomeOrAuthPath && !isLoggedIn ? (
             <UnauthenticatedLinks pathname={pathname} />
           ) : null}
-          {isLoggedIn ? <AuthenticatedLinks /> : null}
+          {isLoggedIn ? <AuthenticatedLinks logout={props.logout} /> : null}
         </div>
         <div className="external-links">
           <GitHubSvg width="32px" height="32px" />
@@ -81,4 +97,14 @@ const Nav = props => {
   )
 }
 
-export default Nav
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  location: state.router.location
+})
+
+const mapDispatchToProps = { logout }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Nav)
