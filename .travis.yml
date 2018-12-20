@@ -1,23 +1,14 @@
 language: node_js
-
 node_js:
-  - "10"
-
+- '10'
 before_install:
-  - chmod +x scripts/test
-
-# cache:
-#   yarn: true
-#   directories:
-#     - node_modules
-
+- chmod +x scripts/test
+cache:
+  yarn: true
+  directories:
+    - node_modules
 services: mongodb
-
 env:
-#   - MONGO_URI=$MONGO_URI
-#   - NODE_ENV=$NODE_ENV
-  - JWT_SECRET=$JWT_SECRET
-
+  secure: wCDcERCsc6Qq23IDG8QyKMdW3MyzU7q8U56/Y/vJNAnvwbpUMihAHPSb5hFyXWeauvfCNhHAJVrPROIJop1Np4qIARVx62dA4/bN4eHRx7TOEfQwciS3iyRrlTR+l/cdA9XhSyRSBleB3ZKvVkrppEA4k/voectdfyQFv1Oe/H5I9S/HQ5a/N9vWzV8fAAdSrrLFmWeTdZbEZbz0Wc6/Yvgmjq/ylBZzebHC0gLX59LozL6uZbWEdLWCmfOGuxnBzFG+3NyKIhnpv4QBSPnqJ2L1MqqRV6US4HeTwDxv292Te5It0ZvtFOeBQsHWYYurKifIJ+OPSxN4jUGyJaQBXbC6y2FhfSxj+Rf1wS7jNlOG6OWqpw068hEAKdiJOw9w4fUH+V/efotxhF6fBDF1tB6CQxZs52EHLlp48A3977JLbvib7rE9LzwHjpDHksEDVf4GBMvd1kC3x7/bH3pgKcpPzhJqQ6wP4zRZV5wxyoHflle3wLNAcaRRDXaZfM7KqCDb4jNDq++XM9hCusO4yGwNRRxXPyJuUxZNtUnOKp3jE9CCQ/OCDFkCZw4kmcI1rRb9MqNmsMnmA3k3JNXCs0EjcDW9Ai9hHRDXLvJuVHoHBe4rSiS5NoBWDlgtFOGB08zTwvUSXY2ApBJSUQUtqNXAyb5M8SONiCOAxSgdLFE=
 script:
-  - scripts/test
-
+- scripts/test
