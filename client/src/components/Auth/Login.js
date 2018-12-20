@@ -1,7 +1,21 @@
 import React from "react"
-import { Form, FormGroup, Input, Label, Button } from "reactstrap"
+import { connect } from "react-redux"
+import styled from "styled-components"
 
-export default class LogIn extends React.Component {
+import { Input, Form, Button } from "../../theme/styledComponents"
+import { login } from "../../redux/actions/auth"
+
+const LoginStyles = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+  form {
+    width: 300px;
+  }
+`
+
+class Login extends React.Component {
   state = {
     username: "",
     password: ""
@@ -13,40 +27,44 @@ export default class LogIn extends React.Component {
     })
   }
 
+  handleLogin = e => {
+    this.props.login({
+      username: this.state.username,
+      password: this.state.password
+    })
+  }
+
   render() {
     return (
-      <div>
+      <LoginStyles>
         <h3>Log In</h3>
         <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <Label for="username">Username</Label>
-            <Input
-              type="email"
-              placeholder="Username"
-              value={this.state.username}
-              onChange={this.handleChange}
-              id="username"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="password">Password</Label>
-            <Input
-              type="password"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              id="password"
-            />
-          </FormGroup>
-          <Button
-            onClick={() =>
-              this.props.handleLogIn(this.state.username, this.state.password)
-            }
-          >
+          <Input
+            type="email"
+            placeholder="Username"
+            value={this.state.username}
+            onChange={this.handleChange}
+            id="username"
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            id="password"
+          />
+          <Button className="btn-secondary" onClick={this.handleLogin}>
             Submit
           </Button>
         </Form>
-      </div>
+      </LoginStyles>
     )
   }
 }
+
+const mapDispatchToProps = { login }
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login)

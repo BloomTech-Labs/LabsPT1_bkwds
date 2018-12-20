@@ -2,7 +2,6 @@ import React from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 
-import { history } from "../../store"
 import { Register, Login } from "../Auth"
 import Container from "../Container"
 import FakeLogin from "../FakeLogin"
