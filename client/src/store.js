@@ -6,7 +6,7 @@ import logger from "redux-logger"
 import { reducer as formReducer } from "redux-form"
 
 import { authReducer } from "./redux/reducers/auth"
-import { tripsReducer } from "./redux/reducers/trips"
+import { tripReducer } from "./redux/reducers/trips"
 
 export const history = createBrowserHistory()
 
@@ -16,7 +16,7 @@ const middleware = [logger, thunk, routerMiddleware(history)]
 // TODO: put in redux/reducers/index.js & import instead
 const createRootReducer = history =>
   combineReducers({
-    trips: tripsReducer,
+    trips: tripReducer,
     auth: authReducer,
     form: formReducer,
     router: connectRouter(history)
