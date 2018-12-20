@@ -18,9 +18,10 @@ export const validateRegistration = values => {
   if (!values.email) errors.email = "Email is required"
   if (!emailRegex.test(values.email))
     errors.email = "Please enter a valid email address"
+
   if (!values.password) errors.password = "Password is required"
-  if (!values.confirmPassword)
-    errors.confirmPassword = "Please confirm your password"
+  if (values.password && values.password.length < 8)
+    errors.password = "Password must be at least 8 characters"
 
   if (
     values.password &&
