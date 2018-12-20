@@ -5,10 +5,10 @@ export const ValidatedInput = props => {
   const { input, meta, type, placeholder } = props
   return (
     <div>
-      <Input type={type} placeholder={placeholder} {...input} />
       {meta.touched && meta.error ? (
-        <div className="form-error">{meta.error}</div>
+        <span className="form-error">{meta.error}</span>
       ) : null}
+      <Input type={type} placeholder={placeholder} {...input} />
     </div>
   )
 }

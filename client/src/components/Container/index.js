@@ -10,6 +10,11 @@ import { isProtectedPath } from "../../redux/helpers"
 
 const ContainerStyles = styled.div`
   height: 100vh;
+
+  span.form-error {
+    font-size: 12px;
+    color: ${props => props.theme.secondaryDark};
+  }
 `
 
 const Container = ({ pathname, children }) => {
