@@ -11,8 +11,7 @@ import {
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE
 } from "./types"
-
-const SERVER_URI = "https://backwoods-tracker.herokuapp.com/api"
+import { SERVER_URI } from "../../config"
 
 export const login = ({ username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })

@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import styled from "styled-components"
 
 import Nav from "../Nav"
 import BreadcrumbBar from "../Breadcrumb"

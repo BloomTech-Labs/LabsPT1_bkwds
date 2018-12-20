@@ -1,14 +1,22 @@
-import { FETCH_TRIPS } from "../actions/types"
+// import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/types"
 
-const defaultState = {
-  trips: [{ id: 1, name: "some trip" }]
-}
+// const defaultState = {
+//   auth: {
+//     user: null,
+//     isLoggedIn: false,
+//     isSignedUp: false,
+//     isError: false,
+//     error: null
+//   }
+// }
 
-export const tripsReducer = (state = defaultState, action) => {
-  switch (action.type) {
-    case FETCH_TRIPS:
-      return { ...state }
-    default:
-      return state
-  }
-}
+// export const authReducer = (state = defaultState, action) => {
+//   switch (action.type) {
+//     case LOGIN_SUCCESS:
+//       return { ...state, isLoggedIn: true }
+//     case LOGOUT_SUCCESS:
+//       return { ...state, isLoggedIn: false }
+//     default:
+//       return state
+//   }
+// }
