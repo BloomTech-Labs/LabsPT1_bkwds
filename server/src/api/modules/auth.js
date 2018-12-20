@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken"
-import config from "../../config"
+// import config from "../../config"
 import { User } from "../resources/user/user.model"
 
-const JWT_SECRET = config.secrets.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET
 
 export const register = (req, res) => {
   const { username, password, email } = req.body
