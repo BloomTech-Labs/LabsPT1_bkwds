@@ -58,12 +58,14 @@ class App extends React.Component {
   }
 
   render() {
+    const { isLoggedIn, isSignedUp, isAuthenticated } = this.state
+
     return (
       <Router>
         <Switch>
           <LayoutWrapper
-            isLoggedIn={this.state.isLoggedIn}
-            isSignedUp={this.state.isSignedUp}
+            isLoggedIn={isLoggedIn}
+            isSignedUp={isSignedUp}
             handleSignOut={this.signOut}
           >
             <Route path="/" exact component={Home} />
@@ -71,12 +73,12 @@ class App extends React.Component {
               path="/login"
               exact
               render={() =>
-                this.state.isLoggedIn ? (
+                isLoggedIn ? (
                   <Redirect to="/" />
                 ) : (
                   <LogIn
                     handleLogIn={this.logIn}
-                    isAuthenticated={this.state.isAuthenticated}
+                    isAuthenticated={isAuthenticated}
                   />
                 )
               }
@@ -85,7 +87,7 @@ class App extends React.Component {
               path="/signup"
               exact
               render={() =>
-                this.state.isSignedUp ? (
+                isSignedUp ? (
                   <Redirect to="/login" />
                 ) : (
                   <SignUp handleSignUp={this.signUp} />
@@ -97,30 +99,22 @@ class App extends React.Component {
             <Route
               path="/trip/:tripId/progress/:progressId"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : Progress
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : Progress)}
             />
             <Route
               path="/trip/create"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : TripCreate
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : TripCreate)}
             />
             <Route
               path="/billing"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : Billing
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : <Billing />)}
             />
             <Route
               path="/settings"
               exact
-              render={() =>
-                !this.state.isLoggedIn ? <Redirect to="/" /> : Settings
-              }
+              render={() => (!isLoggedIn ? <Redirect to="/" /> : <Settings />)}
             />
           </LayoutWrapper>
         </Switch>
