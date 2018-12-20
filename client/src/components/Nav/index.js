@@ -10,7 +10,7 @@ import { isProtectedPath } from "../../redux/helpers"
 
 const NavStyles = styled.div`
   background: ${props => props.theme.white};
-  height: ${props => props.theme.navHeight};
+  height: ${props => `${props.theme.navHeight}px`};
 
   display: flex;
   align-items: center;

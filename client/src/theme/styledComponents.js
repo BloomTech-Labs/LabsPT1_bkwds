@@ -7,6 +7,12 @@ export const GlobalStyles = styled.div`
   height: 100vh;
   overflow: hidden;
 
+  /* Bootstrap Overrides */
+  ol,
+  ul {
+    margin: 0;
+  }
+
   span.form-error {
     font-size: 12px;
     color: ${props => props.theme.secondaryDark};
@@ -57,6 +63,21 @@ export const Button = styled.button`
   &:hover, &:focus {
     background-color: ${props => props.theme.primary}
     border-color: ${props => props.theme.primary}
+  }
+
+  /* Styles for Link/anchor elements that might be children of Button */
+  a { 
+    color: ${props => props.theme.white};
+    &:hover { text-decoration: none; }
+  }
+
+  &.btn-light {
+    background-color: ${props => props.theme.primary}
+    border-color: ${props => props.theme.primary}
+    &:hover, &:focus {
+      background-color: ${props => props.theme.primaryDark}
+      border-color: ${props => props.theme.primaryDark}
+    }
   }
 
   &.btn-secondary {
