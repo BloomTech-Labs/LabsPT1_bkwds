@@ -3,32 +3,45 @@ import { Field, reduxForm } from "redux-form"
 
 import { Form, Button } from "../../theme/styledComponents"
 import { ValidatedInput } from "./customInputs"
-import { validateLogin } from "./validations"
+import { validateRegistration } from "./validations"
 
-let LoginForm = props => {
+let RegisterForm = props => {
   const { handleSubmit } = props
   return (
     <Form onSubmit={handleSubmit}>
       <Field
+        name="email"
+        type="email"
+        // type="text"
+        component={ValidatedInput}
+        placeholder="Email"
+      />
+      <Field
         name="username"
-        placeholder="Username or email"
         type="text"
         component={ValidatedInput}
+        placeholder="Username"
       />
       <Field
         name="password"
-        placeholder="Password"
         type="password"
         component={ValidatedInput}
+        placeholder="Password"
+      />
+      <Field
+        name="confirmPassword"
+        type="password"
+        component={ValidatedInput}
+        placeholder="Confirm Password"
       />
       <Button type="submit">Submit</Button>
     </Form>
   )
 }
 
-LoginForm = reduxForm({
-  form: "login",
-  validate: validateLogin
-})(LoginForm)
+RegisterForm = reduxForm({
+  form: "register",
+  validate: validateRegistration
+})(RegisterForm)
 
-export default LoginForm
+export default RegisterForm
