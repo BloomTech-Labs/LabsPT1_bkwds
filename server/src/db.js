@@ -3,16 +3,11 @@ import config from "./config"
 
 mongoose.Promise = global.Promise
 
-// const databaseURI = config.db.url
-const options = {
-  useNewUrlParser: true
-}
-
 export const connect = () => {
   return mongoose
     .connect(
       config.db.url,
-      options
+      { userNewUrlParser: true }
     )
     .then(() => {
       console.log("MONGO DB CONNECTED")
