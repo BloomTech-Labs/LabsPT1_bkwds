@@ -100,7 +100,7 @@ const DropdownStyles = styled.li`
     }
   }
 `
-const Dropdown = props => {
+const Dropdown = () => {
   return (
     <DropdownStyles>
       <button className="hover-button">

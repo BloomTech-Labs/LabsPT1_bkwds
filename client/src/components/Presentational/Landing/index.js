@@ -1,7 +1,7 @@
 import React from "react"
 import * as s from "./styles"
 
-const Landing = props => {
+const Landing = () => {
   return (
     <s.LandingStyles>
       <div> LANDING PAGE </div>

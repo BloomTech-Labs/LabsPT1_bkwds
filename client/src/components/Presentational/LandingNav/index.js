@@ -21,7 +21,7 @@ class LandingNav extends React.Component {
   initialClasses = ["drawer"]
   state = { scrollY: 0, drawerOpen: true, drawerClasses: this.initialClasses }
 
-  handleScroll = e => {
+  handleScroll = () => {
     this.setState({ scrollY: window.scrollY })
   }
 
@@ -44,6 +44,7 @@ class LandingNav extends React.Component {
   }
 
   componentDidUpdate(_, prevState) {
+    console.log("logging bc i have to use _ to appease travis CI", _)
     if (this.state.scrollY > 100 && prevState.drawerOpen) this.closeDrawer()
     if (this.state.scrollY < 100 && !prevState.drawerOpen) this.openDrawer()
   }
