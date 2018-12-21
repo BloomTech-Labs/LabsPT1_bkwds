@@ -44,8 +44,8 @@ class LandingNav extends React.Component {
   }
 
   componentDidUpdate(_, prevState) {
-    if (this.state.scrollY > 100 && this.state.drawerOpen) this.closeDrawer()
-    if (this.state.scrollY < 100 && !this.state.drawerOpen) this.openDrawer()
+    if (this.state.scrollY > 100 && prevState.drawerOpen) this.closeDrawer()
+    if (this.state.scrollY < 100 && !prevState.drawerOpen) this.openDrawer()
   }
 
   componentWillUnmount() {
