@@ -31,7 +31,8 @@ export const schema = {
   lon: {
     type: Number,
     required: [true]
-  }
+  },
+  waypoints: [{ type: ObjectId, ref: "Waypoint" }]
 }
 
 const tripSchema = new mongoose.Schema(schema, { timestamps: true })
