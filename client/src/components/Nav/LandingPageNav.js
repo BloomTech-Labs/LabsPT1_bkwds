@@ -25,8 +25,9 @@ const LandingPageNavStyles = styled.div`
     height: 70px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex: 1 100%;
+    padding-left: 10%;
 
     span {
       font-weight: 400;
@@ -36,7 +37,12 @@ const LandingPageNavStyles = styled.div`
       color: ${props => props.theme.white};
     }
     span.banner-app-name {
-      color: ${props => props.theme.secondary};
+      color: ${props => props.theme.white};
+      margin-right: 1.5rem;
+      font-size: 1.5rem;
+    }
+    span.banner-rotating-tagline {
+      font-style: italic;
     }
   }
 
