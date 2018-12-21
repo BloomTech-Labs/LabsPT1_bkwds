@@ -92,19 +92,3 @@ export const theme = {
   // Headers
   h1: 2.4
 }
-
-// const white = "#fff"
-// const offWhite = "#fff4e7"
-// const ghostWhite = "#f6f8fb"
-// const lightGray = "rgba(23,42,58,0.25)"
-// const midGray = "rgba(46, 49, 72, 0.75)"
-// const offBlack = "rgb(62, 62, 62)"
-// const black = "rgb(32, 34, 51)"
-
-// const primary = themeColor || "#64a666"
-// const primaryDark = "#326956"
-// const primaryExtraDark = "#032f1f"
-// const secondary = "#df6853"
-// const secondaryDark = "#be2322"
-// const tertiary = "#e0a66d"
-// const tertiaryDark = "#ca825c"

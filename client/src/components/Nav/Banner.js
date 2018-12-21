@@ -1,30 +1,24 @@
 import React, { Component } from "react"
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes, css } from "styled-components"
 
 // seconds btwn animations / new tagline generation
 const seconds = 9
 
 const fadeInAndOut = keyframes`
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
 `
+
+const animationRule = css`
+  ${fadeInAndOut} ${seconds}s infinite ease;
+`
+
 const BannerStyles = styled.div`
   .banner-rotating-tagline {
-    animation-name: ${fadeInAndOut};
-    animation-duration: ${seconds}s;
+    animation: ${animationRule};
     animation-delay: 0s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease;
     opacity: 1;
   }
 `
@@ -50,12 +44,11 @@ class Banner extends Component {
   getTagline = makeTaglineIterator(this.state.taglines)
 
   componentDidMount() {
-    // get initial tagline
+    // First get initial tagline:
     this.setState({ tagline: this.getTagline.next().value })
 
-    // get new tagline every n seconds
+    // Then get a new tagline every n seconds:
     this.interval = setInterval(() => {
-      console.log("CALLING INTERVAL, STATE IS: ", this.state)
       this.setState({
         tagline: this.getTagline.next().value
       })
@@ -63,6 +56,7 @@ class Banner extends Component {
   }
 
   componentWillUnmount() {
+    // Stop getting taglines!
     clearInterval(this.interval)
   }
 

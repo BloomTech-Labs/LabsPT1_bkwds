@@ -1,78 +1,47 @@
 import { css } from "styled-components"
 
+// MEDIA TEMPLATES
+const breakpoints = {
+  desktop: 992,
+  tablet: 768,
+  phone: 576
+}
+
+/* You can use the media export in a styled-component like so:
+ *   ${media.desktop`display: flex;`}
+ *   ${media.tablet`display: inline-block;`}
+ *   ${media.phone`display: none;`} */
+export const media = Object.keys(breakpoints).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (max-width: ${breakpoints[label] / 16}em) {
+      ${css(...args)};
+    }
+  `
+  return acc
+}, {})
+
+// General styles that you can spread around:
 export const flexCenterMixin = css`
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
-export const containerMixin = css`
-  display: flex;
-  /* flex-grow: 2; */
+export const boxShadowMixin = css`
+  box-shadow: 0 0 0.625rem 0 rgba(0, 0, 0, 0.1);
 `
 
 export const modalBlur = css`
   filter: blur(1px);
 `
 
+// Wrote these in anticipation of a card component
 export const card = css`
   background: ${props => props.theme.primary};
   box-shadow: ${props => props.theme.boxShadow};
 `
 
-export const boxShadowMixin = css`
-  box-shadow: 0 0 0.625rem 0 rgba(0, 0, 0, 0.1);
-`
-
-export const animations = css`
-  /* -webkit-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out; */
-`
-
 export const fontDeclarations = css`
-  @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Regular"), local("Calibre-Regular"),
-      url("/fonts/Calibre-Regular.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Regular Italic"), local("Calibre-Regular-Italic"),
-      url("/fonts/Calibre-RegularItalic.otf") format("opentype");
-    font-weight: 400;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Light"), local("Calibre-Light"),
-      url("/fonts/Calibre-Light.otf") format("opentype");
-    font-weight: 200;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Light Italic"), local("Calibre-Light-Italic"),
-      url("/fonts/Calibre-LightItalic.otf") format("opentype");
-    font-weight: 200;
-    font-style: italic;
-  }
-  @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Medium"), local("Calibre-Medium"),
-      url("/fonts/Calibre-Medium.otf") format("opentype");
-    font-weight: 600;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Medium Italic"), local("Calibre-Medium-Italic"),
-      url("/fonts/Calibre-MediumItalic.otf") format("opentype");
-    font-weight: 600;
-    font-style: italic;
-  }
-
   @font-face {
     font-family: "Wals";
     src: local("Wals Regular"), local("Wals-Regular"),
