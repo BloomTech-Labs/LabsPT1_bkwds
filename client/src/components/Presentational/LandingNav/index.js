@@ -1,21 +1,11 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
-import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 
-import { logout } from "../../../redux/actions/auth"
-
 import BannerContainer from "../../Containers/BannerContainer"
-import GitHubSvg from "../../icons/GitHubSvg"
 import ChevronSvg from "../../icons/ChevronSvg"
 import UserSvg from "../../icons/UserSvg"
 import { Button } from "../../../theme/styledComponents"
 import * as s from "./styles"
-
-// TODO: Refactor LandingPageNav and Nav components, stop borrowing from each other
-import { NavStyles } from "../../Nav/styles"
-import UnauthenticatedLinks from "../../Nav/UnauthenticatedLinks"
-import AuthenticatedLinks from "../../Nav/AuthenticatedLinks"
 
 class LandingNav extends React.Component {
   initialClasses = ["drawer"]
@@ -54,9 +44,6 @@ class LandingNav extends React.Component {
   }
 
   render() {
-    const { location, logout, isLoggedIn } = this.props
-    const { pathname } = location
-
     return (
       <>
         <s.LandingNavStyles>
@@ -143,15 +130,4 @@ class LandingNav extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
-})
-
-const mapDispatchToProps = { logout }
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(LandingNav)
-)
+export default LandingNav
