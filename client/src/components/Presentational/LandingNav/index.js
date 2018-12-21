@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import BannerContainer from "../../Containers/BannerContainer"
 import ChevronSvg from "../../icons/ChevronSvg"
 import UserSvg from "../../icons/UserSvg"
+import { Button } from "../../../theme/styledComponents"
 import * as s from "./styles"
 
 class MobileTopNav extends React.Component {
@@ -79,22 +80,28 @@ class MobileTopNav extends React.Component {
         </s.MobileTopNavStyles>
 
         <s.MobileBottomNavStyles>
-          <div
-            className="mobile-bottom-nav"
-            style={{ top: this.state.drawerOpen ? null : "-1.275rem" }}
-          >
-            {/* <div className="mobile-bottom-nav"> */}
-            <div className="mobile-bottom-nav-left">
-              {/* <h3>The wave Mattress</h3> */}
-              <p>Read reviews</p>
+          {/* UP ON MOBILE */}
+          <div className="split-top">
+            <div
+              className="mobile-bottom-nav"
+              style={{ top: this.state.drawerOpen ? null : "-1.275rem" }}
+            >
+              <div className="mobile-bottom-nav-left split-top-on-mobile">
+                <h1>Your First Trip is Free!</h1>
+                <button>Learn More</button>
+              </div>
             </div>
-            <div className="mobile-bottom-nav-right">
+          </div>
+
+          {/* DOWN ON MOBILE */}
+          <div className="split-bottom">
+            <div className="mobile-bottom-nav-right split-bottom-on-mobile">
               <div className="mobile-bottom-cta-wrapper">
                 <div className="mobile-bottom-cta-text">
-                  {/* <h2>Starting at $10/year</h2> */}
+                  <h2>Starting at $10/year</h2>
                   <p>3 plans available</p>
                 </div>
-                {/* <button>Choose your plan</button> */}
+                <Button>Choose your plan</Button>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { boxShadowMixin, media } from "../../../theme/mixins"
+import { boxShadowMixin, media, flexCenterMixin } from "../../../theme/mixins"
 
 export const MobileTopNavStyles = styled.div`
   /* position: relative; */
@@ -138,36 +138,82 @@ export const MobileBottomNavStyles = styled.div`
 
     top: 3.125rem;
     ${media.tablet`top: 3rem`};
-
-    /* Consider turning these off until you test them more */
-    transition: transform 0.25s ease-in-out;
-    transform: translateY(60px);
-    ${media.tablet`transform: translateY(70px)`};
-
     position: fixed;
     left: 0;
     right: 0;
-    display: flex;
-    align-items: center;
+    ${flexCenterMixin};
     justify-content: space-between;
+
+    /* Consider turning these off until you test them more */
+    transform: translateY(60px);
+    ${media.tablet`transform: translateY(70px)`};
+    transition: transform 0.25s ease-in-out;
 
     background: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
   }
 
-  .mobile-bottom-nav-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    margin-right: 2rem;
+  .mobile-bottom-nav-left.split-top-on-mobile {
+    ${flexCenterMixin};
+    justify-content: space-between;
+    width: 100%;
+    flex: 1;
+    h1 {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.167;
+      letter-spacing: 0.01875rem;
+      color: #1e306e;
+      margin-bottom: 0;
+      ${media.tablet`margin: 0 40px;`}
+      ${media.phone`margin: 0 20px;`}
+    }
+    button {
+      display: flex;
+      font-size: 0.95rem;
+      border: none;
+      color: ${props => props.theme.primary};
+      border-bottom: 1px solid rgba(33, 43, 100, 0.25);
+      cursor: pointer;
+      transition: border-color 0.15s ease-out;
+      padding: 0;
+      ${media.tablet`margin: 0 40px;`}
+      ${media.phone`margin: 0 20px;`}
+    }
   }
 
-  .mobile-bottom-nav-right {
-    position: absolute;
-    top: 0;
-    right: 0;
+  .mobile-bottom-nav-right.split-bottom-on-mobile {
+    box-shadow: 0 -0.125rem 0.25rem 0 rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+
+    /* Fix to bottom of screen on tablets & smaller */
+    ${media.tablet`
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    `}
+
+    /* Otherwise render at top with sibling */
+    @media all and (min-width: 769px) {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .mobile-bottom-cta-wrapper {
+    display: flex;
+    padding: 0.75rem;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background: #fff;
+  }
+  .mobile-bottom-cta-text {
+    flex: 1;
+    margin-right: 0.75rem;
+    text-align: left;
   }
 `

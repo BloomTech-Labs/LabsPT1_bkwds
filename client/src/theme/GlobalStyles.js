@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components"
 import { fontDeclarations, fontMixin } from "./mixins"
 
 export const GlobalStyles = createGlobalStyle`
+  ${fontDeclarations};
   html {
     box-sizing: border-box;
   }
@@ -13,7 +14,6 @@ export const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  ${fontDeclarations};
   ${fontMixin};
 
   /* Bootstrap Overrides */
