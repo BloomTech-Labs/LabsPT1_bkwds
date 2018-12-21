@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const UserSvg = ({ height, weight }) => {
+const UserSvg = ({ height, width }) => {
   const Icon = styled.span`
     /* position: relative;
     width: 0.5rem;
@@ -11,7 +11,7 @@ const UserSvg = ({ height, weight }) => {
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out; */
     svg {
       height: ${height};
-      weight: ${weight};
+      width: ${width};
       fill: ${props => props.theme.primary};
       /* position: absolute;
       top: 1px;

@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
+import Banner from "./Banner"
 import { boxShadowMixin } from "../../theme/mixins"
 import ChevronSvg from "../icons/ChevronSvg"
 import UserSvg from "../icons/UserSvg"
@@ -18,8 +19,8 @@ const LandingPageNavStyles = styled.div`
 
   .landing-page-banner {
     color: ${props => props.theme.white};
-    /* background-color: ${props => props.theme.primaryDark}; */
-    background-color: #0e153f;
+    background-color: ${props => props.theme.primaryDark};
+    /* background-color: #0e153f; */
     width: 100%;
     height: 70px;
     display: flex;
@@ -30,12 +31,12 @@ const LandingPageNavStyles = styled.div`
     span {
       font-weight: 400;
       font-size: 1.125rem;
-      letter-spacing: 0.0275rem;
     }
-    span.banner-app-title {
-      color: 
-/* style={{ color: "#d7ecf7" }} */
-
+    span.banner-title {
+      color: ${props => props.theme.white};
+    }
+    span.banner-app-name {
+      color: ${props => props.theme.secondary};
     }
   }
 
@@ -57,7 +58,7 @@ const LandingPageNavStyles = styled.div`
     button {
       color: ${props => props.theme.primary};
       border: none;
-      padding-right: .5rem;
+      padding-right: 0.5rem;
       padding-left: 1rem;
       padding-top: 2px;
       padding-bottom: 0px;
@@ -98,7 +99,7 @@ const LandingPageNavStyles = styled.div`
     span {
       align-self: center;
       fill: currentColor;
-      margin-left: .375rem;
+      margin-left: 0.375rem;
       margin-top: 0;
     }
   }
@@ -133,12 +134,14 @@ const LandingPageNavStyles = styled.div`
 const LandingPageNav = () => {
   return (
     <LandingPageNavStyles>
-      <div className="landing-page-banner">
-        <span className="banner-app-title">
-          <span >Backwoods Tracker</span>: Built for
+      <Banner />
+      {/* <div className="landing-page-banner">
+
+        <span className="banner-title">
+          <span className="banner-app-name">Backwoods Tracker:</span> Built for
           adventures.
         </span>
-      </div>
+      </div> */}
       <div className="landing-page-nav">
 
         {/* 1024px or less ONLY */}
