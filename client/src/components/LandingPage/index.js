@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const LandingPageStyles = styled.div``
 
-const LandingPage = () => {
+const LandingPage = props => {
   return (
     <LandingPageStyles>
       <div>Landing Page</div>
