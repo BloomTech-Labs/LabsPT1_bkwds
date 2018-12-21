@@ -73,53 +73,53 @@ export const fontDeclarations = css`
     font-style: italic;
   }
 
-  /* @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Regular"), local("Calibre-Regular"),
-      url("/fonts/Calibre-Regular.woff2") format("woff2");
+  @font-face {
+    font-family: "Wals";
+    src: local("Wals Regular"), local("Wals-Regular"),
+      url("/fonts/Wals-Regular.otf") format("opentype");
     font-weight: 400;
     font-style: normal;
   }
   @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Regular Italic"), local("Calibre-Regular-Italic"),
-      url("/fonts/Calibre-RegularItalic.woff2") format("woff2");
+    font-family: "Wals";
+    src: local("Wals Regular Oblique"), local("Wals-Regular-Oblique"),
+      url("/fonts/Wals-Regular-Oblique.otf") format("opentype");
     font-weight: 400;
     font-style: italic;
   }
   @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Light"), local("Calibre-Light"),
-      url("/fonts/Calibre-Light.woff2") format("woff2");
-    font-weight: 200;
+    font-family: "Wals";
+    src: local("Wals Light"), local("Wals-Light"),
+      url("/fonts/Wals-Light.otf") format("opentype");
+    font-weight: 300;
     font-style: normal;
   }
   @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Light Italic"), local("Calibre-Light-Italic"),
-      url("/fonts/Calibre-LightItalic.woff2") format("woff2");
-    font-weight: 200;
+    font-family: "Wals";
+    src: local("Wals Light Oblique"), local("Wals-Light-Oblique"),
+      url("/fonts/Wals-Light-Oblique.otf") format("opentype");
+    font-weight: 300;
     font-style: italic;
   }
   @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Medium"), local("Calibre-Medium"),
-      url("/fonts/Calibre-Medium.woff2") format("woff2");
-    font-weight: 600;
+    font-family: "Wals";
+    src: local("Wals Medium"), local("Wals-Medium"),
+      url("/fonts/Wals-Medium.otf") format("opentype");
+    font-weight: 500;
     font-style: normal;
   }
   @font-face {
-    font-family: "Calibre";
-    src: local("Calibre Medium Italic"), local("Calibre-Medium-Italic"),
-      url("/fonts/Calibre-MediumItalic.woff2") format("woff2");
-    font-weight: 600;
+    font-family: "Wals";
+    src: local("Wals Medium Oblique"), local("Wals-Medium-Oblique"),
+      url("/fonts/Wals-Medium-Oblique.otf") format("opentype");
+    font-weight: 500;
     font-style: italic;
-  } */
+  }
 `
 
 export const fontMixin = css`
   html * {
-    font-family: Calibre;
+    font-family: Wals;
     /* setting 1rem to ===  16px */
     font-size: 16px;
     text-rendering: optimizeLegibility;
