@@ -4,3 +4,10 @@ export function isProtectedPath(pathname, pathArray) {
     false
   )
 }
+
+export function* makeTaglineIterator(taglinesArray) {
+  let count = 0
+  while (count < Infinity) {
+    yield taglinesArray[count++ % taglinesArray.length]
+  }
+}

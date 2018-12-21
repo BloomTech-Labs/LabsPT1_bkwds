@@ -3,9 +3,9 @@ import { Route, Switch, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 
 import { Register, Login } from "../Auth"
-import Container from "../Container"
+import AppContainer from "../AppContainer"
 import FakeLogin from "../FakeLogin"
-import LandingPage from "../LandingPage"
+import LandingPage from "../Pages/LandingPage"
 import Trips from "../Trips"
 
 export const TripsView = () => <div>Trips View component here!</div>
@@ -16,7 +16,7 @@ export const Billing = () => <div>Billing component here!</div>
 export const Settings = () => <div>Settings component here!</div>
 
 const App = props => (
-  <Container>
+  <AppContainer>
     {/* REMOVE THIS COMPONENT BEFORE PUSHING TO PRODUCTION; FOR TESTING UI CHANGE FOR LOGIN ONLY */}
     <Route path="/" component={FakeLogin} />
     <Switch>
@@ -53,7 +53,7 @@ const App = props => (
         render={() => (!props.isLoggedIn ? <Redirect to="/" /> : <Settings />)}
       />
     </Switch>
-  </Container>
+  </AppContainer>
 )
 
 const mapStateToProps = state => ({

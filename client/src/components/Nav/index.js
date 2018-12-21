@@ -8,7 +8,7 @@ import { isProtectedPath } from "../../redux/helpers"
 import { boxShadowMixin } from "../../theme/mixins"
 
 import Dropdown from "./Dropdown"
-import LandingPageNav from "./LandingPageNav"
+import LandingPageNav from "../Pages/LandingPage/LandingPageNav"
 import GitHubSvg from "../icons/GitHubSvg"
 // import UserSvg from "../icons/UserSvg"
 
