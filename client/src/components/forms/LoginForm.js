@@ -21,7 +21,7 @@ let LoginForm = props => {
         type="password"
         component={ValidatedInput}
       />
-      <Button className="btn-inverted" type="submit">
+      <Button className="btn" type="submit">
         Submit
       </Button>
     </Form>

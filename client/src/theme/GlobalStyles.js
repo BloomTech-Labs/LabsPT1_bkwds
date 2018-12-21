@@ -41,6 +41,10 @@ export const GlobalStyles = createGlobalStyle`
     height: 100vh;
     /* margin-top: ${props => "-" + props.theme.navHeight}; */
   }
+  .main-wrapper-auth {
+    background: ${props => props.theme.contentBackground}
+  }
+
   .main-content {
     display: flex;
     height: 100%;

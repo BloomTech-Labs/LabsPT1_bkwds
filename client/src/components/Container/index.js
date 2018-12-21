@@ -15,14 +15,19 @@ const Right = styled.div`
 `
 
 const Container = ({ pathname, children, isLoggedIn }) => {
-  const protectedPaths = ["/", "/signup", "/login"]
-  const showBreadcrumbs = !isProtectedPath(pathname, protectedPaths)
+  const authPaths = ["/signup", "/login"]
+  const showBreadcrumbs = !isProtectedPath(pathname, ["/", ...authPaths])
   const showSidebar = isLoggedIn && showBreadcrumbs
+  const userOnAuthPath = authPaths.includes(pathname)
+  const mainWrapperClassList = [
+    "main-wrapper",
+    userOnAuthPath ? "main-wrapper-auth" : null
+  ]
 
   return (
     <>
       <GlobalStyles />
-      <div className="main-wrapper">
+      <div className={mainWrapperClassList.join(" ")}>
         <Nav />
         {/* {showBreadcrumbs ? <Breadcrumbs /> : null} */}
         {showSidebar ? (

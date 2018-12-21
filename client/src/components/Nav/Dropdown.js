@@ -31,12 +31,12 @@ const DropdownStyles = styled.li`
 
   .dropdown-content {
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    width: 100%;
   }
 
   .dropdown-content-visible {
     ${boxShadowMixin};
     transform: translateY(0);
-    width: 100%;
   }
 
   .dropdown-content-hidden {
