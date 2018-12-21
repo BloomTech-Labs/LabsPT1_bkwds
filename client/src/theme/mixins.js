@@ -33,30 +33,44 @@ export const fontDeclarations = css`
   @font-face {
     font-family: "Calibre";
     src: local("Calibre Regular"), local("Calibre-Regular"),
-      url("/fonts/Calibre-Regular.woff") format("woff");
+      url("/fonts/Calibre-Regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
   }
   @font-face {
     font-family: "Calibre";
+    src: local("Calibre Regular Italic"), local("Calibre-Regular-Italic"),
+      url("/fonts/Calibre-RegularItalic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+  }
+  @font-face {
+    font-family: "Calibre";
     src: local("Calibre Light"), local("Calibre-Light"),
-      url("/fonts/Calibre-Light.woff") format("woff");
-    font-weight: 300;
+      url("/fonts/Calibre-Light.woff2") format("woff2");
+    font-weight: 200;
     font-style: normal;
   }
   @font-face {
     font-family: "Calibre";
+    src: local("Calibre Light Italic"), local("Calibre-Light-Italic"),
+      url("/fonts/Calibre-LightItalic.woff2") format("woff2");
+    font-weight: 200;
+    font-style: italic;
+  }
+  @font-face {
+    font-family: "Calibre";
     src: local("Calibre Medium"), local("Calibre-Medium"),
-      url("/fonts/Calibre-Medium.woff") format("woff");
+      url("/fonts/Calibre-Medium.woff2") format("woff2");
     font-weight: 600;
     font-style: normal;
   }
   @font-face {
     font-family: "Calibre";
-    src: local("Calibre Semibold"), local("Calibre-Semibold"),
-      url("/fonts/Calibre-Semibold.woff2") format("woff2");
-    font-weight: 700;
-    font-style: normal;
+    src: local("Calibre Medium Italic"), local("Calibre-Medium-Italic"),
+      url("/fonts/Calibre-MediumItalic.woff2") format("woff2");
+    font-weight: 600;
+    font-style: italic;
   }
 `
 

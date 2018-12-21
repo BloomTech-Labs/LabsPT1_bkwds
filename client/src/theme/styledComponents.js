@@ -52,14 +52,11 @@ export const Button = styled.button`
   /* Styles for Link/anchor elements that might be children of Button */
   a {
     color: ${props => props.theme.white};
-    &:hover {
-      text-decoration: none;
-    }
   }
 
   &.btn-light {
-    background-color: ${props => props.theme.primary};
-    border-color: ${props => props.theme.primary};
+    background-color: ${props => props.theme.primaryLight};
+    border-color: ${props => props.theme.primaryLight};
     &:hover,
     &:focus {
       background-color: ${props => props.theme.primaryDark};
@@ -68,15 +65,21 @@ export const Button = styled.button`
   }
 
   &.btn-inverted {
+    color: ${props => props.theme.primary};
+    /* target anchors for when we nest Links inside buttons */
+    & a {
+      color: ${props => props.theme.primary};
+    }
     background-color: ${props => props.theme.primaryLight};
     border-color: ${props => props.theme.primaryLight};
-    color: ${props => props.theme.primaryDark};
     &:hover,
     &:focus {
-      background-color: #d7ecf7;
-      border-color: #d7ecf7;
-      /* background-color: ${props => props.theme.ghostWhite};
-      border-color: ${props => props.theme.ghostWhite}; */
+      background-color: ${props => props.theme.primary};
+      border-color: ${props => props.theme.primary};
+      color: ${props => props.theme.white};
+      & a {
+        color: ${props => props.theme.white};
+      }
     }
   }
 

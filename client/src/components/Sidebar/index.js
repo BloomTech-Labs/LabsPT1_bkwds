@@ -5,7 +5,6 @@ import { Button } from "../../theme/styledComponents"
 
 const SidebarStyles = styled.div`
   width: ${props => `${props.theme.sidebarWidth}px`};
-  height: 100vh;
   /* .sidebar-links {
     width: ${props => `${props.theme.sidebarWidth}px`};
     height: 100vh;
@@ -24,7 +23,7 @@ const SidebarStyles = styled.div`
 `
 
 const SidebarLink = ({ to, displayName, pathname }) => (
-  <Button className={pathname === to ? "btn-light" : ""}>
+  <Button className={pathname === to ? "btn-inverted" : ""}>
     <Link to={to}>{displayName}</Link>
   </Button>
 )
@@ -33,6 +32,11 @@ const Sidebar = ({ location }) => {
   return (
     <SidebarStyles>
       <div className="sidebar-links">
+        <SidebarLink
+          to="/"
+          displayName="Landing Page"
+          pathname={location.pathname}
+        />
         <SidebarLink
           to="/trips"
           displayName="Trips"
