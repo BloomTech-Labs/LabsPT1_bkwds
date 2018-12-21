@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
@@ -40,7 +40,13 @@ const DropdownStyles = styled.li`
   }
 
   .dropdown-content-hidden {
-    display: none;
+    visibility: hidden;
+    transition: padding-left 0.15s ease-in, color 0.15s ease-in;
+  }
+
+  .dropdown:hover .dropdown-content-hidden {
+    visibility: visible;
+    transition-delay: 0s;
   }
 
   .dropdown-list {
@@ -75,52 +81,70 @@ const DropdownStyles = styled.li`
     margin-left: 0.5rem;
     font-size: 0.6875rem;
     font-weight: 400;
-    line-height: 1.2;
+    /* line-height: 1.2; */
     text-align: center;
     color: #526699;
     border-radius: 0.75rem;
     background-color: #d7ecf7;
   }
 `
+class Dropdown extends Component {
+  // state = { hidden: true }
 
-// <Link to="/settings">
-//   Account
-//   <ChevronSvg />
-// </Link>
-// <Dropdown hidden={false} />
-const Dropdown = ({ hidden }) => {
-  return (
-    <DropdownStyles>
-      <Link to="/account">
-        Account
-        <ChevronSvg />
-      </Link>
+  // handleMouseEnter = e => {
+  //   console.log("HOVER!", e)
+  //   this.setState({ hidden: false })
+  // }
 
-      <div className="dropdown">
-        <div
-          className={`dropdown-content ${
-            hidden ? "dropdown-content-hidden" : "dropdown-content-visible"
-          }`}
+  // handleMouseLeave = e => {
+  //   console.log("MOUSE LEAVE!", e)
+
+  //   this.setState({ hidden: true })
+  // }
+
+  render() {
+    return (
+      <DropdownStyles>
+        {/* <Link to="/account">
+          Account
+          <ChevronSvg />
+        </Link> */}
+        <a
+        // onMouseEnter={this.handleMouseEnter}
+        // onMouseLeave={this.handleMouseLeave}
         >
-          <div className="dropdown-list">
-            <Link to="/settings" className="dropdown-list-item">
-              Settings
-            </Link>
-            <Link to="/invoices" className="dropdown-list-item">
-              Invoices
-              <div className="new-icon">NEW</div>
-            </Link>
-            <Link to="/billing" className="dropdown-list-item">
-              Billing
-            </Link>
-            <Link to="/profile" className="dropdown-list-item">
-              Your Profile
-            </Link>
+          Account <ChevronSvg />
+        </a>
+
+        <div className="dropdown">
+          <div
+            className="dropdown-content dropdown-content-hidden"
+            // className={`dropdown-content ${
+            //   this.state.hidden
+            //     ? "dropdown-content-hidden"
+            //     : "dropdown-content-visible"
+            // }`}
+          >
+            <div className="dropdown-list">
+              <Link to="/settings" className="dropdown-list-item">
+                Settings
+              </Link>
+              <Link to="/invoices" className="dropdown-list-item">
+                Invoices
+                <div className="new-icon">NEW</div>
+              </Link>
+              <Link to="/billing" className="dropdown-list-item">
+                Billing
+              </Link>
+              <Link to="/profile" className="dropdown-list-item">
+                Your Profile
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </DropdownStyles>
-  )
+      </DropdownStyles>
+    )
+  }
 }
 
 export default Dropdown

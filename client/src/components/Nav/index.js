@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import styled from "styled-components"
 import { connect } from "react-redux"
 
@@ -8,8 +8,9 @@ import { isProtectedPath } from "../../redux/helpers"
 import { boxShadowMixin } from "../../theme/mixins"
 
 import Dropdown from "./Dropdown"
+import LandingPageNav from "./LandingPageNav"
 import GitHubSvg from "../icons/GitHubSvg"
-import UserSvg from "../icons/UserSvg"
+// import UserSvg from "../icons/UserSvg"
 
 const NavStyles = styled.div`
   background: ${props => props.theme.white};
@@ -21,16 +22,15 @@ const NavStyles = styled.div`
   width: 100%;
   ${boxShadowMixin};
 
+  padding-left: 2rem;
+  padding-right: 1.25rem;
+
   .nav-links-wrapper {
     width: 300px;
-    /* display: flex;
-    align-items: center; */
   }
   .logo {
     color: ${props => props.theme.primary};
     font-weight: 700;
-    padding-left: 25px;
-    padding-right: 25px;
     font-size: 1.75rem;
     letter-spacing: -0.0275rem;
   }
@@ -74,9 +74,11 @@ const NavStyles = styled.div`
     /* position: relative; */
   }
 
-  a.github-icon-link {
-    padding: 0;
-    padding-right: 25px;
+  .call-to-action {
+    height: 100%;
+    & a {
+      height: 100%;
+    }
   }
 `
 
@@ -108,51 +110,47 @@ class AuthenticatedLinks extends Component {
             Log out
           </a>
         </li>
-        <li>
-          <GitHubSvg width="32px" height="32px" />
-        </li>
       </ul>
     )
   }
 }
 
-const Nav = props => {
-  const { isLoggedIn } = props
-  const { pathname } = props.location
+const Nav = ({ location, logout, isLoggedIn }) => {
+  const { pathname } = location
   const protectedPaths = ["/", "/login", "/signup"]
   const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
 
   return (
-    <NavStyles>
-      <div className="logo">Backwoods Tracker</div>
-      <div className="nav-links-wrapper">
-        {isHomeOrAuthPath && !isLoggedIn ? (
-          <UnauthenticatedLinks pathname={pathname} />
-        ) : null}
-        {isLoggedIn ? <AuthenticatedLinks logout={props.logout} /> : null}
-      </div>
-      {/* <div className="internal-links">
-          {isHomeOrAuthPath && !isLoggedIn ? (
-            <UnauthenticatedLinks pathname={pathname} />
-          ) : null}
-          {isLoggedIn ? <AuthenticatedLinks logout={props.logout} /> : null}
-        </div>
-        <div className="external-links">
-          <GitHubSvg width="32px" height="32px" />
-        </div>
-      </div> */}
-    </NavStyles>
+    <div>
+      {pathname === "/" ? (
+        <LandingPageNav />
+      ) : (
+        <NavStyles>
+          <div className="logo">Backwoods Tracker</div>
+          <div className="nav-links-wrapper">
+            {isHomeOrAuthPath && !isLoggedIn ? (
+              <UnauthenticatedLinks pathname={pathname} />
+            ) : null}
+            {isLoggedIn ? <AuthenticatedLinks logout={logout} /> : null}
+          </div>
+          <div className="call-to-action">
+            <GitHubSvg width="32px" height="32px" />
+          </div>
+        </NavStyles>
+      )}
+    </div>
   )
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn,
-  location: state.router.location
+  isLoggedIn: state.auth.isLoggedIn
 })
 
 const mapDispatchToProps = { logout }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Nav)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Nav)
+)
