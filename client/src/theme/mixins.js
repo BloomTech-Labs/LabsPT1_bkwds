@@ -33,6 +33,49 @@ export const fontDeclarations = css`
   @font-face {
     font-family: "Calibre";
     src: local("Calibre Regular"), local("Calibre-Regular"),
+      url("/fonts/Calibre-Regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Calibre";
+    src: local("Calibre Regular Italic"), local("Calibre-Regular-Italic"),
+      url("/fonts/Calibre-RegularItalic.otf") format("opentype");
+    font-weight: 400;
+    font-style: italic;
+  }
+  @font-face {
+    font-family: "Calibre";
+    src: local("Calibre Light"), local("Calibre-Light"),
+      url("/fonts/Calibre-Light.otf") format("opentype");
+    font-weight: 200;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Calibre";
+    src: local("Calibre Light Italic"), local("Calibre-Light-Italic"),
+      url("/fonts/Calibre-LightItalic.otf") format("opentype");
+    font-weight: 200;
+    font-style: italic;
+  }
+  @font-face {
+    font-family: "Calibre";
+    src: local("Calibre Medium"), local("Calibre-Medium"),
+      url("/fonts/Calibre-Medium.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Calibre";
+    src: local("Calibre Medium Italic"), local("Calibre-Medium-Italic"),
+      url("/fonts/Calibre-MediumItalic.otf") format("opentype");
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  /* @font-face {
+    font-family: "Calibre";
+    src: local("Calibre Regular"), local("Calibre-Regular"),
       url("/fonts/Calibre-Regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
@@ -71,7 +114,7 @@ export const fontDeclarations = css`
       url("/fonts/Calibre-MediumItalic.woff2") format("woff2");
     font-weight: 600;
     font-style: italic;
-  }
+  } */
 `
 
 export const fontMixin = css`
