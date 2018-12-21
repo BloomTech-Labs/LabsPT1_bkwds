@@ -2,8 +2,8 @@ import { css } from "styled-components"
 
 // MEDIA TEMPLATES
 const breakpoints = {
-  desktop: 992,
-  tablet: 768,
+  desktop: 1024,
+  tablet: 768, // good
   phone: 576
 }
 

@@ -8,9 +8,8 @@ import { isProtectedPath } from "../../redux/helpers"
 import { boxShadowMixin } from "../../theme/mixins"
 
 import Dropdown from "./Dropdown"
-import LandingPageNav from "../Pages/LandingPage/LandingPageNav"
+// import LandingPageNav from "../Pages/LandingPage/LandingPageNav"
 import GitHubSvg from "../icons/GitHubSvg"
-// import UserSvg from "../icons/UserSvg"
 
 const NavStyles = styled.div`
   background: ${props => props.theme.white};
@@ -132,22 +131,22 @@ const Nav = ({ location, logout, isLoggedIn }) => {
 
   return (
     <div>
-      {pathname === "/" ? (
+      {/* {pathname === "/" ? (
         <LandingPageNav />
-      ) : (
-        <NavStyles>
-          <div className="logo">Backwoods Tracker</div>
-          <div className="nav-links-wrapper">
-            {isHomeOrAuthPath && !isLoggedIn ? (
-              <UnauthenticatedLinks pathname={pathname} />
-            ) : null}
-            {isLoggedIn ? <AuthenticatedLinks logout={logout} /> : null}
-          </div>
-          <div className="call-to-action">
-            <GitHubSvg width="32px" height="32px" />
-          </div>
-        </NavStyles>
-      )}
+      ) : ( */}
+      <NavStyles>
+        <div className="logo">Backwoods Tracker</div>
+        <div className="nav-links-wrapper">
+          {isHomeOrAuthPath && !isLoggedIn ? (
+            <UnauthenticatedLinks pathname={pathname} />
+          ) : null}
+          {isLoggedIn ? <AuthenticatedLinks logout={logout} /> : null}
+        </div>
+        <div className="call-to-action">
+          <GitHubSvg width="32px" height="32px" />
+        </div>
+      </NavStyles>
+      {/* )} */}
     </div>
   )
 }

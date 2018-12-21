@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components"
+import { media } from "../../../theme/mixins"
 
 // Seconds btwn animations / new tagline generation:
 
@@ -22,11 +23,13 @@ export const Banner = styled.div`
   }
 
   .landing-page-banner {
+    height: 60px;
+    ${media.tablet`height: 70px;`}
+
     color: ${props => props.theme.white};
     background-color: ${props => props.theme.primaryDark};
     /* background-color: #0e153f; */
     width: 100%;
-    height: 70px;
     display: flex;
     align-items: center;
     justify-content: flex-start;

@@ -1,3 +1,5 @@
 import styled from "styled-components"
 
-export const LandingStyles = styled.div``
+export const LandingStyles = styled.div`
+  height: 200vh;
+`
