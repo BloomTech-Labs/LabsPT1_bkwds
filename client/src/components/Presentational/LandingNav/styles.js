@@ -133,14 +133,23 @@ export const MobileTopNavStyles = styled.div`
 
 export const MobileBottomNavStyles = styled.div`
   .mobile-bottom-nav {
-    ${media.desktop`height: 5.625rem`};
+    ${media.desktop`height: 5.5625rem`};
     ${media.tablet`height: 2.75rem`};
-    top: 108px;
-    ${media.tablet`top: 118px`};
+
+    top: 3.125rem;
+    ${media.tablet`top: 3rem`};
+
+    /* Consider turning these off until you test them more */
+    transition: transform 0.25s ease-in-out;
+    transform: translateY(60px);
+    ${media.tablet`transform: translateY(70px)`};
 
     position: fixed;
     left: 0;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     background: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
@@ -152,6 +161,8 @@ export const MobileBottomNavStyles = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+
+    margin-right: 2rem;
   }
 
   .mobile-bottom-nav-right {

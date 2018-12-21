@@ -8,7 +8,7 @@ const Banner = props => {
         <span className="banner-title">
           <span className="banner-app-name">Backwoods Tracker</span>
           <span className="banner-rotating-tagline">
-            {" ..."}
+            {" ... "}
             {props.tagline}
           </span>
         </span>

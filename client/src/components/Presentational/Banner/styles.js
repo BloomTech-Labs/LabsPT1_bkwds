@@ -35,6 +35,7 @@ export const Banner = styled.div`
     justify-content: flex-start;
     flex: 1 100%;
     padding-left: 10%;
+    ${media.phone`padding-left: 0.8rem`};
 
     span {
       font-weight: 400;
@@ -45,11 +46,12 @@ export const Banner = styled.div`
     }
     span.banner-app-name {
       color: ${props => props.theme.white};
-      margin-right: 1.5rem;
       font-size: 1.5rem;
+      ${media.tablet`font-size: .8rem`};
     }
     span.banner-rotating-tagline {
       font-style: italic;
+      ${media.tablet`font-size: .8rem`};
     }
   }
 `
