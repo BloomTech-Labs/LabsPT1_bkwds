@@ -29,16 +29,14 @@ const NavStyles = styled.div`
   padding-right: 1.25rem;
 
   .nav-links-wrapper {
-    /* This is to offset the Github logo, which is positioned absolutely */
+    /* This is to offset the Github logo bc of its absolute position */
     margin-right: 60px;
-    /* width: 300px; */
   }
   .logo {
     color: ${props => props.theme.primary};
     font-weight: 700;
     font-size: 1.75rem;
     letter-spacing: -0.0275rem;
-    height: 2rem;
   }
 
   ul {
@@ -77,7 +75,10 @@ const NavStyles = styled.div`
   }
 
   ul.authenticated-links {
-    /* position: relative; */
+    li {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
   }
 
   .call-to-action {

@@ -28,9 +28,14 @@ const LandingPageNavStyles = styled.div`
     flex: 1 100%;
 
     span {
-      font-weight: 600;
+      font-weight: 400;
       font-size: 1.125rem;
       letter-spacing: 0.0275rem;
+    }
+    span.banner-app-title {
+      color: 
+/* style={{ color: "#d7ecf7" }} */
+
     }
   }
 
@@ -54,9 +59,10 @@ const LandingPageNavStyles = styled.div`
       border: none;
       padding-right: .5rem;
       padding-left: 1rem;
-      padding-top: 0.375rem;
-      padding-bottom: 0;
-      font-size: 1.25rem;
+      padding-top: 2px;
+      padding-bottom: 0px;
+      font-size: 1.125rem;
+      font-weight: 400;
       display: flex;
       align-items: center;
       height: 100%;
@@ -80,9 +86,9 @@ const LandingPageNavStyles = styled.div`
       height: 2rem;
       display: block;
       text-align: center;
-      margin-left: -0.15rem;
-      margin-top: -6px;
-
+      height: 100%;
+      margin-left: -3px;
+      margin-top: -3px;
     }
   }
 
@@ -91,11 +97,9 @@ const LandingPageNavStyles = styled.div`
     /* Chevron icon: */
     span {
       align-self: center;
-      width: .625rem;
-      height: .625rem;
-      margin-left: .4375rem;
-      margin-bottom: .1875rem;
       fill: currentColor;
+      margin-left: .375rem;
+      margin-top: 0;
     }
   }
 
@@ -107,15 +111,21 @@ const LandingPageNavStyles = styled.div`
     align-items: center;
     height: 100%;
 
-    /* ICONS on the right side (1024px or less ONLY) */
+    /* ICONS, right side (1024px or less ONLY) */
     a {
       height: 100%;
       display: flex;
       align-items: center;
       padding-left: 0.75rem;
       padding-right: 0.75rem;
-      margin-bottom: -0.25rem;
     }
+  }
+
+  /* Backwards "B" in BT Logo */
+  span.reverse-letter {
+    display: inline-block;
+    /* transform: rotateY(180deg); */
+    transform: translate(2px, 3px);
   }
 `
 
@@ -124,9 +134,9 @@ const LandingPageNav = () => {
   return (
     <LandingPageNavStyles>
       <div className="landing-page-banner">
-        <span>
-          <span style={{ color: "#d7ecf7" }}>Backwoods Tracker</span>: Built for
-          adventurers.
+        <span className="banner-app-title">
+          <span >Backwoods Tracker</span>: Built for
+          adventures.
         </span>
       </div>
       <div className="landing-page-nav">
@@ -135,11 +145,11 @@ const LandingPageNav = () => {
         <div className="landing-page-mobile-nav">
           <div className="landing-page-mobile-menu">
             <div className="landing-page-mobile-logo">
-              <span>BT</span>
+              <span><span className="reverse-letter">B</span>T</span>
             </div>
             <button className="landing-page-mobile-cta">
               Register
-              <ChevronSvg height={".625rem"} width={".625rem"} />
+              <ChevronSvg height={"1.15rem"} />
             </button>
           </div>
           <div className="landing-page-mobile-links">
