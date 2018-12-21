@@ -5,7 +5,6 @@ import { ConnectedRouter } from "connected-react-router"
 import { ThemeProvider } from "styled-components"
 
 import "bootstrap/dist/css/bootstrap.min.css"
-import "./index.css"
 import * as serviceWorker from "./serviceWorker"
 
 import App from "./components/App"

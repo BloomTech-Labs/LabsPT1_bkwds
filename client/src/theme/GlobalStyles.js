@@ -6,6 +6,13 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   ${fontDeclarations};
   ${fontMixin};
 
@@ -34,12 +41,11 @@ export const GlobalStyles = createGlobalStyle`
     height: 100vh;
     /* margin-top: ${props => "-" + props.theme.navHeight}; */
   }
-  .main-wrapper.with-sidebar {
-
-  }
   .main-content {
     display: flex;
     height: 100%;
+  }
+  .main-content.with-sidebar {
   }
 
   span.form-error {
