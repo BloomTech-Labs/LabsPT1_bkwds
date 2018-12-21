@@ -11,7 +11,6 @@ export const LandingNavStyles = styled.div`
     left: 0;
     right: 0;
     z-index: 5;
-
   }
 
   display: flex;
@@ -20,9 +19,9 @@ export const LandingNavStyles = styled.div`
 
   .landing-page-mobile-top-nav {
     /* ${media.desktop`height: 5.625rem`}; */
-    @media all and (min-width: 1024px) {
+    /* @media all and (min-width: 1024px) {
       display: none;
-    }
+    } */
 
     ${boxShadowMixin};
     position: relative;
@@ -37,22 +36,15 @@ export const LandingNavStyles = styled.div`
     will-change: transform;
   }
   .close-drawer {
-    transform: translateY(calc(-70px - 0px));
+    transform: translateY(calc(-60px - 0px));
+    ${media.tablet`transform: translateY(calc(-70px - 0px))`};
     transition: transform 0.25s ease-in-out;
   }
-
-  /* .landing-page-mobile-top-nav.open-drawer {
-    transition: transform .25s ease-in-out,-webkit-transform .25s ease-in-out;
-    will-change: transform;
-  }
-  .landing-page-mobile-top-nav.close-drawer {
-    transform: translateY(calc(-70px - 0px));
-    transition: transform 0.25s ease-in-out;
-  } */
 
   .landing-page-mobile-menu {
     display: flex;
     align-items: center;
+    height: 100%;
     button {
       color: ${props => props.theme.primary};
       border: none;
@@ -130,19 +122,20 @@ export const LandingNavStyles = styled.div`
 
 export const LandingNavBottomStyles = styled.div`
   /* This is a hack to hide the small mobile navbar on Desktop for now. */
-  .hide-mobile-nav-on-desktop {
-    display: none;
+  /* .hide-mobile-nav-on-desktop {
     @media all and (min-width: 1024px) {
       display: none;
     }
-  }
+  } */
 
   .mobile-bottom-nav {
-    ${media.desktop`height: 5.5625rem`};
+    /* ${media.desktop`height: 5.5625rem`}; */
+    height: 5.5625rem;
     ${media.tablet`height: 2.75rem`};
 
-    top: 3.125rem;
-    ${media.tablet`top: 3rem`};
+    top: 3rem;
+    /* ${media.tablet`top: 3rem`}; */
+    /* top: 3.125rem; */
     position: fixed;
     left: 0;
     right: 0;

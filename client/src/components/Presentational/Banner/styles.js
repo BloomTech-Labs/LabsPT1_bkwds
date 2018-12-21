@@ -46,12 +46,13 @@ export const Banner = styled.div`
     }
     span.banner-app-name {
       color: ${props => props.theme.white};
-      font-size: 1.5rem;
-      ${media.tablet`font-size: .8rem`};
+      font-size: 1.125rem;
+      ${media.phone`font-size: .8rem`};
     }
     span.banner-rotating-tagline {
+      color: ${props => props.theme.primaryLight};
       font-style: italic;
-      ${media.tablet`font-size: .8rem`};
+      ${media.phone`font-size: .8rem`};
     }
   }
 `

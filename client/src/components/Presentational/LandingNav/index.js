@@ -69,7 +69,7 @@ class LandingNav extends React.Component {
 
             {/* TODO: Kills this dead */}
             {/* 1024px+ ONLY */}
-            <NavStyles>
+            {/* <NavStyles>
               <div className="logo">Backwoods Tracker</div>
               <div className="nav-links-wrapper">
                 {!isLoggedIn ? (
@@ -77,35 +77,34 @@ class LandingNav extends React.Component {
                 ) : (
                   <AuthenticatedLinks logout={logout} />
                 )}
-                {isLoggedIn ? <AuthenticatedLinks logout={logout} /> : null}
               </div>
               <div className="call-to-action">
                 <GitHubSvg width="32px" height="32px" />
               </div>
-            </NavStyles>
-          </div>
-          {/* END 1024px ONLY */}
+            </NavStyles> */}
+            {/* END 1024px ONLY */}
 
-          {/* 1024px or less ONLY */}
-          <div className="landing-page-nav">
             <div className="landing-page-mobile-top-nav">
-              <div className="landing-page-mobile-menu">
-                <div className="landing-page-mobile-logo">
-                  <span>
-                    <span className="translate-letter">B</span>T
-                  </span>
+              <div className="landing-page-nav">
+                <div className="landing-page-mobile-menu">
+                  <div className="landing-page-mobile-logo">
+                    <span>
+                      <span className="translate-letter">B</span>T
+                    </span>
+                  </div>
+                  <button className="landing-page-mobile-cta">
+                    Register
+                    <ChevronSvg height={"1.15rem"} />
+                  </button>
                 </div>
-                <button className="landing-page-mobile-cta">
-                  Register
-                  <ChevronSvg height={"1.15rem"} />
-                </button>
-              </div>
-              <div className="landing-page-mobile-links">
-                <Link to="/settings">
-                  <UserSvg width="1.188rem" height="1.313rem" />
-                </Link>
+                <div className="landing-page-mobile-links">
+                  <Link to="/settings">
+                    <UserSvg width="1.188rem" height="1.313rem" />
+                  </Link>
+                </div>
               </div>
             </div>
+            {/* 1024px or less ONLY */}
           </div>
           {/* END: 1024px or less ONLY */}
         </s.LandingNavStyles>
@@ -116,7 +115,7 @@ class LandingNav extends React.Component {
             <div className="split-top">
               <div
                 className="mobile-bottom-nav"
-                style={{ top: this.state.drawerOpen ? null : "-1.275rem" }}
+                style={{ top: this.state.drawerOpen ? null : "-1.35rem" }}
               >
                 <div className="mobile-bottom-nav-left split-top-on-mobile">
                   <h1>Your First Trip is Free!</h1>
