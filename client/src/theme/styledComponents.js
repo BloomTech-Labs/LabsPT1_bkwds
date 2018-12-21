@@ -40,6 +40,7 @@ export const Button = styled.button`
   color: ${props => props.theme.white};
   border-radius: 5px;
   padding: 6px 12px;
+  font-weight: 500;
 
   background-color: ${props => props.theme.primaryDark};
   border-color: ${props => props.theme.primaryDark};
@@ -103,37 +104,3 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `
-
-// export const Label = styled.label`
-//   color: ${props => props.theme.midGray};
-// `
-
-// export const FormGroup = styled.div`
-//   position: relative;
-
-//   input {
-//     padding-top: 1.5em;
-//     padding-bottom: 0.35714em;
-//   }
-
-//   label {
-//     font-size: 0.85714em;
-//     font-weight: normal;
-//     position: absolute;
-//     top: 0;
-//     width: 100%;
-//     margin-top: 0.42857em;
-//     margin-left: 1px;
-//     padding: 0 0.91667em;
-//     z-index: 1;
-//     transform: none;
-//     opacity: 1;
-//     -webkit-transition: all 0.2s ease-out;
-//     transition: all 0.2s ease-out;
-//   }
-
-//   input:focus + input {
-//     transform: translateY(-125%);
-//     font-size: 0.75em;
-//   }
-// `

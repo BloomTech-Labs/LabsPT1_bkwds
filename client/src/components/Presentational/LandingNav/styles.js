@@ -185,6 +185,7 @@ export const MobileBottomNavStyles = styled.div`
   .mobile-bottom-nav-right.split-bottom-on-mobile {
     box-shadow: 0 -0.125rem 0.25rem 0 rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    transform: translateY(0);
 
     /* Fix to bottom of screen on tablets & smaller */
     ${media.tablet`
@@ -211,9 +212,20 @@ export const MobileBottomNavStyles = styled.div`
     text-align: center;
     background: #fff;
   }
+
   .mobile-bottom-cta-text {
     flex: 1;
     margin-right: 0.75rem;
     text-align: left;
+
+    h2 {
+      font-size: 1.125rem;
+      margin-bottom: 0;
+    }
+    p {
+      margin-bottom: 0;
+      font-weight: 300;
+      color: ${props => props.theme.lightGray};
+    }
   }
 `
