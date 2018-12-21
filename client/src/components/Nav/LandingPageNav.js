@@ -5,7 +5,6 @@ import { Link } from "react-router-dom"
 import { boxShadowMixin } from "../../theme/mixins"
 import ChevronSvg from "../icons/ChevronSvg"
 import UserSvg from "../icons/UserSvg"
-// import FlagSvg from "../icons/FlagSvg"
 
 const LandingPageNavStyles = styled.div`
   background: ${props => props.theme.white};
@@ -30,8 +29,7 @@ const LandingPageNavStyles = styled.div`
 
     span {
       font-weight: 600;
-      font-size: 1rem;
-      /* line-height: 1.25; */
+      font-size: 1.125rem;
       letter-spacing: 0.0275rem;
     }
   }
@@ -108,26 +106,32 @@ const LandingPageNavStyles = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-    /* Mobile icons on right side of the screen */
+
+    /* ICONS on the right side (1024px or less ONLY) */
     a {
       height: 100%;
       display: flex;
       align-items: center;
       padding-left: 0.75rem;
       padding-right: 0.75rem;
+      margin-bottom: -0.25rem;
     }
   }
 `
 
+// prettier-ignore
 const LandingPageNav = () => {
   return (
     <LandingPageNavStyles>
       <div className="landing-page-banner">
-        <span>An app for adventurers.</span>
+        <span>
+          <span style={{ color: "#d7ecf7" }}>Backwoods Tracker</span>: Built for
+          adventurers.
+        </span>
       </div>
-
       <div className="landing-page-nav">
-        {/* Only renders on 1024px or less */}
+
+        {/* 1024px or less ONLY */}
         <div className="landing-page-mobile-nav">
           <div className="landing-page-mobile-menu">
             <div className="landing-page-mobile-logo">
@@ -138,13 +142,14 @@ const LandingPageNav = () => {
               <ChevronSvg height={".625rem"} width={".625rem"} />
             </button>
           </div>
-
           <div className="landing-page-mobile-links">
             <Link to="/settings">
               <UserSvg width="1.188rem" height="1.313rem" />
             </Link>
           </div>
         </div>
+        {/* END: 1024px or less ONLY */}
+
       </div>
     </LandingPageNavStyles>
   )

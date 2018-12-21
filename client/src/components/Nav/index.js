@@ -16,9 +16,12 @@ const NavStyles = styled.div`
   background: ${props => props.theme.white};
   min-height: ${props => props.theme.navHeight};
 
+  /* relative positioning so that nav-links-cta 
+     can position absolute with Nav as its parent */
+  position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   ${boxShadowMixin};
 
@@ -26,13 +29,16 @@ const NavStyles = styled.div`
   padding-right: 1.25rem;
 
   .nav-links-wrapper {
-    width: 300px;
+    /* This is to offset the Github logo, which is positioned absolutely */
+    margin-right: 60px;
+    /* width: 300px; */
   }
   .logo {
     color: ${props => props.theme.primary};
     font-weight: 700;
     font-size: 1.75rem;
     letter-spacing: -0.0275rem;
+    height: 2rem;
   }
 
   ul {
@@ -75,6 +81,9 @@ const NavStyles = styled.div`
   }
 
   .call-to-action {
+    position: absolute;
+    top: 0;
+    right: 1.25rem;
     height: 100%;
     & a {
       height: 100%;
