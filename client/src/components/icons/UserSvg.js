@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const UserSvg = () => {
+const UserSvg = ({ height, weight }) => {
   const Icon = styled.span`
     /* position: relative;
     width: 0.5rem;
@@ -10,6 +10,9 @@ const UserSvg = () => {
     fill: #a3a3a3;
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out; */
     svg {
+      height: ${height};
+      weight: ${weight};
+      fill: ${props => props.theme.primary};
       /* position: absolute;
       top: 1px;
       left: 0;
@@ -29,6 +32,4 @@ const UserSvg = () => {
   )
 }
 
-// <span class="Icon__icon___QhhbM HeaderNew__account-icon___3beo0" data-icon="account" role="img">
-
-// <title>Account</title>
+export default UserSvg

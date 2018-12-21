@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const ChevronSvg = () => {
+const ChevronSvg = ({ width, height }) => {
   const Icon = styled.span`
     position: relative;
     width: 0.5rem;
@@ -13,8 +13,8 @@ const ChevronSvg = () => {
       position: absolute;
       top: 1px;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: ${width};
+      height: ${height};
     }
   `
   return (
