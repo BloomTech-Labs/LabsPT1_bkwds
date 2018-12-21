@@ -1,12 +1,9 @@
 import styled from "styled-components"
 import { boxShadowMixin, media, flexCenterMixin } from "../../../theme/mixins"
 
-export const MobileTopNavStyles = styled.div`
-  /* position: relative; */
-
+export const LandingNavStyles = styled.div`
   background: ${props => props.theme.white};
   height: 0;
-  /* min-height: ${props => props.theme.navHeight}; */
 
   .banner-and-top-nav-wrapper {
     position: fixed;
@@ -131,7 +128,15 @@ export const MobileTopNavStyles = styled.div`
   }
 `
 
-export const MobileBottomNavStyles = styled.div`
+export const LandingNavBottomStyles = styled.div`
+  /* This is a hack to hide the small mobile navbar on Desktop for now. */
+  .hide-mobile-nav-on-desktop {
+    display: none;
+    @media all and (min-width: 1024px) {
+      display: none;
+    }
+  }
+
   .mobile-bottom-nav {
     ${media.desktop`height: 5.5625rem`};
     ${media.tablet`height: 2.75rem`};
