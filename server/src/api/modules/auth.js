@@ -3,7 +3,6 @@ import config from "../../config"
 import { User } from "../resources/user/user.model"
 
 const JWT_SECRET = config.secrets.JWT_SECRET
-const stripe = config.stripe.instance
 
 export const register = (req, res) => {
   const { username, password, email } = req.body
@@ -12,7 +11,6 @@ export const register = (req, res) => {
       if (user) {
         return res.status(404).send("Username already exists")
       }
-      // create new account
       let newUser = new User({
         username,
         password,
@@ -21,7 +19,7 @@ export const register = (req, res) => {
       newUser
         .save()
         .then(() => {
-          res.status(201).send(customer.id)
+          res.status(201).send()
         })
         .catch(err => {
           const message = err.message

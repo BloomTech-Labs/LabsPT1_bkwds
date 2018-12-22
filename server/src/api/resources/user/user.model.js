@@ -25,6 +25,11 @@ export const schema = {
   sub_date: {
     type: Date
   },
+  customerId: {
+    type: String,
+    unique: true,
+    default: ""
+  },
   trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
 }
 
