@@ -2,8 +2,8 @@ import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-import { boxShadowMixin } from "../../theme/mixins"
-import ChevronSvg from "../icons/ChevronSvg"
+import { boxShadowMixin } from "../../../theme/mixins"
+import ChevronSvg from "../../icons/ChevronSvg"
 
 const DropdownStyles = styled.li`
   flex-direction: row;

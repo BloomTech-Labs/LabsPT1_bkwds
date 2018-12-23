@@ -2,8 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 
-import Nav from "../Nav"
+// import Nav from "../Nav"
 // import Breadcrumbs from "../Breadcrumbs"
+import AppNav from "../Containers/Nav/Container__AppNav"
 import Sidebar from "../Sidebar"
 import { GlobalStyles } from "../../theme/GlobalStyles"
 import { logout } from "../../redux/actions/auth"
@@ -28,7 +29,7 @@ const Container = ({ pathname, children, isLoggedIn }) => {
     <>
       <GlobalStyles />
       <div className={mainWrapperClassList.join(" ")}>
-        <Nav />
+        <AppNav />
         {/* {showBreadcrumbs ? <Breadcrumbs /> : null} */}
         {showSidebar ? (
           <div className="main-content with-sidebar">

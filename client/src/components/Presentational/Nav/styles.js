@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { boxShadowMixin } from "../../theme/mixins"
+import { boxShadowMixin } from "../../../theme/mixins"
 
 export const NavStyles = styled.div`
   background: ${props => props.theme.white};

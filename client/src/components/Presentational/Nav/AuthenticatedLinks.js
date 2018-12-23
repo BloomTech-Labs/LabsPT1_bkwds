@@ -2,8 +2,6 @@ import React, { Component } from "react"
 import Dropdown from "./Dropdown"
 
 class AuthenticatedLinks extends Component {
-  state = {}
-
   handleLogout = e => {
     e.preventDefault()
     this.props.logout()
@@ -12,7 +10,7 @@ class AuthenticatedLinks extends Component {
   render() {
     return (
       <ul className="authenticated-links">
-        <Dropdown hidden={false} />
+        <Dropdown />
         <li>
           <a href="/logout" onClick={this.handleLogout}>
             Log out
