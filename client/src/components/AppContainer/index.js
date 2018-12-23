@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 // import Nav from "../Nav"
 // import Breadcrumbs from "../Breadcrumbs"
-import AppNav from "../Containers/Nav/Container__AppNav"
+import AppNav from "../Containers/Nav/AppNav"
 import Sidebar from "../Sidebar"
 import { GlobalStyles } from "../../theme/GlobalStyles"
 import { logout } from "../../redux/actions/auth"

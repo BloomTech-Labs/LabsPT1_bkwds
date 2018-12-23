@@ -2,7 +2,7 @@ import React from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
-import AppNav from "../../Presentational/Nav/Presentation__AppNav"
+import AppNav from "../../Presentational/Nav/AppNav"
 import { logout } from "../../../redux/actions/auth"
 import { isProtectedPath } from "../../../redux/helpers"
 
