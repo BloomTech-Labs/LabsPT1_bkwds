@@ -9,7 +9,12 @@ import * as s from "./styles"
 
 class LandingNav extends React.Component {
   initialClasses = ["drawer"]
-  state = { scrollY: 0, drawerOpen: true, drawerClasses: this.initialClasses }
+  state = {
+    scrollY: 0,
+    width: document.documentElement.clientWidth,
+    drawerOpen: true,
+    drawerClasses: this.initialClasses
+  }
 
   handleScroll = () => {
     this.setState({ scrollY: window.scrollY })
@@ -34,7 +39,8 @@ class LandingNav extends React.Component {
   }
 
   componentDidUpdate(_, prevState) {
-    console.log("logging bc i have to use _ to appease travis CI", _)
+    // using _ as an expression to shush travisCI
+    console.log(_)
     if (this.state.scrollY > 100 && prevState.drawerOpen) this.closeDrawer()
     if (this.state.scrollY < 100 && !prevState.drawerOpen) this.openDrawer()
   }
@@ -53,23 +59,6 @@ class LandingNav extends React.Component {
             }
           >
             <BannerContainer />
-
-            {/* TODO: Kills this dead */}
-            {/* 1024px+ ONLY */}
-            {/* <NavStyles>
-              <div className="logo">Backwoods Tracker</div>
-              <div className="nav-links-wrapper">
-                {!isLoggedIn ? (
-                  <UnauthenticatedLinks pathname={pathname} />
-                ) : (
-                  <AuthenticatedLinks logout={logout} />
-                )}
-              </div>
-              <div className="call-to-action">
-                <GitHubSvg width="32px" height="32px" />
-              </div>
-            </NavStyles> */}
-            {/* END 1024px ONLY */}
 
             <div className="landing-page-mobile-top-nav">
               <div className="landing-page-nav">
@@ -102,7 +91,11 @@ class LandingNav extends React.Component {
             <div className="split-top">
               <div
                 className="mobile-bottom-nav"
-                style={{ top: this.state.drawerOpen ? null : "-1.35rem" }}
+                style={{
+                  top:
+                    !this.state.drawerOpen &&
+                    (this.state.width <= 768 ? "-1.35rem" : "-0.75rem")
+                }}
               >
                 <div className="mobile-bottom-nav-left split-top-on-mobile">
                   <h1>Your First Trip is Free!</h1>
@@ -114,7 +107,15 @@ class LandingNav extends React.Component {
             {/* DOWN ON MOBILE */}
             <div className="split-bottom">
               <div className="mobile-bottom-nav-right split-bottom-on-mobile">
-                <div className="mobile-bottom-cta-wrapper">
+                <div
+                  className="mobile-bottom-cta-wrapper"
+                  style={{
+                    top:
+                      !this.state.drawerOpen && this.state.width >= 768
+                        ? "3.4rem"
+                        : "inherit"
+                  }}
+                >
                   <div className="mobile-bottom-cta-text">
                     <h2>Starting at $10/year</h2>
                     <p>3 plans available</p>
@@ -127,7 +128,12 @@ class LandingNav extends React.Component {
             {/* Bottom Right Nav, Tablets + Only */}
             <div>
               <div className="tablet-bottom-nav-right">
-                <div className="tablet-bottom-cta-wrapper">
+                <div
+                  className="tablet-bottom-cta-wrapper"
+                  style={{
+                    top: !this.state.drawerOpen ? "3.4rem" : "7.25rem"
+                  }}
+                >
                   <div className="tablet-bottom-cta-text">
                     <h2>Starting at $10/year</h2>
                     <p>3 plans available</p>

@@ -243,6 +243,7 @@ export const LandingNavBottomStyles = styled.div`
     
     .tablet-bottom-cta-wrapper {
       position: fixed;
+      /* This style is also mutated in the JSX component */
       top: 7.25rem;
       width: 100%;
       display: flex;
