@@ -3,7 +3,7 @@ import { css } from "styled-components"
 // MEDIA TEMPLATES
 const breakpoints = {
   desktop: 1024,
-  tablet: 768, // good
+  tablet: 768,
   phone: 576
 }
 
@@ -89,7 +89,7 @@ export const fontDeclarations = css`
 export const fontMixin = css`
   html * {
     font-family: Wals;
-    /* setting 1rem to ===  16px */
+    /* @SET: 1rem === 16px */
     font-size: 16px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

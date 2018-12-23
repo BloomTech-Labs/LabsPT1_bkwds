@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form"
 
 import { Form, Button } from "../../theme/styledComponents"
 import { ValidatedInput } from "./customInputs"
-import { validateLogin } from "./validations"
+import { validateLogin } from "./formValidations"
 
 let LoginForm = props => {
   const { handleSubmit } = props

@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-import BannerContainer from "../../Containers/BannerContainer"
+import Banner from "../../Containers/Banner"
 import ChevronSvg from "../../icons/ChevronSvg"
 import UserSvg from "../../icons/UserSvg"
 import { Button } from "../../../theme/styledComponents"
@@ -58,7 +58,7 @@ class LandingNav extends React.Component {
               "banner-and-top-nav-wrapper " + this.state.drawerClasses.join(" ")
             }
           >
-            <BannerContainer />
+            <Banner />
 
             <div className="landing-page-mobile-top-nav">
               <div className="landing-page-nav">

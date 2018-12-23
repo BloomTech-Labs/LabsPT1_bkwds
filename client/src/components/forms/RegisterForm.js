@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form"
 
 import { Form, Button } from "../../theme/styledComponents"
 import { ValidatedInput } from "./customInputs"
-import { validateRegistration } from "./validations"
+import { validateRegistration } from "./formValidations"
 
 let RegisterForm = props => {
   const { handleSubmit } = props
@@ -12,7 +12,6 @@ let RegisterForm = props => {
       <Field
         name="email"
         type="email"
-        // type="text"
         component={ValidatedInput}
         placeholder="Email"
       />
