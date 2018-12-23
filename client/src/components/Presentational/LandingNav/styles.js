@@ -151,6 +151,7 @@ export const LandingNavBottomStyles = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   }
 
+
   .mobile-bottom-nav-left.split-top-on-mobile {
     ${flexCenterMixin};
     justify-content: space-between;
@@ -178,7 +179,17 @@ export const LandingNavBottomStyles = styled.div`
       ${media.tablet`margin: 0 40px;`}
       ${media.phone`margin: 0 20px;`}
     }
+
+    /*  TODO: Rename classes, bc this code applies to tablet
+        sizes ONLY */
+    @media screen and (min-width: 769px) {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
   }
+
 
   .mobile-bottom-nav-right.split-bottom-on-mobile {
     box-shadow: 0 -0.125rem 0.25rem 0 rgba(0, 0, 0, 0.08);
@@ -196,9 +207,7 @@ export const LandingNavBottomStyles = styled.div`
 
     /* Otherwise render at top with sibling */
     @media all and (min-width: 769px) {
-      position: absolute;
-      top: 0;
-      right: 0;
+      visibility: hidden;
     }
   }
 
@@ -225,5 +234,47 @@ export const LandingNavBottomStyles = styled.div`
       font-weight: 300;
       color: ${props => props.theme.lightGray};
     }
+  }
+
+  /* Renders instead of sibling .split-bottom */
+  .tablet-bottom-nav-right {
+    /* Only shows on tablet screens & above */
+    ${media.tablet`display: none;`}
+    
+    .tablet-bottom-cta-wrapper {
+      position: fixed;
+      top: 7.25rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0.75rem;
+      text-align: right;
+
+      .tablet-bottom-cta-text {
+        h2 {
+          margin-bottom: 0;
+          font-size: 1.15rem;
+          white-space: nowrap;
+        }
+
+        p {
+          margin-bottom: 0;
+          color: #a3a3a3;
+        }
+      }
+
+      button { 
+        padding: 0.75rem 1rem;
+        margin-left: 0.75rem; 
+        width: 14rem;
+      }
+
+
+      /* background: purple; */
+
+
+    }
+
   }
 `

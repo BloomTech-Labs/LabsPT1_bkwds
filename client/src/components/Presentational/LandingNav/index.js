@@ -123,6 +123,19 @@ class LandingNav extends React.Component {
                 </div>
               </div>
             </div>
+
+            {/* Bottom Right Nav, Tablets + Only */}
+            <div>
+              <div className="tablet-bottom-nav-right">
+                <div className="tablet-bottom-cta-wrapper">
+                  <div className="tablet-bottom-cta-text">
+                    <h2>Starting at $10/year</h2>
+                    <p>3 plans available</p>
+                  </div>
+                  <Button>Choose your plan</Button>
+                </div>
+              </div>
+            </div>
           </div>
         </s.LandingNavBottomStyles>
       </>
