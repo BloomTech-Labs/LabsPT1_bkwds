@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 
 import Banner from "../../Containers/Banner"
 import ChevronSvg from "../../icons/ChevronSvg"
@@ -68,8 +68,11 @@ class LandingNav extends React.Component {
                       <span className="translate-letter">B</span>T
                     </span>
                   </div>
-                  <button className="landing-page-mobile-cta">
-                    Register
+                  <button
+                    className="landing-page-mobile-cta"
+                    onClick={() => <Redirect to="/signup" />}
+                  >
+                    <Link to="/login">Login</Link>
                     <ChevronSvg height={"1.15rem"} />
                   </button>
                 </div>

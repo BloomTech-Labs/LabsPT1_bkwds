@@ -52,6 +52,16 @@ const Sidebar = ({ location }) => {
           displayName="Settings"
           pathname={location.pathname}
         />
+        <SidebarLink
+          to="/login"
+          displayName="Login"
+          pathname={location.pathname}
+        />
+        <SidebarLink
+          to="/signup"
+          displayName="Register"
+          pathname={location.pathname}
+        />
       </div>
     </SidebarStyles>
   )

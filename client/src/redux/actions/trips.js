@@ -25,9 +25,17 @@ export const getTrips = () => dispatch => {
 }
 
 export const createTrip = trip => dispatch => {
+  console.log("IN TRIPS ACTION! TRIP:\n", trip)
+
   dispatch({ type: CREATING_TRIP })
-  return axios
-    .post(`${SERVER_URI}/trips`, trip)
+  axios
+    .post(`${SERVER_URI}/trips`, {
+      ...trip,
+      // TODO: Stop hardcoding these!
+      userId: "5c152440cd78b73ce82d683c",
+      lat: 29.2604,
+      lon: 79.7145
+    })
     .then(res => {
       console.log("CREATE TRIP RESPONSE:", res)
 

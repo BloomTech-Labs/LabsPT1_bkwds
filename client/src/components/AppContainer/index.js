@@ -2,8 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 
-// import Nav from "../Nav"
-// import Breadcrumbs from "../Breadcrumbs"
 import AppNav from "../Containers/Nav/AppNav"
 import Sidebar from "../Sidebar"
 import { GlobalStyles } from "../../theme/GlobalStyles"
@@ -17,7 +15,7 @@ const Right = styled.div`
 
 const Container = ({ pathname, children, isLoggedIn }) => {
   const authPaths = ["/signup", "/login"]
-  const showBreadcrumbs = !isProtectedPath(pathname, ["/", ...authPaths])
+  const showBreadcrumbs = !isProtectedPath(pathname, [...authPaths])
   const showSidebar = isLoggedIn && showBreadcrumbs
   const userOnAuthPath = authPaths.includes(pathname)
   const mainWrapperClassList = [
