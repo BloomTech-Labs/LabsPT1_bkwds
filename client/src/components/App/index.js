@@ -22,6 +22,10 @@ const App = props => (
     <Switch>
       <Route path="/" component={LandingPage} exact />
       <AppContainer>
+        {/* TODO: DELETE THIS!! */}
+        <Route path="/login_success" component={Trips} exact />
+        {/* END TODO */}
+
         <Route
           path="/login"
           exact

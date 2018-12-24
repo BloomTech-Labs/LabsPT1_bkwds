@@ -1,11 +1,68 @@
-import React from "react"
-import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 import { boxShadowMixin } from "../../../theme/mixins"
-import ChevronSvg from "../../icons/ChevronSvg"
 
-const DropdownStyles = styled.li`
+export const DropdownStyles = styled.div`
+  /* BOOTSTRAP OVERRIDES: */
+  .dropdown {
+    a:hover,
+    button:hover {
+      text-decoration: none;
+    }
+
+    /* dropdown button AND nested dropdown items styles */
+    button {
+      background-color: transparent;
+      color: ${props => props.theme.midGray};
+      &:hover {
+        color: ${props => props.theme.primary};
+      }
+    }
+
+    /* DROPDOWN HEADER BUTTON STYLES */
+    & > button {
+      display: flex;
+      flex: 1 100%;
+    }
+
+    & > div {
+      top: 13px !important;
+      margin: 0;
+      padding: 0;
+      ${boxShadowMixin}
+      border: 0;
+      border-radius: 0;
+    }
+
+    /* DROPDOWN LIST ITEM STYLES */
+    button.dropdown-item {
+      margin: 0;
+      padding: 0;
+      a {
+        transition: padding-left 0.15s ease-in, color 0.15s ease-in;
+        height: auto;
+        padding: 9px 20px;
+        font-size: 1rem;
+        font-weight: 300;
+
+        &:hover {
+          padding-left: 1.5rem;
+        }
+        &:last-child {
+          /* background-color: ${props => props.theme.primary};
+          color: ${props => props.theme.white};
+          font-weight: 400; */
+        }
+      }
+    }
+
+    .dropdown-divider {
+      margin: 0;
+    }
+  }
+`
+
+export const OldDropdownStyles = styled.li`
   flex-direction: row;
   align-items: center;
   position: relative;
@@ -100,34 +157,3 @@ const DropdownStyles = styled.li`
     }
   }
 `
-const Dropdown = () => {
-  return (
-    <DropdownStyles>
-      <button className="hover-button">
-        Account <ChevronSvg fill="#a3a3a3" />
-      </button>
-
-      <div className="dropdown">
-        <div className="dropdown-content dropdown-content-hidden">
-          <div className="dropdown-list">
-            <Link to="/settings" className="dropdown-list-item">
-              Settings
-            </Link>
-            <Link to="/invoices" className="dropdown-list-item">
-              Invoices
-              <div className="new-icon">NEW</div>
-            </Link>
-            <Link to="/billing" className="dropdown-list-item">
-              Billing
-            </Link>
-            <Link to="/profile" className="dropdown-list-item">
-              Your Profile
-            </Link>
-          </div>
-        </div>
-      </div>
-    </DropdownStyles>
-  )
-}
-
-export default Dropdown

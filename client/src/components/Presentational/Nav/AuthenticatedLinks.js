@@ -1,5 +1,6 @@
 import React, { Component } from "react"
-import Dropdown from "./Dropdown"
+import Dropdown from "../Dropdown"
+import * as s from "./AuthenticatedLinksStyles"
 
 class AuthenticatedLinks extends Component {
   handleLogout = e => {
@@ -9,14 +10,14 @@ class AuthenticatedLinks extends Component {
 
   render() {
     return (
-      <ul className="authenticated-links">
+      <s.AuthenticatedLinksStyles className="AuthenticatedLinksStyles">
         <Dropdown />
         <li>
           <a href="/logout" onClick={this.handleLogout}>
             Log out
           </a>
         </li>
-      </ul>
+      </s.AuthenticatedLinksStyles>
     )
   }
 }

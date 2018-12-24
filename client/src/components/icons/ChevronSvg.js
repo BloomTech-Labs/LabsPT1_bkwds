@@ -15,7 +15,7 @@ const ChevronSvg = ({
     align-self: center;
     width: ${width};
     height: ${height};
-    margin-top: 0.25rem;
+    margin-top: -1px;
     margin-left: 0.375rem;
     fill: ${fill};
 
