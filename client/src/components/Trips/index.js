@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Trip from "../Trip"
+import Trip from "../Presentational/Trip"
 import { getTrips } from "../../redux/actions/trips"
 
 const Trips = props => {

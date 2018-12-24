@@ -5,10 +5,6 @@ import { Button } from "../../theme/styledComponents"
 
 const SidebarStyles = styled.div`
   width: ${props => `${props.theme.sidebarWidth}px`};
-  /* .sidebar-links {
-    width: ${props => `${props.theme.sidebarWidth}px`};
-    height: 100vh;
-  } */
   button {
     width: 100%;
     border-radius: 0;
@@ -32,9 +28,10 @@ const Sidebar = ({ location }) => {
   return (
     <SidebarStyles>
       <div className="sidebar-links">
+        <SidebarLink to="/" displayName="Home" pathname={location.pathname} />
         <SidebarLink
-          to="/"
-          displayName="Landing Page"
+          to="/trip/create"
+          displayName="Add a trip"
           pathname={location.pathname}
         />
         <SidebarLink

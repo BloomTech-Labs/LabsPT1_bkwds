@@ -12,3 +12,12 @@ export const ValidatedInput = props => {
     </div>
   )
 }
+
+export const CustomInput = props => {
+  const { input, type, placeholder } = props
+  return (
+    <div>
+      <Input type={type} placeholder={placeholder} {...input} />
+    </div>
+  )
+}

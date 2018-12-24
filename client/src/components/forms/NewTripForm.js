@@ -1,46 +1,47 @@
 import React from "react"
 import { Field, reduxForm } from "redux-form"
 
-// import { Button, Form, Input } from "../../theme/styledComponents"
+import { Button, Form } from "../../theme/styledComponents"
+import { CustomInput as Input } from "./customInputs"
 
 let NewTripForm = ({ handleSubmit }) => {
   return (
     <div className="new-trip-form">
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <div className="trip-name new-trip-form-field">
           <Field
             name="name"
             placeholder="Trip Name"
             type="text"
-            // component={Input}
-            component="input"
+            component={Input}
           />
         </div>
         <div className="trip-start new-trip-form-field">
           Start:
-          <Field name="start" type="date" component="input" />
+          <Field name="start" type="date" component={Input} />
         </div>
         <div className="trip-end new-trip-form-field">
           End:
-          <Field name="end" type="date" component="input" />
+          <Field name="end" type="date" component={Input} />
         </div>
-        <div>
-          DELETE
+        <div className="trip-lat new-trip-form-field">
           <Field
             name="lat"
             placeholder="Latitude"
             type="text"
-            component="input"
+            component={Input}
           />
+        </div>
+        <div className="trip-lon new-trip-form-field">
           <Field
             name="lon"
             placeholder="Longitude"
             type="text"
-            component="input"
+            component={Input}
           />
         </div>
-        <button type="submit">Save Trip</button>
-      </form>
+        <Button type="submit">Save Trip</Button>
+      </Form>
     </div>
   )
 }

@@ -13,7 +13,7 @@ const Right = styled.div`
   width: 100%;
 `
 
-const Container = ({ pathname, children, isLoggedIn }) => {
+const AppContainer = ({ pathname, children, isLoggedIn }) => {
   const authPaths = ["/signup", "/login"]
   const showBreadcrumbs = !isProtectedPath(pathname, [...authPaths])
   const showSidebar = isLoggedIn && showBreadcrumbs
@@ -52,4 +52,4 @@ const mapDispatchToProps = { handleSignOut: logout }
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Container)
+)(AppContainer)

@@ -2,7 +2,7 @@ import React from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 
-import Dashboard from "../Dashboard"
+import Dashboard from "../Containers/Dashboard"
 import Login from "../Containers/Login"
 import Register from "../Containers/Register"
 import AppContainer from "../AppContainer"
@@ -21,6 +21,11 @@ const App = ({ isLoggedIn, isSignedUp }) => (
   <>
     <Route path="/" component={FakeLogin} />
     <Switch>
+      <Route
+        path="/"
+        exact
+        render={() => (isLoggedIn ? <Dashboard /> : <LandingPage />)}
+      />
       <AppContainer>
         <Route
           path="/"
