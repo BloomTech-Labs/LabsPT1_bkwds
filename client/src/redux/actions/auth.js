@@ -28,11 +28,11 @@ export const login = ({ username, password }) => dispatch => {
     })
 }
 
-export const register = ({ email, username, pass }) => dispatch => {
+export const register = ({ email, username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
 
   return axios
-    .post(`${SERVER_URI}/register`, { email, username, pass })
+    .post(`${SERVER_URI}/register`, { email, username, password })
     .then(() => {
       // DO WE NEED THIS CHECK?
       // if (res.status === 201) {

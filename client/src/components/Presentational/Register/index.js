@@ -3,11 +3,11 @@ import React from "react"
 import * as s from "./styles"
 import RegisterForm from "../../forms/RegisterForm"
 
-const Register = props => {
+const Register = ({ register }) => {
   return (
     <s.RegisterStyles>
       <h3>Sign Up</h3>
-      <RegisterForm onSubmit={props.register} />
+      <RegisterForm onSubmit={register} />
     </s.RegisterStyles>
   )
 }
