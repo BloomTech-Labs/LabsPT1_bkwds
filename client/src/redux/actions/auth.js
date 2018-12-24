@@ -13,11 +13,12 @@ import {
 export const login = ({ username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
   return axios
-    .get(`${SERVER_URI}/login`, { username, password })
+    .post(`${SERVER_URI}/login`, { username, password })
     .then(res => {
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data.token })
+      console.log("RESPONSE:", res)
+      dispatch({ type: LOGIN_SUCCESS, payload: res })
 
-      localStorage.setItem("token", JSON.stringify(res.data.token))
+      localStorage.setItem("jwt", JSON.stringify(res.data.token))
 
       dispatch(push("/login_success"))
     })
