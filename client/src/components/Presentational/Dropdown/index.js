@@ -12,25 +12,21 @@ import ChevronSvg from "../../icons/ChevronSvg"
 
 class NavDropdown extends Component {
   state = {
-    dropdownOpen: true
+    dropdownOpen: false
   }
 
-  // TODO: Delete this when done styling the button!
-
-  componentDidMount() {}
-
   toggle = () => {
-    // this.setState(prevState => ({
-    //   dropdownOpen: !prevState.dropdownOpen
-    // }))
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }))
   }
 
   onMouseEnter = () => {
-    // this.setState({ dropdownOpen: true })
+    this.setState({ dropdownOpen: true })
   }
 
   onMouseLeave = () => {
-    // this.setState({ dropdownOpen: false })
+    this.setState({ dropdownOpen: false })
   }
 
   render() {
