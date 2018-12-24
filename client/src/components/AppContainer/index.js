@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import styled from "styled-components"
 
 import AppNav from "../Containers/Nav/AppNav"
-import Sidebar from "../Sidebar"
+import Sidebar from "../Presentational/Sidebar"
 import { GlobalStyles } from "../../theme/GlobalStyles"
 import { logout } from "../../redux/actions/auth"
 import { isProtectedPath } from "../../redux/helpers"

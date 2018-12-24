@@ -1,22 +1,7 @@
 import React from "react"
 import { Link, withRouter } from "react-router-dom"
-import styled from "styled-components"
-import { Button } from "../../theme/styledComponents"
-
-const SidebarStyles = styled.div`
-  width: ${props => `${props.theme.sidebarWidth}px`};
-  button {
-    width: 100%;
-    border-radius: 0;
-    display: flex;
-    padding: 0;
-    border-bottom: 1px solid ${props => props.theme.ghostWhite};
-    a {
-      flex: 0 0 100%;
-      padding: 6px 12px;
-    }
-  }
-`
+import { Button } from "../../../theme/styledComponents"
+import * as s from "./styles"
 
 const SidebarLink = ({ to, displayName, pathname }) => (
   <Button className={pathname === to ? "btn-inverted" : ""}>
@@ -26,7 +11,7 @@ const SidebarLink = ({ to, displayName, pathname }) => (
 
 const Sidebar = ({ location }) => {
   return (
-    <SidebarStyles>
+    <s.SidebarStyles>
       <div className="sidebar-links">
         <SidebarLink to="/" displayName="Home" pathname={location.pathname} />
         <SidebarLink
@@ -60,7 +45,7 @@ const Sidebar = ({ location }) => {
           pathname={location.pathname}
         />
       </div>
-    </SidebarStyles>
+    </s.SidebarStyles>
   )
 }
 
