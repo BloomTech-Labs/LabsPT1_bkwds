@@ -7,9 +7,9 @@ import { history } from "../../store"
 import { Register, Login } from "../Auth"
 import Container from "../Container"
 import FakeLogin from "../FakeLogin"
+import TripList from "../Trips/TripList"
 
 export const Home = () => <div>Home component here!</div>
-export const TripsView = () => <div>Trips View component here!</div>
 export const TripView = () => <div>Single Trip View component here!</div>
 export const Progress = () => <div>Track and view trip progress here!</div>
 export const TripCreate = () => <div>Create New Trip here!</div>
@@ -35,7 +35,7 @@ const App = props => (
             props.isSignedUp ? <Redirect to="/login" /> : <Register />
           }
         />
-        <Route path="/trips" exact component={TripsView} />
+        <Route path="/trips" exact component={TripList} />
         <Route path="/trips/:tripId" exact component={TripView} />
         <Route
           path="/trip/create"

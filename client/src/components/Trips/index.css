@@ -1,0 +1,38 @@
+/* @import "compass";
+@import "breakpoint"; */
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.cards {
+  /* display: flex; */
+}
+
+.card {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2%;
+  margin-right: 2%;
+  padding-bottom: 1%;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+
+.card-container {
+  padding: 2px 16px;
+  max-width: 100%;
+}
+
+img {
+  max-width: 100%;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import TripCard from "./TripCard"
+import "./index.css"
 
 class TripList extends Component {
   state = {
@@ -12,7 +13,19 @@ class TripList extends Component {
       },
       {
         id: 2,
-        name: "dawsons h",
+        name: "Coachella",
+        start: "here",
+        end: "there"
+      },
+      {
+        id: 3,
+        name: "Burning Man",
+        start: "here",
+        end: "there"
+      },
+      {
+        id: 4,
+        name: "Appalachian Trail",
         start: "here",
         end: "there"
       }
@@ -21,11 +34,9 @@ class TripList extends Component {
 
   render() {
     return (
-      <div>
-        <h5>Your Trips:</h5>
-
+      <div class="container">
         {this.state.trips.map(trip => (
-          <TripCard key={trip.id} trip={trip} />
+          <TripCard key={trip.id} trip={trip} class="cards" />
         ))}
       </div>
     )

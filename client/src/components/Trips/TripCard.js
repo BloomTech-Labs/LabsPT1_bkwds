@@ -1,21 +1,22 @@
 import React from "react"
-import { Card, CardText, CardBody, CardTitle, Button } from "reactstrap"
+import "./index.css"
 
 const TripCard = ({ trip }) => {
   console.log(trip, "TRIP")
   return (
-    <div>
-      <Card key={trip.id} trip={trip}>
-        <CardBody>
-          <CardTitle>{trip.name.substring(0, 21)}</CardTitle>
-          <hr className="my-2" />
-          <CardText>{trip.start.substring(0, 50)}</CardText>
-          <CardText>{trip.end.substring(0, 50)}</CardText>
-          {/* we may want a fucntion that will allow the user 
-                             to start the trip when the start date = now() */}
-          <Button>Start Trip</Button>
-        </CardBody>
-      </Card>
+    <div key={trip.id} trip={trip} class="card">
+      <img
+        src="https://staticmapmaker.com/img/google.png"
+        alt="Google Map of Albany, NY"
+      />
+      <div class="card-container">
+        <h4>
+          <b>{trip.name}</b>
+        </h4>
+        <p>{trip.start}</p>
+        <p>{trip.end}</p>
+        <button>Start Trip</button>
+      </div>
     </div>
   )
 }
