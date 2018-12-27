@@ -4,12 +4,12 @@ import "./index.css"
 const TripCard = ({ trip }) => {
   console.log(trip, "TRIP")
   return (
-    <div key={trip.id} trip={trip} class="card">
+    <div key={trip.id} trip={trip} className="card">
       <img
         src="https://staticmapmaker.com/img/google.png"
         alt="Google Map of Albany, NY"
       />
-      <div class="card-container">
+      <div className="card-container">
         <h4>
           <b>{trip.name}</b>
         </h4>
