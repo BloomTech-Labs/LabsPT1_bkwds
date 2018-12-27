@@ -1,16 +1,9 @@
-/* @import "compass";
-@import "breakpoint"; */
-
 .container {
   max-width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-}
-
-.cards {
-  /* display: flex; */
 }
 
 .card {
