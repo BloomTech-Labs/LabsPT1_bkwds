@@ -13,9 +13,6 @@ cache:
 
 services: mongodb
 
-env:
-  - MONGO_URI=$MONGO_URI
-
 script:
   - scripts/test
 
