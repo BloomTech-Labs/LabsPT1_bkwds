@@ -1,27 +1,27 @@
 Welcome to the client-side code for Backwoods Tracker!
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Directory Structure](#directory-structure)
-  _ [src/components](#srccomponents)
-  _ [src/components/Containers](#srccomponentscontainers)
-  _ [src/components/Presentational](#srccomponentspresentational)
-  _ [src/components/forms](#srccomponentsforms)
-  _ [src/components/hoc](#srccomponentshoc)
-  _ [src/components/icons](#srccomponentsicons)
-  _ [src/config](#srcconfig)
-  _ [src/redux](#srcredux)
-  _ [What's this types.js file?](#whats-this-typesjs-file)
-  _ [What's this store.js file?](#whats-this-storejs-file)
-  _ [src/theme](#srctheme)
-  _ [GlobalStyles](#globalstyles)
-  _ [styledComponents](#styledcomponents)
-  _ [mixins.js](#mixinsjs) \* [variables](#variables)
+  - [src/components](#srccomponents)
+    - [src/components/Containers](#srccomponentscontainers)
+    - [src/components/Presentational](#srccomponentspresentational)
+    - [src/components/forms](#srccomponentsforms)
+    - [src/components/hoc](#srccomponentshoc)
+    - [src/components/icons](#srccomponentsicons)
+    - [src/config](#srcconfig)
+    - [src/redux](#srcredux)
+      - [What's this types.js file?](#whats-this-typesjs-file)
+      - [What's this store.js file?](#whats-this-storejs-file)
+    - [src/theme](#srctheme)
+      - [GlobalStyles](#globalstyles)
+      - [styledComponents](#styledcomponents)
+      - [mixins.js](#mixinsjs)
+      - [variables](#variables)
 - [Redux Form](#redux-form)
 
-<!-- /code_chunk_output -->
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Directory Structure
 
