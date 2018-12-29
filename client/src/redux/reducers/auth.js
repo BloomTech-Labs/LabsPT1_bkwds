@@ -7,6 +7,8 @@ import {
   QUERYING_USER_BY_TOKEN_ERROR
 } from "../actions/types"
 
+import { normalizeUser } from "../../utils/selectors"
+
 const defaultState = {
   user: {},
   pending: false,
@@ -19,17 +21,10 @@ const defaultState = {
 export const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      const {
-        email,
-        username,
-        createdAt,
-        updatedAt,
-        _id
-      } = action.payload.data.user
       return {
         ...state,
         isLoggedIn: true,
-        user: { email, username, createdAt, updatedAt, id: _id }
+        user: normalizeUser(action.payload)
       }
 
     case LOGOUT_SUCCESS:
@@ -44,7 +39,7 @@ export const authReducer = (state = defaultState, action) => {
         ...state,
         pending: false,
         isLoggedIn: true,
-        user: action.payload
+        user: normalizeUser(action.payload)
       }
     case QUERYING_USER_BY_TOKEN_ERROR:
       return {

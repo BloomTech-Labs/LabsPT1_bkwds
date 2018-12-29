@@ -19,21 +19,26 @@ class Trip extends Component {
     const { trip, archived } = this.props
     return (
       <s.TripStyles>
-        <div>
-          ID: <Link to={"/app/trip/get/" + trip.id}>{trip.id}</Link>
-          <button onClick={this.handleDelete(trip.id)}>DELETE</button>
-          <button onClick={this.toggleArchive(trip.id, !archived)}>
-            {archived ? "UNARCHIVE" : "ARCHIVE"}
-          </button>
-        </div>
-        <div>Name: {trip.name}</div>
-        <div>UserID: {trip.userId}</div>
-        <div>Start: {trip.start}</div>
-        <div>End: {trip.end}</div>
-        <div>Created at: {trip.createdAt}</div>
-        <div>Updated at: {trip.updatedAt}</div>
-        <div>Archived: {trip.isArchived.toString()}</div>
-        <br />
+        {!trip.id && "Loading trip"}
+        {trip.id && (
+          <>
+            <div>
+              ID: <Link to={"/app/trip/get/" + trip.id}>{trip.id}</Link>
+              <button onClick={this.handleDelete(trip.id)}>DELETE</button>
+              <button onClick={this.toggleArchive(trip.id, !archived)}>
+                {archived ? "UNARCHIVE" : "ARCHIVE"}
+              </button>
+            </div>
+            <div>Name: {trip.name}</div>
+            <div>UserID: {trip.userId}</div>
+            <div>Start: {trip.start}</div>
+            <div>End: {trip.end}</div>
+            <div>Created at: {trip.createdAt}</div>
+            <div>Updated at: {trip.updatedAt}</div>
+            <div>Archived: {trip.isArchived.toString()}</div>
+            <br />
+          </>
+        )}
       </s.TripStyles>
     )
   }

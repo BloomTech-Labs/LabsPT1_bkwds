@@ -81,7 +81,7 @@ class NewTripForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  userId: state.auth.user._id
+  userId: state.auth.user.id
 })
 
 const mapDispatchToProps = { createTrip }

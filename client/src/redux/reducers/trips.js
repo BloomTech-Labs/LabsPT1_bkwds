@@ -19,16 +19,20 @@ import {
 } from "../actions/types"
 
 import {
-  filterOutTripById,
+  // filterOutTripById,
   normalizeTrip,
-  normalizeTrips
+  normalizeTrips,
+  getArchivedTripsArray,
+  getAllButDeleted,
+  getUnarchivedTripsArray
 } from "../../utils/selectors"
 
 const defaultState = {
   pending: false,
   error: null,
   trips: {},
-  activeTrip: {}
+  activeTrip: ""
+  // activeTrip: {}
 }
 
 export const tripReducer = (state = defaultState, action) => {
@@ -40,7 +44,7 @@ export const tripReducer = (state = defaultState, action) => {
         ...state,
         pending: false,
         error: null,
-        trips: normalizeTrips(action.payload.filter(trip => !trip.isArchived))
+        trips: normalizeTrips(getUnarchivedTripsArray(action.payload))
       }
     case LOADING_TRIPS_ERROR:
       return { ...state, pending: false, error: action.payload }
@@ -52,13 +56,13 @@ export const tripReducer = (state = defaultState, action) => {
         ...state,
         pending: false,
         error: null,
-        trips: normalizeTrips(action.payload.filter(trip => trip.isArchived))
+        trips: normalizeTrips(getArchivedTripsArray(action.payload))
       }
     case LOADING_ARCHIVED_TRIPS_ERROR:
       return { ...state, pending: false, error: action.payload }
 
     case GET_SINGLE_TRIP:
-      return { ...state, activeTrip: state.trips[action.payload] }
+      return { ...state, activeTrip: action.payload }
 
     case CREATING_TRIP:
       return { ...state, pending: true }
@@ -76,14 +80,14 @@ export const tripReducer = (state = defaultState, action) => {
       return state
 
     case DELETING_TRIP:
-      // Make activeTrip an empty object in case we're deleting activeTrip
-      return { ...state, pending: true, activeTrip: {} }
+      // Make activeTrip an empty string in case we happen to be deleting the activeTrip
+      return { ...state, pending: true, activeTrip: "" }
     case DELETING_TRIP_SUCCESS:
       return {
         ...state,
         pending: false,
         error: null,
-        trips: filterOutTripById(action.payload)(state.trips)
+        trips: getAllButDeleted(state, action.payload)
       }
     case DELETING_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 import Trip from "./Trip"
 import { getSingleTrip } from "../redux/actions/trips"
+import { getTripById } from "../utils/selectors"
 
 class SingleTrip extends Component {
   componentDidMount() {
@@ -15,15 +16,15 @@ class SingleTrip extends Component {
     return (
       <div>
         <div>Single Trip View component here! {tripId}</div>
-        {trip && <Trip trip={trip} />}
+        <Trip trip={trip} />
         <Link to="/app/trips">← Back to All Trips</Link>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  trip: state.trips.activeTrip
+const mapStateToProps = (state, ownProps) => ({
+  trip: getTripById(state, ownProps.tripId)
 })
 
 const mapDispatchToProps = { getSingleTrip }

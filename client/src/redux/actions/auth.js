@@ -22,7 +22,7 @@ export const login = ({ username, password }) => dispatch => {
     .post(`${SERVER_URI}/login`, { username, password })
     .then(res => {
       console.log("RESPONSE:", res)
-      dispatch({ type: LOGIN_SUCCESS, payload: res })
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
 
       localStorage.setItem("jwt", JSON.stringify(res.data.token))
 

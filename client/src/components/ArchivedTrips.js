@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 
 import Trip from "./Trip"
 import { getArchivedTrips } from "../redux/actions/trips"
+import { getTripsArray } from "../utils/selectors"
 
 class ArchivedTrips extends Component {
   componentDidMount() {
@@ -23,7 +24,7 @@ class ArchivedTrips extends Component {
 }
 
 const mapStateToProps = state => ({
-  trips: Object.keys(state.trips.trips).map(key => state.trips.trips[key])
+  trips: getTripsArray(state)
 })
 
 const mapDispatchToProps = { getArchivedTrips }
