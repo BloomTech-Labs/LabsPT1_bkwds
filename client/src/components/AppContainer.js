@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 
-import AppNav from "../containers/AppNav"
+import AppNav from "./AppNav"
 import Sidebar from "./Sidebar"
 import { GlobalStyles } from "../styles/theme/GlobalStyles"
 import { logout } from "../redux/actions/auth"

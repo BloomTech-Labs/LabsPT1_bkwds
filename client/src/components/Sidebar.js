@@ -13,7 +13,7 @@ const Sidebar = ({ location }) => {
   return (
     <s.SidebarStyles>
       <div className="sidebar-links">
-        App
+        <div style={{ marginLeft: "2rem" }}>App:</div>
         <SidebarLink
           to="/app"
           displayName="Dashboard"
@@ -39,7 +39,7 @@ const Sidebar = ({ location }) => {
           displayName="Settings"
           pathname={location.pathname}
         />
-        Pages
+        <div style={{ marginLeft: "2rem" }}>Pages:</div>
         <SidebarLink
           to="/"
           displayName="Landing Page"

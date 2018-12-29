@@ -1,11 +1,21 @@
 import React from "react"
-import * as s from "../styles/AppNav.styles"
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
 
 import AuthenticatedLinks from "./AuthenticatedLinks"
 import UnauthenticatedLinks from "./UnauthenticatedLinks"
 import GitHubSvg from "./icons/GitHubSvg"
 
-const AppNav = ({ pathname, logout, isLoggedIn, isHomeOrAuthPath }) => {
+import { logout } from "../redux/actions/auth"
+import { isProtectedPath } from "../utils"
+import * as s from "../styles/AppNav.styles"
+
+const protectedPaths = ["/", "/login", "/signup"]
+
+const AppNav = ({ location, logout, isLoggedIn }) => {
+  const { pathname } = location
+  const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
+
   return (
     <div>
       <s.NavStyles>
@@ -24,4 +34,17 @@ const AppNav = ({ pathname, logout, isLoggedIn, isHomeOrAuthPath }) => {
   )
 }
 
-export default AppNav
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn
+})
+
+const mapDispatchToProps = {
+  logout
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AppNav)
+)

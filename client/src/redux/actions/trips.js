@@ -1,4 +1,5 @@
 import axios from "axios"
+import { push } from "connected-react-router"
 
 import { SERVER_URI } from "../../config"
 import {
@@ -39,6 +40,7 @@ export const createTrip = trip => dispatch => {
     .post(`${SERVER_URI}/trips`, { ...trip })
     .then(res => {
       dispatch({ type: CREATING_TRIP_SUCCESS, payload: res.data })
+      dispatch(push("/app/trips"))
     })
     .catch(err => {
       dispatch({ type: CREATING_TRIP_ERROR, payload: err })

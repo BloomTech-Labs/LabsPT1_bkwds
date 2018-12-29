@@ -7,7 +7,7 @@ const LandingPage = () => {
   return (
     <>
       <GlobalStyles />
-      <LandingNav />
+      <LandingNav scrollY={100} />
       <Landing />
     </>
   )

@@ -26,7 +26,7 @@ export const normalizeTrips = tripsArr =>
  * filterTripById
  * Signature :: String -> Array<ReduxTrip> -> Array<ReduxTrip
  **/
+// eslint-disable-next-line no-unused-vars
 export const filterTripById = id => ({ [id]: filtered, ...rest }) => {
-  console.log("DELETED:", filtered)
   return rest
 }

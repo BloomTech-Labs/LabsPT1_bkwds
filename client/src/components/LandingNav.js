@@ -1,7 +1,7 @@
 import React from "react"
 import { Link, Redirect } from "react-router-dom"
 
-import Banner from "../containers/Banner"
+import Banner from "./Banner"
 import ChevronSvg from "./icons/ChevronSvg"
 import UserSvg from "./icons/UserSvg"
 import { Button } from "../styles/theme/styledComponents"
@@ -38,11 +38,11 @@ class LandingNav extends React.Component {
     window.addEventListener("scroll", this.handleScroll)
   }
 
+  // eslint-disable-next-line no-unused-vars
   componentDidUpdate(_, prevState) {
-    // logging `_` to shush travisCI
-    console.log(_)
-    if (this.state.scrollY > 100 && prevState.drawerOpen) this.closeDrawer()
-    if (this.state.scrollY < 100 && !prevState.drawerOpen) this.openDrawer()
+    const { scrollY } = this.props || 100
+    if (this.state.scrollY > scrollY && prevState.drawerOpen) this.closeDrawer()
+    if (this.state.scrollY < scrollY && !prevState.drawerOpen) this.openDrawer()
   }
 
   componentWillUnmount() {
@@ -58,7 +58,7 @@ class LandingNav extends React.Component {
               "banner-and-top-nav-wrapper " + this.state.drawerClasses.join(" ")
             }
           >
-            <Banner />
+            <Banner seconds={9} />
 
             <div className="landing-page-mobile-top-nav">
               <div className="landing-page-nav">
