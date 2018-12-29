@@ -17,7 +17,7 @@ const Trips = ({ trips, getTrips }) => {
 }
 
 const mapStateToProps = state => ({
-  trips: state.trips.trips
+  trips: Object.keys(state.trips.trips).map(key => state.trips.trips[key])
 })
 
 const mapDispatchToProps = { getTrips }

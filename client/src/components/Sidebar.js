@@ -13,15 +13,20 @@ const Sidebar = ({ location }) => {
   return (
     <s.SidebarStyles>
       <div className="sidebar-links">
-        <SidebarLink to="/" displayName="Home" pathname={location.pathname} />
+        App
+        <SidebarLink
+          to="/app"
+          displayName="Dashboard"
+          pathname={location.pathname}
+        />
         <SidebarLink
           to="/app/trip/create"
-          displayName="Add a trip"
+          displayName="Create a new trip"
           pathname={location.pathname}
         />
         <SidebarLink
           to="/app/trips"
-          displayName="Trips"
+          displayName="All Trips"
           pathname={location.pathname}
         />
         <SidebarLink
@@ -32,6 +37,12 @@ const Sidebar = ({ location }) => {
         <SidebarLink
           to="/app/settings"
           displayName="Settings"
+          pathname={location.pathname}
+        />
+        Pages
+        <SidebarLink
+          to="/"
+          displayName="Landing Page"
           pathname={location.pathname}
         />
         <SidebarLink

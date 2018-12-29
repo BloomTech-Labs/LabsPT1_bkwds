@@ -3,7 +3,6 @@ import { connectRouter, routerMiddleware } from "connected-react-router"
 import { createBrowserHistory } from "history"
 import thunk from "redux-thunk"
 import logger from "redux-logger"
-import { reducer as formReducer } from "redux-form"
 
 import { authReducer } from "./redux/reducers/auth"
 import { tripReducer } from "./redux/reducers/trips"
@@ -18,7 +17,6 @@ const createRootReducer = history =>
   combineReducers({
     trips: tripReducer,
     auth: authReducer,
-    form: formReducer,
     router: connectRouter(history)
   })
 

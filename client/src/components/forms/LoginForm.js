@@ -1,36 +1,51 @@
-import React from "react"
-import { Field, reduxForm } from "redux-form"
+import React, { Component } from "react"
+import { connect } from "react-redux"
 
-import { Form, Button } from "../../styles/theme/styledComponents"
-import { ValidatedInput } from "./customInputs"
-import { validateLogin } from "./formValidations"
+import { Form, Input, Button } from "../../styles/theme/styledComponents"
+import { login } from "../../redux/actions/auth"
 
-let LoginForm = props => {
-  const { handleSubmit } = props
-  return (
-    <Form onSubmit={handleSubmit}>
-      <Field
-        name="username"
-        placeholder="Username or email"
-        type="text"
-        component={ValidatedInput}
-      />
-      <Field
-        name="password"
-        placeholder="Password"
-        type="password"
-        component={ValidatedInput}
-      />
-      <Button className="btn" type="submit">
-        Submit
-      </Button>
-    </Form>
-  )
+class LoginForm extends Component {
+  state = {
+    username: "",
+    password: ""
+  }
+
+  handleChange = key => e => {
+    this.setState({ [key]: e.target.value })
+  }
+
+  handleSubmit = e => {
+    e.preventDefault()
+    const { username, password } = this.state
+    this.props.login({ username, password })
+  }
+
+  render() {
+    return (
+      <>
+        <Form>
+          <Input
+            type="text"
+            placeholder="Username or email"
+            onChange={this.handleChange("username")}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            onChange={this.handleChange("password")}
+          />
+          <Button className="btn" type="submit" onClick={this.handleSubmit}>
+            Log in
+          </Button>
+        </Form>
+      </>
+    )
+  }
 }
 
-LoginForm = reduxForm({
-  form: "login",
-  validate: validateLogin
-})(LoginForm)
+const mapDispatchToProps = { login }
 
-export default LoginForm
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginForm)

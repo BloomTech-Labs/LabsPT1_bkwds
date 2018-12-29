@@ -4,7 +4,6 @@ import { Redirect, Route } from "react-router"
 
 const CustomRoute = props => {
   const { isLoggedIn, protectedPath, ...rest } = props
-  console.log("RENDERING CUSTOM ROUTE!", isLoggedIn, "\nREST:", rest)
   if (isLoggedIn || !protectedPath) {
     return <Route {...rest} />
   }

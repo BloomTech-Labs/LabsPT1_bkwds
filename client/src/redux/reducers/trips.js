@@ -4,13 +4,16 @@ import {
   LOADING_TRIPS_ERROR,
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
-  CREATING_TRIP_ERROR
+  CREATING_TRIP_ERROR,
+  CREATING_WAYPOINT,
+  GET_SINGLE_TRIP
 } from "../actions/types"
 
 const defaultState = {
   loading: false,
   error: null,
-  trips: []
+  trips: {},
+  activeTrip: {}
 }
 
 export const tripReducer = (state = defaultState, action) => {
@@ -22,10 +25,15 @@ export const tripReducer = (state = defaultState, action) => {
         ...state,
         loading: false,
         error: null,
-        trips: action.payload
+        trips: action.payload.reduce((acc, curr) => {
+          acc[curr._id] = curr
+          return acc
+        }, {})
       }
     case LOADING_TRIPS_ERROR:
       return { ...state, loading: false, error: action.payload }
+    case GET_SINGLE_TRIP:
+      return { ...state, activeTrip: state.trips[action.payload] }
     case CREATING_TRIP:
       return { ...state, loading: true }
     case CREATING_TRIP_SUCCESS:
@@ -34,6 +42,9 @@ export const tripReducer = (state = defaultState, action) => {
         loading: false,
         trips: [...state.trips, action.payload]
       }
+    // IMPLEMENT!
+    case CREATING_WAYPOINT:
+      return { ...state }
     case CREATING_TRIP_ERROR:
       return { ...state, loading: false, error: action.payload }
     default:

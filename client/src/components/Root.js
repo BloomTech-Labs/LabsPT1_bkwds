@@ -1,7 +1,6 @@
 import React from "react"
 import { Switch } from "react-router-dom"
 
-// import Dashboard from "../containers/Dashboard"
 import Dashboard from "./pages/Dashboard"
 import Pages from "./pages/Pages"
 import LandingPage from "./pages/LandingPage"

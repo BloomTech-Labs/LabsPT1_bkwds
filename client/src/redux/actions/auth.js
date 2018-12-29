@@ -20,7 +20,7 @@ export const login = ({ username, password }) => dispatch => {
 
       localStorage.setItem("jwt", JSON.stringify(res.data.token))
 
-      dispatch(push("/login_success"))
+      dispatch(push("/app"))
     })
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })
@@ -38,7 +38,7 @@ export const register = ({ email, username, password }) => dispatch => {
       // DO WE NEED THIS CHECK?
       // if (res.status === 201) {
       dispatch({ type: REGISTRATION_SUCCESS })
-      dispatch(push("/logged-in"))
+      dispatch(push("/pages/login"))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })

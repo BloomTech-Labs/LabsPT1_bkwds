@@ -1,14 +1,13 @@
 import React from "react"
 
 import * as s from "../styles/Login.styles"
-import NewLoginForm from "./forms/NewLoginForm"
-// import LoginForm from "../../forms/LoginForm"
+import LoginForm from "./forms/LoginForm"
 
-const Login = props => {
+const Login = () => {
   return (
     <s.LoginStyles>
       <h3>Log In</h3>
-      <NewLoginForm onSubmit={props.login} />
+      <LoginForm />
     </s.LoginStyles>
   )
 }

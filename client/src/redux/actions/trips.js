@@ -5,9 +5,11 @@ import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
   LOADING_TRIPS_ERROR,
+  GET_SINGLE_TRIP,
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
-  CREATING_TRIP_ERROR
+  CREATING_TRIP_ERROR,
+  CREATING_WAYPOINT
 } from "./types"
 
 export const getTrips = () => dispatch => {
@@ -24,9 +26,11 @@ export const getTrips = () => dispatch => {
     })
 }
 
-export const createTrip = trip => dispatch => {
-  console.log("IN TRIPS ACTION! TRIP:\n", trip)
+export const getSingleTrip = tripId => dispatch => {
+  dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
+}
 
+export const createTrip = trip => dispatch => {
   dispatch({ type: CREATING_TRIP })
   axios
     .post(`${SERVER_URI}/trips`, {
@@ -34,8 +38,6 @@ export const createTrip = trip => dispatch => {
       userId: "5c152440cd78b73ce82d683c"
     })
     .then(res => {
-      console.log("CREATE TRIP RESPONSE:", res)
-
       dispatch({ type: CREATING_TRIP_SUCCESS, payload: res.data })
     })
     .catch(err => {
@@ -43,4 +45,9 @@ export const createTrip = trip => dispatch => {
       //errorHandler(err)
       console.error("CREATE TRIP ERROR!", err)
     })
+}
+
+export const saveWaypoint = waypoint => dispatch => {
+  dispatch({ type: CREATING_WAYPOINT })
+  alert("implement save waypoint!")
 }

@@ -2,8 +2,8 @@ import React from "react"
 import { Switch } from "react-router-dom"
 
 import AppContainer from "../AppContainer"
-import Register from "../../containers/Register"
-import Login from "../../containers/Login"
+import Register from "../Register"
+import Login from "../Login"
 import CustomRoute from "../../utils/CustomRoute"
 
 const pagesRoutes = [

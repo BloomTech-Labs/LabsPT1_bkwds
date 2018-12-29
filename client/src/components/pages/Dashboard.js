@@ -7,26 +7,31 @@ import { Switch } from "react-router-dom"
 import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"
+import DashboardHome from "../DashboardHome"
+import SingleTrip from "../SingleTrip"
 
 import { getTrips } from "../../redux/actions/trips"
 import CustomRoute from "../../utils/CustomRoute"
 
 export const Billing = () => <div>Billing component here!</div>
 export const Settings = () => <div>Settings component here!</div>
-export const SingleTrip = ({ trip }) => (
-  <div>Single Trip View component here! {trip.toString()}</div>
-)
 
 const dashboardRoutes = [
+  {
+    path: "/",
+    name: "Dashboard",
+    component: DashboardHome,
+    exact: true
+  },
   {
     path: "/trip/create",
     name: "NewTrip",
     component: NewTrip
   },
   {
-    path: "/trip/:tripId",
+    path: "/trip/get/:tripId",
     name: "SingleTrip",
-    render: ({ match }) => <SingleTrip trip={match.params.tripId} />
+    render: ({ match }) => <SingleTrip tripId={match.params.tripId} />
   },
   {
     path: "/trips",
@@ -51,20 +56,12 @@ class Dashboard extends Component {
   }
 
   render() {
+    const basePath = this.props.match.path
     return (
       <Switch>
         <AppContainer>
           {dashboardRoutes.map(({ path, ...rest }, idx) => (
-            <>
-              {console.log("RENDERING DASHBOARD ROUTE!")}
-              {console.log("DASHBOARD ROUTE PATH:", path)}
-              {console.log("DASHBOARD ROUTE REST:", rest)}
-              <CustomRoute
-                path={this.props.match.path + path}
-                {...rest}
-                key={idx}
-              />
-            </>
+            <CustomRoute path={basePath + path} {...rest} key={idx} />
           ))}
         </AppContainer>
       </Switch>
