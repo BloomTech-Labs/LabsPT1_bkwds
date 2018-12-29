@@ -7,16 +7,16 @@ import { ThemeProvider } from "styled-components"
 import "bootstrap/dist/css/bootstrap.min.css"
 import * as serviceWorker from "./serviceWorker"
 
-import App from "./components/App"
+import Root from "./components/Root"
 import { store } from "./store"
-import { theme } from "./theme/variables"
+import { theme } from "./styles/theme/variables"
 import { history } from "./store"
 
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <ThemeProvider theme={theme}>
-        <App />
+        <Root />
       </ThemeProvider>
     </ConnectedRouter>
   </Provider>,

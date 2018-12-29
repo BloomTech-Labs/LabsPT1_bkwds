@@ -2,7 +2,7 @@ import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/types"
 
 const defaultState = {
   user: null,
-  isLoggedIn: false,
+  isLoggedIn: true,
   isSignedUp: false,
   isError: false,
   error: null

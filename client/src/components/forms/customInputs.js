@@ -1,5 +1,5 @@
 import React from "react"
-import { Input } from "../../theme/styledComponents"
+import { Input } from "../../styles/theme/styledComponents"
 
 export const ValidatedInput = props => {
   const { input, meta, type, placeholder } = props

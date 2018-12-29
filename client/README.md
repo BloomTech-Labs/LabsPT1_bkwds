@@ -309,3 +309,8 @@ You can also access **component props** to render styles conditionally, dependin
 - Refactor Nav scrollY into variable, or read from a prop (can then make this dynamic based on screen height?)
 - Add PropTypes to all components
 - Add Jest/Enzyme/Sinon and configure frontend tests
+- Remove `isSignedUp` from auth state
+- Update Dashboard router to use Redirect.props.to.state (from) to redirect after login
+- Add Pages:
+  1. /login :: Login
+  2. /signup :: Register

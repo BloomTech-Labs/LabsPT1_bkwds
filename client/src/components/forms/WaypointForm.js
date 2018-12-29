@@ -1,7 +1,7 @@
 import React from "react"
 import { Field, reduxForm } from "redux-form"
 
-import { Button, Form, Input } from "../../theme/styledComponents"
+import { Button, Form, Input } from "../../styles/theme/styledComponents"
 
 let WaypointForm = ({ handleSubmit }) => {
   return (

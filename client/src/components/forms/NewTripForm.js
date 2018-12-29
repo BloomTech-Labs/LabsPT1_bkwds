@@ -1,7 +1,7 @@
 import React from "react"
 import { Field, reduxForm } from "redux-form"
 
-import { Button, Form } from "../../theme/styledComponents"
+import { Button, Form } from "../../styles/theme/styledComponents"
 import { CustomInput as Input } from "./customInputs"
 
 let NewTripForm = ({ handleSubmit }) => {
