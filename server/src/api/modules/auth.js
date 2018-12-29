@@ -56,8 +56,6 @@ export const login = (req, res) => {
 }
 
 export const protect = (req, res, next) => {
-  console.log("REQ HEADERS!", req.headers)
-  console.log("REQ HEADER: AUTH!", req.headers.authorization)
   if (!req.headers.authorization) {
     return res.status(400).send("Bad Request")
   }
@@ -79,5 +77,8 @@ export const getUserFromToken = (req, res) => {
     .then(user => {
       return res.status(200).json(user)
     })
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.error(err)
+      return res.status(401).send("Unauthorized")
+    })
 }
