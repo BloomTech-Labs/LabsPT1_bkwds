@@ -87,10 +87,10 @@ export const toggleArchive = (tripId, archiveTrip) => dispatch => {
   dispatch({ type: TOGGLE_ARCHIVE_TRIP })
   axios
     .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: archiveTrip })
-    .then(res => {
+    .then(() => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_SUCCESS })
     })
-    .then(res => {
+    .then(() => {
       archiveTrip ? dispatch(getTrips()) : dispatch(getArchivedTrips())
     })
     .catch(err => {
@@ -101,6 +101,7 @@ export const toggleArchive = (tripId, archiveTrip) => dispatch => {
 }
 
 export const saveWaypoint = waypoint => dispatch => {
+  console.log(waypoint)
   dispatch({ type: CREATING_WAYPOINT })
   alert("implement save waypoint!")
 }

@@ -21,8 +21,6 @@ Welcome to the client-side code for Backwoods Tracker!
     - [variables.js](#variablesjs)
       - [Advanced theming](#advanced-theming)
 - [Dependencies](#dependencies)
-  - [Redux Form](#redux-form)
-    - [Usage](#usage)
 - [TODO](#todo)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -260,48 +258,7 @@ You can also access **component props** to render styles conditionally, dependin
 
 # Dependencies
 
-## Redux Form
-
-[redux-form on GitHub](https://redux-form.com/8.1.0/docs/gettingstarted.md/)
-[redux-form docs](https://redux-form.com/8.1.0/docs/gettingstarted.md/)
-
-`redux-form` connects our form components to our Redux store. It simplifies
-
-### Usage
-
-1. Import `Field` and `reduxForm` from `redux-form`
-2. When you declare your component, use `let` instead of `const` because you will be overwriting it
-3. Use a `form` element or our custom `Form` component
-4. Pass the form an `onSubmit` function; this will probably be a Redux action. It's important that this is named `onSubmit`!
-5. Add a `Field` component for each input; any props you pass it will be spread onto the rendered element, for example `placeholder`. Make sure it has the following props, which are specific to redux-form:
-   - `name`: The name of the field you want registered with state; this is how you will access the value later on
-   - `component`: This is either a string representing the type of html element, for example `component="input` _or_ the interpolated name of a custom component, for example `component={MyInput}`
-   - There are other props you can pass a `Field`, consult the docs for more advanced usage
-6. Reassign your component like so, where the value of `form` is what you want to name the form in the store (available here on `form.myform`):
-   ```javascript
-   MyForm = reduxForm({ form: "myform" })(MyForm)
-   ```
-7. Export your form! No need to use `connect`, redux-form handles that for you.
-8. If you want more control over the `onSubmit` function, all the field values are passed as an object to whatever function you pass here (the convention is to call this object `values`).
-
-   - No need to access the `event` object to run `event.preventDefault()`, this is handled for you.
-   - For example, in an early iteration the `NewTrip` component defined the `onSubmit` function like this:
-
-   ```javascript
-   import NewTripForm from "./forms/NewTripForm"
-   import { createTrip } from "../redux/actions/trips"
-
-   class NewTrip extends Component {
-     submitTrip = values => {
-       this.props.createTrip({ ...values })
-     }
-     render() {
-       return <NewTripForm onSubmit={this.submitTrip} />
-     }
-   }
-   ```
-
-   In this case this is unnecessary because we're just spreading values into the `createTrip` action, but if you needed to do something with the values before sending it to the action, this is how you would do it.
+- Redux Form removed 12/29/18
 
 # TODO
 
