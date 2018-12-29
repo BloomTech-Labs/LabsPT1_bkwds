@@ -18,11 +18,6 @@ export const LandingNavStyles = styled.div`
   justify-content: space-between;
 
   .landing-page-mobile-top-nav {
-    /* ${media.desktop`height: 5.625rem`}; */
-    /* @media all and (min-width: 1024px) {
-      display: none;
-    } */
-
     ${boxShadowMixin};
     position: relative;
     display: flex;
@@ -32,7 +27,7 @@ export const LandingNavStyles = styled.div`
   }
 
   .open-drawer {
-    transition: transform .25s ease-in-out,-webkit-transform .25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
     will-change: transform;
   }
   .close-drawer {
@@ -142,9 +137,6 @@ export const LandingNavBottomStyles = styled.div`
     ${flexCenterMixin};
     justify-content: space-between;
 
-    /* Consider turning these off until you test them more */
-    transform: translateY(60px);
-    ${media.tablet`transform: translateY(70px)`};
     transition: transform 0.25s ease-in-out;
 
     background: #fff;
@@ -243,8 +235,11 @@ export const LandingNavBottomStyles = styled.div`
     
     .tablet-bottom-cta-wrapper {
       position: fixed;
+
+      transition: transform 0.25s ease-in-out;
+
       /* This style is also mutated in the JSX component */
-      top: 7.25rem;
+      /* top: 7.25rem; */
       width: 100%;
       display: flex;
       align-items: center;

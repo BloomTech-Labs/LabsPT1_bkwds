@@ -95,9 +95,11 @@ class LandingNav extends React.Component {
               <div
                 className="mobile-bottom-nav"
                 style={{
-                  top:
-                    !this.state.drawerOpen &&
-                    (this.state.width <= 768 ? "-1.35rem" : "-0.75rem")
+                  transform: this.state.drawerOpen
+                    ? this.state.width <= 768
+                      ? "translateY(4.365rem)"
+                      : "translateY(3.75rem)"
+                    : "translateY(0rem)"
                 }}
               >
                 <div className="mobile-bottom-nav-left split-top-on-mobile">
@@ -134,7 +136,10 @@ class LandingNav extends React.Component {
                 <div
                   className="tablet-bottom-cta-wrapper"
                   style={{
-                    top: !this.state.drawerOpen ? "3.4rem" : "7.25rem"
+                    transform:
+                      this.state.width >= 768 && this.state.drawerOpen
+                        ? "translateY(2.9625rem)"
+                        : "translateY(-0.87125rem)"
                   }}
                 >
                   <div className="tablet-bottom-cta-text">
