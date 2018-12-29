@@ -1,4 +1,6 @@
 import React, { Component } from "react"
+import { connect } from "react-redux"
+
 import {
   Dropdown,
   DropdownToggle,
@@ -30,6 +32,7 @@ class NavDropdown extends Component {
   }
 
   render() {
+    const { user } = this.props
     return (
       <s.DropdownStyles>
         <Dropdown
@@ -39,7 +42,8 @@ class NavDropdown extends Component {
           toggle={this.toggle}
         >
           <DropdownToggle>
-            Account <ChevronSvg fill="#a3a3a3" />
+            Hi, {user.username ? user.username + "!" : "Account"}{" "}
+            <ChevronSvg fill="#a3a3a3" />
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem>
@@ -72,4 +76,6 @@ class NavDropdown extends Component {
   }
 }
 
-export default NavDropdown
+const mapStateToProps = state => ({ user: state.auth.user })
+
+export default connect(mapStateToProps)(NavDropdown)

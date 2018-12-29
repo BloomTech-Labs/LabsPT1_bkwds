@@ -10,7 +10,7 @@ const Trips = ({ trips, getTrips }) => {
     <div>
       <button onClick={getTrips}>Get trips</button>
       {trips.map(trip => (
-        <Trip key={trip._id} trip={trip} />
+        <Trip key={trip.id} trip={trip} />
       ))}
     </div>
   )

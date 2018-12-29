@@ -1,8 +1,8 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/types"
 
 const defaultState = {
-  user: null,
-  isLoggedIn: true,
+  user: {},
+  isLoggedIn: false,
   isSignedUp: false,
   isError: false,
   error: null
@@ -11,14 +11,20 @@ const defaultState = {
 export const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      const { email, username, createdAt, updatedAt } = action.payload.data.user
+      const {
+        email,
+        username,
+        createdAt,
+        updatedAt,
+        _id
+      } = action.payload.data.user
       return {
         ...state,
         isLoggedIn: true,
-        user: { email, username, createdAt, updatedAt }
+        user: { email, username, createdAt, updatedAt, id: _id }
       }
     case LOGOUT_SUCCESS:
-      return { ...state, user: null, isLoggedIn: false }
+      return { ...state, user: {}, isLoggedIn: false }
     default:
       return state
   }

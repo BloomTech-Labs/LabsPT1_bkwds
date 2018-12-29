@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+
 import Dropdown from "./Dropdown"
 import * as s from "../styles/AuthenticatedLinks.styles"
 

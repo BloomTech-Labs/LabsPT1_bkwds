@@ -9,7 +9,10 @@ import {
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
   CREATING_TRIP_ERROR,
-  CREATING_WAYPOINT
+  CREATING_WAYPOINT,
+  DELETING_TRIP,
+  DELETING_TRIP_SUCCESS,
+  DELETING_TRIP_ERROR
 } from "./types"
 
 export const getTrips = () => dispatch => {
@@ -33,10 +36,7 @@ export const getSingleTrip = tripId => dispatch => {
 export const createTrip = trip => dispatch => {
   dispatch({ type: CREATING_TRIP })
   axios
-    .post(`${SERVER_URI}/trips`, {
-      ...trip,
-      userId: "5c152440cd78b73ce82d683c"
-    })
+    .post(`${SERVER_URI}/trips`, { ...trip })
     .then(res => {
       dispatch({ type: CREATING_TRIP_SUCCESS, payload: res.data })
     })
@@ -44,6 +44,20 @@ export const createTrip = trip => dispatch => {
       dispatch({ type: CREATING_TRIP_ERROR, payload: err })
       //errorHandler(err)
       console.error("CREATE TRIP ERROR!", err)
+    })
+}
+
+export const deleteTrip = tripId => dispatch => {
+  dispatch({ type: DELETING_TRIP })
+  axios
+    .delete(`${SERVER_URI}/trips/${tripId}`)
+    .then(res => {
+      dispatch({ type: DELETING_TRIP_SUCCESS, payload: res.data._id })
+    })
+    .catch(err => {
+      dispatch({ type: DELETING_TRIP_ERROR, payload: err })
+      //errorHandler(err)
+      console.error("DELETE TRIP ERROR!", err)
     })
 }
 

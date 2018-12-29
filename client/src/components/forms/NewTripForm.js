@@ -24,12 +24,12 @@ class NewTripForm extends Component {
   handleSubmit = e => {
     e.preventDefault()
     const { trip } = this.state
-    console.log("NEW FORM TRIP ON SUBMIT:", { ...trip })
-    this.props.createTrip({ ...trip })
+    this.props.createTrip({ ...trip, userId: this.props.userId })
     this.setState({ ...defaultState })
   }
 
   render() {
+    const { trip } = this.state
     return (
       <div className="new-trip-form">
         <Form>
@@ -37,19 +37,29 @@ class NewTripForm extends Component {
             <Input
               type="text"
               placeholder="Trip Name"
+              value={trip.name}
               onChange={this.handleChange("name")}
             />
           </div>
           <div className="trip-start new-trip-form-field">
-            <Input type="date" onChange={this.handleChange("start")} />
+            <Input
+              type="date"
+              value={trip.start}
+              onChange={this.handleChange("start")}
+            />
           </div>
           <div className="trip-end new-trip-form-field">
-            <Input type="date" onChange={this.handleChange("end")} />
+            <Input
+              type="date"
+              value={trip.end}
+              onChange={this.handleChange("end")}
+            />
           </div>
           <div className="trip-lat new-trip-form-field">
             <Input
               type="text"
               placeholder="Latitude"
+              value={trip.lat}
               onChange={this.handleChange("lat")}
             />
           </div>
@@ -57,6 +67,7 @@ class NewTripForm extends Component {
             <Input
               type="text"
               placeholder="Longitude"
+              value={trip.lon}
               onChange={this.handleChange("lon")}
             />
           </div>
@@ -69,9 +80,13 @@ class NewTripForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  userId: state.auth.user.id
+})
+
 const mapDispatchToProps = { createTrip }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewTripForm)
