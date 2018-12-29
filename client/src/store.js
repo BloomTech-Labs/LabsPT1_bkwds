@@ -15,8 +15,8 @@ const middleware = [thunk, logger, routerMiddleware(history)]
 // TODO: put in redux/reducers/index.js & import instead
 const createRootReducer = history =>
   combineReducers({
-    trips: tripReducer,
     auth: authReducer,
+    trips: tripReducer,
     router: connectRouter(history)
   })
 

@@ -3,6 +3,9 @@ import { push } from "connected-react-router"
 
 import { SERVER_URI } from "../../config"
 import {
+  ARCHIVING_TRIP,
+  ARCHIVING_TRIP_SUCCESS,
+  ARCHIVING_TRIP_ERROR,
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
   LOADING_TRIPS_ERROR,
@@ -61,6 +64,10 @@ export const deleteTrip = tripId => dispatch => {
       //errorHandler(err)
       console.error("DELETE TRIP ERROR!", err)
     })
+}
+
+export const archiveTrip = tripId => dispatch => {
+  dispatch({ type: ARCHIVING_TRIP })
 }
 
 export const saveWaypoint = waypoint => dispatch => {

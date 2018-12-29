@@ -13,10 +13,7 @@ const Right = styled.div`
   width: 100%;
 `
 
-// const AppContainer = ({ pathname, children, isLoggedIn }) => {
-const AppContainer = props => {
-  const { pathname, children, isLoggedIn } = props
-
+const AppContainer = ({ pathname, children, isLoggedIn }) => {
   const authPaths = ["/signup", "/login"]
   const showBreadcrumbs = !isProtectedPath(pathname, [...authPaths])
   const showSidebar = isLoggedIn && showBreadcrumbs

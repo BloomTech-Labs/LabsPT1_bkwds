@@ -1,3 +1,7 @@
+const findTripById = id => ({ [id]: found }) => {
+  return found
+}
+
 /**
  * normalizeTrip
  * Signature :: Object<ServerTrip> -> { id: Object<ReduxTrip> }
@@ -30,3 +34,7 @@ export const normalizeTrips = tripsArr =>
 export const filterTripById = id => ({ [id]: filtered, ...rest }) => {
   return rest
 }
+
+export const updateTripValue = (trip, key, value) => {}
+
+// export const findAndUpdateTrip =

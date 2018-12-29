@@ -1,4 +1,7 @@
 import {
+  ARCHIVING_TRIP,
+  ARCHIVING_TRIP_SUCCESS,
+  ARCHIVING_TRIP_ERROR,
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
   LOADING_TRIPS_ERROR,
@@ -65,6 +68,14 @@ export const tripReducer = (state = defaultState, action) => {
         trips: filterTripById(action.payload)(state.trips)
       }
     case DELETING_TRIP_ERROR:
+      return { ...state, pending: false, error: action.payload }
+
+    case ARCHIVING_TRIP:
+      return { ...state, pending: true }
+    case ARCHIVING_TRIP_SUCCESS:
+      return { ...state }
+    // return { ...state, pending: false,  }
+    case ARCHIVING_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
 
     // IMPLEMENT!
