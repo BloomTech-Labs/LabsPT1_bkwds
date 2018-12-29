@@ -84,6 +84,7 @@ export const checkDbForUser = token => dispatch => {
     .then(res => {
       console.log("RESPONSE! res.data:", res.data)
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
+      dispatch(push("/app"))
     })
     .catch(err => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })

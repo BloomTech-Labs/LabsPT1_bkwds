@@ -19,7 +19,6 @@ import {
 } from "../actions/types"
 
 import {
-  // filterOutTripById,
   normalizeTrip,
   normalizeTrips,
   getArchivedTripsArray,
@@ -32,7 +31,6 @@ const defaultState = {
   error: null,
   trips: {},
   activeTrip: ""
-  // activeTrip: {}
 }
 
 export const tripReducer = (state = defaultState, action) => {
@@ -80,7 +78,7 @@ export const tripReducer = (state = defaultState, action) => {
       return state
 
     case DELETING_TRIP:
-      // Make activeTrip an empty string in case we happen to be deleting the activeTrip
+      // Make activeTrip an empty string in case we happen to be deleting the activeTrip:
       return { ...state, pending: true, activeTrip: "" }
     case DELETING_TRIP_SUCCESS:
       return {
