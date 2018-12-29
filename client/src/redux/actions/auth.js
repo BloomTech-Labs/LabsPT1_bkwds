@@ -55,10 +55,10 @@ export const logout = () => dispatch => {
   dispatch(push("/"))
 }
 
-export const addTokenToState = () => async dispatch => {
+export const addTokenToState = () => dispatch => {
   let token
   try {
-    token = await localStorage.getItem("jwt")
+    token = localStorage.getItem("jwt")
   } catch (e) {
     console.error(e)
   }

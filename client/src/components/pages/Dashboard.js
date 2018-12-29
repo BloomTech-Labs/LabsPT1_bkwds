@@ -1,16 +1,16 @@
 /* eslint react/display-name: 0 */
 
-import React, { Component } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
 
 import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"
+import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import SingleTrip from "../SingleTrip"
 
-import { getTrips } from "../../redux/actions/trips"
 import CustomRoute from "../../utils/CustomRoute"
 
 export const Billing = () => <div>Billing component here!</div>
@@ -36,7 +36,13 @@ const dashboardRoutes = [
   {
     path: "/trips",
     name: "Trips",
-    component: Trips
+    component: Trips,
+    exact: true
+  },
+  {
+    path: "/trips/archived",
+    name: "ArchivedTrips",
+    component: ArchivedTrips
   },
   {
     path: "/settings",
@@ -50,32 +56,21 @@ const dashboardRoutes = [
   }
 ]
 
-class Dashboard extends Component {
-  componentDidMount() {
-    this.props.getTrips()
-  }
-
-  render() {
-    const basePath = this.props.match.path
-    return (
-      <Switch>
-        <AppContainer>
-          {dashboardRoutes.map(({ path, ...rest }, idx) => (
-            <CustomRoute path={basePath + path} {...rest} key={idx} />
-          ))}
-        </AppContainer>
-      </Switch>
-    )
-  }
+const Dashboard = ({ match }) => {
+  const basePath = match.path
+  return (
+    <Switch>
+      <AppContainer>
+        {dashboardRoutes.map(({ path, ...rest }, idx) => (
+          <CustomRoute path={basePath + path} {...rest} key={idx} />
+        ))}
+      </AppContainer>
+    </Switch>
+  )
 }
 
 const mapStateToProps = state => ({
   trips: state.trips.trips
 })
 
-const mapDispatchToProps = { getTrips }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard)
+export default connect(mapStateToProps)(Dashboard)

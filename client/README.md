@@ -314,3 +314,4 @@ You can also access **component props** to render styles conditionally, dependin
 - Add Pages:
   1. /login :: Login
   2. /signup :: Register
+- Fix CustomRoute so it doesn't redirect when valid token exists

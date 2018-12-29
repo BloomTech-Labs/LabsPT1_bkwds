@@ -3,12 +3,12 @@ import { push } from "connected-react-router"
 
 import { SERVER_URI } from "../../config"
 import {
-  ARCHIVING_TRIP,
-  ARCHIVING_TRIP_SUCCESS,
-  ARCHIVING_TRIP_ERROR,
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
   LOADING_TRIPS_ERROR,
+  LOADING_ARCHIVED_TRIPS,
+  LOADING_ARCHIVED_TRIPS_SUCCESS,
+  LOADING_ARCHIVED_TRIPS_ERROR,
   GET_SINGLE_TRIP,
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
@@ -16,7 +16,10 @@ import {
   CREATING_WAYPOINT,
   DELETING_TRIP,
   DELETING_TRIP_SUCCESS,
-  DELETING_TRIP_ERROR
+  DELETING_TRIP_ERROR,
+  TOGGLE_ARCHIVE_TRIP,
+  TOGGLE_ARCHIVE_TRIP_SUCCESS,
+  TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
 
 export const getTrips = () => dispatch => {
@@ -30,6 +33,20 @@ export const getTrips = () => dispatch => {
       dispatch({ type: LOADING_TRIPS_ERROR, payload: err })
       //errorHandler(err)
       console.error("GET TRIPS ERROR!", err)
+    })
+}
+
+export const getArchivedTrips = () => dispatch => {
+  dispatch({ type: LOADING_ARCHIVED_TRIPS })
+  return axios
+    .get(`${SERVER_URI}/trips`)
+    .then(res => {
+      dispatch({ type: LOADING_ARCHIVED_TRIPS_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: LOADING_ARCHIVED_TRIPS_ERROR, payload: err })
+      //errorHandler(err)
+      console.error("GET ARCHIVED TRIPS ERROR!", err)
     })
 }
 
@@ -66,8 +83,21 @@ export const deleteTrip = tripId => dispatch => {
     })
 }
 
-export const archiveTrip = tripId => dispatch => {
-  dispatch({ type: ARCHIVING_TRIP })
+export const toggleArchive = (tripId, archiveTrip) => dispatch => {
+  dispatch({ type: TOGGLE_ARCHIVE_TRIP })
+  axios
+    .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: archiveTrip })
+    .then(res => {
+      dispatch({ type: TOGGLE_ARCHIVE_TRIP_SUCCESS })
+    })
+    .then(res => {
+      archiveTrip ? dispatch(getTrips()) : dispatch(getArchivedTrips())
+    })
+    .catch(err => {
+      dispatch({ type: TOGGLE_ARCHIVE_TRIP_ERROR, payload: err })
+      //errorHandler(err)
+      console.error("ARCHIVING TRIP ERROR!", err)
+    })
 }
 
 export const saveWaypoint = waypoint => dispatch => {

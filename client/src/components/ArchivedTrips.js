@@ -2,20 +2,20 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 import Trip from "./Trip"
-import { getTrips } from "../redux/actions/trips"
+import { getArchivedTrips } from "../redux/actions/trips"
 
-class Trips extends Component {
+class ArchivedTrips extends Component {
   componentDidMount() {
-    this.props.getTrips()
+    this.props.getArchivedTrips()
   }
 
   render() {
     const { trips } = this.props
     return (
       <div>
-        {!trips.length && "No unarchived trips!"}
+        {!trips.length && "No archived trips!"}
         {trips.map(trip => (
-          <Trip key={trip.id} trip={trip} archived={false} />
+          <Trip key={trip.id} trip={trip} archived={true} />
         ))}
       </div>
     )
@@ -26,9 +26,9 @@ const mapStateToProps = state => ({
   trips: Object.keys(state.trips.trips).map(key => state.trips.trips[key])
 })
 
-const mapDispatchToProps = { getTrips }
+const mapDispatchToProps = { getArchivedTrips }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Trips)
+)(ArchivedTrips)

@@ -1,7 +1,3 @@
-const findTripById = id => ({ [id]: found }) => {
-  return found
-}
-
 /**
  * normalizeTrip
  * Signature :: Object<ServerTrip> -> { id: Object<ReduxTrip> }
@@ -31,10 +27,15 @@ export const normalizeTrips = tripsArr =>
  * Signature :: String -> Array<ReduxTrip> -> Array<ReduxTrip
  **/
 // eslint-disable-next-line no-unused-vars
-export const filterTripById = id => ({ [id]: filtered, ...rest }) => {
+export const findTripById = id => ({ [id]: filtered, ...rest }) => {
+  return filtered
+}
+
+// eslint-disable-next-line no-unused-vars
+export const filterOutTripById = id => ({ [id]: filtered, ...rest }) => {
   return rest
 }
 
-export const updateTripValue = (trip, key, value) => {}
+// export const updateTripValue = (trip, key, value) => {}
 
 // export const findAndUpdateTrip =

@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 
 import * as s from "../styles/Trip.styles"
-import { deleteTrip, archiveTrip } from "../redux/actions/trips"
+import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 
 class Trip extends Component {
   handleDelete = tripId => e => {
@@ -11,19 +11,20 @@ class Trip extends Component {
     this.props.deleteTrip(tripId)
   }
 
-  handleArchive = tripId => e => {
-    // e.preventDefault()
-    this.props.archiveTrip(tripId)
+  toggleArchive = (tripId, archiveTrip) => () => {
+    this.props.toggleArchive(tripId, archiveTrip)
   }
 
   render() {
-    const { trip } = this.props
+    const { trip, archived } = this.props
     return (
       <s.TripStyles>
         <div>
           ID: <Link to={"/app/trip/get/" + trip.id}>{trip.id}</Link>
           <button onClick={this.handleDelete(trip.id)}>DELETE</button>
-          <button onClick={this.handleArchive(trip.id)}>ARCHIVE</button>
+          <button onClick={this.toggleArchive(trip.id, !archived)}>
+            {archived ? "UNARCHIVE" : "ARCHIVE"}
+          </button>
         </div>
         <div>Name: {trip.name}</div>
         <div>UserID: {trip.userId}</div>
@@ -31,13 +32,14 @@ class Trip extends Component {
         <div>End: {trip.end}</div>
         <div>Created at: {trip.createdAt}</div>
         <div>Updated at: {trip.updatedAt}</div>
+        <div>Archived: {trip.isArchived.toString()}</div>
         <br />
       </s.TripStyles>
     )
   }
 }
 
-const mapDispatchToProps = { deleteTrip }
+const mapDispatchToProps = { deleteTrip, toggleArchive }
 
 export default connect(
   null,

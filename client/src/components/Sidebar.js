@@ -26,7 +26,12 @@ const Sidebar = ({ location }) => {
         />
         <SidebarLink
           to="/app/trips"
-          displayName="All Trips"
+          displayName="Trips"
+          pathname={location.pathname}
+        />
+        <SidebarLink
+          to="/app/trips/archived"
+          displayName="Archived Trips"
           pathname={location.pathname}
         />
         <SidebarLink
