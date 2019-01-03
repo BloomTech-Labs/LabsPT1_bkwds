@@ -1,9 +1,0 @@
-#breadcrumb li a {
-  color: #007bff;
-  text-decoration: none;
-  text-transform: capitalize;
-}
-#breadcrumb .active a {
-  color: #6c757d;
-  cursor: default;
-}

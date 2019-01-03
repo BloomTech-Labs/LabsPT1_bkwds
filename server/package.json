@@ -21,8 +21,7 @@
     "heroku-postbuild": "yarn build"
   },
   "engines": {
-    "node": "10.14.2",
-    "yarn": "1.3.2"
+    "node": "10.x"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
