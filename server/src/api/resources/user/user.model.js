@@ -52,4 +52,6 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
   })
 }
 
+mongoose.set("useCreateIndex", true)
+mongoose.set("useFindAndModify", false)
 export const User = mongoose.model("User", userSchema, "users")
