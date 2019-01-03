@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import * as s from "../styles/Trip.styles"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 
-class Trip extends Component {
+class TripCard extends Component {
   handleDelete = tripId => e => {
     e.preventDefault()
     this.props.deleteTrip(tripId)
@@ -30,13 +30,11 @@ class Trip extends Component {
               <div className="card-container">
                 <Link to={"/app/trip/get/" + trip.id}>View Trip</Link>
                 <div>Name: {trip.name}</div>
-                <div>UserID: {trip.userId}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>
-                <div>Created at: {trip.createdAt}</div>
-                <div>Updated at: {trip.updatedAt}</div>
                 <div>Archived: {trip.isArchived.toString()}</div>
-                <button onClick={this.handleDelete(trip.id)}>DELETE</button>
+                {/* handleEdit here*/}
+                <button onClick={this.handleDelete(trip.id)}>Edit</button>
                 <button onClick={this.toggleArchive(trip.id, !archived)}>
                   {archived ? "UNARCHIVE" : "ARCHIVE"}
                 </button>
@@ -55,4 +53,4 @@ const mapDispatchToProps = { deleteTrip, toggleArchive }
 export default connect(
   null,
   mapDispatchToProps
-)(Trip)
+)(TripCard)
