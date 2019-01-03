@@ -8,6 +8,7 @@ import { Register, Login } from "../Auth"
 import Container from "../Container"
 import FakeLogin from "../FakeLogin"
 import TripList from "../Trips/TripList"
+import LandingPage from "../LandingPage/LandingPage"
 
 export const Home = () => <div>Home component here!</div>
 export const TripView = () => <div>Single Trip View component here!</div>
@@ -22,7 +23,7 @@ const App = props => (
       {/* REMOVE THIS COMPONENT BEFORE PUSHING TO PRODUCTION; FOR TESTING UI CHANGE FOR LOGIN ONLY */}
       <Route path="/" component={FakeLogin} />
       <Switch>
-        <Route path="/" component={Home} exact />
+        <Route path="/" component={LandingPage} exact />
         <Route
           path="/login"
           exact
