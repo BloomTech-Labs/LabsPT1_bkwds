@@ -40,6 +40,10 @@ export const newTripValidations = values => {
   if (!values.end) errors.end = "End date is required"
   if (!values.lat) errors.lat = "Latitude is required"
   if (!values.lon) errors.lon = "Longitude is required"
+  // Make sure end date is later than start date:
+  if (values.end && values.start > values.end) {
+    errors.end = "Trip can't end before it starts"
+  }
 
   return errors
 }
