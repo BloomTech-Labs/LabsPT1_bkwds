@@ -1,9 +1,9 @@
 import React from "react"
-
-import { Input, Button } from "../../styles/theme/styledComponents"
 import { ErrorMessage } from "formik"
 
-export const CustomError = ({ name }) => (
+import { Input, Button } from "../../styles/theme/styledComponents"
+
+const CustomError = ({ name }) => (
   <ErrorMessage name={name}>
     {errorMessage => <div className="error client-error">{errorMessage}</div>}
   </ErrorMessage>
@@ -22,8 +22,8 @@ export const CustomInputWithError = ({
   <div className="form-field">
     <CustomError name={name} />
     <Input
-      type={type}
       name={name}
+      type={type}
       onChange={onChange}
       onBlur={onBlur}
       placeholder={placeholder}
@@ -33,13 +33,16 @@ export const CustomInputWithError = ({
 )
 
 export const CustomButtonWithError = ({
+  text,
   submitError,
   isSubmitting = false
 }) => (
   <div className="form-field">
     <Button className="btn" type="submit" disabled={isSubmitting}>
-      Log in
+      {text}
     </Button>
-    {submitError && <div className="error server-error">{submitError}</div>}
+    {submitError && (
+      <div className="error server-error">{submitError.toString()}</div>
+    )}
   </div>
 )

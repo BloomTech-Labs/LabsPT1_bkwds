@@ -53,6 +53,7 @@ const LoginForm = ({ username = "", password = "", login, loginError }) => (
               />
 
               <CustomButtonWithError
+                text="Log in"
                 submitError={loginError}
                 isSubmitting={isSubmitting}
               />

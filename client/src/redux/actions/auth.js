@@ -21,7 +21,6 @@ export const login = ({ username, password }) => dispatch => {
   return axios
     .post(`${SERVER_URI}/login`, { username, password })
     .then(res => {
-      console.log("RESPONSE:", res)
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
 
       localStorage.setItem("jwt", JSON.stringify(res.data.token))
@@ -31,6 +30,7 @@ export const login = ({ username, password }) => dispatch => {
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })
       //errorHandler(err)
+      console.error("LOGIN FAILURE:", err)
     })
 }
 
@@ -40,12 +40,13 @@ export const register = ({ email, username, password }) => dispatch => {
   return axios
     .post(`${SERVER_URI}/register`, { email, username, password })
     .then(() => {
-      dispatch({ type: REGISTRATION_SUCCESS })
+      dispatch({ type: REGISTRATION_SUCCESS, payload: { username, password } })
       dispatch(push("/pages/login"))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
       //errorHandler(err)
+      console.error("REGISTRATION FAILURE:", err)
     })
 }
 
@@ -60,7 +61,7 @@ export const addTokenToState = () => dispatch => {
   try {
     token = localStorage.getItem("jwt")
   } catch (e) {
-    console.error(e)
+    console.error("ADD TOKEN TO STATE ERROR:", e)
   }
   // If no token, bail out:
   if (!token) return
