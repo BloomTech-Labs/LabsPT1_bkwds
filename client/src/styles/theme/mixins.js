@@ -20,6 +20,26 @@ export const media = Object.keys(breakpoints).reduce((acc, label) => {
   return acc
 }, {})
 
+// This mixin only works if you put the .error div *before* the input,
+// as the .error div selects its next sibling to apply border colors
+export const validationErrorMixin = css`
+  position: relative;
+  .error {
+    position: absolute;
+    top: -1.25rem;
+    left: 0.375rem;
+    font-size: 0.875rem;
+    color: ${props => props.theme.inputError};
+    &::before {
+      content: "* ";
+    }
+  }
+  .error + input {
+    /* Color input red when adjacent to an error: */
+    border: ${props => `2px solid ${props.theme.inputError}`};
+  }
+`
+
 // General styles that you can spread around:
 export const flexCenterMixin = css`
   display: flex;
