@@ -1,9 +1,39 @@
-Welcome to the client-side code for Backwoods Tracker!
+# Backwoods: Frontend ![Build Status](https://travis-ci.com/Lambda-School-Labs/LabsPT1_Backwoods.svg?branch=master)
+
+Welcome to the client-side documentation for our Backwoods app!
+
+## Team
+
+Listed alphabetically:
+
+<!-- prettier-ignore -->
+| [**Alex Botello**](https://github.com/alexbotello) | [**Andrew Jarrett**](https://github.com/ahrjarrett) | [**John Coronel**](https://github.com/JohnCoronel) | [**Thuy Pham**](https://github.com/iamthuypham) | [**Usman Javed**](https://github.com/ujaved931) | [**Victor Montoya**](https://github.com/victoramontoya) |
+|:------------:|:------------:|:-----------:|:-----------:|:-----------:|:-----------:|
+| [<img src="https://avatars1.githubusercontent.com/u/16750659?s=80" width="80">](https://github.com/alexbotello) | [<img src="https://avatars0.githubusercontent.com/u/15133992?s=80" width="80">](https://github.com/ahrjarrett) | [<img src="https://avatars3.githubusercontent.com/u/10173157?s=80" width="80">](https://github.com/JohnCoronel) | [<img src="https://avatars2.githubusercontent.com/u/5633434?s=80" width="80">](https://github.com/iamthuypham) | [<img src="https://avatars1.githubusercontent.com/u/36476288?s=80" width="80">](https://github.com/ujaved931) | [<img src="https://avatars0.githubusercontent.com/u/29212813?s=80" width="80">](https://github.com/victoramontoya) |
+| [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/alexbotello) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/ahrjarrett) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/JohnCoronel) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/iamthuypham) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/ujaved931) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/victoramontoya) |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/alexander-botello-025019131/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/andrewhjarrett/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/iamthuypham/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/vamontoya/) |
+
+---
+
+## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Directory Structure](#directory-structure)
+- [Dependencies](#dependencies)
+  - [1. Formik](#1-formik)
+    - [Quick Start](#quick-start)
+      - [Render Props?](#render-props)
+      - [Example: Formik Render Props](#example-formik-render-props)
+      - [Formik Props](#formik-props)
+      - [Formik Validation](#formik-validation)
+  - [2. Redux](#2-redux)
+    - [Trips](#trips)
+    - [Using State](#using-state)
+      - [Example: Using Redux State](#example-using-redux-state)
+    - [What's this types.js file?](#whats-this-typesjs-file)
+    - [What's this store.js file?](#whats-this-storejs-file)
+- [App Structure](#app-structure)
   - [src/components](#srccomponents)
     - [src/components/forms](#srccomponentsforms)
     - [src/components/icons](#srccomponentsicons)
@@ -22,18 +52,220 @@ Welcome to the client-side code for Backwoods Tracker!
     - [CustomRoute](#customroute)
     - [index.js](#indexjs)
     - [selectors.js](#selectorsjs)
-- [Redux](#redux)
-  - [Trips](#trips)
-  - [Using State](#using-state)
-    - [Using State: Example](#using-state-example)
-  - [What's this types.js file?](#whats-this-typesjs-file)
-  - [What's this store.js file?](#whats-this-storejs-file)
-- [Dependencies](#dependencies)
-- [TODOs](#todos)
+- [Todos](#todos)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Directory Structure
+# Dependencies
+
+## 1. Formik
+
+At first we used Redux Form to manage form state, but because it stored everything on the store, it was causing the entire app to re-render whenever onChange was called.
+
+[Formik](https://jaredpalmer.com/formik/docs/api/formik) is becoming a standard library for managing React form state, and it doesn't use Redux to do it ✨
+
+### Quick Start
+
+Formik uses React [render props](https://reactjs.org/docs/render-props.html) to render our form and passes in a bunch of great helpers as props.
+
+> **Note:** If you're not familiar with render props, Formik is a relatively gentle introduction to this pattern!
+
+#### Render Props?
+
+Render props are increasingly replacing higher-order components as the way to wrap components and add extra functionality.
+
+All it means for us is that we pass a Formik component a prop called “render” whose value is a function that returns JSX. Don’t forget, `render` isn’t some special name or a reserved word, it’s just the name of the prop that Formik looks for to determine what to, well, render.
+
+> **Note:** You've used render props with React Router before when you need extra control when rendering a particular route.
+
+_It’s worth learning_ how to use render props because awesome libraries like Formik inject a _bunch_ of extra functionality and pass it to our component on `props`.
+
+#### Example: Formik Render Props
+
+```javascript
+import React from "react"
+import { Formik } from "formik"
+
+const handleSubmit = (values, actions) => {
+  // This is where we would call a Redux action:
+  console.log("Andrew’s new name is", values.name)
+  // We can use `actions` to do more advanced stuff:
+  actions.setSubmitting(false)
+}
+
+const renderFunction = props => (
+  <form onSubmit={props.handleSubmit}>
+    <input
+      name="name"
+      type="text"
+      onChange={props.handleChange}
+      onBlur={props.handleBlur}
+      value={props.values.name}
+    />
+    <button type="submit">Submit</button>
+  </form>
+)
+
+const FormikExample = () => (
+  <div>
+    <h1>Let’s play “Change Andrew’s Name”!</h1>
+    <Formik
+      initialValues={{ name: "Andrew" }}
+      onSubmit={handleSubmit}
+      render={renderFunction}
+    />
+  </div>
+)
+```
+
+**2 things to notice:**
+
+- The `onSubmit` prop expects a function that automatically receives 2 arguments from Formik:
+  1. `values : Object` — When we give an input its `name` prop, that input's value will be available on the values object at that key (for example, `values.email`).
+  2. `actions : Object` — These are Formik actions, not Redux actions (although they are similar). You will use these far less than the `values` argument, but it's there if you need it.
+- The `render` prop expects a function that automatically receives `props` from Formik, passing through any other props that you pass.
+
+#### Formik Props
+
+Formik components accept these props (with the props our app makes use of frequently in bold):
+
+- component
+- **render**: (props: FormikProps) => ReactNode
+- children: func
+- enableReinitialize?: boolean
+- isInitialValid?: boolean
+- **initialValues**?: Values
+- onReset?: (values: Values, formikBag: FormikBag) => void
+- **onSubmit**: (values: Values, formikBag: FormikBag) => void
+- **validate**?: (values: Values) => FormikErrors | Promise
+- validateOnBlur?: boolean
+- validateOnChange?: boolean
+- validationSchema?: Schema | (() => Schema)
+
+#### Formik Validation
+
+Validation is easy with Formik, but beyond the scope of these docs.
+
+Check out our app’s [custom form validations](https://github.com/Lambda-School-Labs/LabsPT1_Backwoods/blob/master/client/src/components/forms/formValidations.js), and consult the [Formik validation docs](https://jaredpalmer.com/formik/docs/guides/validation) for more info.
+
+## 2. Redux
+
+Let's talk state!
+
+### Trips
+
+> **Note:** Trips are stored together in an **_object_**, not an array.
+
+Here is an example of how a trip is stored on state:
+
+```javascript
+{
+    "8wer80-qwer08-er875-ef12d": {
+        id: "8wer80-qwer08-er875-ef12d",
+        name: "Trip 1",
+        // rest of Trip 1
+    },
+    "e2er79-df9r08-5r875-1fe2d": {
+        id: "e2er79-df9r08-5r875-1fe2d",
+        name: "Trip 2",
+        // rest of Trip 2
+    },
+
+    // rest of the trips ...
+}
+```
+
+There are a couple reasons for this, most notably that object lookup happens in constant as opposed to linear time -- `O(1)` instead of `O(n)`.
+
+2 things to make working with multiple trips easier:
+
+1. The `getTripsArray` function in `selectors.js` takes the entire state and returns an array of trips
+2. There is an array of trip IDs that you can loop through to iterate over all trips. For example:
+
+```javascript
+// MUTATES STATE, DON'T ACTUALLY DO THIS:
+state.trip.tripIds.map(tripid => {
+  state.trip.trips[tripid].isArchived = false
+})
+```
+
+### Using State
+
+Have a component that needs access to the Redux store?
+
+1. Import connect from `react-redux`
+2. Import any actions you want your component to call/dispatch (if applicable)
+3. Pick the parts of state you need with a `mapStateToProps` function
+4. Pick the actions you need with a `mapDispatchToProps` function
+5. Pass `mapStateToProps` and `mapDispatchToProps` to the `connect` function, then to the next set of parens pass the component you're connecting
+6. Export the connected component
+
+Now the state/actions you need are now available on props!
+
+#### Example: Using Redux State
+
+For example, here is a simplified `AppNav` component:
+
+```javascript
+import React from "react"
+import { connect }
+
+import { login, logout } from "../redux/actions/auth"
+
+const AppNav = ({ logout, isLoggedIn }) => {
+  const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
+
+  return (
+    <div>
+      {isLoggedIn
+        ? <button onClick={logout}>Log out</button>
+        : <button onClick={login}>Log in</button>}
+    </div>
+  )
+}
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn
+})
+
+const mapDispatchToProps = { login, logout }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppNav)
+```
+
+> **Note:** Don't forget to pass `null` as the 1st argument to `connect` if you need to map an action, but don't need your component to subscribe to a slice of state.
+
+### What's this types.js file?
+
+The `types.js` exposes as named exports all of our action types, e.g.:
+
+```javascript
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+```
+
+Note that the constant name and string value map directly to each other; this is to give us code completion and ensure that we don't run into bugs that involve typos, which are notoriously difficult to debug.
+
+### What's this store.js file?
+
+Here's how state is mapped currently:
+
+```javascript
+const createRootReducer = history =>
+  combineReducers({
+    trips: tripReducer,
+    auth: authReducer,
+    router: connectRouter(history)
+  })
+```
+
+**Also note** that if you need access to the router, it lives on state under the `router` key. You should consider using React Router's `withRoute` instead unless you're doing something advanced.
+
+---
+
+# App Structure
 
 ## src/components
 
@@ -62,9 +294,9 @@ All icons and svgs live here! These are housed separately to keep from clutterin
 
 Pages are different from regular components in that they wrap up a number of smaller components as a larger component that is displayed when the user visits a particular route.
 
-**Note:** Most pages use a `CustomRoute` component that lives in `/src/utils`. This component handles protected routes (see the Routing section below). [View component](https://github.com/Lambda-School-Labs/LabsPT1_Backwoods/blob/master/client/src/utils/CustomRoute.js)
+> **Note:** Most pages use a `CustomRoute` component that lives in `/src/utils`. This component handles protected routes (see the Routing section below). [View component](https://github.com/Lambda-School-Labs/LabsPT1_Backwoods/blob/master/client/src/utils/CustomRoute.js)
 
-Pages:
+**Pages:**
 
 1. `Dashboard` :: The Dashboard page is where our app lives. All routes here are mounted on `/app`. To mount a new route, add an object to `dashboardRoutes` with the following format:
 
@@ -100,20 +332,24 @@ If you have any variables that might switch depending on context, put them here 
 
 ## src/redux
 
-See also the Redux section below.
+The Redux folder handles everything Redux!
 
-**Note:** The "main" file for our store configuration lives in `client/store.js`; if you need to see where a particular slice of state lives, start there! (See the store.js note at the bottom of this node).
+> **Note:** The "main" file for our store configuration lives in `client/store.js`.
+>
+> If you need to see where a particular slice of state lives, start there! (See [What's this store.js file?](https://github.com/Lambda-School-Labs/LabsPT1_Backwoods/tree/fix-client-readme/client#whats-this-storejs-file) for a synopsis).
 
-The Redux folder handles everything Redux. There are 4 directories, 3 of which are currently in use:
+The Redux folder contains 4 subdirectories:
 
-- `actions` - The actions folder contains, as you guessed, our app's actions. It also contains our `types.js` file (see below for more info).
-- `reducers` - Our redux reducers. The file name for the actions that apply to which reducer should typically be named the same thing, e.g. `actions/auth.js` and `reducers/auth.js`.
-- `helpers` - Any helper function that helps us manage our actions or reducers should live here
-- `middleware` - Most middleware configuration currently lives in `client/store.js` (see below). If configuring our middlewares gets any more complex, this folder is where we should move that configuration.
+1. `actions` - The actions folder contains, as you guessed, our app's actions. It also contains our `types.js` file (see below for more info).
+2. `reducers` - Our redux reducers. The file name for the actions that apply to which reducer should typically be named the same thing, e.g. `actions/auth.js` and `reducers/auth.js`.
+3. `helpers` - Any helper function that helps us manage our actions or reducers should live here
+4. `middleware` - Most middleware configuration currently lives in `client/store.js`. If configuring our middlewares gets any more complex, this folder is where we should move that configuration.
+
+_For more info:_ See also the [Redux Section](https://github.com/Lambda-School-Labs/LabsPT1_Backwoods/tree/fix-client-readme/client#redux) below
 
 ## src/styles
 
-Styled components live here!
+Styles and styled components live here!
 
 If your styles get too big to live in the same file as your component, create a new file in the root of this folder following this naming convention:
 
@@ -262,138 +498,53 @@ export function* makeTaglineIterator(taglinesArray) {
 
 These are where our Redux state selectors live as named exports (see Redux selectors section below).
 
-# Redux
+---
 
-Let's talk state!
+# Frontend Todos
 
-## Trips
+**Incomplete:**
 
-Note: **Trips are stored in an object, not an array.**
+1. [ ] `trip-tripcard-fix` branch:
 
-Here is an example of how a trip is stored on state:
+   - [ ] Fix .btn:hover styling (styledComponents)
+   - [ ] Fix TripCard styling, remove Trip component
+   - [ ] Move boxshadow on card hover to mixins?
 
-```javascript
-{
-    "8wer80-qwer08-er875-ef12d": {
-        id: "8wer80-qwer08-er875-ef12d",
-        name: "Trip 1",
-        // rest of Trip 1
-    },
-    "e2er79-df9r08-5r875-1fe2d": {
-        id: "e2er79-df9r08-5r875-1fe2d",
-        name: "Trip 2",
-        // rest of Trip 2
-    },
+2. [ ] `redux-state-tweaks` branch:
 
-    // rest of the trips ...
-}
-```
+   - [ ] Fix bug where state.trip.trips changes based on archived/unarchived status (messes up things like tripIndex later)
+   - [ ] Rename trips reducer to just trip to avoid confusing state.trips.trips access
+   - [ ] Create state.trip.tripIds array that reads the keys on state.trips.trips to allow easier looping and other array conveniences
+   - [ ] Add Redux middleware depending on process.env.NODE_ENV (for example, remove redux-logger in prod)
+   - [ ] Implement errorHandler middleware for use in actions
+   - [ ] Fix bug where password hash stored on state when logged in (might need to set up routing?)
 
-There are a couple reasons for this, most notably that object lookup happens in constant as opposed to linear time -- `O(1)` instead of `O(n)`.
+3. [ ] `prop-types` branch:
 
-2 things to make working with multiple trips easier:
+   - [ ] [prop-types] Add PropTypes to all components
 
-1. The `getTripsArray` function in `selectors.js` takes the entire state and returns an array of trips
-2. There is an array of trip IDs that you can loop through to iterate over all trips. For example:
+4. [ ] `add-frontend-tests` branch:
 
-```javascript
-// MUTATES STATE, DON'T ACTUALLY DO THIS:
-state.trip.tripIds.map(tripid => {
-  state.trip.trips[tripid].isArchived = false
-})
-```
+   - [ ] Add Jest/Enzyme/Sinon and configure frontend tests
 
-## Using State
+5. [ ] `[add-formik]` branch:
 
-Have a component that needs access to the Redux store?
+   - [x] Add validation to make sure start date comes before end date
+   - [ ] Let `initialValues` take care of placeholders; remove placeholder props
 
-1. Import connect from `react-redux`
-2. Import any actions you want your component to call/dispatch (if applicable)
-3. Pick the parts of state you need with a `mapStateToProps` function
-4. Pick the actions you need with a `mapDispatchToProps` function
-5. Pass `mapStateToProps` and `mapDispatchToProps` to the `connect` function, then to the next set of parens pass the component you're connecting
-6. Export the connected component
+6. [ ] Unsorted:
 
-Now the state/actions you need are now available on props!
+   - [ ] Refactor Nav scrollY into variable, or read from a prop (can then make this dynamic based on screen height?)
+   - [ ] Update Dashboard router to use Redirect.props.to.state (from) to redirect after login
+   - [ ] Add Pages:
+     1. [ ] /login :: Login
+     2. [ ] /signup :: Register
+   - [ ] Fix CustomRoute so it doesn't redirect when valid token exists
 
-### Using State: Example
+7. [ ] `[fix-client-readme]` branch:
+   - [ ] Write git push hook that runs doctoc automatically?
+   - [ ] Update environment variable `MONGO_URL_PROD` to URI throughout app
 
-For example, here is a simplified `AppNav` component:
+**Complete:**
 
-```javascript
-import React from "react"
-import { connect }
-
-import { login, logout } from "../redux/actions/auth"
-
-const AppNav = ({ logout, isLoggedIn }) => {
-  const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
-
-  return (
-    <div>
-      {isLoggedIn
-        ? <button onClick={logout}>Log out</button>
-        : <button onClick={login}>Log in</button>}
-    </div>
-  )
-}
-
-const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
-})
-
-const mapDispatchToProps = { login, logout }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppNav)
-```
-
-**Note:** Don't forget to pass `null` as the 1st argument to `connect` if you need to map an action, but don't need your component to subscribe to a slice of state.
-
-## What's this types.js file?
-
-The `types.js` exposes as named exports all of our action types, e.g.:
-
-```javascript
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
-```
-
-Note that the constant name and string value map directly to each other; this is to give us code completion and ensure that we don't run into bugs that involve typos, which are notoriously difficult to debug.
-
-## What's this store.js file?
-
-Here's how state is mapped currently:
-
-```javascript
-const createRootReducer = history =>
-  combineReducers({
-    trips: tripReducer,
-    auth: authReducer,
-    router: connectRouter(history)
-  })
-```
-
-**Also note** that if you need access to the router, it lives on state under the `router` key. You should consider using React Router's `withRoute` instead unless you're doing something advanced.
-
-# Dependencies
-
-- Redux Form removed (12/29/18)
-- Formik added (PR dated 01/04/18)
-
-# TODOs
-
-- [ ] Rename `trips` reducer to just `trip` to avoid confusing `state.trips.trips` access
-- [ ] Create `state.trip.tripIds` array that reads the keys on `state.trips.trips` to allow easier looping and other array conveniences
-
-- [ ] Add Redux middleware depending on process.env.NODE_ENV (for example, remove `redux-logger` in prod)
-- [ ] Refactor Nav scrollY into variable, or read from a prop (can then make this dynamic based on screen height?)
-- [ ] Add PropTypes to all components
-- [ ] Add Jest/Enzyme/Sinon and configure frontend tests
-- [x] Remove `isSignedUp` from auth state
-- [ ] Update Dashboard router to use Redirect.props.to.state (from) to redirect after login
-- [ ] Add Pages:
-  1. [ ] /login :: Login
-  2. [ ] /signup :: Register
-- [ ] Fix CustomRoute so it doesn't redirect when valid token exists
+- [x] `[add-theme]` Remove `isSignedUp` from auth state
