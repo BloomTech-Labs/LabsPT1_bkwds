@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 import * as s from "../styles/Trip.styles"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+import { Button } from "../styles/theme/styledComponents"
 
 class TripCard extends Component {
   handleDelete = tripId => e => {
@@ -34,7 +35,7 @@ class TripCard extends Component {
                 <div>End: {trip.end}</div>
                 <div>Archived: {trip.isArchived.toString()}</div>
                 {/* handleEdit here*/}
-                <button onClick={this.handleDelete(trip.id)}>Edit</button>
+                <Button onClick={this.handleDelete(trip.id)}>Edit</Button>
                 <button onClick={this.toggleArchive(trip.id, !archived)}>
                   {archived ? "UNARCHIVE" : "ARCHIVE"}
                 </button>

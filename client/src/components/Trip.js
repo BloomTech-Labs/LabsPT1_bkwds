@@ -5,6 +5,8 @@ import { Link } from "react-router-dom"
 import * as s from "../styles/Trip.styles"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 
+import { CardButton } from "../styles/theme/styledComponents"
+
 class Trip extends Component {
   handleDelete = tripId => e => {
     e.preventDefault()
@@ -23,23 +25,27 @@ class Trip extends Component {
         {trip.id && (
           <>
             <div className="card">
-              <img
-                src="https://staticmapmaker.com/img/google.png"
-                alt="Google Map of Albany, NY"
-              />
-              <div className="card-container">
+              <div className="card-image">
+                <img
+                  src="https://staticmapmaker.com/img/google.png"
+                  alt="Google Map of Albany, NY"
+                />
+              </div>
+
+              <div className="card-content">
                 <Link to={"/app/trip/get/" + trip.id}>View Trip</Link>
-                <div>Name: {trip.name}</div>
-                <div>UserID: {trip.userId}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>
-                <div>Created at: {trip.createdAt}</div>
-                <div>Updated at: {trip.updatedAt}</div>
-                <div>Archived: {trip.isArchived.toString()}</div>
-                <button onClick={this.handleDelete(trip.id)}>DELETE</button>
-                <button onClick={this.toggleArchive(trip.id, !archived)}>
-                  {archived ? "UNARCHIVE" : "ARCHIVE"}
-                </button>
+                <CardButton>HO</CardButton>
+                <CardButton onClick={this.handleDelete(trip.id)}>
+                  {" "}
+                  >{" "}
+                </CardButton>
+                <CardButton onClick={this.toggleArchive(trip.id, !archived)}>
+                  {" "}
+                  >{" "}
+                </CardButton>
+                {archived ? "UNARCHIVE" : "ARCHIVE"}
               </div>
             </div>
             <br />
