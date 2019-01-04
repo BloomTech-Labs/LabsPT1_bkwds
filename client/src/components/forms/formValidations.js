@@ -1,8 +1,7 @@
-const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+import { validateEmail } from "../../utils/"
 
-export const validateLogin = values => {
-  const errors = {}
-
+export const loginValidations = values => {
+  let errors = {}
   if (!values.username) errors.username = "Username or email is required"
   if (!values.password) errors.password = "Password is required"
   if (values.password && values.password.length < 8)
@@ -11,25 +10,36 @@ export const validateLogin = values => {
   return errors
 }
 
-export const validateRegistration = values => {
-  const errors = {}
-
+export const registerValidations = values => {
+  let errors = {}
   if (!values.username) errors.username = "Username is required"
-  if (!values.email) errors.email = "Email is required"
-  if (!emailRegex.test(values.email))
-    errors.email = "Please enter a valid email address"
+  if (!values.email) {
+    errors.email = "Email is required"
+  } else if (validateEmail(values.email)) {
+    errors.email = "Invalid email address"
+  }
 
   if (!values.password) errors.password = "Password is required"
   if (values.password && values.password.length < 8)
     errors.password = "Password must be at least 8 characters"
-
   if (
     values.password &&
-    values.confirmPassword &&
-    values.password !== values.confirmPassword
+    values.passwordConfirm &&
+    values.password !== values.passwordConfirm
   ) {
-    errors.confirmPassword = "Passwords must match"
+    errors.passwordConfirm = "Passwords must match"
   }
+  return errors
+}
+
+export const newTripValidations = values => {
+  let errors = {}
+
+  if (!values.name) errors.name = "Trip name is required"
+  if (!values.start) errors.start = "Start date is required"
+  if (!values.end) errors.end = "End date is required"
+  if (!values.lat) errors.lat = "Latitude is required"
+  if (!values.lon) errors.lon = "Longitude is required"
 
   return errors
 }
