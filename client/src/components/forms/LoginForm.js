@@ -1,51 +1,78 @@
-import React, { Component } from "react"
+import React from "react"
 import { connect } from "react-redux"
+import { Formik } from "formik"
+import styled from "styled-components"
 
-import { Form, Input, Button } from "../../styles/theme/styledComponents"
+import { Form } from "../../styles/theme/styledComponents"
+import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { login } from "../../redux/actions/auth"
+import { loginValidations as validate } from "./formValidations"
+import { authFormErrorsMixin } from "../../styles/theme/mixins"
 
-class LoginForm extends Component {
-  state = {
-    username: "",
-    password: ""
-  }
+const LoginFormStyles = styled.div`
+  ${authFormErrorsMixin};
+`
 
-  handleChange = key => e => {
-    this.setState({ [key]: e.target.value })
-  }
+// Get username and password from parent, if applicable
+// (for example, after registering):
+const LoginForm = ({ username = "", password = "", login, loginError }) => (
+  <Formik
+    validate={validate}
+    initialValues={{ username, password }}
+    onSubmit={(values, actions) => {
+      actions.setSubmitting(false)
+      login(values)
+    }}
+    render={({
+      values,
+      handleBlur,
+      handleChange,
+      handleSubmit,
+      isSubmitting
+    }) => (
+      <LoginFormStyles>
+        <div className="login-form custom-form">
+          <Form onSubmit={handleSubmit}>
+            <div className="relative-positioning">
+              <CustomInputWithError
+                name="username"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Username or email"
+                values={values}
+              />
 
-  handleSubmit = e => {
-    e.preventDefault()
-    const { username, password } = this.state
-    this.props.login({ username, password })
-  }
+              <CustomInputWithError
+                name="password"
+                type="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Password"
+                values={values}
+              />
 
-  render() {
-    return (
-      <>
-        <Form>
-          <Input
-            type="text"
-            placeholder="Username or email"
-            onChange={this.handleChange("username")}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            onChange={this.handleChange("password")}
-          />
-          <Button className="btn" type="submit" onClick={this.handleSubmit}>
-            Log in
-          </Button>
-        </Form>
-      </>
-    )
-  }
-}
+              <CustomButtonWithError
+                submitError={loginError}
+                isSubmitting={isSubmitting}
+              />
+            </div>
+          </Form>
+        </div>
+      </LoginFormStyles>
+    )}
+  />
+)
+
+const mapStateToProps = state => ({
+  loginError: state.auth.error,
+  username: state.auth.user.username,
+  password: state.auth.user.password
+})
 
 const mapDispatchToProps = { login }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(LoginForm)
