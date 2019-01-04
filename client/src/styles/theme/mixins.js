@@ -40,6 +40,25 @@ export const validationErrorMixin = css`
   }
 `
 
+export const authFormErrorsMixin = css`
+  .form-field {
+    ${validationErrorMixin};
+    /* Mixin overrides: */
+    .client-error {
+      width: 50%;
+      text-align: right;
+      line-height: 1.2;
+      top: 0.75rem;
+      left: -52.5%;
+    }
+    .server-error {
+      top: unset;
+      left: 0.625rem;
+      bottom: -1.5rem;
+    }
+  }
+`
+
 // General styles that you can spread around:
 export const flexCenterMixin = css`
   display: flex;
