@@ -17,9 +17,10 @@ export const CustomInputWithError = ({
   type,
   placeholder,
   onChange,
-  onBlur
+  onBlur,
+  classNames = [] // allows you to override styling
 }) => (
-  <div className="form-field">
+  <div className={classNames.length ? classNames.join(" ") : "form-field"}>
     <CustomError name={name} />
     <Input
       name={name}
@@ -35,7 +36,8 @@ export const CustomInputWithError = ({
 export const CustomButtonWithError = ({
   text,
   submitError,
-  isSubmitting = false
+  isSubmitting = false,
+  classNames = [] // allows you to override styling
 }) => (
   <div className="form-field">
     <Button className="btn" type="submit" disabled={isSubmitting}>

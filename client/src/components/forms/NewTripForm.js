@@ -1,87 +1,113 @@
-import React, { Component } from "react"
+import React from "react"
 import { connect } from "react-redux"
+import { Formik } from "formik"
+import styled from "styled-components"
 
-import { Form, Input, Button } from "../../styles/theme/styledComponents"
+import { Form } from "../../styles/theme/styledComponents"
+import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { createTrip } from "../../redux/actions/trips"
+import { newTripValidations as validate } from "./formValidations"
+import { formatDate, getToday, getTomorrow } from "../../utils"
+import { validationErrorMixin } from "../../styles/theme/mixins"
 
-const defaultState = {
-  trip: {
-    name: "",
-    start: "",
-    end: "",
-    lat: "",
-    lon: ""
+const NewTripFormStyles = styled.div`
+  /* Make space up top for validation error messages: */
+  padding-top: 1rem;
+  .new-trip-form-field {
+    ${validationErrorMixin};
   }
-}
-
-class NewTripForm extends Component {
-  state = { ...defaultState }
-
-  handleChange = key => e => {
-    this.setState({ trip: { ...this.state.trip, [key]: e.target.value } })
+  button {
+    height: 2.5rem;
   }
+`
 
-  handleSubmit = e => {
-    e.preventDefault()
-    const { trip } = this.state
-    this.props.createTrip({ ...trip, userId: this.props.userId })
-    this.setState({ ...defaultState })
-  }
+const makeInitialValues = tripIndex => ({
+  name: `Trip #${tripIndex + 1}`, // trip name is initialized to next trip index
+  start: formatDate(getToday()),
+  end: formatDate(getTomorrow()),
+  lat: "",
+  lon: ""
+})
 
-  render() {
-    const { trip } = this.state
-    return (
-      <div className="new-trip-form">
-        <Form>
-          <div className="trip-name new-trip-form-field">
-            <Input
-              type="text"
-              placeholder="Trip Name"
-              value={trip.name}
-              onChange={this.handleChange("name")}
-            />
+const NewTripForm = ({ userId, createTrip, newTripError, tripIndex }) => {
+  return (
+    <Formik
+      validate={validate}
+      initialValues={makeInitialValues(tripIndex)}
+      onSubmit={(values, actions) => {
+        actions.setSubmitting(false)
+        createTrip({ ...values, userId })
+      }}
+      render={({
+        values,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        isSubmitting
+      }) => (
+        <NewTripFormStyles>
+          <div className="new-trip-form custom-form">
+            <Form onSubmit={handleSubmit}>
+              <CustomInputWithError
+                name="name"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Username"
+                values={values}
+                classNames={["new-trip-form-field"]}
+              />
+              <CustomInputWithError
+                name="start"
+                type="date"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                values={values}
+                classNames={["new-trip-form-field"]}
+              />
+              <CustomInputWithError
+                name="end"
+                type="date"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                values={values}
+                classNames={["new-trip-form-field"]}
+              />
+              <CustomInputWithError
+                name="lat"
+                type="number"
+                placeholder="Latitude"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                values={values}
+                classNames={["new-trip-form-field"]}
+              />
+              <CustomInputWithError
+                name="lon"
+                type="number"
+                placeholder="Longitude"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                values={values}
+                classNames={["new-trip-form-field"]}
+              />
+              <CustomButtonWithError
+                text="Save Trip"
+                submitError={newTripError}
+                isSubmitting={isSubmitting}
+              />
+            </Form>
           </div>
-          <div className="trip-start new-trip-form-field">
-            <Input
-              type="date"
-              value={trip.start}
-              onChange={this.handleChange("start")}
-            />
-          </div>
-          <div className="trip-end new-trip-form-field">
-            <Input
-              type="date"
-              value={trip.end}
-              onChange={this.handleChange("end")}
-            />
-          </div>
-          <div className="trip-lat new-trip-form-field">
-            <Input
-              type="text"
-              placeholder="Latitude"
-              value={trip.lat}
-              onChange={this.handleChange("lat")}
-            />
-          </div>
-          <div className="trip-lon new-trip-form-field">
-            <Input
-              type="text"
-              placeholder="Longitude"
-              value={trip.lon}
-              onChange={this.handleChange("lon")}
-            />
-          </div>
-          <Button type="submit" onClick={this.handleSubmit}>
-            Log in
-          </Button>
-        </Form>
-      </div>
-    )
-  }
+        </NewTripFormStyles>
+      )}
+    />
+  )
 }
 
 const mapStateToProps = state => ({
-  userId: state.auth.user.id
+  userId: state.auth.user.id,
+  newTripError: state.trips.error,
+  tripIndex: Object.keys(state.trips.trips).length
 })
 
 const mapDispatchToProps = { createTrip }
