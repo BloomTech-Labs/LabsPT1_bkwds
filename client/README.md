@@ -5,23 +5,31 @@ Welcome to the client-side code for Backwoods Tracker!
 
 - [Directory Structure](#directory-structure)
   - [src/components](#srccomponents)
-    - [./Containers](#containers)
-    - [./Presentational](#presentational)
-    - [./forms](#forms)
-    - [./hoc](#hoc)
-    - [./icons](#icons)
+    - [src/components/forms](#srccomponentsforms)
+    - [src/components/icons](#srccomponentsicons)
+    - [src/components/pages](#srccomponentspages)
   - [src/config](#srcconfig)
   - [src/redux](#srcredux)
-    - [What's this types.js file?](#whats-this-typesjs-file)
-    - [What's this store.js file?](#whats-this-storejs-file)
-  - [src/theme](#srctheme)
-    - [./GlobalStyles.js](#globalstylesjs)
-    - [./styledComponents.js](#styledcomponentsjs)
-    - [./mixins.js](#mixinsjs)
-    - [variables.js](#variablesjs)
+  - [src/styles](#srcstyles)
+    - [src/styles/theme](#srcstylestheme)
+      - [GlobalStyles.js](#globalstylesjs)
+      - [styledComponents.js](#styledcomponentsjs)
+      - [mixins.js](#mixinsjs)
+      - [variables.js](#variablesjs)
       - [Advanced theming](#advanced-theming)
+  - [src/test](#srctest)
+  - [src/utils](#srcutils)
+    - [CustomRoute](#customroute)
+    - [index.js](#indexjs)
+    - [selectors.js](#selectorsjs)
+- [Redux](#redux)
+  - [Trips](#trips)
+  - [Using State](#using-state)
+    - [Using State: Example](#using-state-example)
+  - [What's this types.js file?](#whats-this-typesjs-file)
+  - [What's this store.js file?](#whats-this-storejs-file)
 - [Dependencies](#dependencies)
-- [TODO](#todo)
+- [TODOs](#todos)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -31,83 +39,68 @@ Welcome to the client-side code for Backwoods Tracker!
 
 This is where our React components live.
 
-Possibly the most important convention is that a component lives in the `Presentational` folder _until it needs access to the Redux store_. At that point you can create a separate Container component that renders the presentational component with the needed state added as props (see below for an example).
+Most components will live here as `.js` files. However, there are a few exceptions:
 
-Exceptions include higher-order components, Redux forms, and icons/svg (see respective sections below).
+- Forms
+- Icons
+- Pages
 
-**Note** that not all components have migrated to the Presentational directory yet; this is a work in progress.
+### src/components/forms
 
-### ./Containers
+All forms live here! This is so we can standardize our form dependencies and form validations in 1 place.
 
-Have a component that needs access to the Redux store?
+Files:
 
-1. Create a presentational component, then create a folder in the `Containers` directory.
-2. In the `index.js` file, import your presentational component.
-3. Pick the parts of state you need with a `mapStateToProps` function
-4. Pick the actions you need with a `mapDispatchToProps` function.
-5. Pass those functions to `react-redux`'s `connect` function and export your new container.
+- `formValidations` :: Our client-side form validations live here. To use validations, import the function(s) you need and hook them up to Formik (as of 1/3/19, Formik has yet to be added. See the `formik` branch for more info).
+- `customInputs` :: Usually we want to display validation error messages alongside the offending input element. To prevent code duplication, import the input component you need in the form component you're writing.
 
-Now the state/actions you need are now available on props!
+### src/components/icons
 
-For example, here is the `Login` container:
+All icons and svgs live here! These are housed separately to keep from cluttering up our components directory.
+
+### src/components/pages
+
+Pages are different from regular components in that they wrap up a number of smaller components as a larger component that is displayed when the user visits a particular route.
+
+**Note:** Most pages use a `CustomRoute` component that lives in `/src/utils`. This component handles protected routes (see the Routing section below). [View component](https://github.com/Lambda-School-Labs/LabsPT1_Backwoods/blob/master/client/src/utils/CustomRoute.js)
+
+Pages:
+
+1. `Dashboard` :: The Dashboard page is where our app lives. All routes here are mounted on `/app`. To mount a new route, add an object to `dashboardRoutes` with the following format:
 
 ```javascript
-import React from "react"
-import { connect } from "react-redux"
-
-import { login } from "../../../redux/actions/auth"
-import Login from "../../Presentational/Login"
-
-const LoginContainer = props => <Login login={props.login} />
-
-const mapDispatchToProps = { login }
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(LoginContainer)
+{
+  path: "/your-route",      // Mounts to /app/your-route
+  name: "DOMDisplayName",   // React browser extension uses this
+  component: YourComponent, // Don't forget to import your component!
+  exact: true               // optional, defaults to false
+}
 ```
 
-All of the styling and most of the logic regarding lifecycle methods will happen in the presentational component; the container component just renders the presentational `Login` component and passes it the `login` action as a prop.
+2. `LandingPage` :: This is mounted on our root route, and allows us to wrap the landing page with different styles/components than the rest of our app. Does little more than render `Pages` (see next).
 
-Don't forget to pass `null` as the first argument to `connect` if you need to give a presentational component an action to dispatch, but don't need to subscribe to a slice of state.
+3. `Pages` :: Mounted on `/pages`. To add a page that does not belong inside the dashboard (for example, a Pricing Page), add an object to `pagesRoutes` with the following format:
 
-### ./Presentational
-
-Most components probably start as a presentational component, and any container component you need will probably have a corresponding presentational component.
-
-**Note** that "presentational" does not mean "only concerned with styles or component hierarchy". Often presentational components contain their own logic for managing their own local state and/or lifecycle events, _unless that state or those lifecycle events care about the Redux store or dispatching Redux actions_.
-
-Unlike the container folder, presentational folders will often have more than just an `index.js` file inside them. These files might include:
-
-- A `styles.js` file that houses any custom styles that apply to this component; a good practice is to colocate the styles with the component to which they apply.
-- Any other presentational components that are not used by any other component outside the ones in the current directory. For example, the `Nav/AppNav` component was getting too long, so it was broken into smaller components to make it more readable. These components should be grouped with their parent component _until an external component needs access to them_.
-
-### ./forms
-
-Most forms will need to talk to the Redux store at some point; we are using `redux-form` to simplify this relationshihp, so any form that needs to dispatch a Redux action or read from/write to Redux state lives here.
-
-See also the Redux Form section below.
-
-### ./hoc
-
-Currently the only HOC in our app is `requireAuth`, a simple way to wrap any component with a check for client-side authentication.
-
-As of 12/27/18, this component has not been thoroughly tested and might need to be made more flexible depending on the use case.
-
-### ./icons
-
-It seemed simpler to have a separate directory for any icons or svgs that our app uses; a case could be made for relocating this entire folder to `../Presentational/icons`.
+```javascript
+{
+  path: "/pricing",   // Mounts to /pages/pricing
+  name: "Pricing",    // React browser extension uses this
+  component: Pricing, // Don't forget to import your component!
+  exact: true         // optional
+},
+```
 
 ## src/config
 
 Because our client-side code is a Node app until we build and ship it, we have access to `process.env`.
 
-For this reason, I created a config directory to take advantage of this and export from `config/index.js` a `SERVER_URI` variable that our Redux actions read from and that changes depending on whether we're in a dev or prod env.
+For this reason we added a config directory to take advantage of this and export from `config/index.js` a `SERVER_URI` variable that our Redux actions read from and that changes depending on whether we're in a dev or prod env.
 
 If you have any variables that might switch depending on context, put them here and make them available as named exports.
 
 ## src/redux
+
+See also the Redux section below.
 
 **Note:** The "main" file for our store configuration lives in `client/store.js`; if you need to see where a particular slice of state lives, start there! (See the store.js note at the bottom of this node).
 
@@ -118,37 +111,21 @@ The Redux folder handles everything Redux. There are 4 directories, 3 of which a
 - `helpers` - Any helper function that helps us manage our actions or reducers should live here
 - `middleware` - Most middleware configuration currently lives in `client/store.js` (see below). If configuring our middlewares gets any more complex, this folder is where we should move that configuration.
 
-### What's this types.js file?
+## src/styles
 
-The `types.js` exposes as named exports all of our action types, e.g.:
+Styled components live here!
 
-```javascript
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
-```
+If your styles get too big to live in the same file as your component, create a new file in the root of this folder following this naming convention:
 
-Note that the constant name and string value map directly to each other; this is to give us code completion and ensure that we don't run into bugs that involve typos, which are notoriously difficult to debug.
+`src/styles/YourComponent.styles.js`
+maps to:
+`src/components/YourComponent.js`
 
-### What's this store.js file?
-
-Here's how state is mapped currently:
-
-```javascript
-const createRootReducer = history =>
-  combineReducers({
-    trips: tripReducer,
-    auth: authReducer,
-    form: formReducer,
-    router: connectRouter(history)
-  })
-```
-
-**Also note** that if you need access to a particular form or to the router, those live under `form` and `router` respectively.
-
-## src/theme
+### src/styles/theme
 
 The fun part! This is where we declare our global styles, styled-components, and our theme.
 
-### ./GlobalStyles.js
+#### GlobalStyles.js
 
 The `GlobalStyles` component can be added anywhere in our app _**as a sibling**_ to the component in which those styles will take effect, e.g.:
 
@@ -163,11 +140,11 @@ GlobalStyles is a styled component that does not render its children, so in the 
 
 This is a good place to declare things like the `font-size` that sets our `rem` units, font-declarations, and any css resets/normalizations that should apply to the entire document.
 
-### ./styledComponents.js
+#### styledComponents.js
 
 This is where our cool, reusable components should live! For example, we have a custom `Button` component. If you want to change how our button looks, do that here and it will be applied across our app.
 
-### ./mixins.js
+#### mixins.js
 
 Mixins don't make sense in a lot of contexts, but they're perfect for composing/reusing blocks of css! For example, we have a box-shadow mixin that looks like this:
 
@@ -228,7 +205,7 @@ const MyComponentStyles = styled.div`
 `
 ```
 
-### variables.js
+#### variables.js
 
 This is where our theme lives! :tada:
 
@@ -256,19 +233,167 @@ To change the value of `primaryDark` everywhere it's used in our app, simply cha
 
 You can also access **component props** to render styles conditionally, depending on the value/existence of a particular prop. _This is super cool_, and is used in the banner animation (see `animationRule` inside `Presentational/Banner/styles.js` for an example that reads the animation's duration off `props.seconds`).
 
+## src/test
+
+This is where our frontend tests will live!
+
+## src/utils
+
+This is where we store utility functions that our app's frontend uses.
+
+### CustomRoute
+
+Used by our pages to protect routes on the frontend.
+
+### index.js
+
+Most utility functions will live in this file as named exports. An example is the `makeTaglineIterator` generator, which takes an array of banner taglines and yields the next tagline every time it is called:
+
+```javascript
+export function* makeTaglineIterator(taglinesArray) {
+  let count = 0
+  while (count < Infinity) {
+    yield taglinesArray[count++ % taglinesArray.length]
+  }
+}
+```
+
+### selectors.js
+
+These are where our Redux state selectors live as named exports (see Redux selectors section below).
+
+# Redux
+
+Let's talk state!
+
+## Trips
+
+Note: **Trips are stored in an object, not an array.**
+
+Here is an example of how a trip is stored on state:
+
+```javascript
+{
+    "8wer80-qwer08-er875-ef12d": {
+        id: "8wer80-qwer08-er875-ef12d",
+        name: "Trip 1",
+        // rest of Trip 1
+    },
+    "e2er79-df9r08-5r875-1fe2d": {
+        id: "e2er79-df9r08-5r875-1fe2d",
+        name: "Trip 2",
+        // rest of Trip 2
+    },
+
+    // rest of the trips ...
+}
+```
+
+There are a couple reasons for this, most notably that object lookup happens in constant as opposed to linear time -- `O(1)` instead of `O(n)`.
+
+2 things to make working with multiple trips easier:
+
+1. The `getTripsArray` function in `selectors.js` takes the entire state and returns an array of trips
+2. There is an array of trip IDs that you can loop through to iterate over all trips. For example:
+
+```javascript
+// MUTATES STATE, DON'T ACTUALLY DO THIS:
+state.trip.tripIds.map(tripid => {
+  state.trip.trips[tripid].isArchived = false
+})
+```
+
+## Using State
+
+Have a component that needs access to the Redux store?
+
+1. Import connect from `react-redux`
+2. Import any actions you want your component to call/dispatch (if applicable)
+3. Pick the parts of state you need with a `mapStateToProps` function
+4. Pick the actions you need with a `mapDispatchToProps` function
+5. Pass `mapStateToProps` and `mapDispatchToProps` to the `connect` function, then to the next set of parens pass the component you're connecting
+6. Export the connected component
+
+Now the state/actions you need are now available on props!
+
+### Using State: Example
+
+For example, here is a simplified `AppNav` component:
+
+```javascript
+import React from "react"
+import { connect }
+
+import { login, logout } from "../redux/actions/auth"
+
+const AppNav = ({ logout, isLoggedIn }) => {
+  const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
+
+  return (
+    <div>
+      {isLoggedIn
+        ? <button onClick={logout}>Log out</button>
+        : <button onClick={login}>Log in</button>}
+    </div>
+  )
+}
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn
+})
+
+const mapDispatchToProps = { login, logout }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppNav)
+```
+
+**Note:** Don't forget to pass `null` as the 1st argument to `connect` if you need to map an action, but don't need your component to subscribe to a slice of state.
+
+## What's this types.js file?
+
+The `types.js` exposes as named exports all of our action types, e.g.:
+
+```javascript
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+```
+
+Note that the constant name and string value map directly to each other; this is to give us code completion and ensure that we don't run into bugs that involve typos, which are notoriously difficult to debug.
+
+## What's this store.js file?
+
+Here's how state is mapped currently:
+
+```javascript
+const createRootReducer = history =>
+  combineReducers({
+    trips: tripReducer,
+    auth: authReducer,
+    router: connectRouter(history)
+  })
+```
+
+**Also note** that if you need access to the router, it lives on state under the `router` key. You should consider using React Router's `withRoute` instead unless you're doing something advanced.
+
 # Dependencies
 
-- Redux Form removed 12/29/18
+- Redux Form removed (12/29/18)
+- Formik added (PR dated 01/04/18)
 
-# TODO
+# TODOs
 
-- Add Redux middleware depending on process.env.NODE_ENV (for example, remove `redux-logger` in prod)
-- Refactor Nav scrollY into variable, or read from a prop (can then make this dynamic based on screen height?)
-- Add PropTypes to all components
-- Add Jest/Enzyme/Sinon and configure frontend tests
-- Remove `isSignedUp` from auth state
-- Update Dashboard router to use Redirect.props.to.state (from) to redirect after login
-- Add Pages:
-  1. /login :: Login
-  2. /signup :: Register
-- Fix CustomRoute so it doesn't redirect when valid token exists
+- [ ] Rename `trips` reducer to just `trip` to avoid confusing `state.trips.trips` access
+- [ ] Create `state.trip.tripIds` array that reads the keys on `state.trips.trips` to allow easier looping and other array conveniences
+
+- [ ] Add Redux middleware depending on process.env.NODE_ENV (for example, remove `redux-logger` in prod)
+- [ ] Refactor Nav scrollY into variable, or read from a prop (can then make this dynamic based on screen height?)
+- [ ] Add PropTypes to all components
+- [ ] Add Jest/Enzyme/Sinon and configure frontend tests
+- [x] Remove `isSignedUp` from auth state
+- [ ] Update Dashboard router to use Redirect.props.to.state (from) to redirect after login
+- [ ] Add Pages:
+  1. [ ] /login :: Login
+  2. [ ] /signup :: Register
+- [ ] Fix CustomRoute so it doesn't redirect when valid token exists
