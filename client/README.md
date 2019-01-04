@@ -82,7 +82,7 @@ _It’s worth learning_ how to use render props because awesome libraries like F
 
 #### Example: Formik Render Props
 
-```javascript
+```jsx
 import React from "react"
 import { Formik } from "formik"
 
@@ -184,7 +184,7 @@ There are a couple reasons for this, most notably that object lookup happens in 
 
 ```javascript
 // MUTATES STATE, DON'T ACTUALLY DO THIS:
-state.trip.tripIds.map(tripid => {
+state.trip.tripIds.forEach(tripid => {
   state.trip.trips[tripid].isArchived = false
 })
 ```
@@ -193,7 +193,7 @@ state.trip.tripIds.map(tripid => {
 
 Have a component that needs access to the Redux store?
 
-1. Import connect from `react-redux`
+1. Import `connect` from React Redux
 2. Import any actions you want your component to call/dispatch (if applicable)
 3. Pick the parts of state you need with a `mapStateToProps` function
 4. Pick the actions you need with a `mapDispatchToProps` function
@@ -206,9 +206,9 @@ Now the state/actions you need are now available on props!
 
 For example, here is a simplified `AppNav` component:
 
-```javascript
+```jsx
 import React from "react"
-import { connect }
+import { connect } from "react-redux"
 
 import { login, logout } from "../redux/actions/auth"
 
@@ -217,9 +217,11 @@ const AppNav = ({ logout, isLoggedIn }) => {
 
   return (
     <div>
-      {isLoggedIn
-        ? <button onClick={logout}>Log out</button>
-        : <button onClick={login}>Log in</button>}
+      {isLoggedIn ? (
+        <button onClick={logout}>Log out</button>
+      ) : (
+        <button onClick={login}>Log in</button>
+      )}
     </div>
   )
 }
@@ -365,7 +367,7 @@ The fun part! This is where we declare our global styles, styled-components, and
 
 The `GlobalStyles` component can be added anywhere in our app _**as a sibling**_ to the component in which those styles will take effect, e.g.:
 
-```javascript
+```jsx
 <Root>
   <GlobalStyles />
   <App />
