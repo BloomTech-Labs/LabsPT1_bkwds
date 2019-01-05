@@ -15,19 +15,18 @@
     "start": "node dist/server.js",
     "dev": "webpack --config webpack.dev.js --colors --progress",
     "lint": "eslint \"./**/*.js\"",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --runInBand --detectOpenHandles",
     "clean": "rm -rf dist/",
     "build": "yarn clean && webpack --config webpack.prod.js",
     "heroku-postbuild": "yarn build"
   },
   "engines": {
-    "node": "10.14.2",
-    "yarn": "1.3.2"
+    "node": "10.x"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
     "cors": "2.8.5",
-    "dotenv": "6.2.0",
+    "dotenv": "^6.2.0",
     "express": "4.16.4",
     "jsonwebtoken": "^8.4.0",
     "lodash.merge": "4.6.1",

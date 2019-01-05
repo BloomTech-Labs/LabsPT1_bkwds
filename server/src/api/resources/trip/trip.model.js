@@ -12,26 +12,27 @@ export const schema = {
     required: [true, "name is required."]
   },
   isArchived: {
-    type: boolean,
+    type: Boolean,
     default: false,
     required: [true]
   },
   start: {
-    type: ISOdate,
-    require: [true]
+    type: Date,
+    required: [true]
   },
   end: {
-    type: ISOdate,
-    require: [false]
+    type: Date,
+    required: [false]
   },
   lat: {
-    type: decimal,
-    require: [true]
+    type: Number,
+    required: [true]
   },
   lon: {
-    type: decimal,
-    require: [true]
-  }
+    type: Number,
+    required: [true]
+  },
+  waypoints: [{ type: ObjectId, ref: "Waypoint" }]
 }
 
 const tripSchema = new mongoose.Schema(schema, { timestamps: true })
