@@ -52,6 +52,19 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
   })
 }
 
+userSchema.set("toJSON", {
+  transform: function(doc, ret) {
+    let retJson = {
+      id: ret._id,
+      username: ret.username,
+      email: ret.email,
+      subscribed: ret.subscribed,
+      sub_date: ret.sub_date
+    }
+    return retJson
+  }
+})
+
 mongoose.set("useCreateIndex", true)
 mongoose.set("useFindAndModify", false)
 export const User = mongoose.model("User", userSchema, "users")
