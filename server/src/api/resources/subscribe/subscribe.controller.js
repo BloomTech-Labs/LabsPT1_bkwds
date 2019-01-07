@@ -1,57 +1,80 @@
 import * as userController from "../user/user.controller"
 
-export const subscribeToFreePlan = (req, res, stripe) => {
-  const { email } = req.body
-  stripe.customers
-    .create({ email })
-    .then(result => {
-      const updatedRequest = {
-        ...req,
-        body: {
-          subscribed: true,
-          subdate: Date.now(),
-          customerId: result.id,
-          subscribeId: ""
-        }
+export const getSubscription = async (req, res, stripe) => {
+  const { subscribeId } = req.params
+  const subscription = await stripe.subscriptions.retrieve(subscribeId)
+  if (subscription) {
+    return res.status(200).send(subscription)
+  } else {
+    return res.status(500).send("Stripe error: Cannot retrieve subscription.")
+  }
+}
+
+export const subscribeToFreePlan = async (req, res, stripe) => {
+  const { source } = req.body
+  const customer = await stripe.customers.create({ source: source.id })
+
+  if (customer) {
+    const updatedRequest = {
+      ...req,
+      body: {
+        subscribed: true,
+        subdate: Date.now(),
+        customerId: customerId,
+        subscribeId: result.subscribeId
       }
-      userController.updateUser(updatedRequest, res)
-    })
-    .catch(error => res.status(500).send(error))
+    }
+    return userController.updateUser(updatedRequest, res)
+  } else {
+    res.status(500).send({ error: "Stripe error: cannot create customer." })
+  }
 }
 
-export const addPayment = (req, res, stripe) => {
-  const { customerId, source } = req.body
-  stripe.customers
-    .createSource(customerId, {
-      source
-    })
-    .then(result => res.status(200).send(result))
-    .catch(error => res.status(400).send(error))
-}
+export const subscribeToPaidPlan = async (req, res, stripe) => {
+  const { planId, source } = req.body
+  const customer = await stripe.customers.create({ source: source.id })
 
-export const subscribeToPaidPlan = (req, res, stripe) => {
-  const { customerId, planId } = req.body
-
-  stripe.subscriptions
-    .create({
-      customer: customerId,
+  if (customer) {
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
       items: [{ plan: planId }]
     })
-    .then(result => {
+
+    if (subscription) {
       const updatedRequest = {
         ...req,
         body: {
           subscribed: true,
           subdate: Date.now(),
-          customerId: customerId,
-          subscribeId: result.subscribeId
+          customerId: customer.id,
+          subscribeId: subscription.id
         }
       }
-      userController.updateUser(updatedRequest, res)
-    })
-    .catch(error => res.status(500).send(error))
+      return userController.updateUser(updatedRequest, res)
+    } else {
+      res
+        .status(500)
+        .send({ error: "Stripe error: cannot create subscription." })
+    }
+  }
+  res.status(500).send({ error: "Stripe error: cannot create customer." })
 }
 
-// export const unsubscribe = (req, res, stripe) => {
-
-// }
+export const cancel = async (req, res, stripe) => {
+  const { subscribeId } = req.body
+  const cancellation = await stripe.subscriptions.del(subscribeId)
+  if (cancellation) {
+    const updatedRequest = {
+      ...req,
+      body: {
+        subscribed: true,
+        subdate: Date.now(),
+        customerId: "",
+        subscribeId: ""
+      }
+    }
+    return userController.updateUser(updatedRequest, res)
+  } else {
+    return res.status(500).send("Stripe error: Cannot cancel subscription.")
+  }
+}
