@@ -22,7 +22,7 @@ export const schema = {
     type: Boolean,
     default: false
   },
-  sub_date: {
+  subDate: {
     type: Date
   },
   trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
@@ -59,7 +59,7 @@ userSchema.set("toJSON", {
       username: ret.username,
       email: ret.email,
       subscribed: ret.subscribed,
-      sub_date: ret.sub_date
+      subDate: ret.subDate
     }
     return retJson
   }
