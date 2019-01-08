@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 
-import * as s from "../styles/Trip.styles"
+import * as s from "../styles/TripCard.styles"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 import { Button } from "../styles/theme/styledComponents"
 
@@ -19,7 +19,7 @@ class TripCard extends Component {
   render() {
     const { trip, archived } = this.props
     return (
-      <s.TripStyles>
+      <div>
         {!trip.id && "Loading trip"}
         {trip.id && (
           <>
@@ -30,21 +30,22 @@ class TripCard extends Component {
               />
               <div className="card-container">
                 <Link to={"/app/trip/get/" + trip.id}>View Trip</Link>
-                <div>Name: {trip.name}</div>
+                <div>{trip.name}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>
+                <div>Created at: {trip.createdAt}</div>
+                <div>Updated at: {trip.updatedAt}</div>
                 <div>Archived: {trip.isArchived.toString()}</div>
                 {/* handleEdit here*/}
-                <Button onClick={this.handleDelete(trip.id)}>Edit</Button>
-                <button onClick={this.toggleArchive(trip.id, !archived)}>
-                  {archived ? "UNARCHIVE" : "ARCHIVE"}
-                </button>
+                <CardButton onClick={this.handleDelete(trip.id)}>
+                  Edit
+                </CardButton>
               </div>
             </div>
             <br />
           </>
         )}
-      </s.TripStyles>
+      </div>
     )
   }
 }
@@ -52,6 +53,6 @@ class TripCard extends Component {
 const mapDispatchToProps = { deleteTrip, toggleArchive }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(TripCard)

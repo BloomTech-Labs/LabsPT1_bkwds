@@ -52,6 +52,7 @@ export const getArchivedTrips = () => dispatch => {
 
 export const getSingleTrip = tripId => dispatch => {
   dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
+  dispatch(push("/app/trip/get/" + tripId))
 }
 
 export const createTrip = trip => dispatch => {
@@ -60,7 +61,7 @@ export const createTrip = trip => dispatch => {
     .post(`${SERVER_URI}/trips`, { ...trip })
     .then(res => {
       dispatch({ type: CREATING_TRIP_SUCCESS, payload: res.data })
-      dispatch(push("/app/trips"))
+      dispatch(push("/app/trips/"))
     })
     .catch(err => {
       dispatch({ type: CREATING_TRIP_ERROR, payload: err })

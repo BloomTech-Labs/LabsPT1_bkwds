@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-import Trip from "./Trip"
+import TripCard from "./Trip"
 import { getTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
-import * as s from "../styles/Trip.styles"
+import * as s from "../styles/TripCard.styles"
 
 class Trips extends Component {
   componentDidMount() {
@@ -14,14 +14,14 @@ class Trips extends Component {
   render() {
     const { trips } = this.props
     return (
-      <s.TripStyles>
+      <s.TripCardStyles>
         <div className="container">
           {!trips.length && "No unarchived trips!"}
           {trips.map(trip => (
-            <Trip key={trip.id} trip={trip} archived={false} />
+            <TripCard key={trip.id} trip={trip} archived={false} />
           ))}
         </div>
-      </s.TripStyles>
+      </s.TripCardStyles>
     )
   }
 }
