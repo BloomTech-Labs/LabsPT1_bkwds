@@ -3,7 +3,7 @@ import tripController from "./trip.controller"
 
 export const tripRouter = express.Router()
 
-tripRouter.param("id", tripController.findByParam)
+// tripRouter.param("id", tripController.findByParam)
 
 tripRouter
   .route("/")

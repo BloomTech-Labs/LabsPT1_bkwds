@@ -32,6 +32,12 @@ export const schema = {
     type: Number,
     required: [true]
   },
+  image: {
+    type: String
+  },
+  inProgress: {
+    type: Boolean
+  },
   waypoints: [{ type: ObjectId, ref: "Waypoint" }]
 }
 
