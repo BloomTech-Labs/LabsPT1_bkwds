@@ -15,3 +15,5 @@ tripRouter
   .get(tripController.getOneTrip)
   .put(tripController.updateTrip)
   .delete(tripController.deleteTrip)
+
+tripRouter.route("/:id/waypoints").get(tripController.populateWaypoints)
