@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 
-import * as s from "../styles/Trip.styles"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 import { getSingleTrip } from "../redux/actions/trips"
 
@@ -18,7 +17,7 @@ class Trip extends Component {
   }
 
   render() {
-    const { trip, archived } = this.props
+    const { trip } = this.props
     return (
       <div>
         {!trip.id && "Loading trip"}

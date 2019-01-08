@@ -27,7 +27,7 @@ class TripDetails extends Component {
   }
 
   render() {
-    const { trip, archived, activeTrip } = this.props
+    const { trip } = this.props
     return (
       <div>
         {!trip.id && "Loading trip"}

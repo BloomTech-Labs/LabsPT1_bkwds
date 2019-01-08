@@ -16,7 +16,7 @@ class TripCard extends Component {
   }
 
   render() {
-    const { trip, archived } = this.props
+    const { trip } = this.props
     return (
       <div>
         {!trip.id && "Loading trip"}

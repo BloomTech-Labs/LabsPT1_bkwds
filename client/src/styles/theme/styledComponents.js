@@ -109,14 +109,14 @@ export const CardButton = styled.button`
 			right: 1%;
 			top: -50%;
 			display: block;
-			width: 15%;
-      height: 55%;
-      font-weight: 900;
+			width: 65px;
+      height: 65px;
+      font-weight: bold;
 			border-radius: 100%;
 			background: #fff;
 			box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .15);
 			text-align: center;
-			text-decoration: none;
+			text-decoration: bold;
       color: #1abc9c;
       transition: all .3s ease;
 			&::after
