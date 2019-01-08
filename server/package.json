@@ -7,7 +7,7 @@
     "setupTestFrameworkScriptFile": "<rootDir>/tests/setup.js",
     "verbose": true,
     "testMatch": [
-      "<rootDir>/tests/tests/**"
+      "<rootDir>/tests/modules/**"
     ],
     "testEnvironment": "node"
   },
@@ -21,8 +21,7 @@
     "heroku-postbuild": "yarn build"
   },
   "engines": {
-    "node": "10.x",
-    "yarn": "1.12.3"
+    "node": "10.x"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",

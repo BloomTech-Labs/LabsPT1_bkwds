@@ -22,7 +22,7 @@ export const schema = {
     type: Boolean,
     default: false
   },
-  sub_date: {
+  subDate: {
     type: Date
   },
   trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
@@ -51,6 +51,19 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     cb(null, isMatch)
   })
 }
+
+userSchema.set("toJSON", {
+  transform: function(doc, ret) {
+    let retJson = {
+      id: ret._id,
+      username: ret.username,
+      email: ret.email,
+      subscribed: ret.subscribed,
+      subDate: ret.subDate
+    }
+    return retJson
+  }
+})
 
 mongoose.set("useCreateIndex", true)
 mongoose.set("useFindAndModify", false)
