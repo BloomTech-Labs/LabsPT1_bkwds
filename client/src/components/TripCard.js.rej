@@ -1,0 +1,13 @@
+diff a/client/src/components/TripCard.js b/client/src/components/TripCard.js	(rejected hunks)
+@@ -41 +40,3 @@ class TripCard extends Component {
+-                <CardButton onClick={this.handleDelete(trip.id)}>Edit</CardButton>
++                <CardButton onClick={this.handleDelete(trip.id)}>
++                  Edit
++                </CardButton>
+@@ -46 +47 @@ class TripCard extends Component {
+-        )}  
++        )}
+@@ -48,2 +49 @@ class TripCard extends Component {
+-        
+-      )
++    )

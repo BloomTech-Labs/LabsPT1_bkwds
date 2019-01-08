@@ -52,5 +52,4 @@ img {
   transition: all 1.86s ease;
 }
 
-	
 `

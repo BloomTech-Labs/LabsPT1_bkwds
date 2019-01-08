@@ -7,7 +7,6 @@ import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 import { getSingleTrip } from "../redux/actions/trips"
 
 import { CardButton, Button } from "../styles/theme/styledComponents"
-
 class Trip extends Component {
   handleSingleTrip = tripId => e => {
     e.preventDefault()

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-import TripCard from "./Trip"
+import TripCard from "./TripCard"
 import { getTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"

@@ -1,0 +1,9 @@
+diff a/client/src/components/Trip.js b/client/src/components/Trip.js	(rejected hunks)
+@@ -6 +6 @@ import * as s from "../styles/Trip.styles"
+-import { deleteTrip, toggleArchive} from "../redux/actions/trips"
++import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+@@ -42 +41,3 @@ class Trip extends Component {
+-                <Button btn-light onClick={this.toggleArchive(trip.id)}>Archive</Button>
++                <Button btn-light onClick={this.toggleArchive(trip.id)}>
++                  Archive
++                </Button>
