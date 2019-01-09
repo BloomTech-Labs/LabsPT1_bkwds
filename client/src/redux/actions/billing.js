@@ -28,7 +28,7 @@ export const subscribe = ({ id, owner, stripe }) => async dispatch => {
   const { source } = await stripe.createSource({ type: "card" })
   const updatedSource = { ...source, owner }
   const subscribedUser = await axios.post(`${SERVER_URI}/subscribe/${id}`, {
-    planId: "plan_ECNDe6gLWxZ3cQ",
+    planId: process.env.STRIPE_PLAN_ID_TEST,
     source: updatedSource
   })
   if (subscribedUser) {
