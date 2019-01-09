@@ -1,5 +1,5 @@
 import express from "express"
-import tripController from "./trip.controller"
+import * as tripController from "./trip.controller"
 
 export const tripRouter = express.Router()
 
