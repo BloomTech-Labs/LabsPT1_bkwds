@@ -19,7 +19,7 @@ export const register = (req, res) => {
       newUser
         .save()
         .then(() => {
-          res.status(201).send()
+          res.sendStatus(201)
         })
         .catch(err => {
           const message = err.message
@@ -60,18 +60,18 @@ export const login = (req, res) => {
 }
 
 export const protect = (req, res, next) => {
-  // if (!req.headers.authorization) {
-  //   return res.status(400).send("Bad Request")
-  // }
-  // let token = req.headers.authorization
-  // token = token.replace("Bearer ", "")
-  // jwt.verify(token, JWT_SECRET, err => {
-  //   if (err) {
-  //     next(err)
-  //     return res.status(401).send("Unauthorized")
-  //   }
-  next()
-  // })
+  if (!req.headers.authorization) {
+    return res.status(400).send("Bad Request")
+  }
+  let token = req.headers.authorization
+  token = token.replace("Bearer ", "")
+  jwt.verify(token, JWT_SECRET, err => {
+    if (err) {
+      next(err)
+      return res.status(401).send("Unauthorized")
+    }
+    next()
+  })
 }
 
 export const getUserFromToken = (req, res) => {

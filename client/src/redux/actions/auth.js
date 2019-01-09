@@ -64,7 +64,7 @@ export const addTokenToState = () => dispatch => {
   }
   // If no token, bail out:
   if (!token) return
-  console.log("TOKEN FOUND!", token)
+  // console.log("TOKEN FOUND!", token)
   dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
   // Use token to check DB for user:
   dispatch(checkDbForUser(token))
@@ -82,13 +82,13 @@ export const checkDbForUser = token => dispatch => {
   axios
     .post(`${SERVER_URI}/user_from_token`, { id })
     .then(res => {
-      console.log("RESPONSE! res.data:", res.data)
+      // console.log("RESPONSE! res.data:", res.data)
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
       dispatch(push("/app"))
     })
     .catch(err => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
       // errorHandler(err)
-      console.error("GET USER WITH TOKEN ERROR:", err)
+      // console.error("GET USER WITH TOKEN ERROR:", err)
     })
 }

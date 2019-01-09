@@ -11,10 +11,10 @@ app.use(cors())
 
 app.use("/api", restRouter)
 
-app.all("*", (req, res) => {
-  res.json({
-    ok: true
-  })
-})
+// app.all("*", (req, res) => {
+//   res.json({
+//     ok: true
+//   })
+// })
 
 export default app
