@@ -6,6 +6,7 @@ import { cancelSubscription } from "../redux/actions/billing"
 import { Elements, StripeProvider } from "react-stripe-elements"
 import CheckoutForm from "./forms/CheckoutForm"
 import { Button } from "../styles/theme/styledComponents"
+import { STRIPE_KEY } from "../config"
 
 class Billing extends React.Component {
   state = {
@@ -34,7 +35,7 @@ class Billing extends React.Component {
     const { isCheckoutFormOpen } = this.state
     const isSubscribed = user.subscribed
     return (
-      <StripeProvider apiKey="pk_test_12RJOzHXwYtqfRwncplH3B6V">
+      <StripeProvider apiKey={STRIPE_KEY}>
         <s.BillingStyles>
           {isLoggedIn && !isPending && (
             <>

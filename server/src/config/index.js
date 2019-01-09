@@ -9,9 +9,6 @@ const baseConfig = {
   },
   db: {
     url: process.env.MONGO_URI
-  },
-  stripe: {
-    instance: require("stripe")("sk_test_5twPX0XWUlzom0InGpSF2KhB")
   }
 }
 
