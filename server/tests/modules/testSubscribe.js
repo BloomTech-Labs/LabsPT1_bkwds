@@ -31,6 +31,7 @@ describe("Test Subscribe and Cancel route", () => {
   test("POST free users subscribe", async () => {
     const response = await request(app)
       .post(`/api/subscribe/${userId}`)
+      .set("Authorization", `Bearer ${token}`)
       .send({
         planId: process.env.STRIPE_PLAN_ID_TEST,
         source: { id: "tok_visa" }
