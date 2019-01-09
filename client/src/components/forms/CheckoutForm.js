@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import axios from "axios"
-import { SERVER_URI } from "../../config"
 import * as s from "../../styles/CheckoutForm.styles"
-// import { checkout } from "../../redux/actions/auth"
+import { subscribe } from "../../redux/actions/billing"
 
 import { CardElement, injectStripe } from "react-stripe-elements"
 import { Input, Button } from "../../styles/theme/styledComponents"
@@ -11,50 +9,32 @@ import { Input, Button } from "../../styles/theme/styledComponents"
 class CheckoutForm extends Component {
   state = {
     name: "",
-    billing_address_country: "",
-    billing_address_zip: "",
-    billing_address_state: "",
-    billing_address_line1: "",
-    billing_address_line2: "",
-    billing_address_city: ""
+    country: "",
+    postal_code: "",
+    state: "",
+    line1: "",
+    line2: "",
+    city: ""
   }
 
   submit = async () => {
-    const {
-      name,
-      billing_address_line1,
-      billing_address_line2,
-      billing_address_city,
-      billing_address_state,
-      billing_address_zip,
-      billing_address_country
-    } = this.state
+    const { name, line1, line2, city, state, postal_code, country } = this.state
     const owner = {
       name,
       address: {
-        line1: billing_address_line1,
-        line2: billing_address_line2,
-        city: billing_address_city,
-        state: billing_address_state,
-        postal_code: billing_address_zip,
-        country: billing_address_country
+        line1,
+        line2,
+        city,
+        state,
+        postal_code,
+        country
       }
     }
-
-    const { source } = await this.props.stripe.createSource({ type: "card" })
-    const updatedSource = { ...source, owner }
-    const subscription = await axios.post(
-      `${SERVER_URI}/subscribe/paid/${this.props.user.id}`,
-      {
-        planId: this.props.planId,
-        source: updatedSource
-      }
-    )
-    if (subscription) {
-      this.props.onCompleteSubscribe()
-    } else {
-      console.log(subscription.error)
-    }
+    this.props.subscribe({
+      id: this.props.user.id,
+      owner,
+      stripe: this.props.stripe
+    })
   }
 
   handleChangeCard = card => {
@@ -66,15 +46,7 @@ class CheckoutForm extends Component {
   }
 
   render() {
-    const {
-      name,
-      billing_address_line1,
-      billing_address_line2,
-      billing_address_city,
-      billing_address_state,
-      billing_address_zip,
-      billing_address_country
-    } = this.state
+    const { name, line1, line2, city, state, postal_code, country } = this.state
     return (
       <s.CheckoutFormStyles>
         <CardElement
@@ -89,45 +61,45 @@ class CheckoutForm extends Component {
           onChange={this.handleChangeOwnerInfo}
         />
         <Input
-          id="billing_address_line1"
+          id="line1"
           type="text"
           placeholder="Address Line 1"
-          value={billing_address_line1}
+          value={line1}
           onChange={this.handleChangeOwnerInfo}
         />
         <Input
-          id="billing_address_line2"
+          id="line2"
           type="text"
           placeholder="Address Line 2"
-          value={billing_address_line2}
+          value={line2}
           onChange={this.handleChangeOwnerInfo}
         />
         <Input
-          id="billing_address_city"
+          id="city"
           type="text"
           placeholder="City"
-          value={billing_address_city}
+          value={city}
           onChange={this.handleChangeOwnerInfo}
         />
         <Input
-          id="billing_address_state"
+          id="state"
           type="text"
           placeholder="State"
-          value={billing_address_state}
+          value={state}
           onChange={this.handleChangeOwnerInfo}
         />
         <Input
-          id="billing_address_zip"
-          type="text"
+          id="postal_code"
+          type="number"
           placeholder="Postal Code"
-          value={billing_address_zip}
+          value={postal_code}
           onChange={this.handleChangeOwnerInfo}
         />
         <Input
-          id="billing_address_country"
+          id="country"
           type="text"
           placeholder="Country"
-          value={billing_address_country}
+          value={country}
           onChange={this.handleChangeOwnerInfo}
         />
         <Button onClick={this.submit}>Subsribe Now</Button>
@@ -136,11 +108,15 @@ class CheckoutForm extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => {
-  return { user: auth.user }
+const mapStateToProps = state => {
+  return { user: state.auth.user }
+}
+
+const mapDispatchToProps = {
+  subscribe
 }
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(injectStripe(CheckoutForm))
