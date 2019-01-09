@@ -78,7 +78,7 @@ Creates a new user in the database.
 
 ---
 
-## Get a single user by ID
+## Get a single user
 
 Get a single user from the database
 
@@ -90,7 +90,7 @@ Get a single user from the database
 
 **Required URL Params**:
 
-- **id** - `integer`
+- **id** - `ObjectId`
 
 ### Success Response
 
@@ -128,7 +128,7 @@ Note: Certain properties are not allowed to be modifed.
 
 **Required URL Params**:
 
-- **id** - `integer`
+- **id** - `ObjectId`
 
 ### Success Response
 
@@ -159,7 +159,7 @@ Returns the deleted user and a confirmation message
 
 **Required URL Params**:
 
-- **id** - `integer`
+- **id** - `ObjectId`
 
 ### Success Response
 
@@ -197,7 +197,7 @@ WARNING: This endpoint is not ready. DO NOT USE
 
 **Required URL Params**:
 
-- **id** - `integer`
+- **id** - `ObjectId`
 
 ### Success Response
 
