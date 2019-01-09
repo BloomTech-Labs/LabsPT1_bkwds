@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import Trip from "../components/Maps/singleTrip"
 import { Link } from "react-router-dom"
 
-import Trip from "./Trip"
+// import Trip from "./Trip"
 import { getSingleTrip } from "../redux/actions/trips"
 import { getTripById } from "../utils/selectors"
 
@@ -13,13 +14,7 @@ class SingleTrip extends Component {
 
   render() {
     const { trip, tripId } = this.props
-    return (
-      <div>
-        <div>Single Trip View component here! {tripId}</div>
-        <Trip trip={trip} />
-        <Link to="/app/trips">← Back to All Trips</Link>
-      </div>
-    )
+    return <Trip />
   }
 }
 
