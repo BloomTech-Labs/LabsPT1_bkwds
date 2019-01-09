@@ -27,13 +27,11 @@ export const schema = {
   },
   customerId: {
     type: String,
-    unique: true,
-    default: ""
+    unique: true
   },
   subscribeId: {
     type: String,
-    unique: true,
-    default: ""
+    unique: true
   },
   trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
 }
