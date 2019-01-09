@@ -7,7 +7,7 @@
     "setupTestFrameworkScriptFile": "<rootDir>/tests/setup.js",
     "verbose": true,
     "testMatch": [
-      "<rootDir>/tests/tests/**"
+      "<rootDir>/tests/modules/**"
     ],
     "testEnvironment": "node"
   },
