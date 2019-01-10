@@ -10,9 +10,7 @@ const userData = {
   username: "FreeUser",
   password: "freeUserPass",
   email: "email@hotmail.com",
-  subscribed: false,
-  customerId: "",
-  subscribeId: ""
+  subscribed: false
 }
 
 describe("Test Subscribe and Cancel route", () => {
