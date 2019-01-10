@@ -14,6 +14,11 @@ export default class Map extends React.Component {
       zoom: 9,
       disableDefaultUI: true
     })
+    new window.google.maps.Marker({
+      position: this.state.markers[0],
+      map: map,
+      title: "Placeholder marker"
+    })
   }
   render() {
     return <div style={{ width: "100vw - 165px", height: "100vh" }} id="map" />
