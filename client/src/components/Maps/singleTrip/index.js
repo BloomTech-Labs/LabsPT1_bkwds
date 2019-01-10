@@ -7,7 +7,7 @@ export default class Map extends React.Component {
   }
 
   // data is an array of markers
-  renderMarkers = data => {}
+  //   renderMarkers = data => {}
   componentDidMount() {
     const map = new window.google.maps.Map(document.getElementById("map"), {
       center: this.state.center,
