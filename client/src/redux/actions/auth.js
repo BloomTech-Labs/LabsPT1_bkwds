@@ -24,7 +24,7 @@ export const login = ({ username, password }) => dispatch => {
       console.log("RESPONSE:", res)
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
 
-      localStorage.setItem("jwt", JSON.stringify(res.data.token))
+      localStorage.setItem("jwt", res.data.token)
 
       dispatch(push("/app"))
     })

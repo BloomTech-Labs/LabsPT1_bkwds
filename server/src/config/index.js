@@ -9,6 +9,9 @@ const baseConfig = {
   },
   db: {
     url: process.env.MONGO_URI
+  },
+  stripe: {
+    instance: require("stripe")(process.env.STRIPE_KEY_SERVER_TEST)
   }
 }
 
@@ -17,7 +20,6 @@ let envConfig = {}
 switch (env) {
   case "development":
   case "dev":
-    //envConfig = require("./dev").config
     break
   case "test":
   case "testing":
