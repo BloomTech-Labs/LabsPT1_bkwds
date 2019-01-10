@@ -1,6 +1,6 @@
 import React from "react"
 import CreateTrip from "../components/Maps/createTrip"
-import * as s from "../styles/NewTrip.styles"
+// import * as s from "../styles/NewTrip.styles"
 import NewTripForm from "./forms/NewTripForm"
 // import WaypointForm from "./forms/WaypointForm"
 
