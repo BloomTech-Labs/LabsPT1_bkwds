@@ -8,9 +8,9 @@ Registers and creates a new user in the database
 
 **Token required**: NO
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `201 Created`
+- **Status Code**: `201 Created`
 
 ---
 
@@ -24,9 +24,9 @@ Returns the logged in user and authorization token
 
 **Token required**: NO
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 

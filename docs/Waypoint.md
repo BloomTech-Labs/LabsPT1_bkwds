@@ -8,9 +8,9 @@ Get a list of all waypoints saved in the database
 
 **Token required**: YES
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
@@ -71,9 +71,9 @@ Returns the created waypoint from database
 - **start** - `Date`
 - **end** - `Date`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `201 Created`
+- **Status Code**: `201 Created`
 
 **Example Content**
 
@@ -111,9 +111,9 @@ Returns a single waypoint from the database
 
 - **id** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
@@ -156,9 +156,9 @@ Note: Certain properties are not allowed to be modifed.
 
 - **id** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
@@ -196,9 +196,9 @@ Returns the deleted waypoint and confirmation message
 
 - **id** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `202 Accepted`
+- **Status Code**: `202 Accepted`
 
 **Example Content**
 
@@ -239,9 +239,9 @@ Returns an array of all waypoints for a trip
 
 - **tripId** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
@@ -297,9 +297,9 @@ Returns confirmation message with how many waypoints were deleted
 
 - **tripId** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `202 Accepted`
+- **Status Code**: `202 Accepted`
 
 **Example Content**
 

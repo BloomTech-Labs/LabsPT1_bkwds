@@ -8,9 +8,9 @@ Get a list of all users saved in the database
 
 **Token required**: YES
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
@@ -59,9 +59,9 @@ Creates a new user in the database.
 - **password** - `string`
 - **email** - `string`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `201 Created`
+- **Status Code**: `201 Created`
 
 **Example Content**
 
@@ -90,9 +90,9 @@ Get a single user from the database
 
 - **id** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
@@ -128,9 +128,9 @@ Note: Certain properties are not allowed to be modifed.
 
 - **id** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
@@ -159,9 +159,9 @@ Returns the deleted user and a confirmation message
 
 - **id** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `202 Accepted`
+- **Status Code**: `202 Accepted`
 
 **Example Content**
 
@@ -197,9 +197,9 @@ WARNING: This endpoint is not ready. DO NOT USE
 
 - **id** - `ObjectId`
 
-### Success Response
+**Success Response**:
 
-**Status Code**: `200 OK`
+- **Status Code**: `200 OK`
 
 **Example Content**
 
