@@ -1,9 +1,8 @@
 import express from "express"
 import * as subscribeController from "./subscribe.controller"
-import config from "../../../config"
 
 export const subscribeRouter = express.Router()
-const stripe = config.stripe.instance
+const stripe = require("stripe")(process.env.STRIPE_KEY_SERVER_TEST)
 
 subscribeRouter
   .route("/:id")

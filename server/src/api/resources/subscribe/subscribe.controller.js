@@ -2,13 +2,19 @@ import * as userController from "../user/user.controller"
 
 export const subscribe = async (req, res, stripe) => {
   const { planId, source } = req.body
-  const customer = await stripe.customers.create({ source: source.id })
+  const customer = await stripe.customers.create(
+    { source: source.id },
+    { api_key: process.env.STRIPE_KEY_SERVER_TEST }
+  )
 
   if (customer) {
-    const subscription = await stripe.subscriptions.create({
-      customer: customer.id,
-      items: [{ plan: planId }]
-    })
+    const subscription = await stripe.subscriptions.create(
+      {
+        customer: customer.id,
+        items: [{ plan: planId }]
+      },
+      { api_key: process.env.STRIPE_KEY_SERVER_TEST }
+    )
 
     if (subscription) {
       const updatedRequest = {
@@ -32,7 +38,9 @@ export const subscribe = async (req, res, stripe) => {
 
 export const cancel = async (req, res, stripe) => {
   const { subscribeId } = req.body
-  const cancellation = await stripe.subscriptions.del(subscribeId)
+  const cancellation = await stripe.subscriptions.del(subscribeId, {
+    api_key: process.env.STRIPE_KEY_SERVER_TEST
+  })
   if (cancellation) {
     const updatedRequest = {
       ...req,
