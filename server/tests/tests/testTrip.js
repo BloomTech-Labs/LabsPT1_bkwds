@@ -12,22 +12,22 @@ const userOne = {
 }
 const testTripOne = {
   name: testLocation1,
-  start: 01 - 01 - 2018,
-  end: 01 - 02 - 2018,
+  start: 1547098098614,
+  end: 1547098098914,
   lat: 45.354845,
   lon: 76.2542145
 }
 const testTripTwo = {
   name: testLocation2,
-  start: 02 - 01 - 2018,
-  end: 02 - 02 - 2018,
+  start: 1547098098414,
+  end: 15470980966,
   lat: 65.354845,
   lon: 46.2542145
 }
 const testTripThree = {
   name: testLocation3,
-  start: 03 - 01 - 2018,
-  end: 03 - 02 - 2018,
+  start: 1547098098514,
+  end: 1547098098914,
   lat: 55.354845,
   lon: 36.2542145
 }
