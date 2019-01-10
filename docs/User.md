@@ -1,5 +1,3 @@
-# User
-
 ## Get all users
 
 Get a list of all users saved in the database

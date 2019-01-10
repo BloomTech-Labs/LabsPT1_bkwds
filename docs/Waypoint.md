@@ -1,5 +1,3 @@
-# Waypoint
-
 ## Get all waypoints
 
 Get a list of all waypoints saved in the database

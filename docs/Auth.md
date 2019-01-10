@@ -1,5 +1,3 @@
-# Auth
-
 ## Register a new user
 
 Registers and creates a new user in the database
