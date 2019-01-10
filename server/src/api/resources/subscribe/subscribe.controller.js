@@ -38,7 +38,9 @@ export const cancel = async (req, res, stripe) => {
       ...req,
       body: {
         subscribed: false,
-        subDate: ""
+        subDate: "",
+        customerId: null,
+        subscribeId: null
       }
     }
     return userController.updateUser(updatedRequest, res)

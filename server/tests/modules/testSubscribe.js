@@ -47,6 +47,7 @@ describe("Test Subscribe and Cancel route", () => {
     if (userResponse && userResponse.body && userResponse.body.subscribeId) {
       const response = await request(app)
         .post(`/api/subscribe/cancel/${userId}`)
+        .set("Authorization", `Bearer ${token}`)
         .send({ subscribeId: userResponse.body.subscribeId })
 
       expect(response.statusCode).toBe(200)
