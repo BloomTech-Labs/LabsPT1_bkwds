@@ -3,8 +3,8 @@ import app from "../../src/server"
 
 import { Trip } from "../../src/api/resources/trip/trip.model"
 
-let date = new Date("March 18, 2019 11:30:00 AM")
-let date2 = new Date("March 18, 2019 11:45:00 AM")
+// let date = new Date("March 18, 2019 11:30:00 AM")
+// let date2 = new Date("March 18, 2019 11:45:00 AM")
 const userOne = {
   username: "TestUser1",
   password: "testpass",

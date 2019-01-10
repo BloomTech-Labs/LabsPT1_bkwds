@@ -1,6 +1,5 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
-import Trip from "../trip/trip.model"
 
 const Schema = mongoose.Schema
 const SALT_WORK_FACTOR = 10
