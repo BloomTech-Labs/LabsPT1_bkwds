@@ -1,5 +1,6 @@
 import { Trip } from "./trip.model"
 import { User } from "../user/user.model"
+import { Waypoint } from "../waypoint/waypoint.model"
 
 export const getAllTrips = (req, res) => {
   Trip.find({})
@@ -89,7 +90,13 @@ export const deleteTrip = (req, res) => {
   Trip.findOneAndDelete({ _id: req.params.id })
     .then(trip => {
       if (!trip) return res.status(404).send("trip not found")
-      res.status(202).json(trip)
+      Waypoint.deleteMany({ tripId: trip.id })
+        .then(() => {
+          res.status(202).json(trip)
+        })
+        .catch(err => {
+          res.status(500).send(err)
+        })
     })
     .catch(err => {
       res.status(500).send(err)
