@@ -45,7 +45,7 @@ export const getUnarchivedTripsArray = trips =>
  * Takes a user object from the server & returns an object with
  * an `id` instead of an `_id` property
  **/
-export const normalizeUser = ({ _id, ...rest }) => ({
+export const normalizeUser = ({ ...rest }) => ({
   ...rest
   // id: _id
 })
@@ -57,9 +57,10 @@ export const normalizeUser = ({ _id, ...rest }) => ({
  * key is the Trip _id and whose value is the Trip, except the
  * `_id` key has been normalized to be just `id`
  **/
-export const normalizeTrip = ({ _id, ...rest }) => ({
+// export const normalizeTrip = ({ _id, ...rest }) => ({
+export const normalizeTrip = ({ id, ...rest }) => ({
   // [_id]: { ...rest, id: _id }
-  [_id]: { ...rest }
+  [id]: { ...rest }
 })
 
 /**
