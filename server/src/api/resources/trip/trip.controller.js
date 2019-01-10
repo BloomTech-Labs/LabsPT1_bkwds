@@ -12,6 +12,7 @@ export const getAllTrips = (req, res) => {
 
 export const createTrip = (req, res) => {
   const newTrip = new Trip({
+    userId: req.body.userId,
     name: req.body.name,
     isArchived: req.body.isArchived,
     start: req.body.start,
@@ -38,7 +39,7 @@ export const createTrip = (req, res) => {
 
 export const getOneTrip = (req, res) => {
   Trip.findOne({ _id: req.params.id })
-    .populate("waypoints")
+    .populate({ path: "waypoints", model: "Waypoint" })
     .exec()
     .then(trip => {
       res.status(200).json(trip)
@@ -47,6 +48,13 @@ export const getOneTrip = (req, res) => {
       return res.status(500).send(err)
     })
 }
+
+// export const getOneTrip = (req, res) => {
+//   Trip.findOne(req.params('id')).populateAll().exec(function(err, trip) {
+//       if (err) res.status(500).send(err)
+//       res.status(200).json(trip)
+//     })
+// }
 
 export const updateTrip = (req, res) => {
   const id = req.params.id
