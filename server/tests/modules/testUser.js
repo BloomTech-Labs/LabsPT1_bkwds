@@ -30,7 +30,7 @@ describe("Test User model and routes", () => {
     const response = await request(app)
       .post("/api/login")
       .send({ username: user1.username, password: "testpass" })
-    userID = response.body.user._id
+    userID = response.body.user.id
     token = response.body.token
     return done()
   })
@@ -51,11 +51,10 @@ describe("Test User model and routes", () => {
       .send(userThree)
       .then(response => {
         expect(response.statusCode).toBe(201)
-        expect(response.body._id).toBeTruthy()
+        expect(response.body.id).toBeTruthy()
         expect(response.body.username).toBe("TestUser3")
         expect(response.body.subscribed).toEqual(false)
         expect(response.body.email).toBe("email@yahoo.com")
-        expect(response.body.trips).toEqual([])
         done()
       })
   })
@@ -65,7 +64,7 @@ describe("Test User model and routes", () => {
       .set("Authorization", `Bearer ${token}`)
       .then(response => {
         expect(response.statusCode).toBe(200)
-        expect(response.body._id).toEqual(userID)
+        expect(response.body.id).toEqual(userID)
         expect(response.body.username).toBe("TestUser1")
         done()
       })
@@ -78,7 +77,7 @@ describe("Test User model and routes", () => {
       .send(updated)
       .then(response => {
         expect(response.statusCode).toBe(200)
-        expect(response.body._id).toEqual(userID)
+        expect(response.body.id).toEqual(userID)
         expect(response.body.username).toBe("TestUser1")
         expect(response.body.email).toBe("fakeEmail@gmail.com")
         done()
@@ -90,7 +89,7 @@ describe("Test User model and routes", () => {
       .set("Authorization", `Bearer ${token}`)
       .then(response => {
         expect(response.statusCode).toBe(202)
-        expect(response.body.user._id).toEqual(userID)
+        expect(response.body.user.id).toEqual(userID)
         expect(response.body.user.username).toBe("TestUser1")
         expect(response.body.user.email).toBe("fakeEmail@gmail.com")
         expect(response.body.msg).toBe("User was deleted")
