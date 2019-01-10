@@ -1,4 +1,5 @@
 import { Trip } from "./trip.model"
+import { User } from "../user/user.model"
 
 export const getAllTrips = (req, res) => {
   Trip.find({})
@@ -12,6 +13,7 @@ export const getAllTrips = (req, res) => {
 
 export const createTrip = (req, res) => {
   const newTrip = new Trip({
+    userId: req.body.userId,
     name: req.body.name,
     isArchived: req.body.isArchived,
     start: req.body.start,
@@ -25,7 +27,16 @@ export const createTrip = (req, res) => {
       newTrip
         .save()
         .then(trip => {
-          res.status(201).json(trip)
+          User.findOneAndUpdate(
+            { _id: req.body.userId },
+            { $addToSet: { trips: trip.id } }
+          )
+            .then(() => {
+              res.status(201).json(trip)
+            })
+            .catch(() => {
+              res.status(500).json("Error linking trip to User")
+            })
         })
         .catch(err => {
           res.status(500).send(err.message)
@@ -86,9 +97,9 @@ export const deleteTrip = (req, res) => {
 }
 
 export const populateWaypoints = (req, res) => {
-  User.findById(req.params.id)
+  Trip.findById(req.params.id)
     .populate("waypoints")
-    .exec((err, trip) => {
+    .exec(function(err, trip) {
       if (err) res.status(500).send(err)
       res.status(200).json(trip.waypoints)
     })

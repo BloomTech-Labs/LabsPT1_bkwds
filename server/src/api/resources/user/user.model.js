@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
+import Trip from "../trip/trip.model"
 
 const Schema = mongoose.Schema
 const SALT_WORK_FACTOR = 10
@@ -59,7 +60,8 @@ userSchema.set("toJSON", {
       username: ret.username,
       email: ret.email,
       subscribed: ret.subscribed,
-      subDate: ret.subDate
+      subDate: ret.subDate,
+      trips: ret.trips
     }
     return retJson
   }
