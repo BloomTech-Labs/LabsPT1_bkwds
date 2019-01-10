@@ -46,8 +46,8 @@ export const getUnarchivedTripsArray = trips =>
  * an `id` instead of an `_id` property
  **/
 export const normalizeUser = ({ _id, ...rest }) => ({
-  ...rest,
-  id: _id
+  ...rest
+  // id: _id
 })
 
 /**
@@ -58,7 +58,8 @@ export const normalizeUser = ({ _id, ...rest }) => ({
  * `_id` key has been normalized to be just `id`
  **/
 export const normalizeTrip = ({ _id, ...rest }) => ({
-  [_id]: { ...rest, id: _id }
+  // [_id]: { ...rest, id: _id }
+  [_id]: { ...rest }
 })
 
 /**
