@@ -24,8 +24,8 @@ import {
 
 const token = localStorage.getItem("jwt")
 
-// Set token header on all requests:
-axios.defaults.headers.common["Authorization"] = `${token}`
+// Set token as Authorization header on all requests:
+axios.defaults.headers.common["Authorization"] = token
 
 export const getTrips = () => dispatch => {
   dispatch({ type: LOADING_TRIPS })
