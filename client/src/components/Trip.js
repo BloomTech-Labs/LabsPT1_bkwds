@@ -30,12 +30,19 @@ class Trip extends Component {
               <div className="card-container">
                 <Link to={"/app/trip/get/" + trip.id}>View Trip</Link>
                 <div>Name: {trip.name}</div>
+                <div>ID: {trip.id}</div>
                 <div>UserID: {trip.userId}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>
                 <div>Created at: {trip.createdAt}</div>
                 <div>Updated at: {trip.updatedAt}</div>
                 <div>Archived: {trip.isArchived.toString()}</div>
+                <div>
+                  Waypoints:{" "}
+                  {trip.waypoints.map((w, i) => (
+                    <div key={i}>{w.toString()}</div>
+                  ))}
+                </div>
                 <button onClick={this.handleDelete(trip.id)}>DELETE</button>
                 <button onClick={this.toggleArchive(trip.id, !archived)}>
                   {archived ? "UNARCHIVE" : "ARCHIVE"}

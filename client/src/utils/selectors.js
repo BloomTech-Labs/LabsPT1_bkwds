@@ -60,7 +60,7 @@ export const normalizeUser = ({ ...rest }) => ({
 // export const normalizeTrip = ({ _id, ...rest }) => ({
 export const normalizeTrip = ({ id, ...rest }) => ({
   // [_id]: { ...rest, id: _id }
-  [id]: { ...rest }
+  [id]: { id, ...rest }
 })
 
 /**

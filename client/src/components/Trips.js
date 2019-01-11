@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-import TripCard from "./Trip"
+import Trip from "./Trip"
 import { getTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/Trip.styles"
@@ -16,10 +16,13 @@ class Trips extends Component {
     return (
       <s.TripStyles>
         <div className="container">
-          {!trips.length && "No unarchived trips!"}
-          {trips.map(trip => (
-            <TripCard key={trip.id} trip={trip} archived={false} />
-          ))}
+          {trips.length > 0 ? (
+            trips.map(trip => (
+              <Trip key={trip.id} trip={trip} archived={false} />
+            ))
+          ) : (
+            <div>No trips!</div>
+          )}
         </div>
       </s.TripStyles>
     )

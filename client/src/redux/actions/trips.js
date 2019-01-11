@@ -13,7 +13,6 @@ import {
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
   CREATING_TRIP_ERROR,
-  CREATING_WAYPOINT,
   DELETING_TRIP,
   DELETING_TRIP_SUCCESS,
   DELETING_TRIP_ERROR,
@@ -22,7 +21,12 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
 
-export const getTrips = () => dispatch => {
+const token = localStorage.getItem("jwt")
+
+// Set token as Authorization header on all requests:
+axios.defaults.headers.common["Authorization"] = token
+
+export const getTrips = () => async dispatch => {
   dispatch({ type: LOADING_TRIPS })
   return axios
     .get(`${SERVER_URI}/trips`)
@@ -74,7 +78,7 @@ export const deleteTrip = tripId => dispatch => {
   axios
     .delete(`${SERVER_URI}/trips/${tripId}`)
     .then(res => {
-      dispatch({ type: DELETING_TRIP_SUCCESS, payload: res.data._id })
+      dispatch({ type: DELETING_TRIP_SUCCESS, payload: res.data.id })
     })
     .catch(err => {
       dispatch({ type: DELETING_TRIP_ERROR, payload: err })
@@ -98,10 +102,4 @@ export const toggleArchive = (tripId, archiveTrip) => dispatch => {
       //errorHandler(err)
       console.error("ARCHIVING TRIP ERROR!", err)
     })
-}
-
-export const saveWaypoint = waypoint => dispatch => {
-  console.log(waypoint)
-  dispatch({ type: CREATING_WAYPOINT })
-  alert("implement save waypoint!")
 }

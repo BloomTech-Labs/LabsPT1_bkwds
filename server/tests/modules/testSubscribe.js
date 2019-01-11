@@ -1,26 +1,16 @@
 import request from "supertest"
 import app from "../../src/server"
 
-import { User } from "../../src/api/resources/user/user.model"
+import * as mock from "../mock"
 
 let userId
 let token
 
-const userData = {
-  username: "FreeUser",
-  password: "freeUserPass",
-  email: "email@hotmail.com",
-  subscribed: false
-}
-
 describe("Test Subscribe and Cancel route", () => {
   beforeAll(async () => {
-    let user = new User(userData)
-    await user.save()
-
     const response = await request(app)
       .post("/api/login")
-      .send({ username: user.username, password: "freeUserPass" })
+      .send({ username: mock.userOne.username, password: "testpass" })
 
     userId = response.body.user.id
     token = response.body.token

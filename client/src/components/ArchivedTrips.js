@@ -14,10 +14,11 @@ class ArchivedTrips extends Component {
     const { trips } = this.props
     return (
       <div>
-        {!trips.length && "No archived trips!"}
-        {trips.map(trip => (
-          <Trip key={trip.id} trip={trip} archived={true} />
-        ))}
+        {trips.length ? (
+          trips.map(trip => <Trip key={trip.id} trip={trip} archived={true} />)
+        ) : (
+          <div>No archived trips!</div>
+        )}
       </div>
     )
   }
