@@ -53,7 +53,6 @@ describe("Test Trip model and routes", () => {
       .get(`/api/trips/${tripId}`)
       .set("Authorization", `Bearer ${token}`)
       .then(response => {
-        console.log(response.body)
         expect(response.statusCode).toBe(200)
         expect(response.body.id).toEqual(tripId)
         expect(response.body.name).toBe("tripOne")
