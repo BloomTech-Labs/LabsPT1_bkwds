@@ -1,17 +1,21 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+
+import { deleteTrip, toggleArchive, editTrip } from "../redux/actions/trips"
 import { getSingleTrip } from "../redux/actions/trips"
 
 import { CardButton, Button } from "../styles/theme/styledComponents"
 class Trip extends Component {
-  handleSingleTrip = tripId => e => {
+  handleDelete = tripId => e => {
     e.preventDefault()
-    this.props.getSingleTrip(tripId)
+    this.props.deleteTrip(tripId)
   }
-
+  handleedit = tripId => e => {
+    e.preventDefault()
+    this.props.editTrip(tripId)
+  }
   toggleArchive = (tripId, archiveTrip) => () => {
     this.props.toggleArchive(tripId, archiveTrip)
   }
@@ -39,10 +43,12 @@ class Trip extends Component {
                 <Button btn-light onClick={this.toggleArchive(trip.id)}>
                   Archive
                 </Button>
-                <CardButton onClick={this.handleSingleTrip(trip.id)}>
-                  {" "}
-                  >TT{" "}
-                </CardButton>
+                <Button btn-light onClick={this.handleEdit(trip.id)}>
+                  Edit
+                </Button>
+                <Button btn-light onClick={this.handleDelete(trip.id)}>
+                  Delete
+                </Button>
                 {/* {archived ? "UNARCHIVE" : "ARCHIVE"} */}
               </div>
             </div>
@@ -54,7 +60,12 @@ class Trip extends Component {
   }
 }
 
-const mapDispatchToProps = { deleteTrip, toggleArchive, getSingleTrip }
+const mapDispatchToProps = {
+  deleteTrip,
+  toggleArchive,
+  getSingleTrip,
+  editTrip
+}
 
 export default connect(
   null,

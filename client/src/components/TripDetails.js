@@ -27,13 +27,13 @@ class TripDetails extends Component {
   }
 
   render() {
-    const { trip } = this.props
+    const { trip, archived } = this.props
     return (
       <div>
         {!trip.id && "Loading trip"}
         {trip.id && (
           <>
-            <div className="card">
+            <div key={trip.id} trip={trip} className="card">
               <div className="card-image">
                 <img
                   src="https://staticmapmaker.com/img/google.png"
@@ -50,6 +50,7 @@ class TripDetails extends Component {
                 <Button btn-light onClick={this.toggleArchive(trip.id)}>
                   Archive
                 </Button>
+                {archived ? "UNARCHIVE" : "ARCHIVE"}
                 <Button btn-light onClick={this.handleEditTrip(trip.id)}>
                   Edit
                 </Button>
