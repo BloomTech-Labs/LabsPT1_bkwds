@@ -22,11 +22,18 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
 
+const token = localStorage.getItem("jwt")
+
+// Set token header on all requests:
+axios.defaults.headers.common["Authorization"] = `${token}`
+
 export const getTrips = () => dispatch => {
   dispatch({ type: LOADING_TRIPS })
   return axios
     .get(`${SERVER_URI}/trips`)
     .then(res => {
+      console.log("TRIPS RESPONSE:", res)
+
       dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
     })
     .catch(err => {

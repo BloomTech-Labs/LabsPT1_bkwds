@@ -36,6 +36,12 @@ class Trip extends Component {
                 <div>Created at: {trip.createdAt}</div>
                 <div>Updated at: {trip.updatedAt}</div>
                 <div>Archived: {trip.isArchived.toString()}</div>
+                <div>
+                  Waypoints:{" "}
+                  {trip.waypoints.map(w => (
+                    <div>{w.toString()}</div>
+                  ))}
+                </div>
                 <button onClick={this.handleDelete(trip.id)}>DELETE</button>
                 <button onClick={this.toggleArchive(trip.id, !archived)}>
                   {archived ? "UNARCHIVE" : "ARCHIVE"}
