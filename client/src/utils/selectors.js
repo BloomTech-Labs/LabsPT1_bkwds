@@ -98,3 +98,12 @@ export const findTripById = id => ({ [id]: filtered, ...rest }) => {
 export const filterOutTripById = id => ({ [id]: filtered, ...rest }) => {
   return rest
 }
+
+export const normalizeErrorMsg = payload => {
+  const { data } = payload.response
+  return data && typeof data === "string"
+    ? data
+    : typeof data.msg === "string" && data.msg.length < 50
+    ? data.msg
+    : "Request failed, please try again."
+}
