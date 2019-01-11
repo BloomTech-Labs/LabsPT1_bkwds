@@ -1,4 +1,5 @@
 import { Waypoint } from "./waypoint.model"
+import { Trip } from "../trip/trip.model"
 
 export const getAllWaypoints = (req, res) => {
   Waypoint.find({})
@@ -19,13 +20,29 @@ export const createWaypoint = (req, res) => {
     start: req.body.start,
     end: req.body.end
   })
-  newWaypoint
-    .save()
+  Waypoint.findOne({ name: req.body.name })
     .then(waypoint => {
-      res.status(201).json(waypoint)
+      if (waypoint) return res.status(400).send("Waypoint already exists")
+      newWaypoint
+        .save()
+        .then(response => {
+          Trip.findOneAndUpdate(
+            { _id: req.body.tripId },
+            { $addToSet: { waypoints: response.id } }
+          )
+            .then(() => {
+              res.status(201).json(response)
+            })
+            .catch(() => {
+              res.status(500).json("Error linking waypoint to Trip")
+            })
+        })
+        .catch(() => {
+          res.status(500).json("Error saving waypoint")
+        })
     })
     .catch(err => {
-      res.status(500).send(err.message)
+      res.status(500).json(err.message)
     })
 }
 
@@ -70,8 +87,8 @@ export const deleteWaypoint = (req, res) => {
       }
       res.status(202).json(payload)
     })
-    .catch(err => {
-      res.status(500).send(err)
+    .catch(() => {
+      res.status(500).json("Error deleting waypoint")
     })
 }
 

@@ -35,6 +35,8 @@ export const createUser = (req, res) => {
 
 export const getOneUser = (req, res) => {
   User.findOne({ _id: req.params.id })
+    .populate("trips")
+    .exec()
     .then(user => {
       res.status(200).json(user)
     })
