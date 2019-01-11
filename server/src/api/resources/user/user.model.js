@@ -71,7 +71,8 @@ userSchema.set("toJSON", {
       subscribed: ret.subscribed,
       subDate: ret.subDate,
       customerId: ret.customerId,
-      subscribeId: ret.subscribeId
+      subscribeId: ret.subscribeId,
+      trips: ret.trips
     }
     return retJson
   }

@@ -29,9 +29,16 @@ class NewTripForm extends Component {
   }
 
   render() {
+    const style = {
+      position: "absolute",
+      top: "100px",
+      right: "100px",
+      zIndex: 10
+    }
+
     const { trip } = this.state
     return (
-      <div className="new-trip-form">
+      <div style={style} className="new-trip-form">
         <Form>
           <div className="trip-name new-trip-form-field">
             <Input
