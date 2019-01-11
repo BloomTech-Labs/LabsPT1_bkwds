@@ -1,0 +1,8 @@
+site_name: Backwoods Tracker API
+nav:
+  - Home: Auth.md
+  - Authorization: Auth.md
+  - User: User.md
+  - Trip: Trip.md
+  - Waypoint: Waypoint.md
+theme: readthedocs

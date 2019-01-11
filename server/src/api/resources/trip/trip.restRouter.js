@@ -1,17 +1,19 @@
 import express from "express"
-import tripController from "./trip.controller"
+import * as tripController from "./trip.controller"
 
 export const tripRouter = express.Router()
 
-tripRouter.param("id", tripController.findByParam)
+// tripRouter.param("id", tripController.findByParam)
 
 tripRouter
   .route("/")
-  .get(tripController.getAll)
-  .post(tripController.createOne)
+  .get(tripController.getAllTrips)
+  .post(tripController.createTrip)
 
 tripRouter
   .route("/:id")
-  .get(tripController.getOne)
-  .put(tripController.updateOne)
-  .delete(tripController.deleteOne)
+  .get(tripController.getOneTrip)
+  .put(tripController.updateTrip)
+  .delete(tripController.deleteTrip)
+
+tripRouter.route("/:id/waypoints").get(tripController.populateWaypoints)

@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { CardButton, Button } from "../styles/theme/styledComponents"
+import { Button } from "../styles/theme/styledComponents"
 
 const AddTripButton = () => {
   return (

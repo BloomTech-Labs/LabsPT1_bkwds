@@ -45,9 +45,9 @@ export const getUnarchivedTripsArray = trips =>
  * Takes a user object from the server & returns an object with
  * an `id` instead of an `_id` property
  **/
-export const normalizeUser = ({ _id, ...rest }) => ({
-  ...rest,
-  id: _id
+export const normalizeUser = ({ ...rest }) => ({
+  ...rest
+  // id: _id
 })
 
 /**
@@ -57,8 +57,10 @@ export const normalizeUser = ({ _id, ...rest }) => ({
  * key is the Trip _id and whose value is the Trip, except the
  * `_id` key has been normalized to be just `id`
  **/
-export const normalizeTrip = ({ _id, ...rest }) => ({
-  [_id]: { ...rest, id: _id }
+// export const normalizeTrip = ({ _id, ...rest }) => ({
+export const normalizeTrip = ({ id, ...rest }) => ({
+  // [_id]: { ...rest, id: _id }
+  [id]: { ...rest }
 })
 
 /**
@@ -95,4 +97,13 @@ export const findTripById = id => ({ [id]: filtered, ...rest }) => {
 // eslint-disable-next-line no-unused-vars
 export const filterOutTripById = id => ({ [id]: filtered, ...rest }) => {
   return rest
+}
+
+export const normalizeErrorMsg = payload => {
+  const { data } = payload.response
+  return data && typeof data === "string"
+    ? data
+    : typeof data.msg === "string" && data.msg.length < 50
+    ? data.msg
+    : "Request failed, please try again."
 }

@@ -1,69 +1,92 @@
-import React, { Component } from "react"
+import React from "react"
 import { connect } from "react-redux"
+import { Formik } from "formik"
+import styled from "styled-components"
 
-import { Form, Input, Button } from "../../styles/theme/styledComponents"
+import { Form } from "../../styles/theme/styledComponents"
+import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { register } from "../../redux/actions/auth"
+import { registerValidations as validate } from "./formValidations"
+import { authFormErrorsMixin } from "../../styles/theme/mixins"
 
-class RegisterForm extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    passwordConfirm: ""
-  }
+const RegisterFormStyles = styled.div`
+  ${authFormErrorsMixin};
+`
 
-  handleChange = key => e => {
-    this.setState({ [key]: e.target.value })
-  }
-
-  handleSubmit = e => {
-    e.preventDefault()
-    const { username, email, password } = this.state
-    this.props.register({ username, email, password })
-    this.setState({
-      username: "",
+const RegisterForm = ({ register, registerError }) => (
+  <Formik
+    validate={validate}
+    initialValues={{
       email: "",
+      username: "",
       password: "",
       passwordConfirm: ""
-    })
-  }
+    }}
+    onSubmit={(values, actions) => {
+      actions.setSubmitting(false)
+      register(values)
+    }}
+    render={({
+      values,
+      handleBlur,
+      handleChange,
+      handleSubmit,
+      isSubmitting
+    }) => (
+      <RegisterFormStyles>
+        <div className="register-form custom-form">
+          <Form onSubmit={handleSubmit}>
+            <CustomInputWithError
+              name="email"
+              type="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Email"
+              values={values}
+            />
+            <CustomInputWithError
+              name="username"
+              type="text"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Username"
+              values={values}
+            />
+            <CustomInputWithError
+              name="password"
+              type="password"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Password"
+              values={values}
+            />
+            <CustomInputWithError
+              name="passwordConfirm"
+              type="password"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Confirm password"
+              values={values}
+            />
+            <CustomButtonWithError
+              text="Register"
+              submitError={registerError}
+              isSubmitting={isSubmitting}
+            />
+          </Form>
+        </div>
+      </RegisterFormStyles>
+    )}
+  />
+)
 
-  render() {
-    return (
-      <>
-        <Form>
-          <Input
-            type="email"
-            placeholder="Email"
-            onChange={this.handleChange("email")}
-          />
-          <Input
-            type="text"
-            placeholder="Username"
-            onChange={this.handleChange("username")}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            onChange={this.handleChange("password")}
-          />
-          <Input
-            type="password"
-            placeholder="Confirm Password"
-            onChange={this.handleChange("passwordConfirm")}
-          />
-          <Button className="btn" type="submit" onClick={this.handleSubmit}>
-            Log in
-          </Button>
-        </Form>
-      </>
-    )
-  }
-}
+const mapStateToProps = state => ({
+  registerError: state.auth.error
+})
 
 const mapDispatchToProps = { register }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(RegisterForm)
