@@ -3,8 +3,6 @@ import app from "../../src/server"
 
 import * as mock from "../mock"
 
-import { User } from "../../src/api/resources/user/user.model"
-
 let userId
 let token
 
