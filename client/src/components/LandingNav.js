@@ -72,7 +72,7 @@ class LandingNav extends React.Component {
                     className="landing-page-mobile-cta"
                     onClick={() => <Redirect to="/signup" />}
                   >
-                    <Link to="/pages/login">Login</Link>
+                    <Link to="/login">Login</Link>
                     <ChevronSvg height={"1.15rem"} />
                   </button>
                 </div>

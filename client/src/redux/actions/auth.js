@@ -41,7 +41,7 @@ export const register = ({ email, username, password }) => dispatch => {
     .post(`${SERVER_URI}/register`, { email, username, password })
     .then(() => {
       dispatch({ type: REGISTRATION_SUCCESS })
-      dispatch(push("/pages/login"))
+      dispatch(push("/login"))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
