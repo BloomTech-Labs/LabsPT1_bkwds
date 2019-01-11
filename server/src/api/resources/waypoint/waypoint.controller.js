@@ -81,11 +81,20 @@ export const deleteWaypoint = (req, res) => {
   Waypoint.findOneAndDelete({ _id: req.params.id })
     .then(waypoint => {
       if (!waypoint) return res.status(404).send("Waypoint Not Found")
-      const payload = {
-        waypoint,
-        msg: "Waypoint was deleted"
-      }
-      res.status(202).json(payload)
+      Trip.findOneAndUpdate(
+        { _id: req.body.tripId },
+        { $pull: { waypoints: waypoint.id } }
+      )
+        .then(() => {
+          const payload = {
+            waypoint,
+            msg: "Waypoint was deleted"
+          }
+          res.status(202).json(payload)
+        })
+        .catch(() => {
+          res.status(500).json("Error deleting waypoint")
+        })
     })
     .catch(() => {
       res.status(500).json("Error deleting waypoint")
@@ -105,7 +114,13 @@ export const getWaypointsByTrip = (req, res) => {
 export const deleteWaypointsByTrip = (req, res) => {
   Waypoint.deleteMany({ tripId: req.params.tripId })
     .then(response => {
-      res.status(202).json(`${response.n} waypoints deleted`)
+      Trip.findOneAndUpdate({ _id: req.params.tripId }, { waypoints: [] })
+        .then(() => {
+          res.status(202).json(`${response.n} waypoints deleted`)
+        })
+        .catch(() => {
+          res.status(500).json("Error deleting waypoints")
+        })
     })
     .catch(() => {
       res.status(404).json("No Waypoints found for specified Trip")
