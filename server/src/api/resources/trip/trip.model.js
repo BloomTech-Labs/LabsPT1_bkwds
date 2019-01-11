@@ -32,9 +32,37 @@ export const schema = {
     type: Number,
     required: [true]
   },
+  image: {
+    type: String
+  },
+  inProgress: {
+    type: Boolean,
+    default: false
+  },
   waypoints: [{ type: ObjectId, ref: "Waypoint" }]
 }
 
 const tripSchema = new mongoose.Schema(schema, { timestamps: true })
 
+tripSchema.set("toJSON", {
+  transform: function(doc, ret) {
+    let retJson = {
+      id: ret._id,
+      userId: ret.userId,
+      name: ret.name,
+      lat: ret.lat,
+      lon: ret.lon,
+      start: ret.start,
+      end: ret.end,
+      image: ret.image,
+      isArchived: ret.isArchived,
+      inProgress: ret.inProgress,
+      waypoints: ret.waypoints
+    }
+    return retJson
+  }
+})
+
+mongoose.set("useCreateIndex", true)
+mongoose.set("useFindAndModify", false)
 export const Trip = mongoose.model("Trip", tripSchema, "trips")

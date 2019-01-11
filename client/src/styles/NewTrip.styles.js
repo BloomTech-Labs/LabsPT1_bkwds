@@ -8,7 +8,14 @@ export const NewTripStyles = styled.div`
   }
 
   .new-trip-form {
+    z-index:10000;
+      position:relative;
     form {
+
+
+      
+
+
       display: flex;
       flex-wrap: wrap;
     }
