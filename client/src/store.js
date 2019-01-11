@@ -6,6 +6,7 @@ import logger from "redux-logger"
 
 import { authReducer } from "./redux/reducers/auth"
 import { tripReducer } from "./redux/reducers/trips"
+import { billingReducer } from "./redux/reducers/billing"
 
 export const history = createBrowserHistory()
 
@@ -17,6 +18,7 @@ const createRootReducer = history =>
   combineReducers({
     auth: authReducer,
     trips: tripReducer,
+    billing: billingReducer,
     router: connectRouter(history)
   })
 

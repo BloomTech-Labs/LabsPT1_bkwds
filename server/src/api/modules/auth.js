@@ -11,11 +11,15 @@ export const register = (req, res) => {
       if (user) {
         return res.status(404).send("Username already exists")
       }
-      let newUser = new User({ username, password, email })
+      let newUser = new User({
+        username,
+        password,
+        email
+      })
       newUser
         .save()
         .then(() => {
-          res.status(201).send("success")
+          res.sendStatus(201)
         })
         .catch(err => {
           const message = err.message

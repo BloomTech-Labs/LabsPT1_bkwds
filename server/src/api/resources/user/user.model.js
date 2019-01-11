@@ -25,6 +25,16 @@ export const schema = {
   subDate: {
     type: Date
   },
+  customerId: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
+  subscribeId: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
   trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
 }
 
@@ -60,6 +70,8 @@ userSchema.set("toJSON", {
       email: ret.email,
       subscribed: ret.subscribed,
       subDate: ret.subDate,
+      customerId: ret.customerId,
+      subscribeId: ret.subscribeId,
       trips: ret.trips
     }
     return retJson
