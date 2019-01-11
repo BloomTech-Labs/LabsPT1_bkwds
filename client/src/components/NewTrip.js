@@ -10,9 +10,8 @@ import NewTripForm from "./forms/NewTripForm"
 class NewTrip extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      addingWayPoint: false
+      addingWaypoint: false
     }
   }
   render() {
@@ -21,9 +20,15 @@ class NewTrip extends React.Component {
       height: "100%",
       position: "relative"
     }
+    const formWrapper = {
+      position: "absolute",
+      zIndex: 10,
+      top: "10px",
+      right: "10px"
+    }
     return (
       <div style={style}>
-        <div className="new-trip-form-wrapper">
+        <div style={formWrapper}>
           <NewTripForm />
         </div>
         <CreateTrip />
@@ -31,7 +36,6 @@ class NewTrip extends React.Component {
     )
   }
 }
-
 // const NewTrip = () => {
 //   return (
 //     <s.NewTripStyles>
