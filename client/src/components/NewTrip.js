@@ -3,6 +3,7 @@ import CreateTrip from "../components/Maps/createTrip"
 // import * as s from "../styles/NewTrip.styles"
 import NewTripForm from "./forms/NewTripForm"
 // import WaypointForm from "./forms/WaypointForm"
+import Checkpoint from "./Checkpoint"
 
 //TODO - Move state  up to redux after finalizing createTrip flow
 //TODO - Toggle eventHandler on Map when user clicks on add waypoint
@@ -25,6 +26,12 @@ class NewTrip extends React.Component {
       <div style={style}>
         <div className="new-trip-form-wrapper">
           <NewTripForm />
+          <Checkpoint
+            order="1"
+            complete={false}
+            checkinCheckpoint={() => null}
+            resetCheckpoint={() => null}
+          />
         </div>
         <CreateTrip />
       </div>
