@@ -44,7 +44,7 @@ export const subscribe = ({ id, owner, stripe }) => async dispatch => {
 
   const { source } = await stripe.createSource({ type: "card" })
   const updatedSource = { ...source, owner }
-  const subscribedUser = await axios.post(`${SERVER_URI}/subscribe/${id}`, {
+  const newSubscription = await axios.post(`${SERVER_URI}/subscribe/${id}`, {
     // TODO: Remove STRIPE_PLAN_ID_TEST out soon so things don't break in production, where it will not be defined
     planId: STRIPE_PLAN_ID_TEST,
     source: updatedSource
