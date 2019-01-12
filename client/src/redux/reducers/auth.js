@@ -8,13 +8,24 @@ import {
   REGISTRATION_FAILURE,
   QUERYING_USER_BY_TOKEN,
   QUERYING_USER_BY_TOKEN_SUCCESS,
-  QUERYING_USER_BY_TOKEN_ERROR
+  QUERYING_USER_BY_TOKEN_ERROR,
+  UPDATE_USER_IN_STORE
 } from "../actions/types"
 
 import { normalizeUser, normalizeErrorMsg } from "../../utils/selectors"
 
+const defaultUser = {
+  username: "",
+  email: "",
+  id: null,
+  subscribed: false,
+  subscribeId: null,
+  subDate: null,
+  customerId: null
+}
+
 const defaultState = {
-  user: {},
+  user: { ...defaultUser },
   pending: false,
   isLoggedIn: false,
   checkedForToken: false,
@@ -79,6 +90,12 @@ export const authReducer = (state = defaultState, action) => {
         ...state,
         pending: false,
         error: action.payload
+      }
+
+    case UPDATE_USER_IN_STORE:
+      return {
+        ...state,
+        user: normalizeUser({ ...state.user, ...action.payload })
       }
 
     default:

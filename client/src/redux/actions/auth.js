@@ -13,7 +13,8 @@ import {
   GET_TOKEN_FROM_LOCAL_STORAGE,
   QUERYING_USER_BY_TOKEN,
   QUERYING_USER_BY_TOKEN_SUCCESS,
-  QUERYING_USER_BY_TOKEN_ERROR
+  QUERYING_USER_BY_TOKEN_ERROR,
+  UPDATE_USER_IN_STORE
 } from "./types"
 
 export const login = ({ username, password }) => dispatch => {
@@ -22,7 +23,6 @@ export const login = ({ username, password }) => dispatch => {
     .post(`${SERVER_URI}/login`, { username, password })
     .then(res => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
-
       localStorage.setItem("token", res.data.token)
 
       dispatch(push("/app"))
@@ -39,8 +39,12 @@ export const register = ({ email, username, password }) => dispatch => {
 
   return axios
     .post(`${SERVER_URI}/register`, { email, username, password })
-    .then(() => {
+    .then(res => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
+
+      console.log("USER CREATED, IS THERE A TOKEN?")
+      console.log("USER CREATED, RESPONSE:", res)
+
       dispatch(push("/login"))
     })
     .catch(err => {
@@ -48,6 +52,16 @@ export const register = ({ email, username, password }) => dispatch => {
       //errorHandler(err)
       console.error("REGISTRATION FAILURE:", err)
     })
+}
+
+export const updateUserInStore = ({
+  customerId,
+  subDate,
+  subscribeId,
+  subscribed
+}) => dispatch => {
+  const updates = { customerId, subDate, subscribeId, subscribed }
+  dispatch({ type: UPDATE_USER_IN_STORE, payload: updates })
 }
 
 export const logout = () => dispatch => {
