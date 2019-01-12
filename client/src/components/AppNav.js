@@ -10,7 +10,7 @@ import { logout } from "../redux/actions/auth"
 import { isProtectedPath } from "../utils"
 import * as s from "../styles/AppNav.styles"
 
-const protectedPaths = ["/", "/login", "/signup"]
+const protectedPaths = ["/", "/login", "/register"]
 
 const AppNav = ({ location, logout, isLoggedIn }) => {
   const { pathname } = location

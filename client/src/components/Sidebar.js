@@ -51,12 +51,12 @@ const Sidebar = ({ location }) => {
           pathname={location.pathname}
         />
         <SidebarLink
-          to="/pages/login"
+          to="/login"
           displayName="Login"
           pathname={location.pathname}
         />
         <SidebarLink
-          to="/pages/signup"
+          to="/register"
           displayName="Register"
           pathname={location.pathname}
         />
