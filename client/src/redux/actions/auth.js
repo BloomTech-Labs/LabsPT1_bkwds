@@ -40,7 +40,7 @@ export const register = ({ email, username, password }) => dispatch => {
   return axios
     .post(`${SERVER_URI}/register`, { email, username, password })
     .then(() => {
-      dispatch({ type: REGISTRATION_SUCCESS })
+      dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
       dispatch(push("/login"))
     })
     .catch(err => {

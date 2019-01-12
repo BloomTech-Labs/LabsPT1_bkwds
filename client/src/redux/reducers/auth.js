@@ -53,13 +53,12 @@ export const authReducer = (state = defaultState, action) => {
       }
 
     case REGISTRATION_SUCCESS:
-      const { username, password } = action.payload
+      const { username, email } = action.payload
       return {
         ...state,
         pending: false,
         error: null,
-        // make username and password available on state for LoginForm
-        user: { username, password }
+        user: { username, email }
       }
     case REGISTRATION_FAILURE:
       return { ...state, error: normalizeErrorMsg(action.payload) }
