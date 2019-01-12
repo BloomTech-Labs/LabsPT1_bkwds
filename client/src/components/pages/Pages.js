@@ -8,7 +8,7 @@ import CustomRoute from "../../utils/CustomRoute"
 
 const pagesRoutes = [
   {
-    path: "/signup",
+    path: "/register",
     name: "Register",
     component: Register
   },
@@ -17,11 +17,6 @@ const pagesRoutes = [
     name: "Login",
     component: Login
   }
-  // {
-  //   path: "/pricing",
-  //   name: "Pricing",
-  //   component: Pricing
-  // }
 ]
 
 const Pages = ({ match }) => {
@@ -29,7 +24,9 @@ const Pages = ({ match }) => {
     <AppContainer>
       <Switch>
         {pagesRoutes.map(({ path, ...rest }, idx) => {
-          return <CustomRoute path={match.path + path} {...rest} key={idx} />
+          // Normalize match.path to remove extra / at beginning if mounting Pages on root route:
+          const pathname = match.path === "/" ? path : match.path + path
+          return <CustomRoute path={pathname} {...rest} key={idx} />
         })}
       </Switch>
     </AppContainer>

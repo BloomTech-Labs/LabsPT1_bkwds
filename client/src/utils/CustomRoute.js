@@ -21,7 +21,7 @@ const CustomRoute = props => {
     return (
       <Redirect
         to={{
-          pathname: "/pages/login",
+          pathname: "/login",
           state: { from: props.path }
         }}
       />
