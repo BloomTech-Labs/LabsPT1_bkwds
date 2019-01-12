@@ -35,6 +35,9 @@ export const schema = {
     unique: true,
     sparse: true
   },
+  token: {
+    type: String
+  },
   trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
 }
 
