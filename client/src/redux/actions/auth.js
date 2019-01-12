@@ -23,7 +23,7 @@ export const login = ({ username, password }) => dispatch => {
     .then(res => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
 
-      localStorage.setItem("jwt", res.data.token)
+      localStorage.setItem("token", res.data.token)
 
       dispatch(push("/app"))
     })
@@ -52,14 +52,14 @@ export const register = ({ email, username, password }) => dispatch => {
 
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT_SUCCESS })
-  localStorage.removeItem("jwt")
+  localStorage.removeItem("token")
   dispatch(push("/"))
 }
 
 export const addTokenToState = () => dispatch => {
   let token
   try {
-    token = localStorage.getItem("jwt")
+    token = localStorage.getItem("token")
   } catch (e) {
     console.error("ADD TOKEN TO STATE ERROR:", e)
   }

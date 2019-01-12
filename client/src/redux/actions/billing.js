@@ -10,27 +10,24 @@ import {
   QUERYING_USER_BY_TOKEN_SUCCESS
 } from "./types"
 
+let token
+try {
+  token = localStorage.getItem("token")
+} catch (err) {
+  console.error("Could not parse token from localStorage:", err)
+}
+
+// Set token as Authorization header on all requests:
+axios.defaults.headers.common["Authorization"] = token
+
 export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
   dispatch({ type: CANCEL })
 
-  let token
-  try {
-    token = localStorage.getItem("jwt")
-  } catch (e) {
-    console.error(e)
-  }
   if (!token) return
 
-  const result = await axios.post(
-    `${SERVER_URI}/subscribe/cancel/${id}`,
-    { subscribeId },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    }
-  )
+  const result = await axios.post(`${SERVER_URI}/subscribe/cancel/${id}`, {
+    subscribeId
+  })
   if (result && result.data) {
     dispatch({ type: CANCEL_SUBSCRIPTION_SUCCESS, payload: result.data })
     dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: result.data })
@@ -42,29 +39,14 @@ export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
 export const subscribe = ({ id, owner, stripe }) => async dispatch => {
   dispatch({ type: SUBSCRIBE })
 
-  let token
-  try {
-    token = localStorage.getItem("jwt")
-  } catch (e) {
-    console.error(e)
-  }
   if (!token) return
 
   const { source } = await stripe.createSource({ type: "card" })
   const updatedSource = { ...source, owner }
-  const subscribedUser = await axios.post(
-    `${SERVER_URI}/subscribe/${id}`,
-    {
-      planId: process.env.STRIPE_PLAN_ID_TEST,
-      source: updatedSource
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
-    }
-  )
+  const subscribedUser = await axios.post(`${SERVER_URI}/subscribe/${id}`, {
+    planId: process.env.STRIPE_PLAN_ID_TEST,
+    source: updatedSource
+  })
   if (subscribedUser) {
     dispatch({ type: SUBSCRIBE_SUCCESS, payload: subscribedUser.data })
     dispatch({

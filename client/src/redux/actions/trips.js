@@ -21,7 +21,7 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
 
-const token = localStorage.getItem("jwt")
+const token = localStorage.getItem("token")
 
 // Set token as Authorization header on all requests:
 axios.defaults.headers.common["Authorization"] = token
