@@ -12,12 +12,7 @@ import {
 import { updateUserInStore } from "./auth"
 import { STRIPE_PLAN_ID_TEST } from "../../config"
 
-let token
-try {
-  token = localStorage.getItem("token")
-} catch (err) {
-  console.error("Could not parse token from localStorage:", err)
-}
+const token = localStorage.getItem("token")
 // Set token as Authorization header on all requests:
 axios.defaults.headers.common["Authorization"] = token
 
