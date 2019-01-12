@@ -4,22 +4,28 @@ import { User } from "../resources/user/user.model"
 
 const JWT_SECRET = config.secrets.JWT_SECRET
 
+const generateToken = user => {
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+    expiresIn: 86400 // 24 hours
+  })
+  return token
+}
+
 export const register = (req, res) => {
   const { username, password, email } = req.body
   User.findOne({ username: username })
-    .then(user => {
-      if (user) {
+    .then(preexistingUser => {
+      if (preexistingUser)
         return res.status(404).send("Username already exists")
-      }
-      let newUser = new User({
-        username,
-        password,
-        email
-      })
-      newUser
+
+      let user = new User({ username, password, email })
+      let token = generateToken(user)
+      const payload = { user, token }
+
+      user
         .save()
         .then(() => {
-          res.sendStatus(201)
+          res.status(201).json(payload)
         })
         .catch(err => {
           const message = err.message
@@ -44,9 +50,7 @@ export const login = (req, res) => {
           return res.status(401).send("Unauthorized")
         }
         if (isMatch) {
-          let token = jwt.sign({ id: user._id }, JWT_SECRET, {
-            expiresIn: 86400 // 24 hours
-          })
+          let token = generateToken(user)
           const payload = { user, token }
           res.status(200).json(payload)
         } else {
@@ -70,6 +74,7 @@ export const protect = (req, res, next) => {
       next(err)
       return res.status(401).send("Unauthorized")
     }
+
     next()
   })
 }
