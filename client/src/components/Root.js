@@ -16,5 +16,4 @@ const Root = () => (
     <Pages />
   </Switch>
 )
-
 export default Root
