@@ -9,6 +9,7 @@ import {
   CANCEL_SUBSCRIPTION_FAIL,
   QUERYING_USER_BY_TOKEN_SUCCESS
 } from "./types"
+import { STRIPE_PLAN_ID_TEST } from "../../config"
 
 let token
 try {
@@ -44,7 +45,8 @@ export const subscribe = ({ id, owner, stripe }) => async dispatch => {
   const { source } = await stripe.createSource({ type: "card" })
   const updatedSource = { ...source, owner }
   const subscribedUser = await axios.post(`${SERVER_URI}/subscribe/${id}`, {
-    planId: process.env.STRIPE_PLAN_ID_TEST,
+    // TODO: Take this out so things don't break in production, STRIPE_TEST_ID will not be defined
+    planId: STRIPE_PLAN_ID_TEST,
     source: updatedSource
   })
   if (subscribedUser) {
