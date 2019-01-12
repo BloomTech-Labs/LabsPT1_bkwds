@@ -1,23 +1,50 @@
 import React from "react"
-import { Input } from "../../styles/theme/styledComponents"
+import { ErrorMessage } from "formik"
 
-export const ValidatedInput = props => {
-  const { input, meta, type, placeholder } = props
-  return (
-    <div>
-      {meta.touched && meta.error ? (
-        <span className="form-error">{meta.error}</span>
-      ) : null}
-      <Input type={type} placeholder={placeholder} {...input} />
-    </div>
-  )
-}
+import { Input, Button } from "../../styles/theme/styledComponents"
 
-export const CustomInput = props => {
-  const { input, type, placeholder } = props
-  return (
-    <div>
-      <Input type={type} placeholder={placeholder} {...input} />
-    </div>
-  )
-}
+const CustomError = ({ name }) => (
+  <ErrorMessage name={name}>
+    {errorMessage => <div className="error client-error">{errorMessage}</div>}
+  </ErrorMessage>
+)
+
+// Error Message needs to come first to
+// make it easier to select Input as next sibling
+export const CustomInputWithError = ({
+  values, // `values` is made available by Formik
+  name, // Formik uses `name` to associate an Input with ErrorMessage
+  type,
+  placeholder,
+  onChange,
+  onBlur,
+  classNames = [] // allows you to override styling
+}) => (
+  <div className={classNames.length ? classNames.join(" ") : "form-field"}>
+    <CustomError name={name} />
+    <Input
+      name={name}
+      type={type}
+      onChange={onChange}
+      onBlur={onBlur}
+      placeholder={placeholder}
+      value={`${values[name]}`}
+    />
+  </div>
+)
+
+export const CustomButtonWithError = ({
+  text,
+  submitError,
+  isSubmitting = false,
+  classNames = [] // allows you to override styling
+}) => (
+  <div className={classNames.length ? classNames.join(" ") : "form-field"}>
+    <Button className="btn" type="submit" disabled={isSubmitting}>
+      {text}
+    </Button>
+    {submitError && (
+      <div className="error server-error">{submitError.toString()}</div>
+    )}
+  </div>
+)

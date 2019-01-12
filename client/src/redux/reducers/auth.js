@@ -1,13 +1,17 @@
 import {
+  AUTH_LOADING,
   LOGIN_SUCCESS,
+  LOGIN_FAILURE,
   LOGOUT_SUCCESS,
   GET_TOKEN_FROM_LOCAL_STORAGE,
+  REGISTRATION_SUCCESS,
+  REGISTRATION_FAILURE,
   QUERYING_USER_BY_TOKEN,
   QUERYING_USER_BY_TOKEN_SUCCESS,
   QUERYING_USER_BY_TOKEN_ERROR
 } from "../actions/types"
 
-import { normalizeUser } from "../../utils/selectors"
+import { normalizeUser, normalizeErrorMsg } from "../../utils/selectors"
 
 const defaultState = {
   user: {},
@@ -20,15 +24,45 @@ const defaultState = {
 
 export const authReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case AUTH_LOADING:
+      return { ...state, pending: true }
+
     case LOGIN_SUCCESS:
       return {
         ...state,
         isLoggedIn: true,
+        pending: false,
+        error: null,
         user: normalizeUser(action.payload)
+      }
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        isLoggedIn: false,
+        error: normalizeErrorMsg(action.payload)
       }
 
     case LOGOUT_SUCCESS:
-      return { ...state, user: {}, isLoggedIn: false }
+      return {
+        ...state,
+        user: {},
+        error: null,
+        isLoggedIn: false,
+        pending: false
+      }
+
+    case REGISTRATION_SUCCESS:
+      const { username, password } = action.payload
+      return {
+        ...state,
+        pending: false,
+        error: null,
+        // make username and password available on state for LoginForm
+        user: { username, password }
+      }
+    case REGISTRATION_FAILURE:
+      return { ...state, error: normalizeErrorMsg(action.payload) }
 
     case GET_TOKEN_FROM_LOCAL_STORAGE:
       return { ...state, token: action.payload }

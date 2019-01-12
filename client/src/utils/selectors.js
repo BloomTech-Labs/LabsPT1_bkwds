@@ -60,7 +60,7 @@ export const normalizeUser = ({ ...rest }) => ({
 // export const normalizeTrip = ({ _id, ...rest }) => ({
 export const normalizeTrip = ({ id, ...rest }) => ({
   // [_id]: { ...rest, id: _id }
-  [id]: { ...rest }
+  [id]: { id, ...rest }
 })
 
 /**
@@ -97,4 +97,13 @@ export const findTripById = id => ({ [id]: filtered, ...rest }) => {
 // eslint-disable-next-line no-unused-vars
 export const filterOutTripById = id => ({ [id]: filtered, ...rest }) => {
   return rest
+}
+
+export const normalizeErrorMsg = payload => {
+  const { data } = payload.response
+  return data && typeof data === "string"
+    ? data
+    : typeof data.msg === "string" && data.msg.length < 50
+    ? data.msg
+    : "Request failed, please try again."
 }

@@ -21,16 +21,16 @@ export const login = ({ username, password }) => dispatch => {
   return axios
     .post(`${SERVER_URI}/login`, { username, password })
     .then(res => {
-      console.log("RESPONSE:", res)
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
 
-      localStorage.setItem("jwt", JSON.stringify(res.data.token))
+      localStorage.setItem("jwt", res.data.token)
 
       dispatch(push("/app"))
     })
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })
       //errorHandler(err)
+      console.error("LOGIN FAILURE:", err)
     })
 }
 
@@ -46,6 +46,7 @@ export const register = ({ email, username, password }) => dispatch => {
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
       //errorHandler(err)
+      console.error("REGISTRATION FAILURE:", err)
     })
 }
 
@@ -60,11 +61,10 @@ export const addTokenToState = () => dispatch => {
   try {
     token = localStorage.getItem("jwt")
   } catch (e) {
-    console.error(e)
+    console.error("ADD TOKEN TO STATE ERROR:", e)
   }
   // If no token, bail out:
   if (!token) return
-  console.log("TOKEN FOUND!", token)
   dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
   // Use token to check DB for user:
   dispatch(checkDbForUser(token))
@@ -82,13 +82,12 @@ export const checkDbForUser = token => dispatch => {
   axios
     .post(`${SERVER_URI}/user_from_token`, { id })
     .then(res => {
-      console.log("RESPONSE! res.data:", res.data)
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
       dispatch(push("/app"))
     })
     .catch(err => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
       // errorHandler(err)
-      console.error("GET USER WITH TOKEN ERROR:", err)
+      // console.error("GET USER WITH TOKEN ERROR:", err)
     })
 }
