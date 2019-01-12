@@ -24,6 +24,7 @@ const Pages = ({ match }) => {
     <AppContainer>
       <Switch>
         {pagesRoutes.map(({ path, ...rest }, idx) => {
+          // Normalize match.path to remove extra / at beginning if mounting Pages on root route:
           const pathname = match.path === "/" ? path : match.path + path
           return <CustomRoute path={pathname} {...rest} key={idx} />
         })}
