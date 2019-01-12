@@ -26,7 +26,7 @@ const token = localStorage.getItem("jwt")
 // Set token as Authorization header on all requests:
 axios.defaults.headers.common["Authorization"] = token
 
-export const getTrips = () => async dispatch => {
+export const getTrips = () => dispatch => {
   dispatch({ type: LOADING_TRIPS })
   return axios
     .get(`${SERVER_URI}/trips`)
