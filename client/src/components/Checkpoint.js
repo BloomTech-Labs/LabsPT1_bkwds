@@ -15,6 +15,13 @@ export default class Checkpoint extends React.Component {
     }
   }
 
+  handleChangeName = e => {
+    const newName = e.target.value
+    this.setState(state => ({
+      checkpoint: { ...state.checkpoint, name: newName }
+    }))
+  }
+
   handleChangeETA = value => {
     if (value) {
       this.setState({
@@ -46,6 +53,11 @@ export default class Checkpoint extends React.Component {
           <Collapse isOpen={true}>
             <CardBody>
               <div>
+                <label>Name</label>
+                <input
+                  value={this.state.checkpoint.name}
+                  onChange={this.handleChangeName}
+                />
                 <label>ETA:</label>
                 <input
                   value={this.state.eta}
