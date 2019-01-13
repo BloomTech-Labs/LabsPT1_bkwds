@@ -91,6 +91,7 @@ class UpdatePassword extends Component {
               <a
                 href="https://help.github.com/articles/creating-a-strong-password/"
                 target="_blank"
+                rel="noopener noreferrer"
                 style={{ color: "#0056b3" }}
               >
                 safer password practices
