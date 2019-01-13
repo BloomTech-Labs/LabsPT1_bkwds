@@ -1,8 +1,8 @@
 import {
-  SUBSCRIBE,
+  INIT_NEW_SUBSCRIPTION,
   SUBSCRIBE_SUCCESS,
   SUBSCRIBE_FAIL,
-  CANCEL,
+  INIT_NEW_CANCELLATION,
   CANCEL_SUBSCRIPTION_SUCCESS,
   CANCEL_SUBSCRIPTION_FAIL
 } from "../actions/types"
@@ -14,7 +14,7 @@ const defaultState = {
 
 export const billingReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case SUBSCRIBE:
+    case INIT_NEW_SUBSCRIPTION:
       return {
         ...state,
         pending: true
@@ -29,7 +29,7 @@ export const billingReducer = (state = defaultState, action) => {
     case SUBSCRIBE_FAIL:
       return { ...state, pending: false, error: action.payload }
 
-    case CANCEL:
+    case INIT_NEW_CANCELLATION:
       return { ...state, pending: true }
 
     case CANCEL_SUBSCRIPTION_SUCCESS:

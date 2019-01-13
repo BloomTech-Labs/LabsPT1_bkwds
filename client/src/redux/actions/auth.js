@@ -13,17 +13,20 @@ import {
   GET_TOKEN_FROM_LOCAL_STORAGE,
   QUERYING_USER_BY_TOKEN,
   QUERYING_USER_BY_TOKEN_SUCCESS,
-  QUERYING_USER_BY_TOKEN_ERROR
+  QUERYING_USER_BY_TOKEN_ERROR,
+  UPDATE_USER_IN_STORE
 } from "./types"
 
 export const login = ({ username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
-  return axios
+  axios
     .post(`${SERVER_URI}/login`, { username, password })
     .then(res => {
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
-
-      localStorage.setItem("jwt", res.data.token)
+      const { token, user } = res.data
+      dispatch({ type: LOGIN_SUCCESS, payload: user })
+      localStorage.setItem("token", token)
+      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
+      dispatch(addTokenToState())
 
       dispatch(push("/app"))
     })
@@ -37,11 +40,15 @@ export const login = ({ username, password }) => dispatch => {
 export const register = ({ email, username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
 
-  return axios
+  axios
     .post(`${SERVER_URI}/register`, { email, username, password })
-    .then(() => {
-      dispatch({ type: REGISTRATION_SUCCESS })
-      dispatch(push("/login"))
+    .then(res => {
+      const { token } = res.data
+      dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
+      localStorage.setItem("token", token)
+      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
+      dispatch(addTokenToState())
+      dispatch(checkDbForUser(token))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
@@ -50,16 +57,26 @@ export const register = ({ email, username, password }) => dispatch => {
     })
 }
 
+export const updateUserInStore = ({
+  customerId,
+  subDate,
+  subscribeId,
+  subscribed
+}) => dispatch => {
+  const updates = { customerId, subDate, subscribeId, subscribed }
+  dispatch({ type: UPDATE_USER_IN_STORE, payload: updates })
+}
+
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT_SUCCESS })
-  localStorage.removeItem("jwt")
+  localStorage.removeItem("token")
   dispatch(push("/"))
 }
 
 export const addTokenToState = () => dispatch => {
   let token
   try {
-    token = localStorage.getItem("jwt")
+    token = localStorage.getItem("token")
   } catch (e) {
     console.error("ADD TOKEN TO STATE ERROR:", e)
   }
@@ -80,7 +97,7 @@ export const checkDbForUser = token => dispatch => {
     })
 
   axios
-    .post(`${SERVER_URI}/user_from_token`, { id })
+    .get(`${SERVER_URI}/user_from_token/${id}`)
     .then(res => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
       dispatch(push("/app"))
