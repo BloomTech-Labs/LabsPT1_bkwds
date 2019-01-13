@@ -5,7 +5,6 @@ import TripCard from "./TripCard"
 import { getTrips, createTrip } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"
-import { Button } from "../styles/theme/styledComponents"
 import AddTripButton from "./AddTripButton"
 import FirstTripButton from "./FirstTripButton"
 import * as st from "../styles/AddTripButton.styles"
@@ -59,24 +58,6 @@ class Trips extends Component {
     return <div className="firstTrip">{this.renderTrips()}</div>
   }
 }
-//   render() {
-//     const { trips } = this.props
-
-//     return (
-//       <s.TripCardStyles>
-//         <div className="container">
-//           {trips.length > 0 ? (
-//             trips.map(trip => (
-//               <TripCard key={trip.id} trip={trip} archived={false} />
-//             ))
-//           ) : (
-//             <div>No trips!</div>
-//           )}
-//         </div>
-//       </s.TripCardStyles>
-//     )
-//   }
-// }
 
 const mapStateToProps = state => ({
   trips: getTripsArray(state)
