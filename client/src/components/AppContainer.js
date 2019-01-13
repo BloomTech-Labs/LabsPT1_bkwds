@@ -1,6 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 import AppNav from "./AppNav"
 import Sidebar from "./Sidebar"
@@ -37,6 +39,7 @@ const AppContainer = ({ pathname, children, isLoggedIn }) => {
         ) : (
           <div className="main-content">{children}</div>
         )}
+        <ToastContainer />
       </div>
     </>
   )
