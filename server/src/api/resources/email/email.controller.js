@@ -40,7 +40,7 @@ export const sendPasswordReset = async (req, res, next) => {
 
   console.log("USER:", user)
 
-  const token = encodePasswordHashAsToken(user.password, user.createdAt)
+  const token = encodePasswordHashAsToken(user)
   const url = getPasswordResetURL(user, token)
   const emailTemplate = resetPasswordTemplate(user, url)
 
@@ -56,11 +56,15 @@ export const sendPasswordReset = async (req, res, next) => {
   next()
 }
 
-export const encodePasswordHashAsToken = (passwordHash, createdAt) => {
+export const encodePasswordHashAsToken = ({
+  password: passwordHash,
+  _id: userId,
+  createdAt
+}) => {
   // secret is passwordHash concatenated with timestamp when user was created:
   const secret = passwordHash + "-" + createdAt
   // should i be using jwt.sign, or jwt.encode here?
-  const token = jwt.sign({ password_reset: 12345 }, secret, {
+  const token = jwt.sign({ userId }, secret, {
     expiresIn: 3600
   })
 
@@ -73,14 +77,26 @@ export const encodePasswordHashAsToken = (passwordHash, createdAt) => {
   return token
 }
 
-export const receiveNewPassword = (req, res, next) => {
+export const receiveNewPassword = async (req, res, next) => {
   const { userId, token } = req.params
   const { password } = req.body
 
-  console.log("IN RECEIVE NEW PASSWORD!\n")
+  let user
+  try {
+    user = await User.findById(userId)
+  } catch (err) {
+    console.log("Error finding user in receiveNewPassword handler:", err)
+  }
+
+  const secret = user.password + user.createdAt
+  const payload = jwt.decode(token, secret)
+
   console.log("USER ID: \n", userId)
   console.log("TOKEN: \n", token)
   console.log("NEW PASSWORD: \n", password)
+  console.log("USER FROM ID", user)
+  console.log("USER SECRET:", secret)
+  console.log("FINALLY THE PAYLOAD:", payload)
 }
 
 // Source: https://www.smashingmagazine.com/2017/11/safe-password-resets-with-json-web-tokens/
