@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-const getPasswordResetURL = user =>
-  `http://localhost:3000/reset_password/${user._id}/${user.email}`
+const getPasswordResetURL = (user, token) =>
+  `http://localhost:3000/password/reset/${user._id}/${token}`
 
 const resetPasswordTemplate = (user, url) => {
   const from = process.env.EMAIL_LOGIN
@@ -35,10 +35,13 @@ export const sendPasswordReset = async (req, res, next) => {
     user = await User.findOne({ email }).exec()
   } catch (err) {
     console.log("No user with that email found:", err)
+    next("No user with that email found:", err)
   }
 
   console.log("USER:", user)
-  const url = getPasswordResetURL(user)
+
+  const token = encodePasswordHashAsToken(user.password, user.createdAt)
+  const url = getPasswordResetURL(user, token)
   const emailTemplate = resetPasswordTemplate(user, url)
 
   const sendEmail = () => {
@@ -48,27 +51,42 @@ export const sendPasswordReset = async (req, res, next) => {
       console.log(`Email sent, info.response`, info.response)
     })
   }
+
   sendEmail()
   next()
 }
 
-export const encodePasswordHashAsToken = async (req, res, next) => {
-  const { userId } = req.params
-
-  let user
-  try {
-    user = await User.findById(userId).exec()
-  } catch (err) {
-    console.error("No user by that ID was found", err)
-  }
-
-  const token = jwt.sign({ hash: user.password }, JWT_SECRET, {
+export const encodePasswordHashAsToken = (passwordHash, createdAt) => {
+  // secret is passwordHash concatenated with timestamp when user was created:
+  const secret = passwordHash + "-" + createdAt
+  // should i be using jwt.sign, or jwt.encode here?
+  const token = jwt.sign({ password_reset: 12345 }, secret, {
     expiresIn: 3600
-  }) // Expires in 1 hour
+  })
 
-  console.log("PW HASH:", user.password)
-  console.log("JWT TOKEN FROM HASH:", token)
-  console.log("JWT TOKEN DECODED:", jwt.decode(token))
+  console.log("PW HASH AS SECRET:", passwordHash)
+  console.log("SECRET:", secret)
+  console.log("JWT TOKEN FROM HASH SECRET:", token)
+  console.log("JWT TOKEN DECODED:", jwt.decode(token, passwordHash))
 
-  next()
+  // Return as an object with passwordHash?
+  return token
 }
+
+// Source: https://www.smashingmagazine.com/2017/11/safe-password-resets-with-json-web-tokens/
+// Explanation:
+
+/*
+ * To make this token a one-time-use token, I encourage you to 
+ * use the user’s current password hash in conjunction with 
+ * the user’s created date (in ticks) as the secret key to 
+ * generate the JWT. This helps to ensure that if the user’s 
+ * password was the target of a previous attack (on an unrelated website),
+ * then the user’s created date will make the secret key unique 
+ * from the potentially leaked password.
+
+ * With the combination of the user’s password hash and created date, 
+ * the JWT will become a one-time-use token, because once the user 
+ * has changed their password, it will generate a new password hash 
+ * invalidating the secret key that references the old password
+ */

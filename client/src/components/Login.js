@@ -8,7 +8,7 @@ const Login = () => (
   <s.LoginStyles>
     <h3>Log In</h3>
     <LoginForm />
-    <Link to="/password/recover/?email=">Forgot your password?</Link>
+    <Link to="/password/recover">Forgot your password?</Link>
   </s.LoginStyles>
 )
 

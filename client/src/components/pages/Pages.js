@@ -5,8 +5,9 @@ import AppContainer from "../AppContainer"
 import Register from "../Register"
 import Login from "../Login"
 
-import ResetPassword from "../forms/ResetPasswordForm"
 import CustomRoute from "../../utils/CustomRoute"
+import RecoverPassword from "../forms/RecoverPassword"
+import ResetPassword from "../forms/ResetPassword"
 
 const pagesRoutes = [
   {
@@ -21,16 +22,14 @@ const pagesRoutes = [
   },
   {
     path: "/password/recover",
-    name: "ResetPassword",
-    component: ResetPassword
+    name: "RecoverPassword",
+    component: RecoverPassword
   },
   {
-    path: "reset_password/:userId/:email",
-    name: "RecoverPasswordURL",
+    path: "/password/reset/:userId/:token",
+    name: "ResetPassword",
     component: ({ match }) => (
-      <div>
-        Recover password link, url match: {JSON.stringify(match, null, 2)}
-      </div>
+      <ResetPassword userId={match.params.userId} token={match.params.token} />
     )
   }
 ]
