@@ -11,6 +11,7 @@ import Billing from "../Billing"
 import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import SingleTrip from "../SingleTrip"
+import EditTrip from "../EditTrip"
 
 import CustomRoute from "../../utils/CustomRoute"
 
@@ -27,6 +28,11 @@ const dashboardRoutes = [
     path: "/trip/create",
     name: "NewTrip",
     component: NewTrip
+  },
+  {
+    path: "/trip/edit",
+    name: "EditTrip",
+    component: EditTrip
   },
   {
     path: "/trip/get/:tripId",

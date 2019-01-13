@@ -30,7 +30,7 @@ export const login = ({ username, password }) => dispatch => {
       // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
       dispatch(addTokenToState())
 
-      dispatch(push("/app"))
+      dispatch(push("/app/trips"))
     })
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })

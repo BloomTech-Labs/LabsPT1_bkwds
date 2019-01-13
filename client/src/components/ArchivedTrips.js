@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-import Trip from "./Trip"
+import TripCard from "./TripCard"
 import { getArchivedTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 
@@ -14,11 +14,10 @@ class ArchivedTrips extends Component {
     const { trips } = this.props
     return (
       <div>
-        {trips.length ? (
-          trips.map(trip => <Trip key={trip.id} trip={trip} archived={true} />)
-        ) : (
-          <div>No archived trips!</div>
-        )}
+        {!trips.length && "No archived trips!"}
+        {trips.map(trip => (
+          <TripCard key={trip.id} trip={trip} archived={true} />
+        ))}
       </div>
     )
   }
