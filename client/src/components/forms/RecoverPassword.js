@@ -7,7 +7,7 @@ import styled from "styled-components"
 import axios from "axios"
 import { SERVER_URI } from "../../config"
 
-const ResetPasswordStyles = styled.div`
+export const RecoverPasswordStyles = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
@@ -56,7 +56,7 @@ const ResetPasswordStyles = styled.div`
   }
 `
 
-class ResetPassword extends Component {
+class RecoverPassword extends Component {
   state = {
     email: "",
     submitted: false
@@ -77,7 +77,7 @@ class ResetPassword extends Component {
     const { email, submitted } = this.state
 
     return (
-      <ResetPasswordStyles>
+      <RecoverPasswordStyles>
         <h3>Reset your password</h3>
         {submitted ? (
           <div className="reset-password-form-sent-wrapper">
@@ -108,9 +108,9 @@ class ResetPassword extends Component {
             <Link to="/login">I remember my password</Link>
           </div>
         )}
-      </ResetPasswordStyles>
+      </RecoverPasswordStyles>
     )
   }
 }
 
-export default ResetPassword
+export default RecoverPassword

@@ -7,7 +7,7 @@ import Login from "../Login"
 
 import CustomRoute from "../../utils/CustomRoute"
 import RecoverPassword from "../forms/RecoverPassword"
-import ResetPassword from "../forms/ResetPassword"
+import UpdatePassword from "../forms/UpdatePassword"
 
 const pagesRoutes = [
   {
@@ -27,10 +27,8 @@ const pagesRoutes = [
   },
   {
     path: "/password/reset/:userId/:token",
-    name: "ResetPassword",
-    component: ({ match }) => (
-      <ResetPassword userId={match.params.userId} token={match.params.token} />
-    )
+    name: "UpdatePassword",
+    component: UpdatePassword
   }
 ]
 
