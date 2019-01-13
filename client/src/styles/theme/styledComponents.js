@@ -135,3 +135,35 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `
+export const CardButton = styled.button`
+  position: absolute;
+  right: 1%;
+  top: -50%;
+  display: block;
+  width: 65px;
+  height: 65px;
+  font-weight: bold;
+  border-radius: 100%;
+  background: #fff;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+  text-align: center;
+  text-decoration: bold;
+  color: #1abc9c;
+  transition: all 0.3s ease;
+  &::after {
+    margin-left: 2%;
+    content: "\f054";
+    font-family: FontAwesome;
+    line-height: 10%;
+  }
+
+  &:hover,
+  &:focus {
+    background: #1abc9c;
+    color: #fff;
+    box-shadow: 0 2px 8px 0 rgba(#1abc9c, 0.4);
+    &::after {
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+`

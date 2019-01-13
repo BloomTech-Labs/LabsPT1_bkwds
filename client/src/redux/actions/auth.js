@@ -1,6 +1,8 @@
 import axios from "axios"
 import { push } from "connected-react-router"
 import decodeJwt from "jwt-decode"
+import { toast } from "react-toastify"
+import { normalizeErrorMsg } from "../../utils/selectors"
 
 import { SERVER_URI } from "../../config"
 import {
@@ -27,12 +29,13 @@ export const login = ({ username, password }) => dispatch => {
       localStorage.setItem("token", token)
       dispatch(addTokenToState())
 
-      dispatch(push("/app"))
+      dispatch(push("/app/trips"))
     })
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })
-      //errorHandler(err)
-      console.log("LOGIN FAILURE:", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -49,8 +52,9 @@ export const register = ({ email, username, password }) => dispatch => {
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
-      //errorHandler(err)
-      console.log("REGISTRATION FAILURE:", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -101,7 +105,8 @@ export const checkDbForUser = token => dispatch => {
     })
     .catch(err => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
-      // errorHandler(err)
-      console.log("GET USER WITH TOKEN ERROR:", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }

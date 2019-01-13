@@ -1,54 +1,48 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { Link } from "react-router-dom"
 
-import * as s from "../styles/Trip.styles"
-import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+import { deleteTrip } from "../redux/actions/trips"
+import { getSingleTrip } from "../redux/actions/trips"
 
+import { CardButton } from "../styles/theme/styledComponents"
 class TripCard extends Component {
-  handleDelete = tripId => e => {
+  handleSingleTrip = tripId => e => {
     e.preventDefault()
-    this.props.deleteTrip(tripId)
-  }
-
-  toggleArchive = (tripId, archiveTrip) => () => {
-    this.props.toggleArchive(tripId, archiveTrip)
+    this.props.getSingleTrip(tripId)
   }
 
   render() {
-    const { trip, archived } = this.props
+    const { trip } = this.props
     return (
-      <s.TripStyles>
+      <div>
         {!trip.id && "Loading trip"}
         {trip.id && (
           <>
             <div className="card">
-              <img
-                src="https://staticmapmaker.com/img/google.png"
-                alt="Google Map of Albany, NY"
-              />
-              <div className="card-container">
-                <Link to={"/app/trip/" + trip.id}>View Trip</Link>
-                <div>Name: {trip.name}</div>
+              <div className="card-image">
+                <img
+                  src="https://staticmapmaker.com/img/google.png"
+                  alt="Google Map of Albany, NY"
+                />
+              </div>
+              <div className="card-content">
+                <div>{trip.name}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>
-                <div>Archived: {trip.isArchived.toString()}</div>
-                {/* handleEdit here*/}
-                <button onClick={this.handleDelete(trip.id)}>Edit</button>
-                <button onClick={this.toggleArchive(trip.id, !archived)}>
-                  {archived ? "UNARCHIVE" : "ARCHIVE"}
-                </button>
+                <CardButton onClick={this.handleSingleTrip(trip.id)}>
+                  >
+                </CardButton>
               </div>
             </div>
             <br />
           </>
         )}
-      </s.TripStyles>
+      </div>
     )
   }
 }
 
-const mapDispatchToProps = { deleteTrip, toggleArchive }
+const mapDispatchToProps = { deleteTrip, getSingleTrip }
 
 export default connect(
   null,
