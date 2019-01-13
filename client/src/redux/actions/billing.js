@@ -44,6 +44,7 @@ export const subscribe = ({ id, owner, stripe }) => async dispatch => {
     planId: STRIPE_PLAN_ID_TEST,
     source: updatedSource
   })
+  // Does POST return an empty object on fail? If so, we will never reach the else clause:
   if (newSubscription) {
     dispatch({ type: SUBSCRIBE_SUCCESS, payload: newSubscription.data })
     // TODO: Consider housing subscription information on billing reducer instead of user?

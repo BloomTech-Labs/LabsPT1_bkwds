@@ -22,8 +22,10 @@ import {
 } from "./types"
 
 const token = localStorage.getItem("token")
-// Set token as Authorization header on all requests:
-axios.defaults.headers.common["Authorization"] = token
+if (token) {
+  // If token, set token as Authorization header on all axios requests:
+  axios.defaults.headers.common["Authorization"] = token
+}
 
 export const getTrips = () => dispatch => {
   dispatch({ type: LOADING_TRIPS })

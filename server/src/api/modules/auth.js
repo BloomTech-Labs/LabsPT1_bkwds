@@ -80,9 +80,9 @@ export const protect = (req, res, next) => {
 }
 
 export const getUserFromToken = (req, res) => {
-  const { id } = req.body
+  const { id } = req.params
 
-  User.findById(id)
+  return User.findById(id)
     .then(user => {
       return res.status(200).json(user)
     })

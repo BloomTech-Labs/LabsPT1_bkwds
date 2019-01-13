@@ -41,11 +41,8 @@ export const register = ({ email, username, password }) => dispatch => {
     .post(`${SERVER_URI}/register`, { email, username, password })
     .then(res => {
       dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
-
-      console.log("USER CREATED, IS THERE A TOKEN?")
-      console.log("USER CREATED, RESPONSE:", res)
-
-      dispatch(push("/login"))
+      localStorage.setItem("token", res.data.token)
+      dispatch(push("/app"))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
@@ -94,7 +91,7 @@ export const checkDbForUser = token => dispatch => {
     })
 
   axios
-    .post(`${SERVER_URI}/user_from_token`, { id })
+    .get(`${SERVER_URI}/user_from_token/${id}`)
     .then(res => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
       dispatch(push("/app"))
