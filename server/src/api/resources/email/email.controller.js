@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer"
+import jwt from "jsonwebtoken"
 import { User } from "../user/user.model"
+const { JWT_SECRET } = process.env
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -47,5 +49,26 @@ export const sendPasswordReset = async (req, res, next) => {
     })
   }
   sendEmail()
+  next()
+}
+
+export const encodePasswordHashAsToken = async (req, res, next) => {
+  const { userId } = req.params
+
+  let user
+  try {
+    user = await User.findById(userId).exec()
+  } catch (err) {
+    console.error("No user by that ID was found", err)
+  }
+
+  const token = jwt.sign({ hash: user.password }, JWT_SECRET, {
+    expiresIn: 3600
+  }) // Expires in 1 hour
+
+  console.log("PW HASH:", user.password)
+  console.log("JWT TOKEN FROM HASH:", token)
+  console.log("JWT TOKEN DECODED:", jwt.decode(token))
+
   next()
 }

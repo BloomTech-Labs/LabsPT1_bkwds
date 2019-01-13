@@ -23,6 +23,15 @@ const pagesRoutes = [
     path: "/password/recover",
     name: "ResetPassword",
     component: ResetPassword
+  },
+  {
+    path: "reset_password/:userId/:email",
+    name: "RecoverPasswordURL",
+    component: ({ match }) => (
+      <div>
+        Recover password link, url match: {JSON.stringify(match, null, 2)}
+      </div>
+    )
   }
 ]
 
