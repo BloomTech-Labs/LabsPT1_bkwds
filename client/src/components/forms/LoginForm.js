@@ -56,6 +56,7 @@ const LoginForm = ({ username = "", password = "", login, loginError }) => (
                 text="Log in"
                 submitError={loginError}
                 isSubmitting={isSubmitting}
+                classNames={["btn-ghost"]}
               />
             </div>
           </Form>
