@@ -7,7 +7,6 @@ import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
 import FirstTripButton from "./FirstTripButton"
-import * as st from "../styles/AddTripButton.styles"
 
 class Trips extends Component {
   componentDidMount() {
