@@ -21,6 +21,10 @@ if (token) {
   axios.defaults.headers.common["Authorization"] = token
 }
 
+export const openCheckoutForm = () => dispatch => {
+  dispatch({ type: INIT_NEW_SUBSCRIPTION })
+}
+
 export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
   dispatch({ type: INIT_NEW_CANCELLATION })
 
@@ -41,8 +45,6 @@ export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
 }
 
 export const subscribe = ({ id, owner, stripe }) => async dispatch => {
-  dispatch({ type: INIT_NEW_SUBSCRIPTION })
-
   if (!token) return
 
   try {

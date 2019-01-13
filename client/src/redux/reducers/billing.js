@@ -9,7 +9,8 @@ import {
 
 const defaultState = {
   pending: false,
-  error: null
+  error: null,
+  isCheckoutFormOpen: false
 }
 
 export const billingReducer = (state = defaultState, action) => {
@@ -17,31 +18,40 @@ export const billingReducer = (state = defaultState, action) => {
     case INIT_NEW_SUBSCRIPTION:
       return {
         ...state,
-        pending: true
+        pending: true,
+        isCheckoutFormOpen: true
       }
 
     case SUBSCRIBE_SUCCESS:
       return {
         ...state,
-        pending: false
+        pending: false,
+        isCheckoutFormOpen: false
       }
 
     case SUBSCRIBE_FAIL:
-      return { ...state, pending: false, error: action.payload }
+      return {
+        ...state,
+        pending: false,
+        isCheckoutFormOpen: true,
+        error: action.payload
+      }
 
     case INIT_NEW_CANCELLATION:
-      return { ...state, pending: true }
+      return { ...state, pending: true, isCheckoutFormOpen: false }
 
     case CANCEL_SUBSCRIPTION_SUCCESS:
       return {
         ...state,
-        pending: false
+        pending: false,
+        isCheckoutFormOpen: false
       }
 
     case CANCEL_SUBSCRIPTION_FAIL:
       return {
         ...state,
         pending: false,
+        isCheckoutFormOpen: false,
         error: action.payload
       }
 
