@@ -19,11 +19,14 @@ import {
 
 export const login = ({ username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
-  return axios
+  axios
     .post(`${SERVER_URI}/login`, { username, password })
     .then(res => {
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data.user })
-      localStorage.setItem("token", res.data.token)
+      const { token, user } = res.data
+      dispatch({ type: LOGIN_SUCCESS, payload: user })
+      localStorage.setItem("token", token)
+      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
+      dispatch(addTokenToState())
 
       dispatch(push("/app"))
     })
@@ -37,12 +40,15 @@ export const login = ({ username, password }) => dispatch => {
 export const register = ({ email, username, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
 
-  return axios
+  axios
     .post(`${SERVER_URI}/register`, { email, username, password })
     .then(res => {
+      const { token } = res.data
       dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
-      localStorage.setItem("token", res.data.token)
-      dispatch(push("/app"))
+      localStorage.setItem("token", token)
+      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
+      dispatch(addTokenToState())
+      dispatch(checkDbForUser(token))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
