@@ -2,6 +2,8 @@ import axios from "axios"
 import { push } from "connected-react-router"
 
 import { SERVER_URI } from "../../config"
+import { toast } from "react-toastify"
+import { normalizeErrorMsg } from "../../utils/selectors"
 import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
@@ -42,8 +44,9 @@ export const getTrips = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: LOADING_TRIPS_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("GET TRIPS ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -56,8 +59,9 @@ export const getArchivedTrips = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: LOADING_ARCHIVED_TRIPS_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("GET ARCHIVED TRIPS ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -75,8 +79,9 @@ export const createTrip = trip => dispatch => {
     })
     .catch(err => {
       dispatch({ type: CREATING_TRIP_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("CREATE TRIP ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -89,8 +94,9 @@ export const deleteTrip = tripId => dispatch => {
     })
     .catch(err => {
       dispatch({ type: DELETING_TRIP_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("DELETE TRIP ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -106,7 +112,8 @@ export const toggleArchive = (tripId, archiveTrip) => dispatch => {
     })
     .catch(err => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("ARCHIVING TRIP ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
