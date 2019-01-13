@@ -73,6 +73,16 @@ export const encodePasswordHashAsToken = (passwordHash, createdAt) => {
   return token
 }
 
+export const receiveNewPassword = (req, res, next) => {
+  const { userId, token } = req.params
+  const { password } = req.body
+
+  console.log("IN RECEIVE NEW PASSWORD!\n")
+  console.log("USER ID: \n", userId)
+  console.log("TOKEN: \n", token)
+  console.log("NEW PASSWORD: \n", password)
+}
+
 // Source: https://www.smashingmagazine.com/2017/11/safe-password-resets-with-json-web-tokens/
 // Explanation:
 
