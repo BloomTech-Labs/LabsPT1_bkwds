@@ -14,11 +14,16 @@ export const getPasswordResetURL = (user, token) =>
 export const resetPasswordTemplate = (user, url) => {
   const from = process.env.EMAIL_LOGIN
   const to = user.email
-  const subject = "🔥 Password Reset Instructions for Backwoods App 🔥"
+  const subject = "🌻 Backwoods Password Reset 🌻"
   const html = `
-  <p>Did you forget the password for your Backwoods account? If so,
-    <a href=${url}/>click here</a> to reset it. If this wasn't you, disregard this message and get outside!
-    - Backwoods Customer Support
-  </p>`
+  <p>Hey ${user.username},</p>
+  <p>We heard that you lost your GitHub password. Sorry about that!</p>
+  <p>But don’t worry! You can use the following link to reset your password:</p>
+  <a href=${url}>${url}</a>
+  <p>If you don’t use this link within 1 hour, it will expire.</p>
+  <p>Do something outside today! </p>
+  <p>–Your friends at Backwoods</p>
+  `
+
   return { from, to, subject, html }
 }
