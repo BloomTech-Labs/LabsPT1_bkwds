@@ -3,7 +3,7 @@ import { Button } from "../styles/theme/styledComponents"
 import * as s from "../styles/AddTripButton.styles"
 import PropTypes from "prop-types"
 
-class AddTripButton extends Component {
+class FirstTripButton extends Component {
   static contextTypes = {
     router: PropTypes.object
   }
@@ -16,7 +16,7 @@ class AddTripButton extends Component {
   render() {
     return (
       <s.AddTripButtonStyles>
-        <a className="firstTripMsg">Add Trip</a>
+        <a className="firstTripMsg">Add Your First Trip</a>
         <Button className="AddTripButton" onClick={this.handleClick()}>
           +
         </Button>
@@ -25,4 +25,4 @@ class AddTripButton extends Component {
   }
 }
 
-export default AddTripButton
+export default FirstTripButton

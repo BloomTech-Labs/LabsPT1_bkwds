@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 
-import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+import { deleteTrip } from "../redux/actions/trips"
 import { getSingleTrip } from "../redux/actions/trips"
 
 import { CardButton } from "../styles/theme/styledComponents"
@@ -9,10 +9,6 @@ class TripCard extends Component {
   handleSingleTrip = tripId => e => {
     e.preventDefault()
     this.props.getSingleTrip(tripId)
-  }
-
-  toggleArchive = (tripId, archiveTrip) => () => {
-    this.props.toggleArchive(tripId, archiveTrip)
   }
 
   render() {
@@ -46,7 +42,7 @@ class TripCard extends Component {
   }
 }
 
-const mapDispatchToProps = { deleteTrip, toggleArchive, getSingleTrip }
+const mapDispatchToProps = { deleteTrip, getSingleTrip }
 
 export default connect(
   null,
