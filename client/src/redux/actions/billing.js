@@ -13,8 +13,10 @@ import { updateUserInStore } from "./auth"
 import { STRIPE_PLAN_ID_TEST } from "../../config"
 
 const token = localStorage.getItem("token")
-// Set token as Authorization header on all requests:
-axios.defaults.headers.common["Authorization"] = token
+if (token) {
+  // If token, set token as Authorization header on all requests:
+  axios.defaults.headers.common["Authorization"] = token
+}
 
 export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
   dispatch({ type: INIT_NEW_CANCELLATION })
