@@ -15,9 +15,9 @@ import {
 import { normalizeUser, normalizeErrorMsg } from "../../utils/selectors"
 
 const defaultUser = {
+  id: null,
   username: "",
   email: "",
-  id: null,
   subscribed: false,
   subscribeId: null,
   subDate: null,

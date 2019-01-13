@@ -1,10 +1,10 @@
 import axios from "axios"
 import { SERVER_URI } from "../../config"
 import {
-  SUBSCRIBE,
+  INIT_NEW_SUBSCRIPTION,
   SUBSCRIBE_SUCCESS,
   SUBSCRIBE_FAIL,
-  CANCEL,
+  INIT_NEW_CANCELLATION,
   CANCEL_SUBSCRIPTION_SUCCESS,
   CANCEL_SUBSCRIPTION_FAIL,
   QUERYING_USER_BY_TOKEN_SUCCESS
@@ -17,7 +17,7 @@ const token = localStorage.getItem("token")
 axios.defaults.headers.common["Authorization"] = token
 
 export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
-  dispatch({ type: CANCEL })
+  dispatch({ type: INIT_NEW_CANCELLATION })
 
   if (!token) return
 
@@ -33,7 +33,7 @@ export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
 }
 
 export const subscribe = ({ id, owner, stripe }) => async dispatch => {
-  dispatch({ type: SUBSCRIBE })
+  dispatch({ type: INIT_NEW_SUBSCRIPTION })
 
   if (!token) return
 
@@ -46,7 +46,7 @@ export const subscribe = ({ id, owner, stripe }) => async dispatch => {
   })
   if (newSubscription) {
     dispatch({ type: SUBSCRIBE_SUCCESS, payload: newSubscription.data })
-    // TODO: Consider housing subscription information on billing?
+    // TODO: Consider housing subscription information on billing reducer instead of user?
     dispatch(updateUserInStore(newSubscription.data))
   } else {
     dispatch({ type: SUBSCRIBE_FAIL, payload: newSubscription.error })
