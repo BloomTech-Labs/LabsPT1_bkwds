@@ -40,7 +40,7 @@ export const CustomButtonWithError = ({
   classNames = [] // allows you to override styling
 }) => (
   <div className={classNames.length ? classNames.join(" ") : "form-field"}>
-    <Button className="btn" type="submit" disabled={isSubmitting}>
+    <Button className="btn-primary" type="submit" disabled={isSubmitting}>
       {text}
     </Button>
     {submitError && (

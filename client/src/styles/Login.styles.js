@@ -10,4 +10,10 @@ export const LoginStyles = styled.div`
   form {
     width: 300px;
   }
+  input {
+    width: 100%;
+  }
+  a {
+    margin-top: 0.5rem;
+  }
 `

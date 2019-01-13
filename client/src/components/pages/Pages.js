@@ -4,6 +4,8 @@ import { Switch } from "react-router-dom"
 import AppContainer from "../AppContainer"
 import Register from "../Register"
 import Login from "../Login"
+
+import ResetPassword from "../forms/ResetPasswordForm"
 import CustomRoute from "../../utils/CustomRoute"
 
 const pagesRoutes = [
@@ -16,6 +18,11 @@ const pagesRoutes = [
     path: "/login",
     name: "Login",
     component: Login
+  },
+  {
+    path: "/password/recover",
+    name: "ResetPassword",
+    component: ResetPassword
   }
 ]
 

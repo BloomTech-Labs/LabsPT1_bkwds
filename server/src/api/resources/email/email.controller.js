@@ -1,8 +1,6 @@
 import nodemailer from "nodemailer"
 import { User } from "../user/user.model"
 
-console.log("REACHED CONTROLLER\n\n\n")
-
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -11,49 +9,8 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-// const mailOptions = {
-//   from: "ahrjarrett@gmail.com",
-//   to: "jarrett@ownlocal.com",
-//   subject: "🔥 sent with nodemailer",
-//   text: "Whoa nice"
-// }
-
-// Fire the missiles!
-export const sendPasswordReset = (req, res, next) => {
-  console.log("CALLING SENDPASSWORDRESET")
-  const { userId } = req.params
-  // const user = User.findById({ _id: userId }).exec()
-  const user = {
-    _id: "5c3ad7af8986a0672449a98e",
-    username: "ahrjarrett",
-    email: "ahrjarrett@gmail.com",
-    subscribed: false,
-    trips: []
-  }
-
-  const url = getPasswordResetURL(user)
-  const emailTemplate = resetPasswordTemplate(user, url)
-
-  const sendEmail = () => {
-    transporter.sendMail(emailTemplate, (err, info) => {
-      console.log("calling transporter!")
-      if (err) {
-        console.log(error)
-        res.send(400).json({ error: "done broke" })
-      } else {
-        console.log(`Email sent:`, info.response)
-        res.send(201).json({ sent: true })
-      }
-    })
-  }
-
-  sendEmail()
-  next()
-}
-
-const getPasswordResetURL = user => {
-  return `http://localhost:3000/blah/${user.username}/${user.email}`
-}
+const getPasswordResetURL = user =>
+  `http://localhost:3000/reset_password/${user._id}/${user.email}`
 
 const resetPasswordTemplate = (user, url) => {
   const from = process.env.EMAIL_LOGIN
@@ -63,9 +20,32 @@ const resetPasswordTemplate = (user, url) => {
   <p>Did you forget the password for your Backwoods account? If so, 
     <a href=${url}/>click here</a> to reset it. If this wasn't you, disregard this message and get outside!
     - Backwoods Customer Support
-  </p>
-  `
+  </p>`
+  return { from, to, subject, html }
+}
 
-  const emailTemplate = { from, to, subject, html }
-  return emailTemplate
+// Fire the missiles!
+export const sendPasswordReset = async (req, res, next) => {
+  const { email } = req.params
+
+  let user
+  try {
+    user = await User.findOne({ email }).exec()
+  } catch (err) {
+    console.log("No user with that email found:", err)
+  }
+
+  console.log("USER:", user)
+  const url = getPasswordResetURL(user)
+  const emailTemplate = resetPasswordTemplate(user, url)
+
+  const sendEmail = () => {
+    transporter.sendMail(emailTemplate, (err, info) => {
+      if (err) next(err)
+      console.log(`Email sent, info object:`, info)
+      console.log(`Email sent, info.response`, info.response)
+    })
+  }
+  sendEmail()
+  next()
 }
