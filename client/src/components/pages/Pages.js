@@ -9,6 +9,10 @@ import CustomRoute from "../../utils/CustomRoute"
 import RecoverPassword from "../forms/RecoverPassword"
 import UpdatePassword from "../forms/UpdatePassword"
 
+const UpdatePasswordForm = ({ match }) => (
+  <UpdatePassword userId={match.params.userId} token={match.params.token} />
+)
+
 const pagesRoutes = [
   {
     path: "/register",
@@ -28,7 +32,7 @@ const pagesRoutes = [
   {
     path: "/password/reset/:userId/:token",
     name: "UpdatePassword",
-    component: UpdatePassword
+    component: UpdatePasswordForm
   }
 ]
 
