@@ -3,7 +3,8 @@ import React from "react"
 //TODO - fetch trip data and apply it to map.
 export default class Map extends React.Component {
   state = {
-    center: { lat: -34.397, lng: 150.644 }
+    center: { lat: -34.397, lng: 150.644 },
+    markers: [{ lat: -34.197, lng: 150.474 }]
   }
 
   // data is an array of markers

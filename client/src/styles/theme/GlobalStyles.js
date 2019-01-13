@@ -77,12 +77,15 @@ export const GlobalStyles = createGlobalStyle`
     box-shadow: 0 0.3125rem 0.9375rem 0 rgba(0,0,0,.05), 0 0 0 0.0625rem rgba(0,0,0,.03), 0 0.0625rem 0 0 rgba(0,0,0,.05), 0 0.0625rem 0.1875rem 0 rgba(0,0,0,.01);
     -webkit-transition: background-color .15s ease-out,color .15s ease-out,-webkit-box-shadow .15s ease-out;
     transition: background-color .15s ease-out,color .15s ease-out,-webkit-box-shadow .15s ease-out;
-    &:hover {
+    &:hover, &:focus {
       background-color: ${props => props.theme.white};
       border-color: ${props => props.theme.white};
       color: #526699;
       -webkit-box-shadow: 0 0.3125rem 0.9375rem 0 rgba(0,0,0,.05), 0 0 0 0.0625rem rgba(0,0,0,.03), 0 0.125rem 0.0625rem 0 rgba(0,0,0,.1), 0 0.0625rem 0.1875rem 0 rgba(0,0,0,.01);
       box-shadow: 0 0.3125rem 0.9375rem 0 rgba(0,0,0,.05), 0 0 0 0.0625rem rgba(0,0,0,.03), 0 0.125rem 0.0625rem 0 rgba(0,0,0,.1), 0 0.0625rem 0.1875rem 0 rgba(0,0,0,.01);
+    }
+    &:focus {
+      outline: 0;
     }
   }
 `

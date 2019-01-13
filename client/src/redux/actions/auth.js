@@ -10,7 +10,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE,
-  GET_TOKEN_FROM_LOCAL_STORAGE,
+  ADD_TOKEN_TO_STATE,
   QUERYING_USER_BY_TOKEN,
   QUERYING_USER_BY_TOKEN_SUCCESS,
   QUERYING_USER_BY_TOKEN_ERROR,
@@ -25,7 +25,6 @@ export const login = ({ username, password }) => dispatch => {
       const { token, user } = res.data
       dispatch({ type: LOGIN_SUCCESS, payload: user })
       localStorage.setItem("token", token)
-      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
       dispatch(addTokenToState())
 
       dispatch(push("/app"))
@@ -33,7 +32,7 @@ export const login = ({ username, password }) => dispatch => {
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })
       //errorHandler(err)
-      console.error("LOGIN FAILURE:", err)
+      console.log("LOGIN FAILURE:", err)
     })
 }
 
@@ -46,14 +45,12 @@ export const register = ({ email, username, password }) => dispatch => {
       const { token } = res.data
       dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
       localStorage.setItem("token", token)
-      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
       dispatch(addTokenToState())
-      dispatch(checkDbForUser(token))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
       //errorHandler(err)
-      console.error("REGISTRATION FAILURE:", err)
+      console.log("REGISTRATION FAILURE:", err)
     })
 }
 
@@ -78,11 +75,11 @@ export const addTokenToState = () => dispatch => {
   try {
     token = localStorage.getItem("token")
   } catch (e) {
-    console.error("ADD TOKEN TO STATE ERROR:", e)
+    console.log("ADD TOKEN TO STATE ERROR:", e)
   }
   // If no token, bail out:
   if (!token) return
-  dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
+  dispatch({ type: ADD_TOKEN_TO_STATE, payload: token })
   // Use token to check DB for user:
   dispatch(checkDbForUser(token))
 }
@@ -105,6 +102,6 @@ export const checkDbForUser = token => dispatch => {
     .catch(err => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
       // errorHandler(err)
-      // console.error("GET USER WITH TOKEN ERROR:", err)
+      console.log("GET USER WITH TOKEN ERROR:", err)
     })
 }

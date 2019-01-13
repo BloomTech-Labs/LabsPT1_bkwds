@@ -28,7 +28,7 @@ class TripCard extends Component {
                 alt="Google Map of Albany, NY"
               />
               <div className="card-container">
-                <Link to={"/app/trip/get/" + trip.id}>View Trip</Link>
+                <Link to={"/app/trip/" + trip.id}>View Trip</Link>
                 <div>Name: {trip.name}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>

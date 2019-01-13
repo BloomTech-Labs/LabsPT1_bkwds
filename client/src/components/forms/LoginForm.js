@@ -68,8 +68,7 @@ const LoginForm = ({ username = "", password = "", login, loginError }) => (
 
 const mapStateToProps = state => ({
   loginError: state.auth.error,
-  username: state.auth.user.username,
-  password: state.auth.user.password
+  username: state.auth.user.username
 })
 
 const mapDispatchToProps = { login }

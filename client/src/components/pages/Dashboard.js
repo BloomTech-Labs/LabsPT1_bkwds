@@ -20,7 +20,7 @@ const dashboardRoutes = [
   {
     path: "/",
     name: "Dashboard",
-    component: DashboardHome,
+    component: ({ trips }) => <DashboardHome trips={trips} />,
     exact: true
   },
   {
@@ -29,9 +29,9 @@ const dashboardRoutes = [
     component: NewTrip
   },
   {
-    path: "/trip/get/:tripId",
+    path: "/trip/:tripId",
     name: "SingleTrip",
-    render: ({ match }) => <SingleTrip tripId={match.params.tripId} />
+    component: ({ match }) => <SingleTrip tripId={match.params.tripId} />
   },
   {
     path: "/trips",
