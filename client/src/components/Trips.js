@@ -20,11 +20,11 @@ class Trips extends Component {
   }
 
   renderTrips() {
-    let tripsRender
+    // let tripsRender
     const { trips } = this.props
 
     if (this.props.trips.length > 0) {
-      return (tripsRender = (
+      return (
         <div>
           <s.TripCardStyles>
             <div className="container">
@@ -32,23 +32,23 @@ class Trips extends Component {
               {trips.map(trip => (
                 <TripCard key={trip.id} trip={trip} archived={false} />
               ))}
-              <st.AddTripButtonStyles>
-                <AddTripButton className="AddTripButton" />
-              </st.AddTripButtonStyles>
+              <AddTripButton className="AddTripButton" />
             </div>
           </s.TripCardStyles>
         </div>
-      ))
+      )
     } else {
       let firstTripRender
       // we may need to add a firstTripCreated attribute
       // and render FirstTrip is False, Trips if True
+      // if (this.props.user.firstTrip === True) {
+      //   firstTripRender = (
+      //     <FirstTripButton />
+      //   )
+      // }
+      // return firstTripRender
       if (this.props.trips.length === 0) {
-        firstTripRender = (
-          <div className="FirstTripComponent">
-            <FirstTripButton />
-          </div>
-        )
+        firstTripRender = <FirstTripButton />
       }
       return firstTripRender
     }

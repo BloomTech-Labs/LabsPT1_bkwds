@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Button } from "../styles/theme/styledComponents"
-import * as s from "../styles/AddTripButton.styles"
+import * as s from "../styles/FirstTripStyles.styles"
 import PropTypes from "prop-types"
 
 class FirstTripButton extends Component {
@@ -15,12 +15,12 @@ class FirstTripButton extends Component {
 
   render() {
     return (
-      <s.AddTripButtonStyles>
-        <a className="firstTripMsg">Add Your First Trip</a>
+      <s.FirstTripStyles>
+        <a className="TripMsg">Add your first trip</a>
         <Button className="AddTripButton" onClick={this.handleClick()}>
           +
         </Button>
-      </s.AddTripButtonStyles>
+      </s.FirstTripStyles>
     )
   }
 }

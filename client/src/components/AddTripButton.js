@@ -16,7 +16,7 @@ class AddTripButton extends Component {
   render() {
     return (
       <s.AddTripButtonStyles>
-        <a className="firstTripMsg">Add Trip</a>
+        <a className="TripMsg">Add trip</a>
         <Button className="AddTripButton" onClick={this.handleClick()}>
           +
         </Button>
