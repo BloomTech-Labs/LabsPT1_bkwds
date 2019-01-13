@@ -7,19 +7,22 @@ const JWT_SECRET = config.secrets.JWT_SECRET
 export const register = (req, res) => {
   const { username, password, email } = req.body
   User.findOne({ username: username })
-    .then(user => {
-      if (user) {
-        return res.status(404).send("Username already exists")
-      }
-      let newUser = new User({
-        username,
-        password,
-        email
+    .then(existingUser => {
+      if (existingUser) return res.status(404).send("Username already exists")
+
+      let user = new User({ username, password, email })
+
+      // let token = generateToken(user)
+      const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+        expiresIn: 86400 // 24 hours
       })
-      newUser
+
+      const payload = { user, token }
+
+      user
         .save()
         .then(() => {
-          res.sendStatus(201)
+          res.status(201).json(payload)
         })
         .catch(err => {
           const message = err.message
@@ -44,9 +47,11 @@ export const login = (req, res) => {
           return res.status(401).send("Unauthorized")
         }
         if (isMatch) {
-          let token = jwt.sign({ id: user._id }, JWT_SECRET, {
+          // let token = generateToken(user)
+          const token = jwt.sign({ id: user._id }, JWT_SECRET, {
             expiresIn: 86400 // 24 hours
           })
+
           const payload = { user, token }
           res.status(200).json(payload)
         } else {
@@ -70,14 +75,15 @@ export const protect = (req, res, next) => {
       next(err)
       return res.status(401).send("Unauthorized")
     }
+
     next()
   })
 }
 
 export const getUserFromToken = (req, res) => {
-  const { id } = req.body
+  const { id } = req.params
 
-  User.findById(id)
+  return User.findById(id)
     .then(user => {
       return res.status(200).json(user)
     })

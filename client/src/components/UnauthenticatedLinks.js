@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 const UnauthenticatedLinks = ({ pathname }) => (
   <ul className="unauthenticated-links">
     {pathname === "/login" || pathname === "/" ? (
-      <Link to="/signup">Sign up</Link>
+      <Link to="/register">Sign up</Link>
     ) : null}
-    {pathname === "/signup" || pathname === "/" ? (
+    {pathname === "/register" || pathname === "/" ? (
       <Link to="/login">Login</Link>
     ) : null}
   </ul>

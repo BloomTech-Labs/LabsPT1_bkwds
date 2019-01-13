@@ -68,7 +68,12 @@ const Dashboard = ({ match }) => {
     <Switch>
       <AppContainer>
         {dashboardRoutes.map(({ path, ...rest }, idx) => (
-          <CustomRoute path={basePath + path} {...rest} key={idx} />
+          <CustomRoute
+            protectedPath={true}
+            path={basePath + path}
+            {...rest}
+            key={idx}
+          />
         ))}
       </AppContainer>
     </Switch>

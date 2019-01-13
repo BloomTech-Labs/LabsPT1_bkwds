@@ -14,7 +14,7 @@ const Right = styled.div`
 `
 
 const AppContainer = ({ pathname, children, isLoggedIn }) => {
-  const authPaths = ["/signup", "/login"]
+  const authPaths = ["/register", "/login"]
   const showBreadcrumbs = !isProtectedPath(pathname, [...authPaths])
   const showSidebar = isLoggedIn && showBreadcrumbs
   const userOnAuthPath = authPaths.includes(pathname)
