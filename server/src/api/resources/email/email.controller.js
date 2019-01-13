@@ -1,7 +1,8 @@
 import nodemailer from "nodemailer"
 import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
+
 import { User } from "../user/user.model"
-const { JWT_SECRET } = process.env
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -83,7 +84,7 @@ export const receiveNewPassword = async (req, res, next) => {
 
   let user
   try {
-    user = await User.findById(userId)
+    user = await User.findById(userId).exec()
   } catch (err) {
     console.log("Error finding user in receiveNewPassword handler:", err)
   }
@@ -97,6 +98,39 @@ export const receiveNewPassword = async (req, res, next) => {
   console.log("USER FROM ID", user)
   console.log("USER SECRET:", secret)
   console.log("FINALLY THE PAYLOAD:", payload)
+
+  // If the payload is the same as the userId (what we encoded in encodePasswordHashAsToken), update password
+  if (payload.userId === userId) {
+    console.log("MAATCH! UPDATE PASSWORD")
+    bcrypt.genSalt(10, function(err, salt) {
+      if (err) {
+        console.log("Error generating salt:", err)
+        return
+      }
+
+      bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) {
+          console.log("Error hashing password:", err)
+          return
+        }
+
+        user.password = hash
+        next()
+      })
+    })
+
+    // User.findOneAndUpdate({ _id: userId }, { password: password })
+    //   .then(res => console.log("PASSWORD CHANGED! NEW USER:", res))
+    //   .catch(err =>
+    //     console.log("NO DICE, FOUND NOT UPDATE FOR SOME REASON:", err)
+    //   )
+  } else {
+    console.log("NO DICE!")
+  }
+
+  const fancyNewUser = await User.findById(userId).exec()
+
+  console.log("FINALLY UPDATED?", fancyNewUser)
 }
 
 // Source: https://www.smashingmagazine.com/2017/11/safe-password-resets-with-json-web-tokens/
