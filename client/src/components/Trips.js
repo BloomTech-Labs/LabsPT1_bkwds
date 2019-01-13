@@ -18,40 +18,58 @@ class Trips extends Component {
     this.props.history.push("/app/trip/create")
   }
 
-  renderTrips() {
-    let tripsRender
+  //   renderTrips() {
+  //     let tripsRender
+  //     const { trips } = this.props
+
+  //     if (this.props.trips.length >= 1) {
+  //       return (tripsRender = (
+  //         <s.TripCardStyles>
+  //           <div className="container">
+  //             {!trips.length && "No unarchived trips!"}
+  //             {trips.map(trip => (
+  //               <TripCard key={trip.id} trip={trip} archived={false} />
+  //             ))}
+  //             <AddTripButton />
+  //           </div>
+  //         </s.TripCardStyles>
+  //       ))
+  //     } else {
+  //       let firstTripRender
+
+  //       if (this.props.trips.length === 0) {
+  //         firstTripRender = (
+  //           <div className="firstTrip">
+  //             <p> Add Your First Trip</p>
+  //             <Button onClick={this.handleClick()}>+</Button>
+  //           </div>
+  //         )
+  //       }
+
+  //       return firstTripRender
+  //     }
+  //   }
+
+  //   render() {
+  //     return <div className="firstTrip">{this.renderTrips()}</div>
+  //   }
+  // }
+  render() {
     const { trips } = this.props
 
-    if (this.props.trips.length >= 1) {
-      return (tripsRender = (
-        <s.TripCardStyles>
-          <div className="container">
-            {!trips.length && "No unarchived trips!"}
-            {trips.map(trip => (
+    return (
+      <s.TripCardStyles>
+        <div className="container">
+          {trips.length > 0 ? (
+            trips.map(trip => (
               <TripCard key={trip.id} trip={trip} archived={false} />
-            ))}
-            <AddTripButton />
-          </div>
-        </s.TripCardStyles>
-      ))
-    } else {
-      let firstTripRender
-
-      if (this.props.trips.length === 0) {
-        firstTripRender = (
-          <div className="firstTrip">
-            <p> Add Your First Trip</p>
-            <Button onClick={this.handleClick()}>+</Button>
-          </div>
-        )
-      }
-
-      return firstTripRender
-    }
-  }
-
-  render() {
-    return <div className="firstTrip">{this.renderTrips()}</div>
+            ))
+          ) : (
+            <div>No trips!</div>
+          )}
+        </div>
+      </s.TripCardStyles>
+    )
   }
 }
 

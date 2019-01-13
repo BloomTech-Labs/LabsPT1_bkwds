@@ -7,6 +7,7 @@ import { Switch } from "react-router-dom"
 import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"
+import Billing from "../Billing"
 import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import SingleTrip from "../SingleTrip"
@@ -14,7 +15,6 @@ import EditTrip from "../EditTrip"
 
 import CustomRoute from "../../utils/CustomRoute"
 
-export const Billing = () => <div>Billing component here!</div>
 export const Settings = () => <div>Settings component here!</div>
 
 const dashboardRoutes = [

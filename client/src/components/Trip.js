@@ -37,19 +37,23 @@ class Trip extends Component {
               <div className="card-content">
                 <Link to={"/app/trip/get/" + trip.id}>View Trip</Link>
                 <div>Name: {trip.name}</div>
+                <div>ID: {trip.id}</div>
                 <div>UserID: {trip.userId}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>
-                <Button btn-light onClick={this.toggleArchive(trip.id)}>
-                  Archive
-                </Button>
-                <Button btn-light onClick={this.handleEdit(trip.id)}>
-                  Edit
-                </Button>
-                <Button btn-light onClick={this.handleDelete(trip.id)}>
-                  Delete
-                </Button>
-                {/* {archived ? "UNARCHIVE" : "ARCHIVE"} */}
+                <div>Created at: {trip.createdAt}</div>
+                <div>Updated at: {trip.updatedAt}</div>
+                <div>Archived: {trip.isArchived.toString()}</div>
+                <div>
+                  Waypoints:{" "}
+                  {trip.waypoints.map((w, i) => (
+                    <div key={i}>{w.toString()}</div>
+                  ))}
+                </div>
+                <button onClick={this.handleDelete(trip.id)}>DELETE</button>
+                <button onClick={this.toggleArchive(trip.id, !archived)}>
+                  {archived ? "UNARCHIVE" : "ARCHIVE"}
+                </button>
               </div>
             </div>
             <br />

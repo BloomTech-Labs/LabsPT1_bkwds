@@ -72,7 +72,6 @@ Creates a new trip in the database.
 - **name** - `String`
 - **isArchived** - `Boolean`
 - **start** - `Date`
-- **end** - `Date`
 - **lat** - `Number`
 - **lon** - `Number`
 

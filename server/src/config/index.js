@@ -17,7 +17,6 @@ let envConfig = {}
 switch (env) {
   case "development":
   case "dev":
-    //envConfig = require("./dev").config
     break
   case "test":
   case "testing":
