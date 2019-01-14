@@ -3,20 +3,20 @@ import Styled from "styled-components"
 import { SERVER_URI } from "../../../config"
 import Axios from "axios"
 
-const PanelHeader = Styled.h2`
-    font-size:1.5rem;
-    padding:.5rem;
-`
+// const PanelHeader = Styled.h2`
+//     font-size:1.5rem;
+//     padding:.5rem;
+// `
 
-const WaypointList = Styled.div`
-    overflow:scroll;
-`
-const Waypoint = Styled.div`
-    align-items:center;
-    width: 90%;
-    display:flex;
-    margin:0 auto;
-`
+// const WaypointList = Styled.div`
+//     overflow:scroll;
+// `
+// const Waypoint = Styled.div`
+//     align-items:center;
+//     width: 90%;
+//     display:flex;
+//     margin:0 auto;
+// `
 
 export default class SingleTripMap extends React.Component {
   constructor(props) {
@@ -46,7 +46,7 @@ export default class SingleTripMap extends React.Component {
       this.renderWaypoints(waypoints, map)
     }
   }
-
+  renderWaypointList = waypoints => {}
   //Attach waypoints to map
   renderWaypoints = (waypoints, map) => {
     waypoints.forEach(waypoint => {
