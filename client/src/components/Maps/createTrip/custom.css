@@ -10,3 +10,7 @@
   background: transparent;
   border-bottom: 0.15rem solid black;
 }
+
+.DateInput {
+  width: 100%;
+}

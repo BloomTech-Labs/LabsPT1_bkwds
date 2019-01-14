@@ -11,6 +11,7 @@ import { SingleDatePicker } from "react-dates"
 // Pass in map component as prop to edit  - OR map store in Redux
 
 const Panel = Styled.div`
+    border-radius: .5rem;
     display:flex;
     flex-direction:column;
     background:white;
