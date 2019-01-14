@@ -1,41 +1,45 @@
 import React from "react"
+import Styled from "styled-components"
 
-class CreateTrip extends React.Component {
+import CreateTripPanel from "./createTripPanel"
+
+const MapWrapper = Styled.div`
+  position:relative;
+  width:100%;
+  height:100%;
+`
+
+class CreateTripMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      center: { lat: -34.397, lng: 150.644 },
-      markers: [{ lat: -35.102, lng: 150.123 }]
+      addingWaypoints: false,
+      map: null
     }
   }
   componentDidMount() {
-    const map = new window.google.maps.Map(
-      document.getElementById("createTrip"),
+    var map = new window.google.maps.Map(
+      document.getElementById("createTripMap"),
       {
-        center: this.state.center,
+        center: { lat: -0.777259, lng: -91.142578 },
         zoom: 9,
         disableDefaultUI: true
       }
     )
-    new window.google.maps.Marker({
-      position: this.state.markers[0],
-      map: map,
-      title: "Placeholder marker"
-    })
+    this.setState({ map: map })
   }
 
   render() {
     return (
-      <div
-        id="createTrip"
-        style={{ width: "100%", height: "100%", position: "absolute" }}
-      >
-        {/* <div style = {{zIndex:400, position:'absolute',top:'20px'}}>
-          {this.props.children}
-        </div> */}
-      </div>
+      <MapWrapper>
+        <CreateTripPanel map={this.state.map} />
+        <div
+          id="createTripMap"
+          style={{ width: "100%", height: "100%", position: "absolute" }}
+        />
+      </MapWrapper>
     )
   }
 }
 
-export default CreateTrip
+export default CreateTripMap

@@ -1,0 +1,12 @@
+.SingleDatePicker {
+  width: 85%;
+  margin: 0 auto;
+}
+.SingleDatePickerInput {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  margin: auto;
+  background: transparent;
+  border-bottom: 0.15rem solid black;
+}
