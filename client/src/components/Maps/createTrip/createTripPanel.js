@@ -236,7 +236,6 @@ export default class CreateTripPanel extends React.Component {
               this.addWaypoint(this.props.map)
             }}
           >
-            {" "}
             + Waypoint
           </WaypointButton>
           <SaveButton>Save</SaveButton>
