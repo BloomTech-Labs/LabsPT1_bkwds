@@ -3,7 +3,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
-  GET_TOKEN_FROM_LOCAL_STORAGE,
+  ADD_TOKEN_TO_STATE,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE,
   QUERYING_USER_BY_TOKEN,
@@ -74,7 +74,7 @@ export const authReducer = (state = defaultState, action) => {
     case REGISTRATION_FAILURE:
       return { ...state, error: normalizeErrorMsg(action.payload) }
 
-    case GET_TOKEN_FROM_LOCAL_STORAGE:
+    case ADD_TOKEN_TO_STATE:
       return { ...state, token: action.payload }
     case QUERYING_USER_BY_TOKEN:
       return { ...state, pending: true, checkedForToken: true }

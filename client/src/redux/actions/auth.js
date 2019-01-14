@@ -12,7 +12,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE,
-  GET_TOKEN_FROM_LOCAL_STORAGE,
+  ADD_TOKEN_TO_STATE,
   QUERYING_USER_BY_TOKEN,
   QUERYING_USER_BY_TOKEN_SUCCESS,
   QUERYING_USER_BY_TOKEN_ERROR,
@@ -27,7 +27,6 @@ export const login = ({ username, password }) => dispatch => {
       const { token, user } = res.data
       dispatch({ type: LOGIN_SUCCESS, payload: user })
       localStorage.setItem("token", token)
-      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
       dispatch(addTokenToState())
 
       dispatch(push("/app/trips"))
@@ -49,9 +48,7 @@ export const register = ({ email, username, password }) => dispatch => {
       const { token } = res.data
       dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
       localStorage.setItem("token", token)
-      // dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
       dispatch(addTokenToState())
-      dispatch(checkDbForUser(token))
     })
     .catch(err => {
       dispatch({ type: REGISTRATION_FAILURE, payload: err })
@@ -82,11 +79,11 @@ export const addTokenToState = () => dispatch => {
   try {
     token = localStorage.getItem("token")
   } catch (e) {
-    console.error("ADD TOKEN TO STATE ERROR:", e)
+    console.log("ADD TOKEN TO STATE ERROR:", e)
   }
   // If no token, bail out:
   if (!token) return
-  dispatch({ type: GET_TOKEN_FROM_LOCAL_STORAGE, payload: token })
+  dispatch({ type: ADD_TOKEN_TO_STATE, payload: token })
   // Use token to check DB for user:
   dispatch(checkDbForUser(token))
 }

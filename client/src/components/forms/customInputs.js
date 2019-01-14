@@ -1,7 +1,7 @@
 import React from "react"
 import { ErrorMessage } from "formik"
 
-import { Input, Button } from "../../styles/theme/styledComponents"
+import { GhostInput, Button } from "../../styles/theme/styledComponents"
 
 const CustomError = ({ name }) => (
   <ErrorMessage name={name}>
@@ -10,7 +10,7 @@ const CustomError = ({ name }) => (
 )
 
 // Error Message needs to come first to
-// make it easier to select Input as next sibling
+// make it easier to target Input as next sibling with CSS:
 export const CustomInputWithError = ({
   values, // `values` is made available by Formik
   name, // Formik uses `name` to associate an Input with ErrorMessage
@@ -22,7 +22,7 @@ export const CustomInputWithError = ({
 }) => (
   <div className={classNames.length ? classNames.join(" ") : "form-field"}>
     <CustomError name={name} />
-    <Input
+    <GhostInput
       name={name}
       type={type}
       onChange={onChange}
@@ -39,8 +39,12 @@ export const CustomButtonWithError = ({
   isSubmitting = false,
   classNames = [] // allows you to override styling
 }) => (
-  <div className={classNames.length ? classNames.join(" ") : "form-field"}>
-    <Button className="btn" type="submit" disabled={isSubmitting}>
+  <div className="form-field">
+    <Button
+      className={classNames.length ? classNames.join(" ") : "btn-primary"}
+      type="submit"
+      disabled={isSubmitting}
+    >
       {text}
     </Button>
     {submitError && (

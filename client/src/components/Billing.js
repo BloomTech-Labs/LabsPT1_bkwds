@@ -9,7 +9,28 @@ import { Button } from "../styles/theme/styledComponents"
 import { STRIPE_KEY } from "../config"
 
 class Billing extends React.Component {
-  state = {}
+  state = {
+    stripe: null,
+    isCheckoutFormOpen: false
+  }
+
+  componentDidMount() {
+    const stripeScript = document.createElement("script")
+    stripeScript.src = "https://js.stripe.com/v3/"
+    stripeScript.async = true
+    stripeScript.onload = () => {
+      setTimeout(() => {
+        this.setState({ stripe: window.Stripe(STRIPE_KEY) })
+      }, 1000)
+    }
+    document.body && document.body.appendChild(stripeScript)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isPending && !this.props.isPending && !this.props.hasError) {
+      this.setState({ isCheckoutFormOpen: false })
+    }
+  }
 
   handleOpenCheckoutForm = () => {
     this.props.openCheckoutForm()
@@ -26,7 +47,7 @@ class Billing extends React.Component {
     const { isLoggedIn, user, isPending, isCheckoutFormOpen } = this.props
     const isSubscribed = user.subscribed
     return (
-      <StripeProvider apiKey={STRIPE_KEY}>
+      <StripeProvider stripe={this.state.stripe}>
         <s.BillingStyles>
           {isLoggedIn && !isPending && (
             <>

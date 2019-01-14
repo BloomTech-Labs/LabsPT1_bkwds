@@ -24,6 +24,18 @@ export const Input = styled.input`
   }
 `
 
+export const GhostInput = styled.input`
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  border: 0;
+  font-size: 1.125rem;
+  background-color: ${props => props.theme.white};
+  -webkit-box-shadow: inset -0.0625rem 0 0.1875rem rgba(0, 0, 0, 0.3);
+  box-shadow: inset -0.0625rem 0 0.1875rem rgba(0, 0, 0, 0.3);
+  -webkit-transition: border-color 0.15s ease-out;
+  transition: border-color 0.15s ease-out;
+`
+
 export const Form = styled.form`
   max-width: 100%;
   input {
@@ -39,6 +51,7 @@ export const Form = styled.form`
 export const Button = styled.button`
   color: ${props => props.theme.white};
   border-radius: 5px;
+  padding: 0.75rem 1.25rem;
   padding: 6px 12px;
   font-weight: 500;
 
@@ -53,6 +66,24 @@ export const Button = styled.button`
   /* Styles for Link/anchor elements that might be children of Button */
   a {
     color: ${props => props.theme.white};
+  }
+
+  &.btn {
+    background-color: ${props => props.theme.tertiary};
+    border-color: ${props => props.theme.tertiary};
+    color: ${props => props.theme.white};
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    &:hover,
+    &:focus {
+      background-color: ${props => props.theme.tertiary};
+      border-color: ${props => props.theme.tertiary};
+      color: ${props => props.theme.white};
+    }
+  }
+
+  &.btn-primary {
+    border: 0;
   }
 
   &.btn-light {
@@ -105,36 +136,34 @@ export const Button = styled.button`
   }
 `
 export const CardButton = styled.button`
-    position: absolute;
-			right: 1%;
-			top: -50%;
-			display: block;
-			width: 65px;
-      height: 65px;
-      font-weight: bold;
-			border-radius: 100%;
-			background: #fff;
-			box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .15);
-			text-align: center;
-			text-decoration: bold;
-      color: #1abc9c;
-      transition: all .3s ease;
-			&::after
-				margin-left: 2%;
-				content: '\f054';
-				font-family: FontAwesome;
-        line-height: 10%;
-        
-      &:hover, 
-      &:focus{
-				background: #1abc9c;
-				color: #fff;
-				box-shadow: 0 2px 8px 0 rgba(#1abc9c, .4);
-				&::after
-					text-shadow: 0 2px 8px rgba(0, 0, 0, .15);
-      }
-
+  position: absolute;
+  right: 1%;
+  top: -50%;
+  display: block;
+  width: 65px;
+  height: 65px;
+  font-weight: bold;
+  border-radius: 100%;
+  background: #fff;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+  text-align: center;
+  text-decoration: bold;
+  color: #1abc9c;
+  transition: all 0.3s ease;
+  &::after {
+    margin-left: 2%;
+    content: "\f054";
+    font-family: FontAwesome;
+    line-height: 10%;
   }
 
-
+  &:hover,
+  &:focus {
+    background: #1abc9c;
+    color: #fff;
+    box-shadow: 0 2px 8px 0 rgba(#1abc9c, 0.4);
+    &::after {
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
 `

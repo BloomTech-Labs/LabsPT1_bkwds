@@ -8,14 +8,9 @@ export const NewTripStyles = styled.div`
   }
 
   .new-trip-form {
-    z-index:10000;
-      position:relative;
+    z-index: 10000;
+    position: relative;
     form {
-
-
-      
-
-
       display: flex;
       flex-wrap: wrap;
     }
@@ -24,21 +19,21 @@ export const NewTripStyles = styled.div`
       ${flexCenterMixin};
     }
 
-    button { width: 10rem; }
+    button {
+      width: 10rem;
+    }
   }
 
-    ${media.tablet`
-      input {
-        width: 10rem;
-      }
-    `}
-    ${media.phone`
-      input {
-        width: 100%;
-      }
-    `}
-  }
-
+  ${media.tablet`
+    input {
+      width: 10rem;
+    }
+  `}
+  ${media.phone`
+    input {
+      width: 100%;
+    }
+  `}
 
   .waypoint-form {
     form {
@@ -46,12 +41,12 @@ export const NewTripStyles = styled.div`
       flex-wrap: wrap;
     }
 
-    button { width: 10rem; }
+    button {
+      width: 10rem;
+    }
 
     .waypoint-form-field {
       ${flexCenterMixin};
     }
   }
-
-  /* TRASH: This is just a placeholder! */
 `

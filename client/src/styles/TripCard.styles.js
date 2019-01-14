@@ -23,25 +23,23 @@ export const TripCardStyles = styled.div`
     padding-bottom: 1%;
     border: none !important;
     overflow: hidden;
-    border-radius: 3%
+    border-radius: 3%;
   }
 
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-      img {
-          transform: scale(1.05, 1.05);
-          transition: all 1s ease;
-
-        }
-
-  }
-      .card-content {
-      position: relative
-      margin: 5%;
-
+    img {
+      transform: scale(1.05, 1.05);
+      transition: all 1s ease;
+    }
   }
 
-    .card-image {
+  .card-content {
+    position: relative;
+    margin: 5%;
+  }
+
+  .card-image {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -49,24 +47,22 @@ export const TripCardStyles = styled.div`
     position: relative;
     overflow: hidden;
 
-img {
-  transition: all 1.86s ease;
-}
+    img {
+      transition: all 1.86s ease;
+    }
 
-
-
-.FirstTripComponent{    
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    position: 50%
-
-}
-
+    .FirstTripComponent {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      position: 50%;
+    }
+  }
 `
+
 //   .addTripButton {
 //     display: flex;
 // flex - direction: column;
