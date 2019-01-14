@@ -21,7 +21,7 @@ class CreateTripMap extends React.Component {
     var map = new window.google.maps.Map(
       document.getElementById("createTripMap"),
       {
-        center: { lat: -0.777259, lng: -91.142578 },
+        center: { lat: 39.0997, lng: -94.5786 },
         zoom: 9,
         disableDefaultUI: true
       }

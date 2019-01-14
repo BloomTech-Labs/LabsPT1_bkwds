@@ -114,6 +114,7 @@ class CreateTripPanel extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.map !== prevProps.map) {
       this.searchAutoComplete(this.props.map)
+      this.attachCenterListener(this.props.map)
     }
   }
 
@@ -179,6 +180,13 @@ class CreateTripPanel extends React.Component {
     })
   }
 
+  attachCenterListener = map => {
+    map.addListener("center_changed", () => {
+      const newCenter = map.getCenter()
+      this.setState({ center: { lat: newCenter.lat(), lng: newCenter.lng() } })
+      console.log(this.state.center)
+    })
+  }
   async handleSave() {
     const res = await Axios.post(`${SERVER_URI}/trips/`, {
       user: this.props.userId,
@@ -222,7 +230,10 @@ class CreateTripPanel extends React.Component {
         </InputLabel>
         <TripTitleInput placeholder="Trip Name" />
         <InputLabel>Location</InputLabel>
-        <SearchCenterInput id="mapSearch" placeholder="Trip Center" />
+        <SearchCenterInput
+          id="mapSearch"
+          placeholder="Enter Location OR drag map"
+        />
         <InputLabel>Start Date</InputLabel>
 
         <SingleDatePicker
