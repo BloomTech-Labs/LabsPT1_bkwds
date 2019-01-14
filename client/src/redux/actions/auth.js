@@ -87,6 +87,7 @@ export const logout = () => dispatch => {
       })
     })
     .catch(err => {
+      console.log(err)
       toast.error("Error when unlink your account", {
         position: toast.POSITION.BOTTOM_RIGHT
       })
