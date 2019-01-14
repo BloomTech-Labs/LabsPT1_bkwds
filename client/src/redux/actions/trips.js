@@ -67,7 +67,7 @@ export const getArchivedTrips = () => dispatch => {
 
 export const getSingleTrip = tripId => dispatch => {
   dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
-  dispatch(push("/app/trip/get/" + tripId))
+  dispatch(push("/app/trip/" + tripId))
 }
 
 export const editTrip = tripId => dispatch => {
