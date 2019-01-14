@@ -12,6 +12,7 @@ import { SingleDatePicker } from "react-dates"
 // Pass in map component as prop to edit  - OR map store in Redux
 
 const Panel = Styled.div`
+    max-width:320px;
     border-radius: .5rem;
     display:flex;
     flex-direction:column;
@@ -75,7 +76,6 @@ const InputLabel = Styled.label`
 `
 
 const WaypointLabel = Styled.label`
-  
     margin:1.5rem auto 1.5rem auto;
     color: #808080;
 `
@@ -121,15 +121,17 @@ export default class CreateTripPanel extends React.Component {
     const autoComplete = new window.google.maps.places.Autocomplete(input)
     autoComplete.addListener("place_changed", () => {
       let place = autoComplete.getPlace()
-      let center = {
-        lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng()
+      if (place) {
+        let center = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng()
+        }
+        this.setState({ center })
+        map.panTo({
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng()
+        })
       }
-      this.setState({ center })
-      map.panTo({
-        lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng()
-      })
     })
   }
 
