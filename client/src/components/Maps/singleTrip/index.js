@@ -1,5 +1,5 @@
 import React from "react"
-import Styled from "styled-components"
+// import Styled from "styled-components"
 import { SERVER_URI } from "../../../config"
 import Axios from "axios"
 
@@ -37,7 +37,7 @@ export default class SingleTripMap extends React.Component {
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
-    const map = new window.google.maps.Map(document.getElementById("map"), {
+    const map = new window.google.maps.Map(document.getElementById("Tripmap"), {
       center: center,
       zoom: 9,
       disableDefaultUI: true
@@ -58,7 +58,7 @@ export default class SingleTripMap extends React.Component {
         position: center,
         map: map,
         title: waypoint.name,
-        label: parseInt(waypoint.order)
+        label: waypoint.order
       }).setMap(map)
     })
   }
@@ -73,8 +73,8 @@ export default class SingleTripMap extends React.Component {
   render() {
     return (
       <div
-        style={{ width: "100%", height: "100%", position: "abso" }}
-        id="map"
+        style={{ width: "100%", height: "100%", position: "absolute" }}
+        id="Tripmap"
       />
     )
   }
