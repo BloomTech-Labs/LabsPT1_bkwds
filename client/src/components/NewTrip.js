@@ -12,21 +12,5 @@ class NewTrip extends React.Component {
     return <CreateTrip />
   }
 }
-// const NewTrip = () => {
-//   return (
-//     <s.NewTripStyles>
-//       <div className="create-trip">
-//         <h3>Create a new trip</h3>
-//
-//         <div className="new-trip-map">
-//           <img src="/images/map_placeholder.gif" alt="trash" />
-//         </div>
-//         {/* <div className="waypoint-form-wrapper">
-//           <WaypointForm />
-//         </div> */}
-//       </div>
-//     </s.NewTripStyles>
-//   )
-// }
 
 export default NewTrip
