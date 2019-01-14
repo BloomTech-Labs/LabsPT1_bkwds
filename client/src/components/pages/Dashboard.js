@@ -11,10 +11,9 @@ import Billing from "../Billing"
 import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import SingleTrip from "../SingleTrip"
+import Settings from "../Settings"
 
 import CustomRoute from "../../utils/CustomRoute"
-
-export const Settings = () => <div>Settings component here!</div>
 
 const dashboardRoutes = [
   {

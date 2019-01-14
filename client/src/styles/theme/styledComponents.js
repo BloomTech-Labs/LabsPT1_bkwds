@@ -6,6 +6,12 @@ export const Card = styled.div`
   ${flexCenterMixin};
 `
 
+export const Label = styled.label`
+  color: ${props => props.theme.primary};
+  font-weight: 500;
+  text-transform: capitalize;
+`
+
 export const Input = styled.input`
   background-color: ${props => props.theme.white};
   color: ${props => props.theme.inputTextColor};
