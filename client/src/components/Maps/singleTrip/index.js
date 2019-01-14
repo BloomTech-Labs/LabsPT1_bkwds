@@ -46,7 +46,7 @@ export default class SingleTripMap extends React.Component {
       this.renderWaypoints(waypoints, map)
     }
   }
-  renderWaypointList = waypoints => {}
+  // renderWaypointList = waypoints => {}
   //Attach waypoints to map
   renderWaypoints = (waypoints, map) => {
     waypoints.forEach(waypoint => {

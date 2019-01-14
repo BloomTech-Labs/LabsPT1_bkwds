@@ -2,6 +2,7 @@ import React from "react"
 import { SERVER_URI } from "../../../config"
 import Axios from "axios"
 import Styled from "styled-components"
+import DeleteIcon from "../../icons/deleteSvg"
 import "react-dates/initialize"
 import "react-dates/lib/css/_datepicker.css"
 import "../createTrip/custom.css"
@@ -132,9 +133,16 @@ export default class CreateTripPanel extends React.Component {
     })
   }
 
-  removeMarker = e => {
-    this.setState()
-  }
+  //editWaypoint = (i) => {
+
+  //}
+  //removeWaypoint = (index) => {
+
+  // }
+  // removeMarker = (index) => {
+  //   this.setState()
+
+  // }
 
   addWaypoint = map => {
     const index = this.state.markers.length
@@ -191,11 +199,13 @@ export default class CreateTripPanel extends React.Component {
         <Waypoint key={i}>
           <label>{i + 1}</label>
           <WaypointInput defaultValue={`${waypoint.name}`} />
+          <DeleteIcon width="22px" height="22px" />
         </Waypoint>
       )
     })
   }
 
+  //TODO add delete icons
   render() {
     return (
       <Panel>
