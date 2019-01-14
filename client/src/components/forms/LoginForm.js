@@ -5,7 +5,7 @@ import styled from "styled-components"
 
 import { Form } from "../../styles/theme/styledComponents"
 import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
-import { login } from "../../redux/actions/auth"
+import { login, loginWithOauth } from "../../redux/actions/auth"
 import { loginValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
 
@@ -15,7 +15,13 @@ const LoginFormStyles = styled.div`
 
 // Get username and password from parent, if applicable
 // (for example, after registering):
-const LoginForm = ({ username = "", password = "", login, loginError }) => (
+const LoginForm = ({
+  username = "",
+  password = "",
+  login,
+  loginError,
+  loginWithOauth
+}) => (
   <Formik
     validate={validate}
     initialValues={{ username, password }}
@@ -57,6 +63,10 @@ const LoginForm = ({ username = "", password = "", login, loginError }) => (
                 submitError={loginError}
                 isSubmitting={isSubmitting}
               />
+
+              <button onClick={() => loginWithOauth("google")}>
+                Log in with Google
+              </button>
             </div>
           </Form>
         </div>
@@ -71,7 +81,7 @@ const mapStateToProps = state => ({
   password: state.auth.user.password
 })
 
-const mapDispatchToProps = { login }
+const mapDispatchToProps = { login, loginWithOauth }
 
 export default connect(
   mapStateToProps,
