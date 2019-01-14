@@ -3,20 +3,27 @@ import Styled from "styled-components"
 import { SERVER_URI } from "../../../config"
 import Axios from "axios"
 
-<<<<<<< HEAD
-//TODO - fetch trip data and apply it to map.
-export default class Map extends React.Component {
-  state = {
-    center: { lat: -34.397, lng: 150.644 },
-    markers: [{ lat: -34.197, lng: 150.474 }]
-=======
+const PanelHeader = Styled.h2`
+    font-size:1.5rem;
+    padding:.5rem;
+`
+
+const WaypointList = Styled.div`
+    overflow:scroll;
+`
+const Waypoint = Styled.div`
+    align-items:center;
+    width: 90%;
+    display:flex;
+    margin:0 auto;
+`
+
 export default class SingleTripMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       trip: {}
     }
->>>>>>> trip features added - edit and delete wip
   }
 
   componentDidMount() {

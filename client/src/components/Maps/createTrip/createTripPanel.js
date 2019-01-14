@@ -57,7 +57,6 @@ const Waypoint = Styled.div`
     width: 90%;
     display:flex;
     margin:0 auto;
-
 `
 const TripTitleInput = Styled.input`
     margin: .25rem auto 1.25rem auto;
@@ -84,7 +83,6 @@ const WaypointInput = Styled.input`
     outline:0;
     background:transparent;
     border-bottom: .15rem solid black;
-
 `
 
 const SearchCenterInput = Styled.input`
