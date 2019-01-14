@@ -1,4 +1,5 @@
 import React from "react"
+import { connect } from "react-redux"
 import { SERVER_URI } from "../../../config"
 import Axios from "axios"
 import Styled from "styled-components"
@@ -96,7 +97,7 @@ const SearchCenterInput = Styled.input`
     border-bottom:.15rem solid black;
 `
 
-export default class CreateTripPanel extends React.Component {
+class CreateTripPanel extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -180,7 +181,7 @@ export default class CreateTripPanel extends React.Component {
 
   async handleSave() {
     const res = await Axios.post(`${SERVER_URI}/trips/`, {
-      user: this.props.user,
+      user: this.props.userId,
       lat: this.state.center.lat,
       isArchieved: false,
       lon: this.state.center.lng,
@@ -207,7 +208,6 @@ export default class CreateTripPanel extends React.Component {
     })
   }
 
-  //TODO add delete icons
   render() {
     return (
       <Panel>
@@ -257,3 +257,8 @@ export default class CreateTripPanel extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return { userId: state.auth.user.id }
+}
+export default connect(mapStateToProps)(CreateTripPanel)

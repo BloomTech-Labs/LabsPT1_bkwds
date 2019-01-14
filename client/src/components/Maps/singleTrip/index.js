@@ -1,5 +1,6 @@
 import React from "react"
 // import Styled from "styled-components"
+import { connect } from "react-redux"
 import { SERVER_URI } from "../../../config"
 import Axios from "axios"
 
@@ -18,7 +19,7 @@ import Axios from "axios"
 //     margin:0 auto;
 // `
 
-export default class SingleTripMap extends React.Component {
+class SingleTripMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -47,6 +48,7 @@ export default class SingleTripMap extends React.Component {
     }
   }
   // renderWaypointList = waypoints => {}
+
   //Attach waypoints to map
   renderWaypoints = (waypoints, map) => {
     waypoints.forEach(waypoint => {
@@ -79,3 +81,8 @@ export default class SingleTripMap extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return { tripId: state.trips.activeTrip }
+}
+export default connect(mapStateToProps)(SingleTripMap)
