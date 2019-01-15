@@ -131,7 +131,7 @@ class CreateTripPanel extends React.Component {
     const autoComplete = new window.google.maps.places.Autocomplete(input)
     autoComplete.addListener("place_changed", () => {
       let place = autoComplete.getPlace()
-      if (place) {
+      if (place.geometry !== undefined) {
         let center = {
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng()
@@ -190,6 +190,7 @@ class CreateTripPanel extends React.Component {
     })
     const reOrder = this.updateOrder(temp)
     this.setState({ waypoints: reOrder })
+    this.deleteMapMarkers(i)
   }
 
   handleEdit = (e, i) => {
@@ -201,6 +202,22 @@ class CreateTripPanel extends React.Component {
     })
     this.setState({ waypoints: mapped })
   }
+  //map through and edit titles
+  deleteMapMarkers = i => {
+    this.state.markers.forEach((item, index) => {
+      if (i === index && item) {
+        item.setMap(null)
+      }
+    })
+    let updatedMarkers = this.state.markers.filter((_, index) => {
+      return i !== index
+    })
+    updatedMarkers.forEach((item, index) => {
+      item.setLabel(`${index + 1}`)
+    })
+
+    this.setState({ markers: updatedMarkers })
+  }
 
   attachCenterListener = map => {
     map.addListener("center_changed", () => {
@@ -208,6 +225,7 @@ class CreateTripPanel extends React.Component {
       this.setState({ center: { lat: newCenter.lat(), lng: newCenter.lng() } })
     })
   }
+
   async handleSave() {
     const res = await Axios.post(`${SERVER_URI}/trips/`, {
       user: this.props.userId,
