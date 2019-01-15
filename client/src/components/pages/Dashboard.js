@@ -3,14 +3,14 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
-
+import SingleTrip from "../Maps/singleTrip"
 import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"
 import Billing from "../Billing"
 import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
-import SingleTrip from "../SingleTrip"
+// import SingleTrip from "../SingleTrip"
 import EditTrip from "../EditTrip"
 
 import CustomRoute from "../../utils/CustomRoute"
@@ -65,8 +65,8 @@ const dashboardRoutes = [
 const Dashboard = ({ match }) => {
   const basePath = match.path
   return (
-    <Switch>
-      <AppContainer>
+    <AppContainer>
+      <Switch>
         {dashboardRoutes.map(({ path, ...rest }, idx) => (
           <CustomRoute
             protectedPath={true}
@@ -75,8 +75,8 @@ const Dashboard = ({ match }) => {
             key={idx}
           />
         ))}
-      </AppContainer>
-    </Switch>
+      </Switch>
+    </AppContainer>
   )
 }
 
