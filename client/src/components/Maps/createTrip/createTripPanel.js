@@ -25,6 +25,10 @@ const Panel = Styled.div`
     height:45%;
     z-index:5;
 `
+
+const DeleteButton = Styled.button`
+
+`
 const ButtonGroup = Styled.div`
     display:flex;
     justify-content:space-around;
@@ -137,30 +141,16 @@ class CreateTripPanel extends React.Component {
     })
   }
 
-  //editWaypoint = (i) => {
-
-  //}
-  //removeWaypoint = (index) => {
-
-  // }
-  // removeMarker = (index) => {
-  //   this.setState()
-
-  // }
-
   addWaypoint = map => {
-    const index = this.state.markers.length
+    const index = this.state.waypoints.length
     const listener = map.addListener("click", e => {
       let marker = new window.google.maps.Marker({
         position: e.latLng,
         map: map,
         draggable: true,
-        title: (this.state.markers.length + 1).toString(),
-        label: (this.state.markers.length + 1).toString()
+        title: (index + 1).toString(),
+        label: (index + 1).toString()
       })
-      this.setState(prevState => ({
-        markers: [...prevState.markers, marker]
-      }))
       this.setState(prevState => ({
         waypoints: [
           ...prevState.waypoints,
@@ -175,16 +165,30 @@ class CreateTripPanel extends React.Component {
           }
         ]
       }))
+      this.setState(prevState => ({
+        markers: [...prevState.markers, marker]
+      }))
 
       window.google.maps.event.removeListener(listener)
     })
   }
 
+  //filter waypoint and markers for i, then Re-Apply markers to maps
+  handleDelete = i => {
+    console.log("Handle Delete called with", i)
+    const temp = this.state.waypoints.filter(item => {
+      return i + 1 !== item.order
+    })
+    console.log(temp)
+    this.setState({ waypoints: temp })
+  }
+
+  handleEdit = i => {}
+
   attachCenterListener = map => {
     map.addListener("center_changed", () => {
       const newCenter = map.getCenter()
       this.setState({ center: { lat: newCenter.lat(), lng: newCenter.lng() } })
-      console.log(this.state.center)
     })
   }
   async handleSave() {
@@ -210,7 +214,13 @@ class CreateTripPanel extends React.Component {
         <Waypoint key={i}>
           <label>{i + 1}</label>
           <WaypointInput defaultValue={`${waypoint.name}`} />
-          <DeleteIcon width="22px" height="22px" />
+          <DeleteButton
+            onClick={() => {
+              this.handleDelete(i)
+            }}
+          >
+            <DeleteIcon width="22px" height="22px" />
+          </DeleteButton>
         </Waypoint>
       )
     })
