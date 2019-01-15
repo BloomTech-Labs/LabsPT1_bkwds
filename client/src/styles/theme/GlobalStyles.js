@@ -31,6 +31,10 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
+  button:focus, input:focus, textarea:focus {
+    outline: 0;
+  }
+
   background: ${props => props.theme.contentBackground};
   height: 100vh;
   overflow: hidden;
@@ -42,18 +46,46 @@ export const GlobalStyles = createGlobalStyle`
     /* margin-top: ${props => "-" + props.theme.navHeight}; */
   }
   .main-wrapper-auth {
-    background: ${props => props.theme.contentBackground}
+    background: ${props => props.theme.contentBackground};
   }
 
   .main-content {
     display: flex;
     height: 100%;
   }
-  .main-content.with-sidebar {
-  }
 
   span.form-error {
     font-size: 12px;
     color: ${props => props.theme.secondaryDark};
+  }
+
+  button.btn-ghost, a.btn-ghost, button.ghost-btn, a.ghost-btn {
+    background-color: ${props => props.theme.white};
+    border-color: ${props => props.theme.white};
+    color: ${props => props.theme.black};
+    border: 0;
+    display: inline-block;
+    /* padding: 0.75rem 1.5rem 0.8125rem; */
+    padding: 0.75rem 1.5rem;
+    min-width: 14rem;
+    border-radius: 0.25rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    /* line-height: 1.3; */
+    text-align: center;
+    -webkit-box-shadow: 0 0.3125rem 0.9375rem 0 rgba(0,0,0,.05), 0 0 0 0.0625rem rgba(0,0,0,.03), 0 0.0625rem 0 0 rgba(0,0,0,.05), 0 0.0625rem 0.1875rem 0 rgba(0,0,0,.01);
+    box-shadow: 0 0.3125rem 0.9375rem 0 rgba(0,0,0,.05), 0 0 0 0.0625rem rgba(0,0,0,.03), 0 0.0625rem 0 0 rgba(0,0,0,.05), 0 0.0625rem 0.1875rem 0 rgba(0,0,0,.01);
+    -webkit-transition: background-color .15s ease-out,color .15s ease-out,-webkit-box-shadow .15s ease-out;
+    transition: background-color .15s ease-out,color .15s ease-out,-webkit-box-shadow .15s ease-out;
+    &:hover, &:focus {
+      background-color: ${props => props.theme.white};
+      border-color: ${props => props.theme.white};
+      color: #526699;
+      -webkit-box-shadow: 0 0.3125rem 0.9375rem 0 rgba(0,0,0,.05), 0 0 0 0.0625rem rgba(0,0,0,.03), 0 0.125rem 0.0625rem 0 rgba(0,0,0,.1), 0 0.0625rem 0.1875rem 0 rgba(0,0,0,.01);
+      box-shadow: 0 0.3125rem 0.9375rem 0 rgba(0,0,0,.05), 0 0 0 0.0625rem rgba(0,0,0,.03), 0 0.125rem 0.0625rem 0 rgba(0,0,0,.1), 0 0.0625rem 0.1875rem 0 rgba(0,0,0,.01);
+    }
+    &:focus {
+      outline: 0;
+    }
   }
 `

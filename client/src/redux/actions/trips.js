@@ -2,6 +2,8 @@ import axios from "axios"
 import { push } from "connected-react-router"
 
 import { SERVER_URI } from "../../config"
+import { toast } from "react-toastify"
+import { normalizeErrorMsg } from "../../utils/selectors"
 import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
@@ -42,8 +44,9 @@ export const getTrips = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: LOADING_TRIPS_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("GET TRIPS ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -56,13 +59,20 @@ export const getArchivedTrips = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: LOADING_ARCHIVED_TRIPS_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("GET ARCHIVED TRIPS ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
 export const getSingleTrip = tripId => dispatch => {
   dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
+  dispatch(push("/app/trip/get/" + tripId))
+}
+
+export const editTrip = tripId => dispatch => {
+  dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
+  dispatch(push("/app/trip/edit/" + tripId))
 }
 
 export const createTrip = trip => dispatch => {
@@ -71,12 +81,13 @@ export const createTrip = trip => dispatch => {
     .post(`${SERVER_URI}/trips`, { ...trip })
     .then(res => {
       dispatch({ type: CREATING_TRIP_SUCCESS, payload: res.data })
-      dispatch(push("/app/trips"))
+      dispatch(push("/app/trips/"))
     })
     .catch(err => {
       dispatch({ type: CREATING_TRIP_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("CREATE TRIP ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -89,8 +100,9 @@ export const deleteTrip = tripId => dispatch => {
     })
     .catch(err => {
       dispatch({ type: DELETING_TRIP_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("DELETE TRIP ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
 
@@ -106,7 +118,8 @@ export const toggleArchive = (tripId, archiveTrip) => dispatch => {
     })
     .catch(err => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_ERROR, payload: err })
-      //errorHandler(err)
-      console.error("ARCHIVING TRIP ERROR!", err)
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }

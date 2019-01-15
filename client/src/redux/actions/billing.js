@@ -12,10 +12,17 @@ import {
 import { updateUserInStore } from "./auth"
 import { STRIPE_PLAN_ID_TEST } from "../../config"
 
+import { toast } from "react-toastify"
+import { normalizeErrorMsg } from "../../utils/selectors"
+
 const token = localStorage.getItem("token")
 if (token) {
   // If token, set token as Authorization header on all requests:
   axios.defaults.headers.common["Authorization"] = token
+}
+
+export const openCheckoutForm = () => dispatch => {
+  dispatch({ type: INIT_NEW_SUBSCRIPTION })
 }
 
 export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
@@ -23,35 +30,42 @@ export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
 
   if (!token) return
 
-  const result = await axios.post(`${SERVER_URI}/subscribe/cancel/${id}`, {
-    subscribeId
-  })
-  if (result && result.data) {
+  try {
+    const result = await axios.post(`${SERVER_URI}/subscribe/cancel/${id}`, {
+      subscribeId
+    })
     dispatch({ type: CANCEL_SUBSCRIPTION_SUCCESS, payload: result.data })
     dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: result.data })
-  } else {
-    dispatch({ type: CANCEL_SUBSCRIPTION_FAIL, payload: result.error })
+  } catch (error) {
+    dispatch({ type: CANCEL_SUBSCRIPTION_FAIL, payload: error })
+    toast.error(normalizeErrorMsg(error), {
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
   }
 }
 
 export const subscribe = ({ id, owner, stripe }) => async dispatch => {
-  dispatch({ type: INIT_NEW_SUBSCRIPTION })
-
   if (!token) return
 
-  const { source } = await stripe.createSource({ type: "card" })
-  const updatedSource = { ...source, owner }
-  const newSubscription = await axios.post(`${SERVER_URI}/subscribe/${id}`, {
-    // TODO: Remove STRIPE_PLAN_ID_TEST out soon so things don't break in production, where it will not be defined
-    planId: STRIPE_PLAN_ID_TEST,
-    source: updatedSource
-  })
-  // Does POST return an empty object on fail? If so, we will never reach the else clause:
-  if (newSubscription) {
+  try {
+    const { source } = await stripe.createSource({ type: "card" })
+    const updatedSource = { ...source, owner }
+    const newSubscription = await axios.post(`${SERVER_URI}/subscribe/${id}`, {
+      // TODO: Remove STRIPE_PLAN_ID_TEST out soon so things don't break in production, where it will not be defined
+      planId: STRIPE_PLAN_ID_TEST,
+      source: updatedSource
+    })
+
     dispatch({ type: SUBSCRIBE_SUCCESS, payload: newSubscription.data })
     // TODO: Consider housing subscription information on billing reducer instead of user?
     dispatch(updateUserInStore(newSubscription.data))
-  } else {
-    dispatch({ type: SUBSCRIBE_FAIL, payload: newSubscription.error })
+    toast.success("Successful subscription", {
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
+  } catch (error) {
+    dispatch({ type: SUBSCRIBE_FAIL, payload: error })
+    toast.error(normalizeErrorMsg(error), {
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
   }
 }

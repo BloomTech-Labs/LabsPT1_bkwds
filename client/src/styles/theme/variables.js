@@ -17,8 +17,8 @@ const primaryDark = "#0e153f"
 // const primaryDark = "#05267c"
 const secondary = "#f66"
 const secondaryDark = "#ea554b"
-const tertiary = ""
-const tertiaryDark = ""
+const tertiary = "#45569e"
+const tertiaryLight = "#899ac6"
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -57,7 +57,7 @@ export const theme = {
   tertiary,
   primaryDark,
   secondaryDark,
-  tertiaryDark,
+  tertiaryLight,
   primaryLight,
   transparent,
   white,
@@ -73,7 +73,7 @@ export const theme = {
   textColorDark: white,
   inputError: secondaryDark,
   menuBg: offWhite,
-  // activeItem: tertiaryDark,
+  // activeItem: tertiaryLight,
   navTabColor: tertiary,
 
   // Links

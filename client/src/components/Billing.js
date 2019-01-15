@@ -1,7 +1,7 @@
 import React from "react"
 import * as s from "../styles/Billing.styles"
 import { connect } from "react-redux"
-import { cancelSubscription } from "../redux/actions/billing"
+import { openCheckoutForm, cancelSubscription } from "../redux/actions/billing"
 
 import { Elements, StripeProvider } from "react-stripe-elements"
 import CheckoutForm from "./forms/CheckoutForm"
@@ -10,7 +10,20 @@ import { STRIPE_KEY } from "../config"
 
 class Billing extends React.Component {
   state = {
+    stripe: null,
     isCheckoutFormOpen: false
+  }
+
+  componentDidMount() {
+    const stripeScript = document.createElement("script")
+    stripeScript.src = "https://js.stripe.com/v3/"
+    stripeScript.async = true
+    stripeScript.onload = () => {
+      setTimeout(() => {
+        this.setState({ stripe: window.Stripe(STRIPE_KEY) })
+      }, 1000)
+    }
+    document.body && document.body.appendChild(stripeScript)
   }
 
   componentDidUpdate(prevProps) {
@@ -20,7 +33,7 @@ class Billing extends React.Component {
   }
 
   handleOpenCheckoutForm = () => {
-    this.setState({ isCheckoutFormOpen: true })
+    this.props.openCheckoutForm()
   }
 
   handleCancel = () => {
@@ -31,11 +44,10 @@ class Billing extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, user, isPending } = this.props
-    const { isCheckoutFormOpen } = this.state
+    const { isLoggedIn, user, isPending, isCheckoutFormOpen } = this.props
     const isSubscribed = user.subscribed
     return (
-      <StripeProvider apiKey={STRIPE_KEY}>
+      <StripeProvider stripe={this.state.stripe}>
         <s.BillingStyles>
           {isLoggedIn && !isPending && (
             <>
@@ -88,11 +100,12 @@ const mapStateToProps = state => {
     isLoggedIn: state.auth.isLoggedIn,
     user: state.auth.user,
     isPending: state.billing.pending,
+    isCheckoutFormOpen: state.billing.isCheckoutFormOpen,
     hasError: state.billing.error
   }
 }
 
-const mapDispatchToProps = { cancelSubscription }
+const mapDispatchToProps = { openCheckoutForm, cancelSubscription }
 
 export default connect(
   mapStateToProps,

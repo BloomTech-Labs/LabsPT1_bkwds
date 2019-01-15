@@ -2,12 +2,13 @@ import * as userController from "../user/user.controller"
 
 export const subscribe = async (req, res, stripe) => {
   const { planId, source } = req.body
-  const customer = await stripe.customers.create(
-    { source: source.id },
-    { api_key: process.env.STRIPE_KEY_SERVER_TEST }
-  )
 
-  if (customer) {
+  try {
+    const customer = await stripe.customers.create(
+      { source: source.id },
+      { api_key: process.env.STRIPE_KEY_SERVER_TEST }
+    )
+
     const subscription = await stripe.subscriptions.create(
       {
         customer: customer.id,
@@ -16,32 +17,28 @@ export const subscribe = async (req, res, stripe) => {
       { api_key: process.env.STRIPE_KEY_SERVER_TEST }
     )
 
-    if (subscription) {
-      const updatedRequest = {
-        ...req,
-        body: {
-          subscribed: true,
-          subDate: Date.now(),
-          customerId: customer.id,
-          subscribeId: subscription.id
-        }
+    const updatedRequest = {
+      ...req,
+      body: {
+        subscribed: true,
+        subDate: Date.now(),
+        customerId: customer.id,
+        subscribeId: subscription.id
       }
-      return userController.updateUser(updatedRequest, res)
-    } else {
-      res
-        .status(500)
-        .send({ error: "Stripe error: cannot create subscription." })
     }
+    return userController.updateUser(updatedRequest, res)
+  } catch (error) {
+    res.status(error.statusCode).send(error.message)
   }
-  res.status(500).send({ error: "Stripe error: cannot create customer." })
 }
 
 export const cancel = async (req, res, stripe) => {
   const { subscribeId } = req.body
-  const cancellation = await stripe.subscriptions.del(subscribeId, {
-    api_key: process.env.STRIPE_KEY_SERVER_TEST
-  })
-  if (cancellation) {
+  try {
+    await stripe.subscriptions.del(subscribeId, {
+      api_key: process.env.STRIPE_KEY_SERVER_TEST
+    })
+
     const updatedRequest = {
       ...req,
       body: {
@@ -52,7 +49,7 @@ export const cancel = async (req, res, stripe) => {
       }
     }
     return userController.updateUser(updatedRequest, res)
-  } else {
-    return res.status(500).send("Stripe error: Cannot cancel subscription.")
+  } catch (error) {
+    return res.status(error.statusCode).send(error.message)
   }
 }

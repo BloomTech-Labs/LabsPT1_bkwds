@@ -1,34 +1,40 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-
-import * as s from "../styles/Trip.styles"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+
+import { deleteTrip, toggleArchive, editTrip } from "../redux/actions/trips"
+import { getSingleTrip } from "../redux/actions/trips"
 
 class Trip extends Component {
   handleDelete = tripId => e => {
     e.preventDefault()
     this.props.deleteTrip(tripId)
   }
-
+  handleedit = tripId => e => {
+    e.preventDefault()
+    this.props.editTrip(tripId)
+  }
   toggleArchive = (tripId, archiveTrip) => () => {
     this.props.toggleArchive(tripId, archiveTrip)
   }
 
   render() {
-    const { trip, archived } = this.props
+    const { trip } = this.props
     return (
-      <s.TripStyles>
+      <div>
         {!trip.id && "Loading trip"}
         {trip.id && (
           <>
             <div className="card">
-              <img
-                src="https://staticmapmaker.com/img/google.png"
-                alt="Google Map of Albany, NY"
-              />
-              <div className="card-container">
-                <Link to={"/app/trip/get/" + trip.id}>View Trip</Link>
+              <div className="card-image">
+                <img
+                  src="https://staticmapmaker.com/img/google.png"
+                  alt="Google Map of Albany, NY"
+                />
+              </div>
+              <div className="card-content">
+                <Link to={"/app/trip/" + trip.id}>View Trip</Link>
                 <div>Name: {trip.name}</div>
                 <div>ID: {trip.id}</div>
                 <div>UserID: {trip.userId}</div>
@@ -52,12 +58,17 @@ class Trip extends Component {
             <br />
           </>
         )}
-      </s.TripStyles>
+      </div>
     )
   }
 }
 
-const mapDispatchToProps = { deleteTrip, toggleArchive }
+const mapDispatchToProps = {
+  deleteTrip,
+  toggleArchive,
+  getSingleTrip,
+  editTrip
+}
 
 export default connect(
   null,

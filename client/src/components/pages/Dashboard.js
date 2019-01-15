@@ -12,6 +12,7 @@ import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import SingleTrip from "../SingleTrip"
 import Settings from "../Settings"
+import EditTrip from "../EditTrip"
 
 import CustomRoute from "../../utils/CustomRoute"
 
@@ -19,7 +20,7 @@ const dashboardRoutes = [
   {
     path: "/",
     name: "Dashboard",
-    component: DashboardHome,
+    component: ({ trips }) => <DashboardHome trips={trips} />,
     exact: true
   },
   {
@@ -28,9 +29,14 @@ const dashboardRoutes = [
     component: NewTrip
   },
   {
-    path: "/trip/get/:tripId",
+    path: "/trip/edit",
+    name: "EditTrip",
+    component: EditTrip
+  },
+  {
+    path: "/trip/:tripId",
     name: "SingleTrip",
-    render: ({ match }) => <SingleTrip tripId={match.params.tripId} />
+    component: ({ match }) => <SingleTrip tripId={match.params.tripId} />
   },
   {
     path: "/trips",
