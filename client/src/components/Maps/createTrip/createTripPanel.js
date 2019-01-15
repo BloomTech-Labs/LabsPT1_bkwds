@@ -155,10 +155,19 @@ class CreateTripPanel extends React.Component {
         title: (index + 1).toString(),
         label: (index + 1).toString()
       })
+      marker.addListener("dragend", ev => {
+        const mappedWaypoints = this.state.waypoints.map((item, i) => {
+          if (i !== index) {
+            return item
+          } else return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+        })
+        this.setState({ waypoints: mappedWaypoints })
+      })
       this.setState(prevState => ({
         waypoints: [
           ...prevState.waypoints,
           {
+            userId: this.props.userId,
             lat: e.latLng.lat(),
             lon: e.latLng.lng(),
             tripId: this.props.tripId,
@@ -218,6 +227,8 @@ class CreateTripPanel extends React.Component {
 
     this.setState({ markers: updatedMarkers })
   }
+
+  addMarkerDragListener = map => {}
 
   attachCenterListener = map => {
     map.addListener("center_changed", () => {
