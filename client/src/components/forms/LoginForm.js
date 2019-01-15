@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Formik } from "formik"
 import styled from "styled-components"
 
-import { Form } from "../../styles/theme/styledComponents"
+import { Button, Form } from "../../styles/theme/styledComponents"
 import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { login, loginWithOauth } from "../../redux/actions/auth"
 import { loginValidations as validate } from "./formValidations"
@@ -63,12 +63,9 @@ const LoginForm = ({
                 submitError={loginError}
                 isSubmitting={isSubmitting}
               />
-
-              <button onClick={() => loginWithOauth("google")}>
-                Log in with Google
-              </button>
             </div>
           </Form>
+          <Button onClick={loginWithOauth}>Log in with Google</Button>
         </div>
       </LoginFormStyles>
     )}

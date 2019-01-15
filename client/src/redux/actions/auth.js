@@ -132,7 +132,7 @@ export const checkDbForUser = token => dispatch => {
     })
 }
 
-export const registerWithOauth = oauthName => dispatch => {
+export const registerWithOauth = () => dispatch => {
   // first sign in third party
   authRef
     .signInWithPopup(provider)
@@ -165,17 +165,16 @@ export const registerWithOauth = oauthName => dispatch => {
         })
     })
     .catch(error => {
-      console.log(error)
       dispatch({
         type: REGISTRATION_FAILURE
       })
-      toast.error(`Cannot register with your ${oauthName} account`, {
+      toast.error(error.message, {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
 }
 
-export const loginWithOauth = oauthName => dispatch => {
+export const loginWithOauth = () => dispatch => {
   // sign in third party
   authRef
     .signInWithPopup(provider)
@@ -209,11 +208,10 @@ export const loginWithOauth = oauthName => dispatch => {
         })
     })
     .catch(error => {
-      console.log(error)
       dispatch({
         type: REGISTRATION_FAILURE
       })
-      toast.error(`Cannot sign in with your ${oauthName} account`, {
+      toast.error(error.message, {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
