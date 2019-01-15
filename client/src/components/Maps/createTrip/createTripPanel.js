@@ -27,6 +27,10 @@ const Panel = Styled.div`
 `
 
 const DeleteButton = Styled.button`
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
 
 `
 const ButtonGroup = Styled.div`
@@ -174,16 +178,29 @@ class CreateTripPanel extends React.Component {
   }
 
   //filter waypoint and markers for i, then Re-Apply markers to maps
-  handleDelete = i => {
-    console.log("Handle Delete called with", i)
-    const temp = this.state.waypoints.filter(item => {
-      return i + 1 !== item.order
+  updateOrder = waypoints => {
+    return waypoints.map((item, i) => {
+      return { ...item, order: i }
     })
-    console.log(temp)
-    this.setState({ waypoints: temp })
   }
 
-  handleEdit = i => {}
+  handleDelete = i => {
+    const temp = this.state.waypoints.filter((_, index) => {
+      return i !== index
+    })
+    const reOrder = this.updateOrder(temp)
+    this.setState({ waypoints: reOrder })
+  }
+
+  handleEdit = (e, i) => {
+    const mapped = this.state.waypoints.map((item, index) => {
+      if (index === i) {
+        return { ...item, name: e.target.value }
+      }
+      return item
+    })
+    this.setState({ waypoints: mapped })
+  }
 
   attachCenterListener = map => {
     map.addListener("center_changed", () => {
@@ -213,7 +230,13 @@ class CreateTripPanel extends React.Component {
       return (
         <Waypoint key={i}>
           <label>{i + 1}</label>
-          <WaypointInput defaultValue={`${waypoint.name}`} />
+          <WaypointInput
+            defaultValue={`${waypoint.name}`}
+            value={this.state.waypoints[i].name}
+            onChange={e => {
+              this.handleEdit(e, i)
+            }}
+          />
           <DeleteButton
             onClick={() => {
               this.handleDelete(i)
