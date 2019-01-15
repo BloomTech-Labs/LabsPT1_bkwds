@@ -18,7 +18,7 @@ class TripCard extends Component {
         {!trip.id && "Loading trip"}
         {trip.id && (
           <>
-            <div key={trip.id} trip={trip} className="card">
+            <div className="card">
               <Link
                 to={`/trip/get/${trip.id}`}
                 onClick={this.handleSingleTrip(trip)}
