@@ -7,11 +7,10 @@ import DeleteIcon from "../../icons/deleteSvg"
 import "react-dates/initialize"
 import "react-dates/lib/css/_datepicker.css"
 import "../createTrip/custom.css"
-import { SingleDatePicker } from "react-dates"
-// Onboarding Panel for creating trips
-//TODO: Figure out edit-trip flow
-// Pass in map component as prop to edit  - OR map store in Redux
+import { DateRangePicker } from "react-dates"
+import { Input } from "../../../styles/theme/styledComponents"
 
+//TODO: Correctly handle POST trip/ call
 const Panel = Styled.div`
     max-width:320px;
     border-radius: .5rem;
@@ -19,8 +18,8 @@ const Panel = Styled.div`
     flex-direction:column;
     background:white;
     position:absolute;
-    right:1rem;
-    top:1rem;
+    right:1.5rem;
+    top:1.5rem;
     width:30%;
     height:45%;
     z-index:5;
@@ -31,7 +30,6 @@ const DeleteButton = Styled.button`
     color: inherit;
     border: none;
     padding: 0;
-
 `
 const ButtonGroup = Styled.div`
     display:flex;
@@ -59,7 +57,11 @@ const PanelHeader = Styled.h2`
     font-size:1.5rem;
     padding:.5rem;
 `
+const DateLabel = Styled.label`
+    margin:.5rem auto 0rem auto;
+    color: #808080;
 
+`
 const WaypointList = Styled.div`
     overflow:scroll;
 `
@@ -85,7 +87,7 @@ const InputLabel = Styled.label`
 `
 
 const WaypointLabel = Styled.label`
-    margin:1.5rem auto 1.5rem auto;
+    margin:.25rem auto 1rem auto;
     color: #808080;
 `
 const WaypointInput = Styled.input`
@@ -115,7 +117,7 @@ class CreateTripPanel extends React.Component {
       waypoints: [],
       startDate: null,
       endDate: null,
-      focused: null
+      focusedInput: null
     }
   }
 
@@ -228,14 +230,15 @@ class CreateTripPanel extends React.Component {
     this.setState({ markers: updatedMarkers })
   }
 
-  addMarkerDragListener = map => {}
-
   attachCenterListener = map => {
     map.addListener("center_changed", () => {
       const newCenter = map.getCenter()
       this.setState({ center: { lat: newCenter.lat(), lng: newCenter.lng() } })
     })
   }
+
+  //Add toast to notify validation issues
+  saveValidate = () => {}
 
   async handleSave() {
     const res = await Axios.post(`${SERVER_URI}/trips/`, {
@@ -260,7 +263,8 @@ class CreateTripPanel extends React.Component {
         <Waypoint key={i}>
           <label>{i + 1}</label>
           <WaypointInput
-            defaultValue={`${waypoint.name}`}
+            type="text"
+            placeholder="waypoint title"
             value={this.state.waypoints[i].name}
             onChange={e => {
               this.handleEdit(e, i)
@@ -296,19 +300,46 @@ class CreateTripPanel extends React.Component {
           id="mapSearch"
           placeholder="Enter Location OR drag map"
         />
-        <InputLabel>Start Date</InputLabel>
 
+        <DateLabel>Trip Date</DateLabel>
+
+        {/* 
         <SingleDatePicker
           small={true}
           block={false}
           numberOfMonths={1}
           date={this.state.startDate}
           onDateChange={startDate => this.setState({ startDate })}
-          focused={this.state.focused}
-          onFocusChange={({ focused }) => this.setState({ focused })}
+          focused={this.state.focusedStart}
+          onFocusChange={({ focusedStart }) => this.setState({ focusedStart })}
           id="start_date_picker"
           hideKeyboardShortcutsPanel={true}
-          anchorDirection="right"
+        /> */}
+        {/* <SingleDatePicker
+          small={true}
+          block={false}
+          numberOfMonths={1}
+          date={this.state.endDate}
+          onDateChange={endDate => this.setState({ endDate })}
+          focused={this.state.focusedEnd}
+          onFocusChange={({ focusedEnd }) => this.setState({ focusedEnd })}
+          id="end_date_picker"
+          hideKeyboardShortcutsPanel={true}
+
+        /> */}
+        <DateRangePicker
+          startDateId="startDate"
+          endDateId="endDate"
+          startDate={this.state.startDate}
+          horizontalMargin={5}
+          endDate={this.state.endDate}
+          onDatesChange={({ startDate, endDate }) => {
+            this.setState({ startDate, endDate })
+          }}
+          focusedInput={this.state.focusedInput}
+          onFocusChange={focusedInput => {
+            this.setState({ focusedInput })
+          }}
         />
 
         <WaypointLabel>Waypoints</WaypointLabel>
