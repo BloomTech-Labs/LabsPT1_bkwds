@@ -19,10 +19,7 @@ class TripCard extends Component {
         {trip.id && (
           <>
             <div className="card">
-              <Link
-                to={`/trip/get/${trip.id}`}
-                onClick={this.handleSingleTrip(trip)}
-              >
+              <Link to="/trip/:tripId" onClick={this.handleSingleTrip(trip)}>
                 <div className="card-image">
                   <img
                     src="https://staticmapmaker.com/img/google.png"
