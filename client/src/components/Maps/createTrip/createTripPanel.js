@@ -1,14 +1,16 @@
-import React from "react"
-import { connect } from "react-redux"
-import { SERVER_URI } from "../../../config"
+import React, { Fragment } from "react"
 import Axios from "axios"
 import Styled from "styled-components"
+import { connect } from "react-redux"
+import { toast } from "react-toastify"
+
+import { SERVER_URI } from "../../../config"
 import DeleteIcon from "../../icons/deleteSvg"
 import "react-dates/initialize"
 import "react-dates/lib/css/_datepicker.css"
 import "../createTrip/custom.css"
 import { DateRangePicker } from "react-dates"
-import { toast } from "react-toastify"
+import { media } from "../../../styles/theme/mixins"
 
 //TODO: Correctly handle POST trip/ call
 const Panel = Styled.div`
@@ -24,6 +26,31 @@ const Panel = Styled.div`
     width:30%;
     height:45%;
     z-index:5;
+
+    ${media.tablet`
+      max-width: 100%;
+      width: 100%;
+      height: 5%;
+      top: 0px;
+      right: 0px;
+      background: rgba(255, 255, 2555, 0.5);
+      border-radius: 0;
+      position: relative;
+      overflow-x: hidden;
+      justify-content: center;
+    `}
+
+    #plus-icon{
+      visibility: hidden;
+
+      ${media.tablet`
+        visibility: visible;
+        position: absolute;
+        right: 5%;
+        bottom: 50%;
+        color: rgba(108, 122, 137, .8)
+      `}
+    }
 `
 
 const DeleteButton = Styled.button`
@@ -39,6 +66,12 @@ const ButtonGroup = Styled.div`
     bottom:1rem;
     width:95%;
     margin: 0 auto;
+
+    ${media.tablet`
+      display: none;
+      overflow-x: hidden;
+    `}
+
 `
 const SaveButton = Styled.button`
     color:white;
@@ -57,14 +90,26 @@ const WaypointButton = Styled.button`
 const PanelHeader = Styled.h2`
     font-size:1.5rem;
     padding:.5rem;
+
+    ${media.tablet`display: none;`}
 `
 const DateLabel = Styled.label`
     margin:.5rem auto 0rem auto;
     color: #808080;
 
+    ${media.tablet`
+      display: none;
+      overflow-x: hidden;
+    `}
+
+
 `
 const WaypointList = Styled.div`
-    overflow:scroll;
+
+    ${media.tablet`
+      display: none;
+      overflow-x: hidden;
+    `}
 `
 
 const Waypoint = Styled.div`
@@ -80,16 +125,24 @@ const TripTitleInput = Styled.input`
     outline:0;
     background:transparent;
     border-bottom: .15rem solid black;
+
+    ${media.tablet`display: none;`}
+
 `
 const InputLabel = Styled.label`
     width:85%;
     margin: 0 auto;
     color: #808080;
+
+    ${media.tablet`display: none;`}
 `
 
 const WaypointLabel = Styled.label`
     margin:.25rem auto 1rem auto;
     color: #808080;
+
+    ${media.tablet`display: none;`}
+
 `
 const WaypointInput = Styled.input`
     margin: 0 .5rem;
@@ -97,6 +150,9 @@ const WaypointInput = Styled.input`
     outline:0;
     background:transparent;
     border-bottom: .15rem solid black;
+
+    ${media.tablet`display: none;`}
+
 `
 
 const SearchCenterInput = Styled.input`
@@ -106,6 +162,20 @@ const SearchCenterInput = Styled.input`
     outline:0;
     background:transparent;
     border-bottom:.15rem solid black;
+
+    ${media.tablet`
+      text-align: center;
+      margin: 0;
+      border: 1px solid black;
+      justify-self: center;
+      align-self: center;
+
+    `}
+
+`
+
+const DateRangeStyle = Styled.div`
+  ${media.tablet`display:none;`}
 `
 
 class CreateTripPanel extends React.Component {
@@ -149,88 +219,88 @@ class CreateTripPanel extends React.Component {
     })
   }
 
-  addWaypoint = map => {
-    const index = this.state.waypoints.length
-    const listener = map.addListener("click", e => {
-      let marker = new window.google.maps.Marker({
-        position: e.latLng,
-        map: map,
-        draggable: true,
-        title: (index + 1).toString(),
-        label: (index + 1).toString()
-      })
-      marker.addListener("dragend", ev => {
-        const mappedWaypoints = this.state.waypoints.map((item, i) => {
-          if (i !== index) {
-            return item
-          } else return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
-        })
-        this.setState({ waypoints: mappedWaypoints })
-      })
-      this.setState(prevState => ({
-        waypoints: [
-          ...prevState.waypoints,
-          {
-            userId: this.props.userId,
-            lat: e.latLng.lat(),
-            lon: e.latLng.lng(),
-            tripId: this.props.tripId,
-            order: index + 1,
-            name: `Waypoint ${index + 1}`,
-            start: new Date(),
-            end: new Date()
-          }
-        ]
-      }))
-      this.setState(prevState => ({
-        markers: [...prevState.markers, marker]
-      }))
+  // addWaypoint = map => {
+  //   const index = this.state.waypoints.length
+  //   const listener = map.addListener("click", e => {
+  //     let marker = new window.google.maps.Marker({
+  //       position: e.latLng,
+  //       map: map,
+  //       draggable: true,
+  //       title: (index + 1).toString(),
+  //       label: (index + 1).toString()
+  //     })
+  //     marker.addListener("dragend", ev => {
+  //       const mappedWaypoints = this.state.waypoints.map((item, i) => {
+  //         if (i !== index) {
+  //           return item
+  //         } else return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+  //       })
+  //       this.setState({ waypoints: mappedWaypoints })
+  //     })
+  //     this.setState(prevState => ({
+  //       waypoints: [
+  //         ...prevState.waypoints,
+  //         {
+  //           userId: this.props.userId,
+  //           lat: e.latLng.lat(),
+  //           lon: e.latLng.lng(),
+  //           tripId: this.props.tripId,
+  //           order: index + 1,
+  //           name: `Waypoint ${index + 1}`,
+  //           start: new Date(),
+  //           end: new Date()
+  //         }
+  //       ]
+  //     }))
+  //     this.setState(prevState => ({
+  //       markers: [...prevState.markers, marker]
+  //     }))
 
-      window.google.maps.event.removeListener(listener)
-    })
-  }
+  //     window.google.maps.event.removeListener(listener)
+  //   })
+  // }
 
-  //filter waypoint and markers for i, then Re-Apply markers to maps
-  updateOrder = waypoints => {
-    return waypoints.map((item, i) => {
-      return { ...item, order: i }
-    })
-  }
+  // //filter waypoint and markers for i, then Re-Apply markers to maps
+  // updateOrder = waypoints => {
+  //   return waypoints.map((item, i) => {
+  //     return { ...item, order: i }
+  //   })
+  // }
 
-  handleDelete = i => {
-    const temp = this.state.waypoints.filter((_, index) => {
-      return i !== index
-    })
-    const reOrder = this.updateOrder(temp)
-    this.setState({ waypoints: reOrder })
-    this.deleteMapMarkers(i)
-  }
+  // handleDelete = i => {
+  //   const temp = this.state.waypoints.filter((_, index) => {
+  //     return i !== index
+  //   })
+  //   const reOrder = this.updateOrder(temp)
+  //   this.setState({ waypoints: reOrder })
+  //   this.deleteMapMarkers(i)
+  // }
 
-  handleEdit = (e, i) => {
-    const mapped = this.state.waypoints.map((item, index) => {
-      if (index === i) {
-        return { ...item, name: e.target.value }
-      }
-      return item
-    })
-    this.setState({ waypoints: mapped })
-  }
-  //map through and edit titles
-  deleteMapMarkers = i => {
-    this.state.markers.forEach((item, index) => {
-      if (i === index && item) {
-        item.setMap(null)
-      }
-    })
-    let updatedMarkers = this.state.markers.filter((_, index) => {
-      return i !== index
-    })
-    updatedMarkers.forEach((item, index) => {
-      item.setLabel(`${index + 1}`)
-    })
+  // handleEdit = (e, i) => {
+  //   const mapped = this.state.waypoints.map((item, index) => {
+  //     if (index === i) {
+  //       return { ...item, name: e.target.value }
+  //     }
+  //     return item
+  //   })
+  //   this.setState({ waypoints: mapped })
+  // }
+  // //map through and edit titles
+  // deleteMapMarkers = i => {
+  //   this.state.markers.forEach((item, index) => {
+  //     if (i === index && item) {
+  //       item.setMap(null)
+  //     }
+  //   })
+  //   let updatedMarkers = this.state.markers.filter((_, index) => {
+  //     return i !== index
+  //   })
+  //   updatedMarkers.forEach((item, index) => {
+  //     item.setLabel(`${index + 1}`)
+  //   })
 
-    this.setState({ markers: updatedMarkers })
-  }
+  //   this.setState({ markers: updatedMarkers })
+  // }
 
   attachCenterListener = map => {
     map.addListener("center_changed", () => {
@@ -303,53 +373,56 @@ class CreateTripPanel extends React.Component {
 
   render() {
     return (
-      <Panel>
-        <PanelHeader>Create Your Trip</PanelHeader>
-        <InputLabel>Trip Title</InputLabel>
-        <TripTitleInput
-          placeholder="Trip Name"
-          onChange={this.setTitle}
-          value={this.state.title}
-        />
-        <InputLabel>Location</InputLabel>
-        <SearchCenterInput
-          id="mapSearch"
-          placeholder="Enter Location OR drag map"
-        />
+      <Fragment>
+        <Panel>
+          <PanelHeader>Create Your Trip</PanelHeader>
+          <InputLabel>Trip Title</InputLabel>
+          <TripTitleInput
+            placeholder="Trip Name"
+            onChange={this.setTitle}
+            value={this.state.title}
+          />
+          <InputLabel>Location</InputLabel>
+          <SearchCenterInput
+            id="mapSearch"
+            placeholder="Enter Location OR drag map"
+          />
 
-        <DateLabel>Trip Date</DateLabel>
+          <DateLabel>Trip Date</DateLabel>
+          <DateRangeStyle>
+            <DateRangePicker
+              startDateId="startDate"
+              endDateId="endDate"
+              startDate={this.state.startDate}
+              horizontalMargin={5}
+              endDate={this.state.endDate}
+              onDatesChange={({ startDate, endDate }) => {
+                this.setState({ startDate, endDate })
+              }}
+              focusedInput={this.state.focusedInput}
+              onFocusChange={focusedInput => {
+                this.setState({ focusedInput })
+              }}
+            />
+          </DateRangeStyle>
 
-        <DateRangePicker
-          startDateId="startDate"
-          endDateId="endDate"
-          startDate={this.state.startDate}
-          horizontalMargin={5}
-          endDate={this.state.endDate}
-          onDatesChange={({ startDate, endDate }) => {
-            this.setState({ startDate, endDate })
-          }}
-          focusedInput={this.state.focusedInput}
-          onFocusChange={focusedInput => {
-            this.setState({ focusedInput })
-          }}
-        />
+          <WaypointLabel>Waypoints</WaypointLabel>
+          <WaypointList>
+            {this.renderWaypointList(this.state.waypoints)}
+          </WaypointList>
 
-        <WaypointLabel>Waypoints</WaypointLabel>
-        <WaypointList>
-          {this.renderWaypointList(this.state.waypoints)}
-        </WaypointList>
-
-        <ButtonGroup>
-          <WaypointButton
-            onClick={() => {
-              this.addWaypoint(this.props.map)
-            }}
-          >
-            + Waypoint
-          </WaypointButton>
-          <SaveButton onClick={() => this.handleSave()}>Save</SaveButton>
-        </ButtonGroup>
-      </Panel>
+          <ButtonGroup>
+            <WaypointButton
+              onClick={() => {
+                this.addWaypoint(this.props.map)
+              }}
+            >
+              + Waypoint
+            </WaypointButton>
+            <SaveButton onClick={() => this.handleSave()}>Save</SaveButton>
+          </ButtonGroup>
+        </Panel>
+      </Fragment>
     )
   }
 }
