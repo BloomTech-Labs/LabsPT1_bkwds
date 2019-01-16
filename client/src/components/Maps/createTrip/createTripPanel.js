@@ -8,6 +8,7 @@ import "react-dates/initialize"
 import "react-dates/lib/css/_datepicker.css"
 import "../createTrip/custom.css"
 import { DateRangePicker } from "react-dates"
+import { toast } from "react-toastify"
 
 //TODO: Correctly handle POST trip/ call
 const Panel = Styled.div`
@@ -117,7 +118,8 @@ class CreateTripPanel extends React.Component {
       waypoints: [],
       startDate: null,
       endDate: null,
-      focusedInput: null
+      focusedInput: null,
+      formError: null
     }
   }
 
@@ -238,21 +240,38 @@ class CreateTripPanel extends React.Component {
   }
 
   //Add toast to notify validation issues
-  saveValidate = () => {}
-
-  async handleSave() {
-    const res = await Axios.post(`${SERVER_URI}/trips/`, {
-      user: this.props.userId,
-      lat: this.state.center.lat,
-      isArchieved: false,
-      lon: this.state.center.lng,
-      waypoints: this.state.waypoints,
-      startDate: this.state.startDate,
-      title: this.state.title
-    })
-    const { data } = await res
-    return data
+  saveValidate = () => {
+    const { startDate, endDate, title } = this.state
+    if (startDate === null || endDate === null) {
+      toast("Date not provided")
+      return false
+    }
+    if (title === "") {
+      toast("Title not provided")
+      return false
+    }
+    return true
   }
+
+  handleSave = () => {
+    if (this.saveValidate()) {
+      const trip = Axios.post(`${SERVER_URI}/trips/`, {
+        userId: this.props.userId,
+        lat: this.state.center.lat,
+        isArchieved: false,
+        lon: this.state.center.lng,
+        waypoints: this.state.waypoints,
+        start: this.state.startDate.utc().format(),
+        end: this.state.endDate.utc().format(),
+        name: this.state.title
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
   setTitle = e => {
     this.setState({ title: e.target.value })
   }
@@ -286,15 +305,12 @@ class CreateTripPanel extends React.Component {
     return (
       <Panel>
         <PanelHeader>Create Your Trip</PanelHeader>
-        <InputLabel
-          onChange={() => {
-            this.setTitle()
-          }}
+        <InputLabel>Trip Title</InputLabel>
+        <TripTitleInput
+          placeholder="Trip Name"
+          onChange={this.setTitle}
           value={this.state.title}
-        >
-          Trip Title
-        </InputLabel>
-        <TripTitleInput placeholder="Trip Name" />
+        />
         <InputLabel>Location</InputLabel>
         <SearchCenterInput
           id="mapSearch"
@@ -331,7 +347,7 @@ class CreateTripPanel extends React.Component {
           >
             + Waypoint
           </WaypointButton>
-          <SaveButton>Save</SaveButton>
+          <SaveButton onClick={() => this.handleSave()}>Save</SaveButton>
         </ButtonGroup>
       </Panel>
     )
