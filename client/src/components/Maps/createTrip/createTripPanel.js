@@ -7,20 +7,20 @@ import DeleteIcon from "../../icons/deleteSvg"
 import "react-dates/initialize"
 import "react-dates/lib/css/_datepicker.css"
 import "../createTrip/custom.css"
-import { SingleDatePicker } from "react-dates"
-// Onboarding Panel for creating trips
-//TODO: Figure out edit-trip flow
-// Pass in map component as prop to edit  - OR map store in Redux
+import { DateRangePicker } from "react-dates"
+import { toast } from "react-toastify"
 
+//TODO: Correctly handle POST trip/ call
 const Panel = Styled.div`
-    max-width:320px;
+    max-width:360px;
+    min-width:320px;
     border-radius: .5rem;
     display:flex;
     flex-direction:column;
     background:white;
     position:absolute;
-    right:1rem;
-    top:1rem;
+    right:1.5rem;
+    top:1.5rem;
     width:30%;
     height:45%;
     z-index:5;
@@ -31,7 +31,6 @@ const DeleteButton = Styled.button`
     color: inherit;
     border: none;
     padding: 0;
-
 `
 const ButtonGroup = Styled.div`
     display:flex;
@@ -59,7 +58,11 @@ const PanelHeader = Styled.h2`
     font-size:1.5rem;
     padding:.5rem;
 `
+const DateLabel = Styled.label`
+    margin:.5rem auto 0rem auto;
+    color: #808080;
 
+`
 const WaypointList = Styled.div`
     overflow:scroll;
 `
@@ -85,7 +88,7 @@ const InputLabel = Styled.label`
 `
 
 const WaypointLabel = Styled.label`
-    margin:1.5rem auto 1.5rem auto;
+    margin:.25rem auto 1rem auto;
     color: #808080;
 `
 const WaypointInput = Styled.input`
@@ -115,7 +118,8 @@ class CreateTripPanel extends React.Component {
       waypoints: [],
       startDate: null,
       endDate: null,
-      focused: null
+      focusedInput: null,
+      formError: null
     }
   }
 
@@ -131,7 +135,7 @@ class CreateTripPanel extends React.Component {
     const autoComplete = new window.google.maps.places.Autocomplete(input)
     autoComplete.addListener("place_changed", () => {
       let place = autoComplete.getPlace()
-      if (place) {
+      if (place.geometry !== undefined) {
         let center = {
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng()
@@ -155,10 +159,19 @@ class CreateTripPanel extends React.Component {
         title: (index + 1).toString(),
         label: (index + 1).toString()
       })
+      marker.addListener("dragend", ev => {
+        const mappedWaypoints = this.state.waypoints.map((item, i) => {
+          if (i !== index) {
+            return item
+          } else return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+        })
+        this.setState({ waypoints: mappedWaypoints })
+      })
       this.setState(prevState => ({
         waypoints: [
           ...prevState.waypoints,
           {
+            userId: this.props.userId,
             lat: e.latLng.lat(),
             lon: e.latLng.lng(),
             tripId: this.props.tripId,
@@ -190,6 +203,7 @@ class CreateTripPanel extends React.Component {
     })
     const reOrder = this.updateOrder(temp)
     this.setState({ waypoints: reOrder })
+    this.deleteMapMarkers(i)
   }
 
   handleEdit = (e, i) => {
@@ -201,6 +215,22 @@ class CreateTripPanel extends React.Component {
     })
     this.setState({ waypoints: mapped })
   }
+  //map through and edit titles
+  deleteMapMarkers = i => {
+    this.state.markers.forEach((item, index) => {
+      if (i === index && item) {
+        item.setMap(null)
+      }
+    })
+    let updatedMarkers = this.state.markers.filter((_, index) => {
+      return i !== index
+    })
+    updatedMarkers.forEach((item, index) => {
+      item.setLabel(`${index + 1}`)
+    })
+
+    this.setState({ markers: updatedMarkers })
+  }
 
   attachCenterListener = map => {
     map.addListener("center_changed", () => {
@@ -208,19 +238,40 @@ class CreateTripPanel extends React.Component {
       this.setState({ center: { lat: newCenter.lat(), lng: newCenter.lng() } })
     })
   }
-  async handleSave() {
-    const res = await Axios.post(`${SERVER_URI}/trips/`, {
-      user: this.props.userId,
-      lat: this.state.center.lat,
-      isArchieved: false,
-      lon: this.state.center.lng,
-      waypoints: this.state.waypoints,
-      startDate: this.state.startDate,
-      title: this.state.title
-    })
-    const { data } = await res
-    return data
+
+  //Add toast to notify validation issues
+  saveValidate = () => {
+    const { startDate, endDate, title } = this.state
+    if (startDate === null || endDate === null) {
+      toast("Date not provided")
+      return false
+    }
+    if (title === "") {
+      toast("Title not provided")
+      return false
+    }
+    return true
   }
+
+  handleSave = () => {
+    if (this.saveValidate()) {
+      Axios.post(`${SERVER_URI}/trips/`, {
+        userId: this.props.userId,
+        lat: this.state.center.lat,
+        isArchieved: false,
+        lon: this.state.center.lng,
+        waypoints: this.state.waypoints,
+        start: this.state.startDate.utc().format(),
+        end: this.state.endDate.utc().format(),
+        name: this.state.title
+      })
+        .then(res => {
+          toast(`Trip ${res.data.name} saved`)
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
   setTitle = e => {
     this.setState({ title: e.target.value })
   }
@@ -231,7 +282,8 @@ class CreateTripPanel extends React.Component {
         <Waypoint key={i}>
           <label>{i + 1}</label>
           <WaypointInput
-            defaultValue={`${waypoint.name}`}
+            type="text"
+            placeholder="waypoint title"
             value={this.state.waypoints[i].name}
             onChange={e => {
               this.handleEdit(e, i)
@@ -253,33 +305,33 @@ class CreateTripPanel extends React.Component {
     return (
       <Panel>
         <PanelHeader>Create Your Trip</PanelHeader>
-        <InputLabel
-          onChange={() => {
-            this.setTitle()
-          }}
+        <InputLabel>Trip Title</InputLabel>
+        <TripTitleInput
+          placeholder="Trip Name"
+          onChange={this.setTitle}
           value={this.state.title}
-        >
-          Trip Title
-        </InputLabel>
-        <TripTitleInput placeholder="Trip Name" />
+        />
         <InputLabel>Location</InputLabel>
         <SearchCenterInput
           id="mapSearch"
           placeholder="Enter Location OR drag map"
         />
-        <InputLabel>Start Date</InputLabel>
 
-        <SingleDatePicker
-          small={true}
-          block={false}
-          numberOfMonths={1}
-          date={this.state.startDate}
-          onDateChange={startDate => this.setState({ startDate })}
-          focused={this.state.focused}
-          onFocusChange={({ focused }) => this.setState({ focused })}
-          id="start_date_picker"
-          hideKeyboardShortcutsPanel={true}
-          anchorDirection="right"
+        <DateLabel>Trip Date</DateLabel>
+
+        <DateRangePicker
+          startDateId="startDate"
+          endDateId="endDate"
+          startDate={this.state.startDate}
+          horizontalMargin={5}
+          endDate={this.state.endDate}
+          onDatesChange={({ startDate, endDate }) => {
+            this.setState({ startDate, endDate })
+          }}
+          focusedInput={this.state.focusedInput}
+          onFocusChange={focusedInput => {
+            this.setState({ focusedInput })
+          }}
         />
 
         <WaypointLabel>Waypoints</WaypointLabel>
@@ -295,7 +347,7 @@ class CreateTripPanel extends React.Component {
           >
             + Waypoint
           </WaypointButton>
-          <SaveButton>Save</SaveButton>
+          <SaveButton onClick={() => this.handleSave()}>Save</SaveButton>
         </ButtonGroup>
       </Panel>
     )
