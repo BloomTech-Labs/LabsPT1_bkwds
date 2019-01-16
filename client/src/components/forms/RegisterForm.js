@@ -8,6 +8,7 @@ import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { register, registerWithOauth } from "../../redux/actions/auth"
 import { registerValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
+import Puff from "../icons/Puff"
 
 const RegisterFormStyles = styled.div`
   ${authFormErrorsMixin};
@@ -27,6 +28,7 @@ const RegisterForm = ({ register, registerError, registerWithOauth }) => (
       register(values)
     }}
     render={({
+      pending,
       values,
       handleBlur,
       handleChange,
@@ -68,11 +70,14 @@ const RegisterForm = ({ register, registerError, registerWithOauth }) => (
               placeholder="Confirm password"
               values={values}
             />
-            <CustomButtonWithError
-              text="Register"
-              submitError={registerError}
-              isSubmitting={isSubmitting}
-            />
+            {pending && <Puff width="32px" height="32px" />}
+            {!pending && (
+              <CustomButtonWithError
+                text="Register"
+                submitError={registerError}
+                isSubmitting={isSubmitting}
+              />
+            )}
           </Form>
           <Button onClick={registerWithOauth}>Sign Up with Google</Button>
         </div>
@@ -82,7 +87,8 @@ const RegisterForm = ({ register, registerError, registerWithOauth }) => (
 )
 
 const mapStateToProps = state => ({
-  registerError: state.auth.error
+  registerError: state.auth.error,
+  pending: state.auth.pending
 })
 
 const mapDispatchToProps = { register, registerWithOauth }

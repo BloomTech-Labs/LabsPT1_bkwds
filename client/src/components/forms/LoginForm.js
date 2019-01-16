@@ -8,7 +8,7 @@ import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { login, loginWithOauth } from "../../redux/actions/auth"
 import { loginValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
-import TailSpinSvg from "../icons/TailSpinSvg"
+import Puff from "../icons/Puff"
 
 const LoginFormStyles = styled.div`
   ${authFormErrorsMixin};
@@ -59,17 +59,15 @@ const LoginForm = ({
                 placeholder="Password"
                 values={values}
               />
-              <div>
-                {pending && <TailSpinSvg width="32px" height="32px" />}
-                {!pending && (
-                  <CustomButtonWithError
-                    text="Log in"
-                    submitError={loginError}
-                    isSubmitting={isSubmitting}
-                    classNames={["btn-ghost"]}
-                  />
-                )}
-              </div>
+              {pending && <Puff width="32px" height="32px" />}
+              {!pending && (
+                <CustomButtonWithError
+                  text="Log in"
+                  submitError={loginError}
+                  isSubmitting={isSubmitting}
+                  classNames={["btn-ghost"]}
+                />
+              )}
             </div>
           </Form>
           <Button onClick={loginWithOauth}>Log in with Google</Button>
