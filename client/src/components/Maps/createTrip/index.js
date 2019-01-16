@@ -30,7 +30,8 @@ class CreateTripMap extends React.Component {
     this.state = {
       map: null,
       markers: [],
-      waypoints: []
+      waypoints: [],
+      markerListeners: []
     }
   }
   componentDidMount() {
@@ -45,57 +46,109 @@ class CreateTripMap extends React.Component {
     this.setState({ map: map })
   }
 
-  addWaypoint = map => {
-    if (map === null) return
+  addWaypoint = () => {
     const index = this.state.markers.length
-    const listener = map.addListener("click", e => {
-      let marker = new window.google.maps.Marker({
-        position: e.latLng,
-        map: map,
-        draggable: true,
-        title: (index + 1).toString(),
-        label: (index + 1).toString()
-      })
-      const markerListener = marker.addListener("dragend", ev => {
-        const mappedWaypoints = this.state.waypoints.map((item, i) => {
-          if (i !== index) {
-            window.google.maps.event.removeListener(listener)
-            window.google.maps.event.removeListener(markerListener)
-            return item
-          } else {
-            window.google.maps.event.removeListener(listener)
-            window.google.maps.event.removeListener(markerListener)
-            return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
-          }
-        })
-        this.setState({ waypoints: mappedWaypoints })
-      })
-      this.setState(prevState => ({
-        waypoints: [
-          ...prevState.waypoints,
-          {
-            userId: this.props.userId,
-            lat: e.latLng.lat(),
-            lon: e.latLng.lng(),
-            tripId: this.props.tripId,
-            order: index + 1,
-            name: `Waypoint ${index + 1}`,
-            start: new Date(),
-            end: new Date()
-          }
-        ]
-      }))
-      let markers = this.state.markers
-      markers.push(marker)
-      this.setState({ markers })
-      // this.setState(prevState => ({
-      //   markers: [...prevState.markers, marker]
-      // }))
-
-      // window.google.maps.event.removeListener(listener)
-      // window.google.maps.event.removeListener(markerListener)
+    let marker = new window.google.maps.Marker({
+      position: this.state.map.getCenter(),
+      map: this.state.map,
+      draggable: true,
+      title: (index + 1).toString(),
+      label: (index + 1).toString()
     })
+
+    let waypoint = {
+      userId: this.props.userId,
+      lat: "",
+      lon: "",
+      tripId: "",
+      order: index + 1,
+      name: `Waypoint ${index + 1}`,
+      start: new Date(),
+      end: new Date()
+    }
+
+    // this.markerListener(marker)
+    let markers = this.state.markers
+    markers.push(marker)
+    this.setState({ markers })
+
+    let waypoints = this.state.waypoints
+    waypoints.push(waypoint)
+    this.setState({ waypoints })
   }
+
+  markerListener = marker => {
+    let listener = marker.addListener("dragend", ev => {})
+    // UPDATE LAT AND LON ON MARKER AND WAYPOINT EVERYTIME IT"S DRAGGED
+
+    // const mappedWaypoints = this.state.waypoints.map((item, i) => {
+    //   if (i !== index) {
+    //     // window.google.maps.event.removeListener(listener)
+    //     // window.google.maps.event.removeListener(markerListener)
+    //     return item
+    //   } else {
+    //     // window.google.maps.event.removeListener(listener)
+    //     // window.google.maps.event.removeListener(markerListener)
+    //     return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+    //   }
+    // })
+    let listeners = this.state.markerListeners
+    listeners.push(listener)
+    this.setState({ markerListeners: listeners })
+    // })
+  }
+
+  // addWaypoint = map => {
+  //   if (map === null) return
+  //   const index = this.state.markers.length
+  //   const listener = map.addListener("click", e => {
+  //     let marker = new window.google.maps.Marker({
+  //       position: e.latLng,
+  //       map: map,
+  //       draggable: true,
+  //       title: (index + 1).toString(),
+  //       label: (index + 1).toString()
+  //     })
+  //     const markerListener = marker.addListener("dragend", ev => {
+  //       const mappedWaypoints = this.state.waypoints.map((item, i) => {
+  //         if (i !== index) {
+  //           window.google.maps.event.removeListener(listener)
+  //           window.google.maps.event.removeListener(markerListener)
+  //           return item
+  //         } else {
+  //           window.google.maps.event.removeListener(listener)
+  //           window.google.maps.event.removeListener(markerListener)
+  //           return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+  //         }
+  //       })
+  //       this.setState({ waypoints: mappedWaypoints })
+  //     })
+  //     this.setState(prevState => ({
+  //       waypoints: [
+  //         ...prevState.waypoints,
+  //         {
+  //           userId: this.props.userId,
+  //           lat: e.latLng.lat(),
+  //           lon: e.latLng.lng(),
+  //           tripId: this.props.tripId,
+  //           order: index + 1,
+  //           name: `Waypoint ${index + 1}`,
+  //           start: new Date(),
+  //           end: new Date()
+  //         }
+  //       ]
+  //     }))
+  //     let markers = this.state.markers
+  //     markers.push(marker)
+  //     this.setState({ markers })
+  // this.setState(prevState => ({
+  //   markers: [...prevState.markers, marker]
+  // }))
+
+  // window.google.maps.event.removeListener(listener)
+  // window.google.maps.event.removeListener(markerListener)
+  // })
+  // }
 
   //filter waypoint and markers for i, then Re-Apply markers to maps
   updateOrder = waypoints => {
@@ -150,7 +203,7 @@ class CreateTripMap extends React.Component {
         <i
           id="plus-icon"
           className="fas fa-plus fa-4x"
-          onClick={this.addWaypoint(this.state.map)}
+          onClick={this.addWaypoint}
         />
       </MapWrapper>
     )
