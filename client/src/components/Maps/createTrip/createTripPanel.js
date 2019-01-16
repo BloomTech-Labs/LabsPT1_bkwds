@@ -255,7 +255,7 @@ class CreateTripPanel extends React.Component {
 
   handleSave = () => {
     if (this.saveValidate()) {
-      const trip = Axios.post(`${SERVER_URI}/trips/`, {
+      Axios.post(`${SERVER_URI}/trips/`, {
         userId: this.props.userId,
         lat: this.state.center.lat,
         isArchieved: false,
@@ -266,7 +266,7 @@ class CreateTripPanel extends React.Component {
         name: this.state.title
       })
         .then(res => {
-          console.log(res)
+          toast(`Trip ${res.data.name} saved`)
         })
         .catch(err => console.log(err))
     }
