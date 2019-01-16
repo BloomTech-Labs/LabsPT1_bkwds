@@ -109,7 +109,7 @@ export const changePassword = async (req, res) => {
           oldUser
             .save()
             .then(newUser => {
-              res.status(201).json(newUser)
+              res.status(200).send(newUser)
             })
             .catch(err => {
               const message = err.message
