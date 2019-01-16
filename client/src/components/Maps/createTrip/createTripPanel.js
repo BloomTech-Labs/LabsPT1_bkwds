@@ -8,11 +8,11 @@ import "react-dates/initialize"
 import "react-dates/lib/css/_datepicker.css"
 import "../createTrip/custom.css"
 import { DateRangePicker } from "react-dates"
-import { Input } from "../../../styles/theme/styledComponents"
 
 //TODO: Correctly handle POST trip/ call
 const Panel = Styled.div`
-    max-width:320px;
+    max-width:360px;
+    min-width:320px;
     border-radius: .5rem;
     display:flex;
     flex-direction:column;
@@ -303,30 +303,6 @@ class CreateTripPanel extends React.Component {
 
         <DateLabel>Trip Date</DateLabel>
 
-        {/* 
-        <SingleDatePicker
-          small={true}
-          block={false}
-          numberOfMonths={1}
-          date={this.state.startDate}
-          onDateChange={startDate => this.setState({ startDate })}
-          focused={this.state.focusedStart}
-          onFocusChange={({ focusedStart }) => this.setState({ focusedStart })}
-          id="start_date_picker"
-          hideKeyboardShortcutsPanel={true}
-        /> */}
-        {/* <SingleDatePicker
-          small={true}
-          block={false}
-          numberOfMonths={1}
-          date={this.state.endDate}
-          onDateChange={endDate => this.setState({ endDate })}
-          focused={this.state.focusedEnd}
-          onFocusChange={({ focusedEnd }) => this.setState({ focusedEnd })}
-          id="end_date_picker"
-          hideKeyboardShortcutsPanel={true}
-
-        /> */}
         <DateRangePicker
           startDateId="startDate"
           endDateId="endDate"
