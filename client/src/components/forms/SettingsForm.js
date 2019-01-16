@@ -29,8 +29,14 @@ const SettingsForm = ({
     }}
     onSubmit={({ email, oldPassword, newPassword }, actions) => {
       actions.setSubmitting(false)
-      updateEmail(user.id, email)
-      // updatePassword(user.id, oldPassword, newPassword)
+
+      if (email !== user.email) {
+        updateEmail(user.id, email)
+      }
+
+      if (oldPassword && newPassword) {
+        updatePassword(user.username, oldPassword, newPassword)
+      }
     }}
     render={({
       values,
