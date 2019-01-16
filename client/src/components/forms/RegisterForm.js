@@ -14,7 +14,12 @@ const RegisterFormStyles = styled.div`
   ${authFormErrorsMixin};
 `
 
-const RegisterForm = ({ register, registerError, registerWithOauth }) => (
+const RegisterForm = ({
+  register,
+  registerError,
+  registerWithOauth,
+  pending
+}) => (
   <Formik
     validate={validate}
     initialValues={{
@@ -28,7 +33,6 @@ const RegisterForm = ({ register, registerError, registerWithOauth }) => (
       register(values)
     }}
     render={({
-      pending,
       values,
       handleBlur,
       handleChange,
@@ -70,7 +74,11 @@ const RegisterForm = ({ register, registerError, registerWithOauth }) => (
               placeholder="Confirm password"
               values={values}
             />
-            {pending && <Puff width="32px" height="32px" />}
+            {pending && (
+              <div className="spinner">
+                <Puff width="60px" height="60px" />
+              </div>
+            )}
             {!pending && (
               <CustomButtonWithError
                 text="Register"
@@ -79,7 +87,10 @@ const RegisterForm = ({ register, registerError, registerWithOauth }) => (
               />
             )}
           </Form>
-          <Button onClick={registerWithOauth}>Sign Up with Google</Button>
+          {pending && ""}
+          {!pending && (
+            <Button onClick={registerWithOauth}>Sign Up with Google</Button>
+          )}
         </div>
       </RegisterFormStyles>
     )}

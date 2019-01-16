@@ -59,7 +59,11 @@ const LoginForm = ({
                 placeholder="Password"
                 values={values}
               />
-              {pending && <Puff width="32px" height="32px" />}
+              {pending && (
+                <div className="spinner">
+                  <Puff width="60px" height="60px" />
+                </div>
+              )}
               {!pending && (
                 <CustomButtonWithError
                   text="Log in"
@@ -69,8 +73,11 @@ const LoginForm = ({
                 />
               )}
             </div>
+            {pending && ""}
+            {!pending && (
+              <Button onClick={loginWithOauth}>Log in with Google</Button>
+            )}
           </Form>
-          <Button onClick={loginWithOauth}>Log in with Google</Button>
         </div>
       </LoginFormStyles>
     )}
