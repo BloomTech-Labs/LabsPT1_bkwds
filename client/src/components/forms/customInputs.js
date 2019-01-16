@@ -1,7 +1,7 @@
 import React from "react"
 import { ErrorMessage } from "formik"
 
-import { GhostInput, Button } from "../../styles/theme/styledComponents"
+import { Label, GhostInput, Button } from "../../styles/theme/styledComponents"
 
 const CustomError = ({ name }) => (
   <ErrorMessage name={name}>
@@ -18,10 +18,12 @@ export const CustomInputWithError = ({
   placeholder,
   onChange,
   onBlur,
+  showLabel,
   classNames = [] // allows you to override styling
 }) => (
   <div className={classNames.length ? classNames.join(" ") : "form-field"}>
     <CustomError name={name} />
+    {showLabel && <Label>{name}:</Label>}
     <GhostInput
       name={name}
       type={type}

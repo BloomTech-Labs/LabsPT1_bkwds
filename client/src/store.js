@@ -7,6 +7,7 @@ import logger from "redux-logger"
 import { authReducer } from "./redux/reducers/auth"
 import { tripReducer } from "./redux/reducers/trips"
 import { billingReducer } from "./redux/reducers/billing"
+import { settingsReducer } from "./redux/reducers/settings"
 
 export const history = createBrowserHistory()
 
@@ -19,6 +20,7 @@ const createRootReducer = history =>
     auth: authReducer,
     trips: tripReducer,
     billing: billingReducer,
+    settings: settingsReducer,
     router: connectRouter(history)
   })
 
