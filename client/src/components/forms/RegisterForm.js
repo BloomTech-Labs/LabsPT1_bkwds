@@ -3,9 +3,9 @@ import { connect } from "react-redux"
 import { Formik } from "formik"
 import styled from "styled-components"
 
-import { Form } from "../../styles/theme/styledComponents"
+import { Button, Form } from "../../styles/theme/styledComponents"
 import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
-import { register } from "../../redux/actions/auth"
+import { register, registerWithOauth } from "../../redux/actions/auth"
 import { registerValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
 
@@ -13,7 +13,7 @@ const RegisterFormStyles = styled.div`
   ${authFormErrorsMixin};
 `
 
-const RegisterForm = ({ register, registerError }) => (
+const RegisterForm = ({ register, registerError, registerWithOauth }) => (
   <Formik
     validate={validate}
     initialValues={{
@@ -74,6 +74,7 @@ const RegisterForm = ({ register, registerError }) => (
               isSubmitting={isSubmitting}
             />
           </Form>
+          <Button onClick={registerWithOauth}>Sign Up with Google</Button>
         </div>
       </RegisterFormStyles>
     )}
@@ -84,7 +85,7 @@ const mapStateToProps = state => ({
   registerError: state.auth.error
 })
 
-const mapDispatchToProps = { register }
+const mapDispatchToProps = { register, registerWithOauth }
 
 export default connect(
   mapStateToProps,
