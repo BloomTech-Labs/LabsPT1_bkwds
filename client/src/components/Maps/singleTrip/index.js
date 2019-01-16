@@ -23,7 +23,10 @@ class SingleTripMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      trip: {}
+      markers: [],
+      isEditing: false,
+      trip: {},
+      active: false
     }
   }
 
@@ -32,9 +35,11 @@ class SingleTripMap extends React.Component {
       this.setState({ trip: res }, () => {
         const center = { lat: this.state.trip.lat, lng: this.state.trip.lon }
         this.renderMap(center, this.state.trip.waypoints)
+        console.log(this.state.trip.waypoints)
       })
     })
   }
+
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
@@ -51,18 +56,21 @@ class SingleTripMap extends React.Component {
 
   //Attach waypoints to map
   renderWaypoints = (waypoints, map) => {
+    let markers = []
     waypoints.forEach(waypoint => {
       const center = {
         lat: parseFloat(waypoint.lat.$numberDecimal),
         lng: parseFloat(waypoint.lon.$numberDecimal)
       }
-      new window.google.maps.Marker({
+      let marker = new window.google.maps.Marker({
         position: center,
         map: map,
         title: waypoint.name,
-        label: waypoint.order
-      }).setMap(map)
+        label: `${waypoint.order}`
+      })
+      markers.push(marker)
     })
+    this.setState({ markers })
   }
 
   //fetches trip details

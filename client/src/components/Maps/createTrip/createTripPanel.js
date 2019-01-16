@@ -266,18 +266,38 @@ class CreateTripPanel extends React.Component {
         name: this.state.title
       })
         .then(res => {
-          toast(`Trip ${res.data.name} saved`)
+          Axios.all(this.makeWaypointCalls(this.state.waypoints, res.data.id))
+            .then(toast(`Trip ${res.data.name} saved`))
+            .catch(err => console.log(err))
         })
         .catch(err => console.log(err))
     }
   }
 
+  makeWaypointCalls = (waypoints, tripId) => {
+    let apiCalls = []
+    waypoints.forEach(waypoint => {
+      apiCalls.push(this.saveWaypoint(waypoint, tripId))
+    })
+    return apiCalls
+  }
+  saveWaypoint = (waypoint, tripId) => {
+    return Axios.post(`${SERVER_URI}/waypoints/`, {
+      tripId: tripId,
+      order: waypoint.order,
+      name: waypoint.name,
+      lat: waypoint.lat,
+      lon: waypoint.lon,
+      start: waypoint.start,
+      end: waypoint.end
+    })
+  }
   setTitle = e => {
     this.setState({ title: e.target.value })
   }
 
   renderWaypointList = waypoints => {
-    return waypoints.map((waypoint, i) => {
+    return waypoints.map((_, i) => {
       return (
         <Waypoint key={i}>
           <label>{i + 1}</label>
