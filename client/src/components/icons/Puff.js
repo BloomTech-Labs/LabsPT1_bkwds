@@ -1,11 +1,11 @@
 import React from "react"
 
-const Puff = ({ height = "32px", width = "32px", fill }) => {
+const Puff = ({ height = "32px", width = "32px" }) => {
   return (
     <div className="spinner">
       <svg
-        width="44"
-        height="44"
+        width={width}
+        height={height}
         viewBox="0 0 44 44"
         xmlns="http://www.w3.org/2000/svg"
         stroke="#1E306E"
