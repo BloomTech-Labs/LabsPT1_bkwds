@@ -1,42 +1,23 @@
 import React from "react"
-import Styled from "styled-components"
+import axios from "axios"
 import { connect } from "react-redux"
 import { toast } from "react-toastify"
 
 import CreateTripPanel from "./createTripPanel"
-import { media } from "../../../styles/theme/mixins"
+import { MapWrapper } from "../../../styles/CreateTrip.styles"
 import { SERVER_URI } from "../../../config"
-
-const MapWrapper = Styled.div`
-  position:relative;
-  width:100%;
-  height:100%;
-
-  #plus-icon{
-    visibility: hidden;
-
-    ${media.tablet`
-      visibility: visible;
-      position: absolute;
-      cursor: pointer;
-      right: 5%;
-      bottom: 30%;
-      color: rgba(242, 106, 33, .8);
-    `}
-  }
-`
+import CustomMarker from "../../../assets/add_icon-min.png"
+import CustomWaypoint from "../../../assets/add_marker_icon-min.png"
 
 class CreateTripMap extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      markers: [],
-      waypoints: [],
-      title: "",
-      startDate: "",
-      endDate: ""
-    }
+  state = {
+    markers: [],
+    waypoints: [],
+    title: "",
+    startDate: "",
+    endDate: ""
   }
+
   componentDidMount() {
     window.map = new window.google.maps.Map(
       document.getElementById("createTripMap"),
@@ -57,27 +38,13 @@ class CreateTripMap extends React.Component {
       title: (index + 1).toString(),
       label: (index + 1).toString(),
       index: index,
-      icon: `${SERVER_URI}/images/add_marker_icon.svg`
+      icon: CustomWaypoint
     })
 
     let markers = this.state.markers
     markers.push(marker)
     this.setState({ markers })
     this.deleteListener(marker)
-    // let waypoint = {
-    //   userId: this.props.userId,
-    //   lat: "",
-    //   lon: "",
-    //   tripId: "",
-    //   order: index + 1,
-    //   name: `Waypoint ${index + 1}`,
-    //   start: new Date(),
-    //   end: new Date()
-    // }
-
-    // let waypoints = this.state.waypoints
-    // waypoints.push(waypoint)
-    // this.setState({ waypoints })
   }
 
   deleteListener = marker => {
@@ -88,12 +55,10 @@ class CreateTripMap extends React.Component {
 
   deleteMarker = marker => {
     let markers = this.state.markers
-    // let index = marker.index
     marker.setMap(null)
     let filtered = markers.filter((_, i) => {
       return i !== marker.index
     })
-    // console.log(filtered)
     let newMarkers = filtered.map((item, i) => {
       return {
         ...item,
@@ -102,7 +67,6 @@ class CreateTripMap extends React.Component {
         index: i + 1
       }
     })
-    // console.log(newMarkers)
     this.setState({ markers: newMarkers })
   }
 
@@ -110,8 +74,50 @@ class CreateTripMap extends React.Component {
     this.setState({ title })
   }
 
+  getDates = ({ startDate, endDate }) => {
+    this.setState({ startDate, endDate })
+  }
+
   saveTrip = () => {
+    const { markers } = this.state
+    let config = {
+      headers: { Authorization: "Bearer " + this.props.token }
+    }
     if (this.saveValidate()) {
+      let trip = {
+        userId: this.props.userId,
+        isArchived: false,
+        name: this.state.title,
+        start: this.state.startDate.utc().format(),
+        end: this.state.endDate.utc().format(),
+        lat: window.map.getCenter().lat(),
+        lon: window.map.getCenter().lng()
+      }
+      axios
+        .post(`${SERVER_URI}/trips/`, trip, config)
+        .then(resp => {
+          let waypoints = markers.map(marker => {
+            return {
+              tripId: resp.tripId,
+              order: marker.index + 1,
+              name: `Checkpoint ${marker.index}`,
+              lat: marker.getPosition().lat(),
+              lon: marker.getPosition().lng(),
+              end: Date.now()
+            }
+            axios
+              .post(`${SERVER_URI}/waypoints/batch`, waypoints, config)
+              .then(waypoints => {
+                console.log(waypoints)
+              })
+              .catch(() => {
+                console.log("Error posting to waypoints")
+              })
+          })
+        })
+        .catch(() => {
+          console.log("Error posting to waypoints")
+        })
     }
   }
 
@@ -132,7 +138,9 @@ class CreateTripMap extends React.Component {
     let props = {
       addWaypoint: this.addWaypoint,
       deleteListener: this.deleteListener,
-      getTitle: this.getTitle
+      getTitle: this.getTitle,
+      saveTrip: this.saveTrip,
+      getDates: this.getDates
     }
     return (
       <MapWrapper>
@@ -141,18 +149,19 @@ class CreateTripMap extends React.Component {
           id="createTripMap"
           style={{ width: "100%", height: "100%", position: "absolute" }}
         />
-        {/* <i
+        <img
           id="plus-icon"
-          className="fas fa-plus fa-3x"
+          src={CustomMarker}
           onClick={this.addWaypoint}
-        /> */}
-        <img id="plus-icon" src={`${SERVER_URI}/images/add_icon.svg`} />
+          alt="Custom Add Icon"
+        />
       </MapWrapper>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return { userId: state.auth.user.id }
+  console.log(state)
+  return { token: state.auth.token, userId: state.auth.user.id }
 }
 export default connect(mapStateToProps)(CreateTripMap)
