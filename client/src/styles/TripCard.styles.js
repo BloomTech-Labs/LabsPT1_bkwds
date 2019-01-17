@@ -50,5 +50,18 @@ export const TripCardStyles = styled.div`
     img {
       transition: all 1.86s ease;
     }
+
+    img.grayscale {
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+    }
+
+    .text-overlay {
+      position: absolute;
+      color: rgba(30, 33, 37, 0.25);
+      font-size: 5rem;
+      font-weight: 600;
+      transform: rotate(45deg);
+    }
   }
 `

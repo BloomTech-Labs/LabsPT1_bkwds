@@ -14,17 +14,18 @@ const TripCard = ({ trip, archived, toggleArchive }) => (
         <div className="card">
           <div className="card-image">
             <img
+              className={archived ? "grayscale" : ""}
               src="https://staticmapmaker.com/img/google.png"
               alt="Google Map of Albany, NY"
             />
+            {archived && <div className="text-overlay">ARCHIVED</div>}
           </div>
           <div className="card-content">
             <div>{trip.name}</div>
             <div>Start: {trip.start}</div>
             <div>End: {trip.end}</div>
-            <div>Archived: {trip.isArchived.toString()}</div>
             <Button
-              className="btn"
+              className={archived ? "btn-gray" : "btn"}
               onClick={() => toggleArchive(trip.id, !trip.isArchived)}
             >
               {archived ? "Unarchive" : "Archive"}
