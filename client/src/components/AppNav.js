@@ -19,7 +19,7 @@ const AppNav = ({ location, logout, isLoggedIn }) => {
   return (
     <div>
       <s.NavStyles>
-        <div className="logo">Backwoods Tracker</div>
+        <div className="logo">bkwds.</div>
         <div className="nav-links-wrapper">
           {isHomeOrAuthPath && !isLoggedIn ? (
             <UnauthenticatedLinks pathname={pathname} />
