@@ -18,6 +18,10 @@ const Panel = Styled.div`
 `
 
 const ButtonGroup = Styled.div`
+    display:flex;
+`
+
+const StartTripButton = Styled.button`
     
 `
 
