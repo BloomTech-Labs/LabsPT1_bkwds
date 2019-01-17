@@ -6,7 +6,7 @@ import RegisterForm from "./forms/RegisterForm"
 const Register = () => {
   return (
     <s.RegisterStyles>
-      <h3>Sign Up</h3>
+      <h4>Sign up</h4>
       <RegisterForm />
     </s.RegisterStyles>
   )
