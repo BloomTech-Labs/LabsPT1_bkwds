@@ -57,6 +57,12 @@ export const authFormErrorsMixin = css`
       bottom: -1.5rem;
     }
   }
+  .spinner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+  }
 `
 
 // General styles that you can spread around:

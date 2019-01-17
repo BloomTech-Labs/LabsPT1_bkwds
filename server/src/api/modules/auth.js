@@ -80,15 +80,37 @@ export const protect = (req, res, next) => {
   })
 }
 
-export const getUserFromToken = (req, res) => {
-  const { id } = req.params
-
-  return User.findById(id)
-    .then(user => {
-      return res.status(200).json(user)
+export const changePassword = async (req, res) => {
+  const { username, oldPassword, newPassword } = req.body
+  // find if old password is valid
+  User.findOne({ username: username })
+    .then(oldUser => {
+      if (!oldUser) return res.status(404).send("User does not exist")
+      oldUser.comparePassword(oldPassword, (err, isMatch) => {
+        if (err) {
+          return res.status(401).send("Unauthorized")
+        }
+        if (isMatch) {
+          // change to new password
+          oldUser.password = newPassword
+          oldUser
+            .save()
+            .then(newUser => {
+              res.status(200).send(newUser)
+            })
+            .catch(err => {
+              const message = err.message
+              res.status(500).json({
+                status: "change password failed",
+                msg: message
+              })
+            })
+        } else {
+          return res.status(401).send("Invalid old password")
+        }
+      })
     })
     .catch(err => {
-      console.error(err)
-      return res.status(401).send("Unauthorized")
+      res.status(500).send(err)
     })
 }
