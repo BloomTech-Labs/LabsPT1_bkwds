@@ -1,10 +1,6 @@
 import styled from "styled-components"
 
 export const TripCardStyles = styled.div`
-  a {
-    text-decoration: underline;
-  }
-
   .container {
     max-width: 100%;
     margin: 0 auto;

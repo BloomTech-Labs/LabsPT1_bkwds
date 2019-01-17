@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 
 import { deleteTrip } from "../redux/actions/trips"
 import { getSingleTrip } from "../redux/actions/trips"
 
-import { CardButton } from "../styles/theme/styledComponents"
 class TripCard extends Component {
   handleSingleTrip = tripId => e => {
     e.preventDefault()
@@ -19,20 +19,19 @@ class TripCard extends Component {
         {trip.id && (
           <>
             <div className="card">
-              <div className="card-image">
-                <img
-                  src="https://staticmapmaker.com/img/google.png"
-                  alt="Google Map of Albany, NY"
-                />
-              </div>
-              <div className="card-content">
-                <div>{trip.name}</div>
-                <div>Start: {trip.start}</div>
-                <div>End: {trip.end}</div>
-                <CardButton onClick={this.handleSingleTrip(trip.id)}>
-                  >
-                </CardButton>
-              </div>
+              <Link to="/trip/:tripId" onClick={this.handleSingleTrip(trip)}>
+                <div className="card-image">
+                  <img
+                    src="https://staticmapmaker.com/img/google.png"
+                    alt="Google Map of Albany, NY"
+                  />
+                </div>
+                <div className="card-content">
+                  <div>{trip.name}</div>
+                  <div>Start: {trip.start}</div>
+                  <div>End: {trip.end}</div>
+                </div>
+              </Link>
             </div>
             <br />
           </>

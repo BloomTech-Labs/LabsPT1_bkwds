@@ -17,7 +17,7 @@ class FirstTripButton extends Component {
     return (
       <s.FirstTripStyles>
         <a href="/" className="TripMsg">
-          Add your first trip
+          No Trips! Add A Trip Now:
         </a>
         <Button className="AddTripButton" onClick={this.handleClick()}>
           +
