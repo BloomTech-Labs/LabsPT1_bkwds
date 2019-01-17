@@ -5,6 +5,10 @@ export const subscribeRouter = express.Router()
 const stripe = require("stripe")(process.env.STRIPE_KEY_SERVER_TEST)
 
 subscribeRouter
+  .route("/invoices")
+  .post((req, res) => subscribeController.retrieveInvoices(req, res, stripe))
+
+subscribeRouter
   .route("/:id")
   .post((req, res) => subscribeController.subscribe(req, res, stripe))
 
