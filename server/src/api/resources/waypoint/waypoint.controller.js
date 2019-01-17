@@ -81,7 +81,7 @@ export const updateWaypoint = (req, res) => {
 export const deleteWaypoint = (req, res) => {
   Waypoint.findOneAndDelete({ _id: req.params.id })
     .then(waypoint => {
-      if (!waypoint) return res.status(404).json("Waypoint Not Found")
+      if (!waypoint) return res.status(404).send("Waypoint Not Found")
       Trip.findOneAndUpdate(
         { _id: req.body.tripId },
         { $pull: { waypoints: waypoint.id } }
