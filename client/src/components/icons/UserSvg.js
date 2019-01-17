@@ -3,21 +3,17 @@ import styled from "styled-components"
 
 const UserSvg = ({ height, width }) => {
   const Icon = styled.span`
-    /* position: relative;
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-left: 0.3125rem;
-    fill: #a3a3a3;
-    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out; */
+    display: inline-block;
+    cursor: pointer;
+    height: ${height * 2}rem;
+    width: ${width * 2}rem;
+    text-align: center;
+
     svg {
-      height: ${height};
-      width: ${width};
+      height: ${height}rem;
+      width: ${width}rem;
       fill: ${props => props.theme.primary};
-      /* position: absolute;
-      top: 1px;
-      left: 0;
-      width: 100%;
-      height: 100%; */
+      margin-top: 11px;
     }
   `
   return (

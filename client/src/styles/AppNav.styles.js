@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { boxShadowMixin } from "./theme/mixins"
+import { boxShadowMixin, media } from "./theme/mixins"
 
 export const NavStyles = styled.div`
   background: ${props => props.theme.white};
@@ -16,10 +16,18 @@ export const NavStyles = styled.div`
 
   padding-left: 2rem;
   padding-right: 1.25rem;
+  ${media.phone`padding-right: 0;`}
 
   .nav-links-wrapper {
-    /* This is to offset the Github logo bc of its absolute position */
-    margin-right: 60px;
+    display: none;
+    ${media.phone`
+      display: block;
+
+      `}
+
+    }
+
+    /* ${media.phone`display: none !important;`} */
   }
   .logo {
     color: ${props => props.theme.primary};
@@ -71,12 +79,40 @@ export const NavStyles = styled.div`
   }
 
   .call-to-action {
-    position: absolute;
+    ${media.tablet`display: none !important;`}
+  }
+
+  /* Aha! This didn't take forever, fucking Bootstrap */
+  .dropdown-menu {
+    width: 102vw;
+    right: 0;
     top: 0;
-    right: 1.25rem;
-    height: 100%;
-    & a {
-      height: 100%;
+    left: 0;
+    border-radius: 0;
+    margin-left: -6px;
+    margin: 0.05rem 0 0;
+  }
+
+  .mobile-links-wrapper {
+    display: none;
+    width: 100%;
+    li.dropdown.nav-item {
+      justify-content: flex-end !important;
     }
+
+    ${media.phone`
+      display: block;
+
+      .mobile-dropdown-toggle {
+        background: transparent;
+      }
+    `}
+  }
+
+  .appnav-right {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 `

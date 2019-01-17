@@ -35,7 +35,6 @@ export const DropdownStyles = styled.div`
 
     .dropdown-menu {
       width: 75%;
-      /* background: tomato !important; */
     }
 
     /* DROPDOWN HEADER BUTTON STYLES */
