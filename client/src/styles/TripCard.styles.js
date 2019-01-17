@@ -11,7 +11,7 @@ export const TripCardStyles = styled.div`
     display: flex;
     justify-content: row;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: start;
   }
 
   .card {
@@ -23,7 +23,7 @@ export const TripCardStyles = styled.div`
     padding-bottom: 1%;
     border: none !important;
     overflow: hidden;
-    border-radius: 3%;
+    border-radius: 0.25rem;
   }
 
   .card:hover {
