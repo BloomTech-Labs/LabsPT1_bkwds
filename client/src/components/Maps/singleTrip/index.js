@@ -6,7 +6,6 @@ import { getSingleTrip } from "../../../redux/actions/trips"
 class SingleTripMap extends React.Component {
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
-    this.renderMap()
   }
 
   componentDidUpdate() {

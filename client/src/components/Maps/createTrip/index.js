@@ -9,10 +9,18 @@ import { SERVER_URI } from "../../../config"
 import CustomMarker from "../../../assets/add_icon-min.png"
 import CustomWaypoint from "../../../assets/add_marker_icon-min.png"
 
+const convertMarkerToWaypoint = marker => ({
+  order: marker.index + 1,
+  name: `Checkpoint ${marker.index}}`,
+  lat: marker.getPosition().lat(),
+  lon: marker.getPosition().lng(),
+  start: Date.now(),
+  end: Date.now()
+})
+
 class CreateTripMap extends React.Component {
   state = {
     markers: [],
-    waypoints: [],
     title: "",
     startDate: "",
     endDate: ""
@@ -23,11 +31,18 @@ class CreateTripMap extends React.Component {
       document.getElementById("createTripMap"),
       {
         center: { lat: 39.0997, lng: -94.5786 },
-        zoom: 5,
+        zoom: 9,
         disableDefaultUI: true
       }
     )
     axios.defaults.headers.common["Authorization"] = this.props.token
+  }
+
+  componentDidUpdate() {
+    let waypoints = this.state.markers.map(marker => ({
+      ...convertMarkerToWaypoint(marker)
+    }))
+    console.log("UPDATED, WAYPOINTS:", { waypoints })
   }
 
   addWaypoint = () => {
@@ -98,32 +113,34 @@ class CreateTripMap extends React.Component {
       axios
         .post(`${SERVER_URI}/trips/`, trip)
         .then(resp => {
-          let waypoints = markers.map(marker => ({
-            tripId: resp.tripId,
-            order: marker.index + 1,
-            name: `Checkpoint ${marker.index}`,
-            lat: marker.getPosition().lat(),
-            lon: marker.getPosition().lng(),
-            start: Date.now(),
-            end: Date.now()
+          console.log("CREATE TRIP RESPONSE:", resp)
+          console.log("CREATE TRIP ID:", resp.data.id)
+
+          let waypoints = this.state.markers.map(marker => ({
+            ...convertMarkerToWaypoint(marker),
+            tripId: resp.data.id
           }))
 
+          console.log("WAYPOINTS:", waypoints)
+
           axios
-            .post(`${SERVER_URI}/waypoints/batch`, waypoints)
+            .put(`${SERVER_URI}/waypoints/batch`, waypoints)
             .then(waypoints => {
               console.log(waypoints)
             })
-            .catch(() => {
-              console.log("Error posting to waypoints")
+            .catch(err => {
+              console.log("Error posting to waypoints: INSIDE ERR = ", err)
             })
         })
-        .catch(() => {
-          console.log("Error posting to waypoints")
+        .catch(err => {
+          console.log("Error posting to waypoints: OUTSIDE ERR = ", err)
         })
     }
   }
 
   saveValidate = () => {
+    console.log("VALIDATING, STATE:", this.state)
+
     const { startDate, endDate, title } = this.state
     if (startDate === null || endDate === null) {
       toast("Date not provided")
@@ -162,8 +179,9 @@ class CreateTripMap extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state)
-  return { token: state.auth.token, userId: state.auth.user.id }
-}
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  userId: state.auth.user.id
+})
+
 export default connect(mapStateToProps)(CreateTripMap)
