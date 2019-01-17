@@ -24,12 +24,6 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
 
-// const token = localStorage.getItem("token")
-// if (token) {
-//   // If token, set token as Authorization header on all axios requests:
-//   axios.defaults.headers.common["Authorization"] = token
-// }
-
 export const getTrips = () => dispatch => {
   const token = localStorage.getItem("token")
   if (token) {
@@ -88,7 +82,7 @@ export const createTrip = (trip, markers) => dispatch => {
       }))
       axios
         .put(`${SERVER_URI}/waypoints/batch`, waypoints)
-        .then(res => {
+        .then(() => {
           dispatch({ type: CREATING_TRIP_SUCCESS, payload: response.data })
           setTimeout(() =>
             dispatch(push(`/app/trip/${response.data.id}`), 2000)
