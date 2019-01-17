@@ -5,11 +5,9 @@ import { toast } from "react-toastify"
 
 import CreateTripPanel from "./createTripPanel"
 import { MapWrapper } from "../../../styles/CreateTrip.styles"
-import { SERVER_URI } from "../../../config"
 import CustomMarker from "../../../assets/add_icon-min.png"
 import CustomWaypoint from "../../../assets/add_marker_icon-min.png"
 import { createTrip } from "../../../redux/actions/trips"
-import { convertMarkerToWaypoint } from "../../../utils"
 
 class CreateTripMap extends React.Component {
   state = {
@@ -94,26 +92,6 @@ class CreateTripMap extends React.Component {
       }
 
       this.props.createTrip(trip, markers)
-
-      // axios
-      //   .post(`${SERVER_URI}/trips/`, trip)
-      //   .then(res => {
-      //     let waypoints = markers.map(marker => ({
-      //       ...convertMarkerToWaypoint(marker),
-      //       tripId: res.data.id
-      //     }))
-      //     axios
-      //       .put(`${SERVER_URI}/waypoints/batch`, waypoints)
-      //       .then(waypoints => {
-      //         console.log(waypoints)
-      //       })
-      //       .catch(err => {
-      //         console.log("Error saving waypoints to trip, err:", err)
-      //       })
-      //   })
-      //   .catch(err => {
-      //     console.log("Error posting waypoints, err:", err)
-      //   })
     }
   }
 
