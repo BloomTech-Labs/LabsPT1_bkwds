@@ -66,10 +66,10 @@ export const getSingleTrip = tripId => dispatch => {
   })
 }
 
-export const editTrip = tripId => dispatch => {
-  dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
-  dispatch(push("/app/trip/edit/" + tripId))
-}
+// export const editTrip = tripId => dispatch => {
+//   dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
+//   dispatch(push("/app/trip/edit/" + tripId))
+// }
 
 export const createTrip = (trip, markers) => dispatch => {
   dispatch({ type: CREATING_TRIP })

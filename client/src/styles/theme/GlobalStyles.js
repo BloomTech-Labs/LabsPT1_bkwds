@@ -69,7 +69,7 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0.75rem 1.5rem;
     min-width: 14rem;
     border-radius: 0.25rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     /* line-height: 1.3; */
     text-align: center;
