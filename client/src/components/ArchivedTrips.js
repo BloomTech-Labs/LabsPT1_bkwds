@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import TripCard from "./TripCard"
 import { getArchivedTrips } from "../redux/actions/trips"
@@ -21,6 +22,12 @@ class ArchivedTrips extends Component {
       </div>
     )
   }
+}
+
+ArchivedTrips.propTypes = {
+  getArchivedTrips: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  trips: PropTypes.arrayOf(PropTypes.object)
 }
 
 const mapStateToProps = state => ({

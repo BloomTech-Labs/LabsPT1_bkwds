@@ -1,6 +1,7 @@
 import React from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import AuthenticatedLinks from "./AuthenticatedLinks"
 import UnauthenticatedLinks from "./UnauthenticatedLinks"
@@ -32,6 +33,12 @@ const AppNav = ({ location, logout, isLoggedIn }) => {
       </s.NavStyles>
     </div>
   )
+}
+
+AppNav.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
