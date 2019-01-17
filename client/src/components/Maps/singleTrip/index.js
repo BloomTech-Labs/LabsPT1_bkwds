@@ -3,6 +3,12 @@ import { connect } from "react-redux"
 
 import { getSingleTrip } from "../../../redux/actions/trips"
 
+const dashSymbol = {
+  path: "M 0,-1 0,1",
+  strokeOpacity: 1,
+  scale: 3
+}
+
 class SingleTripMap extends React.Component {
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
@@ -10,29 +16,31 @@ class SingleTripMap extends React.Component {
 
   componentDidUpdate() {
     const { trip } = this.props
-    const center = {
-      lat: parseFloat(trip.lat),
-      lng: parseFloat(trip.lon)
-    }
-    console.log("SINGLE TRIP COMPONENT UPDATED! PROPS:", this.props)
-    this.renderMap(center, trip.waypoints)
+    const lat = trip.lat
+    const lng = trip.lon
+    const center = { lat, lng }
+    if (trip && trip.waypoints) this.renderMap(center, trip.waypoints)
+    this.drawPolyline()
   }
 
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
-    const map = new window.google.maps.Map(document.getElementById("Tripmap"), {
-      center: center,
-      zoom: 9,
-      disableDefaultUI: true
-    })
+    window.map = new window.google.maps.Map(
+      document.getElementById("Tripmap"),
+      {
+        center: center,
+        zoom: 9,
+        disableDefaultUI: true
+      }
+    )
     if (waypoints) {
-      this.renderWaypoints(waypoints, map)
+      this.renderWaypoints(waypoints)
     }
   }
 
   // Attach waypoints to map
-  renderWaypoints = (waypoints, map) => {
+  renderWaypoints = waypoints => {
     waypoints.forEach(waypoint => {
       const center = {
         lat: parseFloat(waypoint.lat.$numberDecimal),
@@ -40,11 +48,37 @@ class SingleTripMap extends React.Component {
       }
       new window.google.maps.Marker({
         position: center,
-        map: map,
+        map: window.map,
         title: waypoint.name,
         label: waypoint.order.toString()
-      }).setMap(map)
+      }).setMap(window.map)
     })
+  }
+
+  drawPolyline = () => {
+    const { waypoints } = this.props.trip
+    const path = waypoints.map(w => ({
+      lat: parseFloat(w.lat.$numberDecimal),
+      lng: parseFloat(w.lon.$numberDecimal)
+    }))
+
+    const polyline = new window.google.maps.Polyline({
+      path,
+      strokeColor: "#1e306e",
+      strokeOpacity: 0,
+      strokeWeight: 2,
+      icons: [
+        {
+          icon: dashSymbol,
+          offset: 0,
+          repeat: "20px"
+        }
+      ]
+    })
+
+    window.polyline = polyline
+
+    polyline.setMap(window.map)
   }
 
   render() {
