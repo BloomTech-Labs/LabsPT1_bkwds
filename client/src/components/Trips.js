@@ -13,7 +13,6 @@ class Trips extends Component {
   }
 
   renderTrips() {
-    // let tripsRender
     const { trips, loading } = this.props
 
     return (

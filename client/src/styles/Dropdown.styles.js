@@ -1,15 +1,27 @@
 import styled from "styled-components"
 
-import { boxShadowMixin } from "./theme/mixins"
+import { boxShadowMixin, media } from "./theme/mixins"
 
 export const DropdownStyles = styled.div`
   /* BOOTSTRAP OVERRIDES: */
+  margin-right: 0.75rem;
 
   .dropdown {
+    ${media.phone`display: none !important;`}
+
+    width: 240px;
     a:hover,
     button:hover {
       text-decoration: none;
     }
+
+  .navbar-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    height: 50px;
+    padding: 0;
+  }
 
     /* dropdown button AND nested dropdown items styles */
     button {
@@ -27,7 +39,8 @@ export const DropdownStyles = styled.div`
     }
 
     & > div {
-      top: 13px !important;
+      top: 0px !important;
+      right: 0px;
       margin: 0;
       padding: 0;
       ${boxShadowMixin}

@@ -5,6 +5,10 @@ export const TripCardStyles = styled.div`
     text-decoration: underline;
   }
 
+  button {
+    margin-top: 1.25rem;
+  }
+
   .container {
     max-width: 100%;
     margin: 0 auto;

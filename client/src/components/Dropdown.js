@@ -41,7 +41,7 @@ class NavDropdown extends Component {
           isOpen={this.state.dropdownOpen}
           toggle={this.toggle}
         >
-          <DropdownToggle>
+          <DropdownToggle className="navbar-toggle">
             Hi, {user.username ? user.username + "!" : "Account"}{" "}
             <ChevronSvg fill="#a3a3a3" />
           </DropdownToggle>
