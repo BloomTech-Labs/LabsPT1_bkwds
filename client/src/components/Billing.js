@@ -1,7 +1,12 @@
 import React from "react"
 import * as s from "../styles/Billing.styles"
 import { connect } from "react-redux"
-import { openCheckoutForm, cancelSubscription } from "../redux/actions/billing"
+import moment from "moment"
+import {
+  openCheckoutForm,
+  cancelSubscription,
+  retrieveInvoices
+} from "../redux/actions/billing"
 
 import { Elements, StripeProvider } from "react-stripe-elements"
 import CheckoutForm from "./forms/CheckoutForm"
@@ -15,6 +20,7 @@ class Billing extends React.Component {
   }
 
   componentDidMount() {
+    const { subscribeId, customerId } = this.props.user
     const stripeScript = document.createElement("script")
     stripeScript.src = "https://js.stripe.com/v3/"
     stripeScript.async = true
@@ -24,11 +30,25 @@ class Billing extends React.Component {
       }, 1000)
     }
     document.body && document.body.appendChild(stripeScript)
+
+    if (subscribeId && customerId) {
+      this.props.retrieveInvoices(customerId, subscribeId)
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.isPending && !this.props.isPending && !this.props.hasError) {
       this.setState({ isCheckoutFormOpen: false })
+    }
+    if (
+      !prevProps.user.subscribed &&
+      this.props.user.subscribed &&
+      this.props.user.subscribeId
+    ) {
+      this.props.retrieveInvoices(
+        this.props.user.customerId,
+        this.props.user.subscribeId
+      )
     }
   }
 
@@ -44,7 +64,13 @@ class Billing extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, user, isPending, isCheckoutFormOpen } = this.props
+    const {
+      isLoggedIn,
+      user,
+      isPending,
+      isCheckoutFormOpen,
+      invoices
+    } = this.props
     const isSubscribed = user.subscribed
     return (
       <StripeProvider stripe={this.state.stripe}>
@@ -89,6 +115,31 @@ class Billing extends React.Component {
               </Elements>
             </>
           )}
+          {isSubscribed && invoices && (
+            <>
+              <h3>Invoices</h3>
+              <table>
+                <tr>
+                  <th>Service</th>
+                  <th>Period</th>
+                </tr>
+                {invoices.map(invoice => (
+                  <tr key={invoice.id}>
+                    <td>{invoice.lines.data[0].description}</td>
+                    <td>
+                      {moment
+                        .unix(invoice.lines.data[0].period.start)
+                        .format("YYYY-MM-DD")}
+                      {" to "}
+                      {moment
+                        .unix(invoice.lines.data[0].period.end)
+                        .format("YYYY-MM-DD")}
+                    </td>
+                  </tr>
+                ))}
+              </table>
+            </>
+          )}
         </s.BillingStyles>
       </StripeProvider>
     )
@@ -101,11 +152,16 @@ const mapStateToProps = state => {
     user: state.auth.user,
     isPending: state.billing.pending,
     isCheckoutFormOpen: state.billing.isCheckoutFormOpen,
-    hasError: state.billing.error
+    hasError: state.billing.error,
+    invoices: state.billing.invoices
   }
 }
 
-const mapDispatchToProps = { openCheckoutForm, cancelSubscription }
+const mapDispatchToProps = {
+  openCheckoutForm,
+  cancelSubscription,
+  retrieveInvoices
+}
 
 export default connect(
   mapStateToProps,
