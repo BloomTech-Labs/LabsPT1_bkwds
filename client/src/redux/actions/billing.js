@@ -7,7 +7,10 @@ import {
   INIT_NEW_CANCELLATION,
   CANCEL_SUBSCRIPTION_SUCCESS,
   CANCEL_SUBSCRIPTION_FAIL,
-  QUERYING_USER_BY_TOKEN_SUCCESS
+  QUERYING_USER_BY_TOKEN_SUCCESS,
+  INIT_NEW_INVOICES,
+  INVOICES_SUCCESS,
+  INVOICES_FAIL
 } from "./types"
 import { updateUserInStore } from "./auth"
 import { STRIPE_PLAN_ID_TEST } from "../../config"
@@ -56,15 +59,36 @@ export const subscribe = ({ id, owner, stripe }) => async dispatch => {
       source: updatedSource
     })
 
-    dispatch({ type: SUBSCRIBE_SUCCESS, payload: newSubscription.data })
+    dispatch({ type: SUBSCRIBE_SUCCESS })
     // TODO: Consider housing subscription information on billing reducer instead of user?
     dispatch(updateUserInStore(newSubscription.data))
+
     toast.success("Successful subscription", {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   } catch (error) {
     dispatch({ type: SUBSCRIBE_FAIL, payload: error })
-    toast.error(normalizeErrorMsg(error), {
+    toast.error(error.toString(), {
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
+  }
+}
+
+export const retrieveInvoices = (customerId, subscribeId) => async dispatch => {
+  dispatch({ type: INIT_NEW_INVOICES })
+
+  if (!token) return
+
+  try {
+    const result = await axios.post(`${SERVER_URI}/subscribe/invoices`, {
+      customerId,
+      subscribeId
+    })
+
+    dispatch({ type: INVOICES_SUCCESS, payload: result.data })
+  } catch (error) {
+    dispatch({ type: INVOICES_FAIL, payload: error })
+    toast.error("Cannot retrieve your invoices. Please reload the page.", {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }

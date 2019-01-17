@@ -30,7 +30,7 @@ const defaultState = {
   pending: false,
   error: null,
   trips: {},
-  activeTrip: ""
+  activeTrip: {}
 }
 
 export const tripReducer = (state = defaultState, action) => {
@@ -78,8 +78,8 @@ export const tripReducer = (state = defaultState, action) => {
       return state
 
     case DELETING_TRIP:
-      // Make activeTrip an empty string in case we happen to be deleting the activeTrip:
-      return { ...state, pending: true, activeTrip: "" }
+      // Make activeTrip an empty object in case we happen to be deleting the activeTrip:
+      return { ...state, pending: true, activeTrip: {} }
     case DELETING_TRIP_SUCCESS:
       return {
         ...state,

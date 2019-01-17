@@ -1,48 +1,54 @@
-import React, { Component } from "react"
+import React from "react"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 
-import { deleteTrip } from "../redux/actions/trips"
-import { getSingleTrip } from "../redux/actions/trips"
-
+import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
-class TripCard extends Component {
-  handleSingleTrip = tripId => e => {
-    e.preventDefault()
-    this.props.getSingleTrip(tripId)
-  }
+import ChevronSvg from "./icons/ChevronSvg"
+import { Button } from "../styles/theme/styledComponents"
 
-  render() {
-    const { trip } = this.props
-    return (
-      <div>
-        {!trip.id && "Loading trip"}
-        {trip.id && (
-          <>
-            <div className="card">
-              <div className="card-image">
-                <img
-                  src="https://staticmapmaker.com/img/google.png"
-                  alt="Google Map of Albany, NY"
+const TripCard = ({ trip, archived, toggleArchive }) => (
+  <div>
+    {!trip.id && "Loading trip"}
+    {trip.id && (
+      <>
+        <div className="card">
+          <div className="card-image">
+            <img
+              className={archived ? "grayscale" : ""}
+              src="https://staticmapmaker.com/img/google.png"
+              alt="Google Map of Albany, NY"
+            />
+            {archived && <div className="text-overlay">ARCHIVED</div>}
+          </div>
+          <div className="card-content">
+            <div>{trip.name}</div>
+            <div>Start: {trip.start}</div>
+            <div>End: {trip.end}</div>
+            <Button
+              className={archived ? "btn-gray" : "btn"}
+              onClick={() => toggleArchive(trip.id, !trip.isArchived)}
+            >
+              {archived ? "Unarchive" : "Archive"}
+            </Button>
+            <Link to={`/app/trip/${trip.id}`}>
+              <CardButton>
+                <ChevronSvg
+                  width="2rem"
+                  height="2rem"
+                  transform="rotate(-90deg)"
                 />
-              </div>
-              <div className="card-content">
-                <div>{trip.name}</div>
-                <div>Start: {trip.start}</div>
-                <div>End: {trip.end}</div>
-                <CardButton onClick={this.handleSingleTrip(trip.id)}>
-                  >
-                </CardButton>
-              </div>
-            </div>
-            <br />
-          </>
-        )}
-      </div>
-    )
-  }
-}
+              </CardButton>
+            </Link>
+          </div>
+        </div>
+        <br />
+      </>
+    )}
+  </div>
+)
 
-const mapDispatchToProps = { deleteTrip, getSingleTrip }
+const mapDispatchToProps = { deleteTrip, toggleArchive }
 
 export default connect(
   null,

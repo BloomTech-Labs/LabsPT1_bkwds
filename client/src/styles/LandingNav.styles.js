@@ -224,7 +224,7 @@ export const LandingNavBottomStyles = styled.div`
     p {
       margin-bottom: 0;
       font-weight: 300;
-      color: ${props => props.theme.lightGray};
+      color: ${props => props.theme.midGray};
     }
   }
 
