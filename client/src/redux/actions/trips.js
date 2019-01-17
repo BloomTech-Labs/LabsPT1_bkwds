@@ -81,7 +81,7 @@ export const createTrip = (trip, markers) => dispatch => {
         tripId: response.data.id
       }))
       axios
-        .put(`${SERVER_URI}/waypoints/batch`, waypoints)
+        .post(`${SERVER_URI}/waypoints/batch`, waypoints)
         .then(() => {
           dispatch({ type: CREATING_TRIP_SUCCESS, payload: response.data })
           setTimeout(() =>
