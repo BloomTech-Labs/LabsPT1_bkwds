@@ -27,6 +27,7 @@ class CreateTripMap extends React.Component {
         disableDefaultUI: true
       }
     )
+    axios.defaults.headers.common["Authorization"] = this.props.token
   }
 
   addWaypoint = () => {
@@ -80,9 +81,7 @@ class CreateTripMap extends React.Component {
 
   saveTrip = () => {
     const { markers } = this.state
-    let config = {
-      headers: { Authorization: "Bearer " + this.props.token }
-    }
+
     if (this.saveValidate()) {
       let trip = {
         userId: this.props.userId,
@@ -93,27 +92,30 @@ class CreateTripMap extends React.Component {
         lat: window.map.getCenter().lat(),
         lon: window.map.getCenter().lng()
       }
+
+      console.log("TRIP:", trip)
+
       axios
-        .post(`${SERVER_URI}/trips/`, trip, config)
+        .post(`${SERVER_URI}/trips/`, trip)
         .then(resp => {
-          let waypoints = markers.map(marker => {
-            return {
-              tripId: resp.tripId,
-              order: marker.index + 1,
-              name: `Checkpoint ${marker.index}`,
-              lat: marker.getPosition().lat(),
-              lon: marker.getPosition().lng(),
-              end: Date.now()
-            }
-            axios
-              .post(`${SERVER_URI}/waypoints/batch`, waypoints, config)
-              .then(waypoints => {
-                console.log(waypoints)
-              })
-              .catch(() => {
-                console.log("Error posting to waypoints")
-              })
-          })
+          let waypoints = markers.map(marker => ({
+            tripId: resp.tripId,
+            order: marker.index + 1,
+            name: `Checkpoint ${marker.index}`,
+            lat: marker.getPosition().lat(),
+            lon: marker.getPosition().lng(),
+            start: Date.now(),
+            end: Date.now()
+          }))
+
+          axios
+            .post(`${SERVER_URI}/waypoints/batch`, waypoints)
+            .then(waypoints => {
+              console.log(waypoints)
+            })
+            .catch(() => {
+              console.log("Error posting to waypoints")
+            })
         })
         .catch(() => {
           console.log("Error posting to waypoints")
