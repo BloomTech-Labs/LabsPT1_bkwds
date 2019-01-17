@@ -18,5 +18,5 @@ waypointRouter.route("/batch").post(waypointController.createManyWaypoints)
 waypointRouter
   .route("/:id")
   .get(waypointController.getWaypoint)
-  .post(waypointController.updateWaypoint)
+  .put(waypointController.updateWaypoint)
   .delete(waypointController.deleteWaypoint)
