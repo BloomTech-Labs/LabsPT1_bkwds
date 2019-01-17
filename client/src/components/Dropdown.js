@@ -47,7 +47,7 @@ class NavDropdown extends Component {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem>
-              <Link to="/settings" className="dropdown-list-item">
+              <Link to="/app/settings" className="dropdown-list-item">
                 Settings
               </Link>
             </DropdownItem>
