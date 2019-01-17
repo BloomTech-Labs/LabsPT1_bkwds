@@ -9,6 +9,7 @@ import { login, loginWithOauth } from "../../redux/actions/auth"
 import { loginValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
 import Puff from "../icons/Puff"
+import GoogleIcon from "../icons/GoogleIcon"
 
 const LoginFormStyles = styled.div`
   ${authFormErrorsMixin};
@@ -69,15 +70,20 @@ const LoginForm = ({
                   text="Log in"
                   submitError={loginError}
                   isSubmitting={isSubmitting}
-                  classNames={["btn-ghost"]}
                 />
               )}
             </div>
             {pending && ""}
-            {!pending && (
-              <Button onClick={loginWithOauth}>Log in with Google</Button>
-            )}
           </Form>
+          {!pending && (
+            <Button
+              className="btn-ghost"
+              width="300px"
+              onClick={loginWithOauth}
+            >
+              <GoogleIcon /> Log in with Google
+            </Button>
+          )}
         </div>
       </LoginFormStyles>
     )}

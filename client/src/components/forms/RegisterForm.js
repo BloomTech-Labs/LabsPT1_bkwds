@@ -9,6 +9,7 @@ import { register, registerWithOauth } from "../../redux/actions/auth"
 import { registerValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
 import Puff from "../icons/Puff"
+import GoogleIcon from "../icons/GoogleIcon"
 
 const RegisterFormStyles = styled.div`
   ${authFormErrorsMixin};
@@ -89,7 +90,13 @@ const RegisterForm = ({
           </Form>
           {pending && ""}
           {!pending && (
-            <Button onClick={registerWithOauth}>Sign Up with Google</Button>
+            <Button
+              className="btn-ghost"
+              width="300px"
+              onClick={registerWithOauth}
+            >
+              <GoogleIcon /> Sign Up with Google
+            </Button>
           )}
         </div>
       </RegisterFormStyles>
