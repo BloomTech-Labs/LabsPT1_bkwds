@@ -18,10 +18,14 @@ restRouter.route("/register").post(register)
 restRouter.route("/login").post(login)
 restRouter.route("/changePassword").post(changePassword)
 restRouter.route("/user_from_token/:id").get(getUserFromToken)
-restRouter.use("/users", userRouter)
+
 // restRouter.use("/users", protect, userRouter)
-restRouter.use("/trips", protect, tripRouter)
-restRouter.use("/waypoints", protect, waypointRouter)
+// restRouter.use("/trips", protect, tripRouter)
+// restRouter.use("/waypoints", protect, waypointRouter)
+
+restRouter.use("/users", userRouter)
+restRouter.use("/trips", tripRouter)
+restRouter.use("/waypoints", waypointRouter)
 restRouter.use("/subscribe", protect, subscribeRouter)
 
 restRouter.use("/reset_password", emailRouter)
