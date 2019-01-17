@@ -50,25 +50,5 @@ export const TripCardStyles = styled.div`
     img {
       transition: all 1.86s ease;
     }
-
-    .FirstTripComponent {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      align-content: center;
-      position: 50%;
-    }
   }
 `
-
-//   .addTripButton {
-//     display: flex;
-// flex - direction: column;
-// width: 100 %;
-// justify - content: center;
-// align - items: center;
-// position: relative;
-// border - style: solid;
-// }

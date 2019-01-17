@@ -2,11 +2,11 @@ import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 
-import { deleteTrip } from "../redux/actions/trips"
-
+import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
+import { Button } from "../styles/theme/styledComponents"
 
-const TripCard = ({ trip }) => (
+const TripCard = ({ trip, archived, toggleArchive }) => (
   <div>
     {!trip.id && "Loading trip"}
     {trip.id && (
@@ -22,6 +22,13 @@ const TripCard = ({ trip }) => (
             <div>{trip.name}</div>
             <div>Start: {trip.start}</div>
             <div>End: {trip.end}</div>
+            <div>Archived: {trip.isArchived.toString()}</div>
+            <Button
+              className="btn"
+              onClick={() => toggleArchive(trip.id, !trip.isArchived)}
+            >
+              {archived ? "Unarchive" : "Archive"}
+            </Button>
             <CardButton>
               ><Link to={`/app/trip/${trip.id}`}>TRIP</Link>
             </CardButton>
@@ -33,7 +40,7 @@ const TripCard = ({ trip }) => (
   </div>
 )
 
-const mapDispatchToProps = { deleteTrip }
+const mapDispatchToProps = { deleteTrip, toggleArchive }
 
 export default connect(
   null,

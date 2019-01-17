@@ -43,8 +43,11 @@ export const AddTripButtonStyles = styled.div`
     width: 100%;
     max-width: 380px;
     color: rgba(179, 179, 179, 0.75);
-    &:hover: {
-      color: rgba(179, 179, 179, 1);
+    &:hover {
+      h2,
+      span {
+        color: ${props => props.theme.midGray};
+      }
     }
   }
 
@@ -55,5 +58,6 @@ export const AddTripButtonStyles = styled.div`
   }
   span {
     font-size: 3.5rem;
+    margin-top: -0.25rem;
   }
 `
