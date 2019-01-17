@@ -1,8 +1,12 @@
 .DateRangePicker {
+  display: flex;
+  justify-self: center;
   width: 90%;
   margin: 0 auto;
+  background: rgba(255, 255, 2555, 0.5);
 }
 
 .DateRangePickerInput {
-  border: none;
+  background: rgba(255, 255, 2555, 0.5);
+  width: 100%;
 }

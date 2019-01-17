@@ -1,9 +1,11 @@
 import React from "react"
 import Styled from "styled-components"
 import { connect } from "react-redux"
+import { toast } from "react-toastify"
 
 import CreateTripPanel from "./createTripPanel"
 import { media } from "../../../styles/theme/mixins"
+import { SERVER_URI } from "../../../config"
 
 const MapWrapper = Styled.div`
   position:relative;
@@ -16,26 +18,27 @@ const MapWrapper = Styled.div`
     ${media.tablet`
       visibility: visible;
       position: absolute;
+      cursor: pointer;
       right: 5%;
       bottom: 30%;
-      color: rgba(108, 122, 137, .8)
+      color: rgba(242, 106, 33, .8);
     `}
   }
-
 `
 
 class CreateTripMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      map: null,
       markers: [],
       waypoints: [],
-      markerListeners: []
+      title: "",
+      startDate: "",
+      endDate: ""
     }
   }
   componentDidMount() {
-    var map = new window.google.maps.Map(
+    window.map = new window.google.maps.Map(
       document.getElementById("createTripMap"),
       {
         center: { lat: 39.0997, lng: -94.5786 },
@@ -43,168 +46,107 @@ class CreateTripMap extends React.Component {
         disableDefaultUI: true
       }
     )
-    this.setState({ map: map })
   }
 
   addWaypoint = () => {
     const index = this.state.markers.length
     let marker = new window.google.maps.Marker({
-      position: this.state.map.getCenter(),
-      map: this.state.map,
+      position: window.map.getCenter(),
+      map: window.map,
       draggable: true,
       title: (index + 1).toString(),
-      label: (index + 1).toString()
+      label: (index + 1).toString(),
+      index: index,
+      icon: `${SERVER_URI}/images/add_marker_icon.svg`
     })
 
-    let waypoint = {
-      userId: this.props.userId,
-      lat: "",
-      lon: "",
-      tripId: "",
-      order: index + 1,
-      name: `Waypoint ${index + 1}`,
-      start: new Date(),
-      end: new Date()
-    }
-
-    // this.markerListener(marker)
     let markers = this.state.markers
     markers.push(marker)
     this.setState({ markers })
+    this.deleteListener(marker)
+    // let waypoint = {
+    //   userId: this.props.userId,
+    //   lat: "",
+    //   lon: "",
+    //   tripId: "",
+    //   order: index + 1,
+    //   name: `Waypoint ${index + 1}`,
+    //   start: new Date(),
+    //   end: new Date()
+    // }
 
-    let waypoints = this.state.waypoints
-    waypoints.push(waypoint)
-    this.setState({ waypoints })
+    // let waypoints = this.state.waypoints
+    // waypoints.push(waypoint)
+    // this.setState({ waypoints })
   }
 
-  markerListener = marker => {
-    let listener = marker.addListener("dragend", ev => {})
-    // UPDATE LAT AND LON ON MARKER AND WAYPOINT EVERYTIME IT"S DRAGGED
-
-    // const mappedWaypoints = this.state.waypoints.map((item, i) => {
-    //   if (i !== index) {
-    //     // window.google.maps.event.removeListener(listener)
-    //     // window.google.maps.event.removeListener(markerListener)
-    //     return item
-    //   } else {
-    //     // window.google.maps.event.removeListener(listener)
-    //     // window.google.maps.event.removeListener(markerListener)
-    //     return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
-    //   }
-    // })
-    let listeners = this.state.markerListeners
-    listeners.push(listener)
-    this.setState({ markerListeners: listeners })
-    // })
-  }
-
-  // addWaypoint = map => {
-  //   if (map === null) return
-  //   const index = this.state.markers.length
-  //   const listener = map.addListener("click", e => {
-  //     let marker = new window.google.maps.Marker({
-  //       position: e.latLng,
-  //       map: map,
-  //       draggable: true,
-  //       title: (index + 1).toString(),
-  //       label: (index + 1).toString()
-  //     })
-  //     const markerListener = marker.addListener("dragend", ev => {
-  //       const mappedWaypoints = this.state.waypoints.map((item, i) => {
-  //         if (i !== index) {
-  //           window.google.maps.event.removeListener(listener)
-  //           window.google.maps.event.removeListener(markerListener)
-  //           return item
-  //         } else {
-  //           window.google.maps.event.removeListener(listener)
-  //           window.google.maps.event.removeListener(markerListener)
-  //           return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
-  //         }
-  //       })
-  //       this.setState({ waypoints: mappedWaypoints })
-  //     })
-  //     this.setState(prevState => ({
-  //       waypoints: [
-  //         ...prevState.waypoints,
-  //         {
-  //           userId: this.props.userId,
-  //           lat: e.latLng.lat(),
-  //           lon: e.latLng.lng(),
-  //           tripId: this.props.tripId,
-  //           order: index + 1,
-  //           name: `Waypoint ${index + 1}`,
-  //           start: new Date(),
-  //           end: new Date()
-  //         }
-  //       ]
-  //     }))
-  //     let markers = this.state.markers
-  //     markers.push(marker)
-  //     this.setState({ markers })
-  // this.setState(prevState => ({
-  //   markers: [...prevState.markers, marker]
-  // }))
-
-  // window.google.maps.event.removeListener(listener)
-  // window.google.maps.event.removeListener(markerListener)
-  // })
-  // }
-
-  //filter waypoint and markers for i, then Re-Apply markers to maps
-  updateOrder = waypoints => {
-    return waypoints.map((item, i) => {
-      return { ...item, order: i }
+  deleteListener = marker => {
+    window.google.maps.event.addListenerOnce(marker, "dblclick", () => {
+      this.deleteMarker(marker)
     })
   }
 
-  handleDelete = i => {
-    const temp = this.state.waypoints.filter((_, index) => {
-      return i !== index
+  deleteMarker = marker => {
+    let markers = this.state.markers
+    // let index = marker.index
+    marker.setMap(null)
+    let filtered = markers.filter((_, i) => {
+      return i !== marker.index
     })
-    const reOrder = this.updateOrder(temp)
-    this.setState({ waypoints: reOrder })
-    this.deleteMapMarkers(i)
-  }
-
-  handleEdit = (e, i) => {
-    const mapped = this.state.waypoints.map((item, index) => {
-      if (index === i) {
-        return { ...item, name: e.target.value }
-      }
-      return item
-    })
-    this.setState({ waypoints: mapped })
-  }
-  //map through and edit titles
-  deleteMapMarkers = i => {
-    this.state.markers.forEach((item, index) => {
-      if (i === index && item) {
-        item.setMap(null)
+    // console.log(filtered)
+    let newMarkers = filtered.map((item, i) => {
+      return {
+        ...item,
+        title: (i + 1).toString(),
+        label: (i + 1).toString(),
+        index: i + 1
       }
     })
-    let updatedMarkers = this.state.markers.filter((_, index) => {
-      return i !== index
-    })
-    updatedMarkers.forEach((item, index) => {
-      item.setLabel(`${index + 1}`)
-    })
+    // console.log(newMarkers)
+    this.setState({ markers: newMarkers })
+  }
 
-    this.setState({ markers: updatedMarkers })
+  getTitle = title => {
+    this.setState({ title })
+  }
+
+  saveTrip = () => {
+    if (this.saveValidate()) {
+    }
+  }
+
+  saveValidate = () => {
+    const { startDate, endDate, title } = this.state
+    if (startDate === null || endDate === null) {
+      toast("Date not provided")
+      return false
+    }
+    if (title === "") {
+      toast("Title not provided")
+      return false
+    }
+    return true
   }
 
   render() {
+    let props = {
+      addWaypoint: this.addWaypoint,
+      deleteListener: this.deleteListener,
+      getTitle: this.getTitle
+    }
     return (
       <MapWrapper>
-        <CreateTripPanel map={this.state.map} />
+        <CreateTripPanel {...props} />
         <div
           id="createTripMap"
           style={{ width: "100%", height: "100%", position: "absolute" }}
         />
-        <i
+        {/* <i
           id="plus-icon"
-          className="fas fa-plus fa-4x"
+          className="fas fa-plus fa-3x"
           onClick={this.addWaypoint}
-        />
+        /> */}
+        <img id="plus-icon" src={`${SERVER_URI}/images/add_icon.svg`} />
       </MapWrapper>
     )
   }

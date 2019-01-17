@@ -1,7 +1,6 @@
 import React, { Fragment } from "react"
 import Axios from "axios"
 import Styled from "styled-components"
-import { connect } from "react-redux"
 import { toast } from "react-toastify"
 
 import { SERVER_URI } from "../../../config"
@@ -30,14 +29,17 @@ const Panel = Styled.div`
     ${media.tablet`
       max-width: 100%;
       width: 100%;
-      height: 5%;
+      height: ${props => (props.isToggled ? "50%" : "6%")};
       top: 0px;
       right: 0px;
-      background: rgba(255, 255, 2555, 0.5);
+      background: ${props =>
+        props.isToggled ? "white" : "rgba(255, 255, 2555, 0.5)"};
       border-radius: 0;
-      position: relative;
+      position: absolute;
       overflow-x: hidden;
-      justify-content: center;
+      justify-content: ${props =>
+        props.isToggled ? "space-evenly" : "center"};
+      align-items: ${props => (props.isToggled ? "space-evenly" : "center")};
     `}
 
     #plus-icon{
@@ -68,7 +70,9 @@ const ButtonGroup = Styled.div`
     margin: 0 auto;
 
     ${media.tablet`
-      display: none;
+      display: ${props => (props.isToggled ? "flex" : "none")};
+      position: static;
+      justify-content: initial;
       overflow-x: hidden;
     `}
 
@@ -78,6 +82,14 @@ const SaveButton = Styled.button`
     width: 105px;
     border-radius:4px;
     background: #0e153f;
+
+    ${media.tablet`
+      display: ${props => (props.isToggled ? "flex" : "none")};
+      position: static;
+      bottom: auto;
+      border: 1px solid black;
+      margin: 0 auto;
+    `}
 `
 
 const WaypointButton = Styled.button`
@@ -85,6 +97,8 @@ const WaypointButton = Styled.button`
     background: #0e153f;
     border-radius: 4px;
     width:105px;
+
+    ${media.tablet`display:none;`}
 
 `
 const PanelHeader = Styled.h2`
@@ -126,7 +140,14 @@ const TripTitleInput = Styled.input`
     background:transparent;
     border-bottom: .15rem solid black;
 
-    ${media.tablet`display: none;`}
+    ${media.tablet`
+      display: ${props => (props.isToggled ? "flex" : "none")};
+      text-align: center;
+      margin: 0;
+      border: 1px solid black;
+      justify-self: center;
+      align-self: center;
+    `}
 
 `
 const InputLabel = Styled.label`
@@ -175,32 +196,53 @@ const SearchCenterInput = Styled.input`
 `
 
 const DateRangeStyle = Styled.div`
-  ${media.tablet`display:none;`}
+  ${media.tablet`
+    display: ${props => (props.isToggled ? "flex" : "none")};
+    width: 85%;
+    border: 1px solid black;
+    justify-content: center;
+    align-content: center;
+    `}
+`
+// background: rgba(255, 255, 2555, 0.5);
+
+const Toggle = Styled.div`
+  display: flex;
+  visibility: hidden;
+  justify-content: center;
+
+  ${media.tablet`
+    visibility: visible;
+  `}
+
 `
 
 class CreateTripPanel extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      markers: [],
       center: {},
       title: "",
-      waypoints: [],
       startDate: null,
       endDate: null,
       focusedInput: null,
-      formError: null
+      formError: null,
+      location: "",
+      isToggled: false
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.map !== prevProps.map) {
-      this.searchAutoComplete(this.props.map)
-      this.attachCenterListener(this.props.map)
-    }
+  toggleDropdown = () => {
+    this.setState({ isToggled: !this.state.isToggled })
   }
 
-  searchAutoComplete = map => {
+  handleLocation = event => {
+    this.setState({ location: event.target.value })
+    this.searchAutoComplete()
+    this.attachCenterListener()
+  }
+
+  searchAutoComplete = () => {
     const input = document.getElementById("mapSearch")
     const autoComplete = new window.google.maps.places.Autocomplete(input)
     autoComplete.addListener("place_changed", () => {
@@ -211,7 +253,7 @@ class CreateTripPanel extends React.Component {
           lng: place.geometry.location.lng()
         }
         this.setState({ center })
-        map.panTo({
+        window.map.panTo({
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng()
         })
@@ -219,92 +261,9 @@ class CreateTripPanel extends React.Component {
     })
   }
 
-  // addWaypoint = map => {
-  //   const index = this.state.waypoints.length
-  //   const listener = map.addListener("click", e => {
-  //     let marker = new window.google.maps.Marker({
-  //       position: e.latLng,
-  //       map: map,
-  //       draggable: true,
-  //       title: (index + 1).toString(),
-  //       label: (index + 1).toString()
-  //     })
-  //     marker.addListener("dragend", ev => {
-  //       const mappedWaypoints = this.state.waypoints.map((item, i) => {
-  //         if (i !== index) {
-  //           return item
-  //         } else return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
-  //       })
-  //       this.setState({ waypoints: mappedWaypoints })
-  //     })
-  //     this.setState(prevState => ({
-  //       waypoints: [
-  //         ...prevState.waypoints,
-  //         {
-  //           userId: this.props.userId,
-  //           lat: e.latLng.lat(),
-  //           lon: e.latLng.lng(),
-  //           tripId: this.props.tripId,
-  //           order: index + 1,
-  //           name: `Waypoint ${index + 1}`,
-  //           start: new Date(),
-  //           end: new Date()
-  //         }
-  //       ]
-  //     }))
-  //     this.setState(prevState => ({
-  //       markers: [...prevState.markers, marker]
-  //     }))
-
-  //     window.google.maps.event.removeListener(listener)
-  //   })
-  // }
-
-  // //filter waypoint and markers for i, then Re-Apply markers to maps
-  // updateOrder = waypoints => {
-  //   return waypoints.map((item, i) => {
-  //     return { ...item, order: i }
-  //   })
-  // }
-
-  // handleDelete = i => {
-  //   const temp = this.state.waypoints.filter((_, index) => {
-  //     return i !== index
-  //   })
-  //   const reOrder = this.updateOrder(temp)
-  //   this.setState({ waypoints: reOrder })
-  //   this.deleteMapMarkers(i)
-  // }
-
-  // handleEdit = (e, i) => {
-  //   const mapped = this.state.waypoints.map((item, index) => {
-  //     if (index === i) {
-  //       return { ...item, name: e.target.value }
-  //     }
-  //     return item
-  //   })
-  //   this.setState({ waypoints: mapped })
-  // }
-  // //map through and edit titles
-  // deleteMapMarkers = i => {
-  //   this.state.markers.forEach((item, index) => {
-  //     if (i === index && item) {
-  //       item.setMap(null)
-  //     }
-  //   })
-  //   let updatedMarkers = this.state.markers.filter((_, index) => {
-  //     return i !== index
-  //   })
-  //   updatedMarkers.forEach((item, index) => {
-  //     item.setLabel(`${index + 1}`)
-  //   })
-
-  //   this.setState({ markers: updatedMarkers })
-  // }
-
-  attachCenterListener = map => {
-    map.addListener("center_changed", () => {
-      const newCenter = map.getCenter()
+  attachCenterListener = () => {
+    window.map.addListener("center_changed", () => {
+      const newCenter = window.map.getCenter()
       this.setState({ center: { lat: newCenter.lat(), lng: newCenter.lng() } })
     })
   }
@@ -342,55 +301,61 @@ class CreateTripPanel extends React.Component {
     }
   }
 
-  setTitle = e => {
-    this.setState({ title: e.target.value })
-  }
-
-  renderWaypointList = waypoints => {
-    return waypoints.map((waypoint, i) => {
-      return (
-        <Waypoint key={i}>
-          <label>{i + 1}</label>
-          <WaypointInput
-            type="text"
-            placeholder="waypoint title"
-            value={this.state.waypoints[i].name}
-            onChange={e => {
-              this.handleEdit(e, i)
-            }}
-          />
-          <DeleteButton
-            onClick={() => {
-              this.handleDelete(i)
-            }}
-          >
-            <DeleteIcon width="22px" height="22px" />
-          </DeleteButton>
-        </Waypoint>
-      )
+  handleTitle = e => {
+    this.setState({ title: e.target.value }, () => {
+      this.props.getTitle(e.target.value)
     })
   }
+
+  // renderWaypointList = waypoints => {
+  //   return waypoints.map((waypoint, i) => {
+  //     return (
+  //       <Waypoint key={i}>
+  //         <label>{i + 1}</label>
+  //         <WaypointInput
+  //           type="text"
+  //           placeholder="waypoint title"
+  //           value={this.state.waypoints[i].name}
+  //           onChange={e => {
+  //             this.handleEdit(e, i)
+  //           }}
+  //         />
+  //         <DeleteButton
+  //           onClick={() => {
+  //             this.handleDelete(i)
+  //           }}
+  //         >
+  //           <DeleteIcon width="22px" height="22px" />
+  //         </DeleteButton>
+  //       </Waypoint>
+  //     )
+  //   })
+  // }
 
   render() {
     return (
       <Fragment>
-        <Panel>
+        <Panel isToggled={this.state.isToggled}>
           <PanelHeader>Create Your Trip</PanelHeader>
-          <InputLabel>Trip Title</InputLabel>
-          <TripTitleInput
-            placeholder="Trip Name"
-            onChange={this.setTitle}
-            value={this.state.title}
-          />
           <InputLabel>Location</InputLabel>
           <SearchCenterInput
             id="mapSearch"
             placeholder="Enter Location OR drag map"
+            value={this.state.location}
+            onChange={this.handleLocation}
+          />
+
+          <TripTitleInput
+            isToggled={this.state.isToggled}
+            placeholder="Trip Name"
+            onChange={this.handleTitle}
+            value={this.state.title}
           />
 
           <DateLabel>Trip Date</DateLabel>
-          <DateRangeStyle>
+          <DateRangeStyle isToggled={this.state.isToggled}>
             <DateRangePicker
+              numberOfMonths={1}
               startDateId="startDate"
               endDateId="endDate"
               startDate={this.state.startDate}
@@ -407,27 +372,32 @@ class CreateTripPanel extends React.Component {
           </DateRangeStyle>
 
           <WaypointLabel>Waypoints</WaypointLabel>
-          <WaypointList>
+          {/* <WaypointList>
             {this.renderWaypointList(this.state.waypoints)}
-          </WaypointList>
+          </WaypointList> */}
 
-          <ButtonGroup>
-            <WaypointButton
-              onClick={() => {
-                this.addWaypoint(this.props.map)
-              }}
-            >
+          <ButtonGroup isToggled={this.state.isToggled}>
+            <WaypointButton onClick={this.props.addWaypoint}>
               + Waypoint
             </WaypointButton>
-            <SaveButton onClick={() => this.handleSave()}>Save</SaveButton>
+            <SaveButton
+              isToggled={this.state.isToggled}
+              onClick={() => this.handleSave()}
+            >
+              Create Trip
+            </SaveButton>
           </ButtonGroup>
+          <Toggle>
+            <i
+              id="down-angle"
+              className="fas fa-angle-down fa-2x"
+              onClick={this.toggleDropdown}
+            />
+          </Toggle>
         </Panel>
       </Fragment>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return { userId: state.auth.user.id }
-}
-export default connect(mapStateToProps)(CreateTripPanel)
+export default CreateTripPanel
