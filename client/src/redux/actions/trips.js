@@ -66,14 +66,14 @@ export const getArchivedTrips = () => dispatch => {
 }
 
 export const getSingleTrip = tripId => dispatch => {
-  dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
-  dispatch(push("/app/trip/" + tripId))
+  dispatch({ type: GET_SINGLE_TRIP, payload: tripId.id })
+  dispatch(push("/app/trip/" + tripId.id))
 }
 
-export const editTrip = tripId => dispatch => {
-  dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
-  dispatch(push("/app/trip/edit/" + tripId))
-}
+// export const editTrip = tripId => dispatch => {
+//   dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
+//   dispatch(push("/app/trip/edit/" + tripId))
+// }
 
 export const createTrip = trip => dispatch => {
   dispatch({ type: CREATING_TRIP })
