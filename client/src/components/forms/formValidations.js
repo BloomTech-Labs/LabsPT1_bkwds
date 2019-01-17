@@ -47,3 +47,23 @@ export const newTripValidations = values => {
 
   return errors
 }
+
+export const settingsValidations = values => {
+  let errors = {}
+  if (!values.email) {
+    errors.email = "Email is required"
+  } else if (validateEmail(values.email)) {
+    errors.email = "Invalid email address"
+  }
+
+  if (!values.oldPassword && values.newPassword)
+    errors.oldPassword = "Old password is required"
+  if (values.oldPassword && !values.newPassword)
+    errors.newPassword = "New password is required"
+  if (
+    (values.oldPassword && values.oldPassword.length < 8) ||
+    (values.newPassword && values.newPassword.length < 8)
+  )
+    errors.password = "Password must be at least 8 characters"
+  return errors
+}
