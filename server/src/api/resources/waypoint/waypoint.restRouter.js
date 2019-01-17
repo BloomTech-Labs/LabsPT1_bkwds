@@ -9,16 +9,14 @@ waypointRouter
   .post(waypointController.createWaypoint)
 
 waypointRouter
-  .route("/:id")
-  .get(waypointController.getWaypoint)
-  .put(waypointController.updateWaypoint)
-  .delete(waypointController.deleteWaypoint)
-
-waypointRouter
   .route("/trip/:tripId")
   .get(waypointController.getWaypointsByTrip)
   .delete(waypointController.deleteWaypointsByTrip)
 
+waypointRouter.route("/batch").put(waypointController.createManyWaypoints)
+
 waypointRouter
-  .route("/batch/:tripId")
-  .put(waypointController.createManyWaypoints)
+  .route("/:id")
+  .get(waypointController.getWaypoint)
+  .put(waypointController.updateWaypoint)
+  .delete(waypointController.deleteWaypoint)
