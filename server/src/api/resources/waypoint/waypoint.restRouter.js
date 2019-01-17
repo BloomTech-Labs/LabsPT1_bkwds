@@ -21,4 +21,4 @@ waypointRouter
 
 waypointRouter
   .route("/batch/:tripId")
-  .put(waypointController.updateManyWaypoints)
+  .put(waypointController.createManyWaypoints)
