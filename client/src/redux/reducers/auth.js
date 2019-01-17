@@ -36,7 +36,7 @@ const defaultState = {
 export const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case AUTH_LOADING:
-      return { ...state, pending: true }
+      return { ...state, pending: true, error: null }
 
     case LOGIN_SUCCESS:
       return {
