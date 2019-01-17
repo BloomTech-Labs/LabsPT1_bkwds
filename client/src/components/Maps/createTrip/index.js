@@ -11,7 +11,7 @@ import CustomWaypoint from "../../../assets/add_marker_icon-min.png"
 
 const convertMarkerToWaypoint = marker => ({
   order: marker.index + 1,
-  name: `Checkpoint ${marker.index}}`,
+  name: `Checkpoint ${marker.index}`,
   lat: marker.getPosition().lat(),
   lon: marker.getPosition().lng(),
   start: Date.now(),
@@ -36,13 +36,6 @@ class CreateTripMap extends React.Component {
       }
     )
     axios.defaults.headers.common["Authorization"] = this.props.token
-  }
-
-  componentDidUpdate() {
-    let waypoints = this.state.markers.map(marker => ({
-      ...convertMarkerToWaypoint(marker)
-    }))
-    console.log("UPDATED, WAYPOINTS:", { waypoints })
   }
 
   addWaypoint = () => {
@@ -100,7 +93,6 @@ class CreateTripMap extends React.Component {
     if (this.saveValidate()) {
       let trip = {
         userId: this.props.userId,
-        isArchived: false,
         name: this.state.title,
         start: this.state.startDate.utc().format(),
         end: this.state.endDate.utc().format(),
@@ -108,46 +100,40 @@ class CreateTripMap extends React.Component {
         lon: window.map.getCenter().lng()
       }
 
-      console.log("TRIP:", trip)
-
       axios
         .post(`${SERVER_URI}/trips/`, trip)
-        .then(resp => {
-          console.log("CREATE TRIP RESPONSE:", resp)
-          console.log("CREATE TRIP ID:", resp.data.id)
-
-          let waypoints = this.state.markers.map(marker => ({
+        .then(res => {
+          let waypoints = markers.map(marker => ({
             ...convertMarkerToWaypoint(marker),
-            tripId: resp.data.id
+            tripId: res.data.id
           }))
-
-          console.log("WAYPOINTS:", waypoints)
-
           axios
             .put(`${SERVER_URI}/waypoints/batch`, waypoints)
             .then(waypoints => {
               console.log(waypoints)
             })
             .catch(err => {
-              console.log("Error posting to waypoints: INSIDE ERR = ", err)
+              console.log("Error saving waypoints to trip, err:", err)
             })
         })
         .catch(err => {
-          console.log("Error posting to waypoints: OUTSIDE ERR = ", err)
+          console.log("Error posting waypoints, err:", err)
         })
     }
   }
 
   saveValidate = () => {
-    console.log("VALIDATING, STATE:", this.state)
-
-    const { startDate, endDate, title } = this.state
+    const { startDate, endDate, title, markers } = this.state
     if (!startDate || !endDate) {
       toast("Date not provided")
       return false
     }
     if (title === "") {
       toast("Title not provided")
+      return false
+    }
+    if (!markers.length) {
+      toast("Set at least 1 checkpoint")
       return false
     }
     return true
