@@ -14,6 +14,6 @@ export const LoginStyles = styled.div`
     width: 100%;
   }
   a {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
 `
