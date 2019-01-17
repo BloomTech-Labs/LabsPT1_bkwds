@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
+import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
 
 const TripCard = ({ trip, archived, toggleArchive }) => (
@@ -30,9 +31,15 @@ const TripCard = ({ trip, archived, toggleArchive }) => (
             >
               {archived ? "Unarchive" : "Archive"}
             </Button>
-            <CardButton>
-              ><Link to={`/app/trip/${trip.id}`}>TRIP</Link>
-            </CardButton>
+            <Link to={`/app/trip/${trip.id}`}>
+              <CardButton>
+                <ChevronSvg
+                  width="2rem"
+                  height="2rem"
+                  transform="rotate(-90deg)"
+                />
+              </CardButton>
+            </Link>
           </div>
         </div>
         <br />

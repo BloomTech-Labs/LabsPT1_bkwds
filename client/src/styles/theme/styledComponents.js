@@ -146,6 +146,7 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `
+
 export const CardButton = styled.button`
   position: absolute;
   right: 1%;
@@ -161,12 +162,12 @@ export const CardButton = styled.button`
   text-decoration: bold;
   color: #1abc9c;
   transition: all 0.3s ease;
-  &::after {
+  /* &::after {
     margin-left: 2%;
     content: "\f054";
     font-family: FontAwesome;
     line-height: 10%;
-  }
+  } */
 
   &:hover,
   &:focus {
