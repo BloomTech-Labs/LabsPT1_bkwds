@@ -129,12 +129,13 @@ export const deleteWaypointsByTrip = (req, res) => {
 }
 
 export const updateManyWaypoints = (req, res) => {
+  const { tripId } = req.params
   const waypoints = req.body.waypoints.map(
-    ({ tripId, order, name, lat, lon, start, end }) =>
+    ({ order, name, lat, lon, start, end }) =>
       new Waypoint({ tripId, order, name, lat, lon, start, end })
   )
 
-  Waypoint.insert(waypoints)
+  Waypoint.insertMany(waypoints)
     .then(response => {
       Trip.findByIdAndUpdate(
         { _id: tripId },

@@ -19,4 +19,6 @@ waypointRouter
   .get(waypointController.getWaypointsByTrip)
   .delete(waypointController.deleteWaypointsByTrip)
 
-waypointRouter.route("/batch").put(waypointController.updateManyWaypoints)
+waypointRouter
+  .route("/batch/:tripId")
+  .put(waypointController.updateManyWaypoints)
