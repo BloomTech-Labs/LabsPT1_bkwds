@@ -129,8 +129,8 @@ export const deleteWaypointsByTrip = (req, res) => {
 }
 
 export const createManyWaypoints = (req, res) => {
-  let { tripId } = req.body.waypoints[0]
-  const waypoints = req.body.waypoints.map(
+  let { tripId } = req.body[0]
+  const waypoints = req.body.map(
     ({ order, name, lat, lon, start, end }) =>
       new Waypoint({ tripId, order, name, lat, lon, start, end })
   )
