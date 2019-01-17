@@ -80,19 +80,6 @@ export const protect = (req, res, next) => {
   })
 }
 
-export const getUserFromToken = (req, res) => {
-  const { id } = req.params
-
-  return User.findById(id)
-    .then(user => {
-      return res.status(200).json(user)
-    })
-    .catch(err => {
-      console.error(err)
-      return res.status(401).send("Unauthorized")
-    })
-}
-
 export const changePassword = async (req, res) => {
   const { username, oldPassword, newPassword } = req.body
   // find if old password is valid
