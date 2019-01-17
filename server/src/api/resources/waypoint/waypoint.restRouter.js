@@ -13,7 +13,7 @@ waypointRouter
   .get(waypointController.getWaypointsByTrip)
   .delete(waypointController.deleteWaypointsByTrip)
 
-waypointRouter.route("/batch").put(waypointController.createManyWaypoints)
+waypointRouter.route("/batch").post(waypointController.createManyWaypoints)
 
 waypointRouter
   .route("/:id")
