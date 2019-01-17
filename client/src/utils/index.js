@@ -22,3 +22,12 @@ export const getToday = () => new Date()
 
 export const getTomorrow = () =>
   (today => new Date(new Date().setDate(today.getDate() + 1)))(new Date())
+
+export const convertMarkerToWaypoint = marker => ({
+  order: marker.index + 1,
+  name: `Checkpoint ${marker.index}`,
+  lat: marker.getPosition().lat(),
+  lon: marker.getPosition().lng(),
+  start: Date.now(),
+  end: Date.now()
+})

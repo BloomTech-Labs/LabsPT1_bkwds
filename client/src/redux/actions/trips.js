@@ -4,6 +4,7 @@ import { push } from "connected-react-router"
 import { SERVER_URI } from "../../config"
 import { toast } from "react-toastify"
 import { normalizeErrorMsg } from "../../utils/selectors"
+import { convertMarkerToWaypoint } from "../../utils"
 import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
@@ -76,13 +77,26 @@ export const editTrip = tripId => dispatch => {
   dispatch(push("/app/trip/edit/" + tripId))
 }
 
-export const createTrip = trip => dispatch => {
+export const createTrip = (trip, markers) => dispatch => {
   dispatch({ type: CREATING_TRIP })
   axios
-    .post(`${SERVER_URI}/trips`, { ...trip })
-    .then(res => {
-      dispatch({ type: CREATING_TRIP_SUCCESS, payload: res.data })
-      dispatch(push("/app/trips/"))
+    .post(`${SERVER_URI}/trips`, trip)
+    .then(response => {
+      let waypoints = markers.map(marker => ({
+        ...convertMarkerToWaypoint(marker),
+        tripId: response.data.id
+      }))
+      axios
+        .put(`${SERVER_URI}/waypoints/batch`, waypoints)
+        .then(res => {
+          dispatch({ type: CREATING_TRIP_SUCCESS, payload: response.data })
+          setTimeout(() =>
+            dispatch(push(`/app/trip/${response.data.id}`), 2000)
+          )
+        })
+        .catch(err => {
+          console.log("Error saving waypoints to trip, err:", err)
+        })
     })
     .catch(err => {
       dispatch({ type: CREATING_TRIP_ERROR, payload: err })

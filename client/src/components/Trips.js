@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 import TripCard from "./TripCard"
-import { getTrips, createTrip } from "../redux/actions/trips"
+import { getTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
@@ -62,7 +62,7 @@ const mapStateToProps = state => ({
   trips: getTripsArray(state)
 })
 
-const mapDispatchToProps = { getTrips, createTrip }
+const mapDispatchToProps = { getTrips }
 
 export default connect(
   mapStateToProps,
