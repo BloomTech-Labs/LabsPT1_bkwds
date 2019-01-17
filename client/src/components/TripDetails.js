@@ -2,16 +2,10 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 import { deleteTrip, toggleArchive, editTrip } from "../redux/actions/trips"
-import { getSingleTrip } from "../redux/actions/trips"
 
 import { Button } from "../styles/theme/styledComponents"
 
 class TripDetails extends Component {
-  handleSingleTrip = tripId => e => {
-    e.preventDefault()
-    this.props.getSingleTrip(tripId)
-  }
-
   toggleArchive = (tripId, archiveTrip) => () => {
     this.props.toggleArchive(tripId, archiveTrip)
   }
@@ -69,7 +63,6 @@ class TripDetails extends Component {
 const mapDispatchToProps = {
   deleteTrip,
   toggleArchive,
-  getSingleTrip,
   editTrip
 }
 

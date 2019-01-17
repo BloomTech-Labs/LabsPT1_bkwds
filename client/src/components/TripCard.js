@@ -1,18 +1,14 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 
 import { deleteTrip } from "../redux/actions/trips"
-import { getSingleTrip } from "../redux/actions/trips"
 
 import { CardButton } from "../styles/theme/styledComponents"
 class TripCard extends Component {
-  handleSingleTrip = tripId => e => {
-    e.preventDefault()
-    this.props.getSingleTrip(tripId)
-  }
-
   render() {
     const { trip } = this.props
+    console.log("TRIP CARD TRIP:", trip)
     return (
       <div>
         {!trip.id && "Loading trip"}
@@ -29,8 +25,8 @@ class TripCard extends Component {
                 <div>{trip.name}</div>
                 <div>Start: {trip.start}</div>
                 <div>End: {trip.end}</div>
-                <CardButton onClick={this.handleSingleTrip(trip.id)}>
-                  >
+                <CardButton>
+                  ><Link to={`/app/trip/${trip.id}`}>TRIP</Link>
                 </CardButton>
               </div>
             </div>
@@ -42,7 +38,7 @@ class TripCard extends Component {
   }
 }
 
-const mapDispatchToProps = { deleteTrip, getSingleTrip }
+const mapDispatchToProps = { deleteTrip }
 
 export default connect(
   null,

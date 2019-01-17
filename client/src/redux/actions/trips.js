@@ -12,6 +12,7 @@ import {
   LOADING_ARCHIVED_TRIPS_SUCCESS,
   LOADING_ARCHIVED_TRIPS_ERROR,
   GET_SINGLE_TRIP,
+  ADD_ACTIVE_TRIP_TO_STATE,
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
   CREATING_TRIP_ERROR,
@@ -66,8 +67,9 @@ export const getArchivedTrips = () => dispatch => {
 }
 
 export const getSingleTrip = tripId => dispatch => {
-  dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
-  dispatch(push("/app/trip/" + tripId))
+  axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
+    dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
+  })
 }
 
 export const editTrip = tripId => dispatch => {
