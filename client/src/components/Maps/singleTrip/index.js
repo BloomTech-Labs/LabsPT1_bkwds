@@ -2,6 +2,7 @@ import React from "react"
 // import Styled from "styled-components"
 import { connect } from "react-redux"
 import { SERVER_URI } from "../../../config"
+import PropTypes from "prop-types"
 import Axios from "axios"
 
 // const PanelHeader = Styled.h2`
@@ -80,6 +81,10 @@ class SingleTripMap extends React.Component {
       />
     )
   }
+}
+
+SingleTripMap.propTypes = {
+  tripId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => {

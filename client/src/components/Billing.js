@@ -2,6 +2,7 @@ import React from "react"
 import * as s from "../styles/Billing.styles"
 import { connect } from "react-redux"
 import moment from "moment"
+import PropTypes from "prop-types"
 import {
   openCheckoutForm,
   cancelSubscription,
@@ -144,6 +145,18 @@ class Billing extends React.Component {
       </StripeProvider>
     )
   }
+}
+
+Billing.propTypes = {
+  cancelSubscription: PropTypes.func.isRequired,
+  hasError: PropTypes.string,
+  invoices: PropTypes.arrayOf(PropTypes.object),
+  isCheckoutFormOpen: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  isPending: PropTypes.bool.isRequired,
+  openCheckoutForm: PropTypes.func.isRequired,
+  retrieveInvoices: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {

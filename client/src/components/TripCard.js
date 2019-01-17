@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
 import { deleteTrip } from "../redux/actions/trips"
 import { getSingleTrip } from "../redux/actions/trips"
@@ -39,6 +40,24 @@ class TripCard extends Component {
       </div>
     )
   }
+}
+
+TripCard.propTypes = {
+  archived: PropTypes.bool.isRequired,
+  deleteTrip: PropTypes.func.isRequired,
+  getSingleTrip: PropTypes.func.isRequired
+  // trip: PropTypes.shape({
+  //   end: PropTypes.string,
+  //   id: PropTypes.string,
+  //   inProgress: PropTypes.bool,
+  //   isArchived: PropTypes.bool,
+  //   lat: PropTypes.number,
+  //   lon: PropTypes.number,
+  //   name: PropTypes.string,
+  //   start: PropTypes.string,
+  //   userId: PropTypes.string,
+  //   waypoints: PropTypes.arrayOf(PropTypes.object)
+  // })
 }
 
 const mapDispatchToProps = { deleteTrip, getSingleTrip }

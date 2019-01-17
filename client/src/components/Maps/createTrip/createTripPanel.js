@@ -9,6 +9,7 @@ import "react-dates/lib/css/_datepicker.css"
 import "../createTrip/custom.css"
 import { DateRangePicker } from "react-dates"
 import { toast } from "react-toastify"
+import PropTypes from "prop-types"
 
 //TODO: Correctly handle POST trip/ call
 const Panel = Styled.div`
@@ -352,6 +353,11 @@ class CreateTripPanel extends React.Component {
       </Panel>
     )
   }
+}
+
+CreateTripPanel.propTypes = {
+  map: PropTypes.object,
+  userId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => {
