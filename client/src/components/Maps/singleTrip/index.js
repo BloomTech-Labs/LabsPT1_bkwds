@@ -1,35 +1,22 @@
 import React from "react"
 import { connect } from "react-redux"
-import { withRouter } from "react-router-dom"
-import { SERVER_URI } from "../../../config"
-import Axios from "axios"
 
 import { getSingleTrip } from "../../../redux/actions/trips"
 
-// const PanelHeader = Styled.h2`
-//     font-size:1.5rem;
-//     padding:.5rem;
-// `
-
-// const WaypointList = Styled.div`
-//     overflow:scroll;
-// `
-// const Waypoint = Styled.div`
-//     align-items:center;
-//     width: 90%;
-//     display:flex;
-//     margin:0 auto;
-// `
-
 class SingleTripMap extends React.Component {
-  state = {
-    trip: {}
+  componentDidMount() {
+    this.props.getSingleTrip(this.props.tripId)
+    this.renderMap()
   }
 
-  componentDidMount() {
-    console.log("SINGLE TRIP MAP MOUNTED, PROPS:", this.props)
-    const { tripId } = this.props
-    this.props.getSingleTrip(tripId)
+  componentDidUpdate() {
+    const { trip } = this.props
+    const center = {
+      lat: parseFloat(trip.lat),
+      lng: parseFloat(trip.lon)
+    }
+    console.log("SINGLE TRIP COMPONENT UPDATED! PROPS:", this.props)
+    this.renderMap(center, trip.waypoints)
   }
 
   //Attaches Map to div
@@ -62,13 +49,6 @@ class SingleTripMap extends React.Component {
     })
   }
 
-  //fetches trip details
-  // async fetchTrip(tripId) {
-  //   const res = await Axios.get(`${SERVER_URI}/trips/${tripId}`)
-  //   const { data } = await res
-  //   return data
-  // }
-
   render() {
     return (
       <div
@@ -83,9 +63,22 @@ const mapStateToProps = state => ({
   trip: state.trips.activeTrip
 })
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { getSingleTrip }
-  )(SingleTripMap)
-)
+export default connect(
+  mapStateToProps,
+  { getSingleTrip }
+)(SingleTripMap)
+
+// const PanelHeader = Styled.h2`
+//     font-size:1.5rem;
+//     padding:.5rem;
+// `
+
+// const WaypointList = Styled.div`
+//     overflow:scroll;
+// `
+// const Waypoint = Styled.div`
+//     align-items:center;
+//     width: 90%;
+//     display:flex;
+//     margin:0 auto;
+// `
