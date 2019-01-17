@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { TripPropTypes } from "./propTypes"
 
 import TripCard from "./TripCard"
 import { getTrips, createTrip } from "../redux/actions/trips"
@@ -56,6 +58,12 @@ class Trips extends Component {
   render() {
     return <div className="firstTrip">{this.renderTrips()}</div>
   }
+}
+
+Trips.propTypes = {
+  createTrip: PropTypes.func.isRequired,
+  getTrips: PropTypes.func.isRequired,
+  trips: PropTypes.arrayOf(TripPropTypes)
 }
 
 const mapStateToProps = state => ({
