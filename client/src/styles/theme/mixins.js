@@ -7,6 +7,11 @@ const breakpoints = {
   phone: 576
 }
 
+const minBreakpoints = {
+  tablet: 577,
+  desktop: 769
+}
+
 /* You can use the media export in a styled-component like so:
  *   ${media.desktop`display: flex;`}
  *   ${media.tablet`display: inline-block;`}
@@ -14,6 +19,15 @@ const breakpoints = {
 export const media = Object.keys(breakpoints).reduce((acc, label) => {
   acc[label] = (...args) => css`
     @media (max-width: ${breakpoints[label] / 16}em) {
+      ${css(...args)};
+    }
+  `
+  return acc
+}, {})
+
+export const minMedia = Object.keys(minBreakpoints).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (min-width: ${breakpoints[label] / 16}em) {
       ${css(...args)};
     }
   `

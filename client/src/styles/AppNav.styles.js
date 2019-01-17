@@ -18,17 +18,6 @@ export const NavStyles = styled.div`
   padding-right: 1.25rem;
   ${media.phone`padding-right: 0;`}
 
-  .nav-links-wrapper {
-    display: none;
-    ${media.phone`
-      display: block;
-
-      `}
-
-    }
-
-    /* ${media.phone`display: none !important;`} */
-  }
   .logo {
     color: ${props => props.theme.primary};
     font-weight: 700;
@@ -89,8 +78,8 @@ export const NavStyles = styled.div`
     top: 0;
     left: 0;
     border-radius: 0;
-    margin-left: -6px;
     margin: 0.05rem 0 0;
+    margin-left: -6px;
   }
 
   .mobile-links-wrapper {
@@ -114,5 +103,32 @@ export const NavStyles = styled.div`
     flex-grow: 1;
     flex-direction: row;
     justify-content: flex-end;
+  }
+
+  .navlinks-wrapper {
+    display: block;
+    ${media.phone`display: none;`}
+  }
+
+  /* SHARED STYLES WITH DROPDOWN.STYLES.JS */
+  button.dropdown-item {
+    margin: 0;
+    padding: 0;
+    a {
+      transition: padding-left 0.15s ease-in, color 0.15s ease-in;
+      height: auto;
+      padding: 9px 20px;
+      font-size: 1rem;
+      font-weight: 300;
+
+      &:hover {
+        padding-left: 1.5rem;
+      }
+      &:last-child {
+        /* background-color: ${props => props.theme.primary};
+        color: ${props => props.theme.white};
+        font-weight: 400; */
+      }
+    }
   }
 `

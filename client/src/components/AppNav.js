@@ -31,7 +31,8 @@ class AppNav extends Component {
   }
 
   render() {
-    const { pathname, isLoggedIn, logout } = this.props.location
+    const { logout, isLoggedIn, location } = this.props
+    const { pathname } = location
     const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
     return (
       <div>
@@ -40,7 +41,7 @@ class AppNav extends Component {
             <div className="logo">bkwds.</div>
           </div>
           <div className="appnav-right">
-            <div className="nav-links-wrapper">
+            <div className="navlinks-wrapper">
               {isHomeOrAuthPath && !isLoggedIn ? (
                 <UnauthenticatedLinks
                   className="unauthenticated-links"
