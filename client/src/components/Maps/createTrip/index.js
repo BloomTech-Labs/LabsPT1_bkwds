@@ -22,8 +22,8 @@ class CreateTripMap extends React.Component {
   state = {
     markers: [],
     title: "",
-    startDate: "",
-    endDate: ""
+    startDate: null,
+    endDate: null
   }
 
   componentDidMount() {
@@ -142,7 +142,7 @@ class CreateTripMap extends React.Component {
     console.log("VALIDATING, STATE:", this.state)
 
     const { startDate, endDate, title } = this.state
-    if (startDate === null || endDate === null) {
+    if (!startDate || !endDate) {
       toast("Date not provided")
       return false
     }
