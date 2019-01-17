@@ -30,9 +30,8 @@ class SingleTripMap extends React.Component {
       this.renderWaypoints(waypoints, map)
     }
   }
-  // renderWaypointList = waypoints => {}
 
-  //Attach waypoints to map
+  // Attach waypoints to map
   renderWaypoints = (waypoints, map) => {
     waypoints.forEach(waypoint => {
       const center = {
@@ -43,7 +42,7 @@ class SingleTripMap extends React.Component {
         position: center,
         map: map,
         title: waypoint.name,
-        label: waypoint.order
+        label: waypoint.order.toString()
       }).setMap(map)
     })
   }
