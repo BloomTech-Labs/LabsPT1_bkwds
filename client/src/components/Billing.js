@@ -13,6 +13,7 @@ import { Elements, StripeProvider } from "react-stripe-elements"
 import CheckoutForm from "./forms/CheckoutForm"
 import { Button } from "../styles/theme/styledComponents"
 import { STRIPE_KEY } from "../config"
+//import { UserPropTypes } from "./propTypes"
 
 class Billing extends React.Component {
   state = {
@@ -155,8 +156,9 @@ Billing.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   isPending: PropTypes.bool.isRequired,
   openCheckoutForm: PropTypes.func.isRequired,
-  retrieveInvoices: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  retrieveInvoices: PropTypes.func.isRequired
+  // TODO: figure out why we have Trip objects instead of IDs here!
+  // user: UserPropTypes
 }
 
 const mapStateToProps = state => {

@@ -90,4 +90,5 @@ SingleTripMap.propTypes = {
 const mapStateToProps = state => {
   return { tripId: state.trips.activeTrip }
 }
+
 export default connect(mapStateToProps)(SingleTripMap)
