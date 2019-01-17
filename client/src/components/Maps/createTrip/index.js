@@ -1,6 +1,5 @@
 import React from "react"
 import Styled from "styled-components"
-
 import CreateTripPanel from "./createTripPanel"
 
 const MapWrapper = Styled.div`
@@ -13,12 +12,11 @@ class CreateTripMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      addingWaypoints: false,
       map: null
     }
   }
   componentDidMount() {
-    var map = new window.google.maps.Map(
+    const map = new window.google.maps.Map(
       document.getElementById("createTripMap"),
       {
         center: { lat: 39.0997, lng: -94.5786 },

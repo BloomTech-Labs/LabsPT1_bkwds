@@ -215,7 +215,7 @@ class CreateTripPanel extends React.Component {
     })
     this.setState({ waypoints: mapped })
   }
-  //map through and edit titles
+
   deleteMapMarkers = i => {
     this.state.markers.forEach((item, index) => {
       if (i === index && item) {
@@ -239,7 +239,6 @@ class CreateTripPanel extends React.Component {
     })
   }
 
-  //Add toast to notify validation issues
   saveValidate = () => {
     const { startDate, endDate, title } = this.state
     if (startDate === null || endDate === null) {
