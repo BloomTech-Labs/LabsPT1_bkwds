@@ -45,7 +45,7 @@ const SettingsForm = ({
       handleSubmit,
       isSubmitting
     }) => (
-      <SettingsFormStyles className="responsive-design-settings">
+      <SettingsFormStyles>
         <div className="register-form custom-form">
           <Form onSubmit={handleSubmit}>
             <CustomInputWithError
