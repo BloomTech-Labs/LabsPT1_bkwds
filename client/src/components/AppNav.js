@@ -7,19 +7,38 @@ import UnauthenticatedLinks from "./UnauthenticatedLinks"
 import GitHubSvg from "./icons/GitHubSvg"
 
 import { logout } from "../redux/actions/auth"
+import { toggleSidebar } from "../redux/actions/navigation"
 import { isProtectedPath } from "../utils"
+import { HamburgerSpring } from "react-animated-burgers"
+
+import { withTheme } from "styled-components"
 import * as s from "../styles/AppNav.styles"
 
 const protectedPaths = ["/", "/login", "/register"]
 
-const AppNav = ({ location, logout, isLoggedIn }) => {
+const AppNav = ({
+  location,
+  logout,
+  isLoggedIn,
+  isSidebarOpen,
+  toggleSidebar,
+  theme
+}) => {
   const { pathname } = location
   const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
-
   return (
     <div>
       <s.NavStyles>
-        <div className="logo">Backwoods Tracker</div>
+        <div className="logo">
+          <HamburgerSpring
+            className="hamburgerIcon"
+            buttonWidth={20}
+            barColor={`${theme.primary}`}
+            isActive={isSidebarOpen}
+            toggleButton={() => toggleSidebar(isSidebarOpen)}
+          />
+          Backwoods Tracker
+        </div>
         <div className="nav-links-wrapper">
           {isHomeOrAuthPath && !isLoggedIn ? (
             <UnauthenticatedLinks pathname={pathname} />
@@ -35,16 +54,18 @@ const AppNav = ({ location, logout, isLoggedIn }) => {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+  isLoggedIn: state.auth.isLoggedIn,
+  isSidebarOpen: state.navigation.isSidebarOpen
 })
 
 const mapDispatchToProps = {
-  logout
+  logout,
+  toggleSidebar
 }
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(AppNav)
+  )(withTheme(AppNav))
 )

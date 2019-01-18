@@ -26,6 +26,14 @@ export const NavStyles = styled.div`
     font-weight: 700;
     font-size: 1.75rem;
     letter-spacing: -0.0275rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .hamburgerIcon {
+    display: flex;
+    margin-right: 5px;
   }
 
   ul {

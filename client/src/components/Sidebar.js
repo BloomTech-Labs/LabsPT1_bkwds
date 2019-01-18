@@ -1,19 +1,23 @@
 import React from "react"
 import { Link, withRouter } from "react-router-dom"
+import { connect } from "react-redux"
 import { Button } from "../styles/theme/styledComponents"
 import * as s from "../styles/Sidebar.styles"
 
 const SidebarLink = ({ to, displayName, pathname }) => (
   <Button className={pathname === to ? "btn-inverted" : ""}>
+    <Link to={to}>
+      <i className="fa fa-heart" />
+    </Link>
     <Link to={to}>{displayName}</Link>
   </Button>
 )
 
-const Sidebar = ({ location }) => {
+const Sidebar = ({ location, isSidebarOpen }) => {
   return (
     <s.SidebarStyles>
-      <div className="sidebar-links">
-        <div style={{ marginLeft: "2rem" }}>App:</div>
+      <div className={`sidebar-links ${isSidebarOpen && "open"}`}>
+        {/* <div style={{ marginLeft: "2rem" }}>App:</div> */}
         <SidebarLink
           to="/app"
           displayName="Dashboard"
@@ -44,7 +48,7 @@ const Sidebar = ({ location }) => {
           displayName="Settings"
           pathname={location.pathname}
         />
-        <div style={{ marginLeft: "2rem" }}>Pages:</div>
+        {/* <div style={{ marginLeft: "2rem" }}>Pages:</div> */}
         <SidebarLink
           to="/"
           displayName="Landing Page"
@@ -65,4 +69,13 @@ const Sidebar = ({ location }) => {
   )
 }
 
-export default withRouter(Sidebar)
+const mapStateToProps = state => ({
+  isSidebarOpen: state.navigation.isSidebarOpen
+})
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    null
+  )(Sidebar)
+)
