@@ -1,8 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import Axios from "axios"
 
+import { TripPropTypes } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
 
 const dashSymbol = {
@@ -91,6 +91,12 @@ class SingleTripMap extends React.Component {
       />
     )
   }
+}
+
+SingleTripMap.propTypes = {
+  getSingleTrip: PropTypes.func.isRequired,
+  trip: TripPropTypes.isRequired,
+  tripId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
