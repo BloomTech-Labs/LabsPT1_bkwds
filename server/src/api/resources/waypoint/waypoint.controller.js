@@ -10,6 +10,7 @@ export const getAllWaypoints = (req, res) => {
       res.status(500).send(err)
     })
 }
+
 export const createWaypoint = (req, res) => {
   const newWaypoint = new Waypoint({
     tripId: req.body.tripId,
@@ -128,42 +129,26 @@ export const deleteWaypointsByTrip = (req, res) => {
 }
 
 export const createManyWaypoints = (req, res) => {
-  console.log("CREATE MANY REQ.BODY:", req.body)
-
   let { tripId } = req.body[0]
 
-  console.log("TRIPID:", tripId)
-
-  const waypoints = req.body.map(
-    ({ order, name, lat, lon, start, end }) =>
-      new Waypoint({ tripId, order, name, lat, lon, start, end })
-  )
-
-  console.log("CREATING MANY:", waypoints)
-
-  Waypoint.insertMany(waypoints)
+  Waypoint.insertMany(req.body)
     .then(response => {
-      console.log("INSERTED MANY! RESPONSE:", response)
       Trip.findByIdAndUpdate(
         { _id: tripId },
         {
           $addToSet: {
-            waypoints: { $each: [...waypoints.map(({ id }) => id)] }
+            waypoints: { $each: [...response.map(({ id }) => id)] }
           }
         }
       )
-        .then(resp => {
-          // returns the TRIP, not the waypoints
-          console.log("RETURNS TRIP:", resp)
+        .then(() => {
           res.status(201).json(response)
         })
-        .catch(err => {
-          console.error("UPDATING TRIP ERR:", err)
+        .catch(() => {
           res.status(500).json("Error linking waypoints to Trip")
         })
     })
     .catch(err => {
-      console.error("UPDATING WAYPOINTS ERR:", err)
       res.status(500).json(err.message)
     })
 }

@@ -11,7 +11,6 @@ export const restRouter = express.Router()
 restRouter.route("/register").post(register)
 restRouter.route("/login").post(login)
 restRouter.route("/changePassword").post(changePassword)
-
 restRouter.use("/users", protect, userRouter)
 restRouter.use("/trips", protect, tripRouter)
 restRouter.use("/waypoints", protect, waypointRouter)

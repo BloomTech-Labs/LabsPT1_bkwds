@@ -20,8 +20,3 @@ waypointRouter
   .get(waypointController.getWaypoint)
   .put(waypointController.updateWaypoint)
   .delete(waypointController.deleteWaypoint)
-
-waypointRouter
-  .route("/trip/:tripId")
-  .get(waypointController.getWaypointsByTrip)
-  .delete(waypointController.deleteWaypointsByTrip)
