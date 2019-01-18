@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Nav from "./LandingPageNav"
 import LandingCTA from "./LandingCTA"
 
-const Container = styled.div`
+const HeroContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-image: url(./images/LPBackground.jpg);
@@ -17,12 +17,12 @@ const CTAContainer = styled.div`
 
 const HeroPage = () => {
   return (
-    <Container>
+    <HeroContainer>
       <Nav />
       <CTAContainer>
         <LandingCTA />
       </CTAContainer>
-    </Container>
+    </HeroContainer>
   )
 }
 

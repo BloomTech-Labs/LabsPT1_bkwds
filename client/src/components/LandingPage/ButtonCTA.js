@@ -30,7 +30,7 @@ const ButtonCTA = () => {
   return (
     <Link to="/login">
       <CTAButton>
-        <h4>Hike with us.</h4>
+        <h4>Hike with us</h4>
       </CTAButton>
     </Link>
   )

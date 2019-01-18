@@ -19,12 +19,12 @@ const Img = styled.img`
 const Menu = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 110px);
-  margin-right: 90px;
+  margin-right: 5%;
   text-align: center;
   justify-content: space-around;
 
   a {
-    font-size: 23px;
+    font-size: 20px;
     color: white !important;
   }
 `

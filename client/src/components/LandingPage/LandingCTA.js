@@ -9,9 +9,6 @@ const CallToAction = styled.div`
   width: 100%;
   margin-top: 42px;
   margin-right: 2rem;
-  margin-left: 2rem;
-  align-content: center;
-  justify-content: start;
 
   h1 {
     color: white !important;
@@ -25,6 +22,10 @@ const CallToAction = styled.div`
   }
   .accent {
     color: #f26a21 !important;
+  }
+
+  a {
+    align-self: center;
   }
 `
 
