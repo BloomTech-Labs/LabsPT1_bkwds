@@ -1,16 +1,16 @@
 import PropTypes from "prop-types"
 
 export const TripPropTypes = PropTypes.shape({
-  end: PropTypes.string,
-  id: PropTypes.string,
-  inProgress: PropTypes.bool,
-  isArchived: PropTypes.bool,
-  lat: PropTypes.number,
-  lon: PropTypes.number,
-  name: PropTypes.string,
-  start: PropTypes.string,
-  userId: PropTypes.string,
-  waypoints: PropTypes.arrayOf(PropTypes.string)
+  end: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  inProgress: PropTypes.bool.isRequired,
+  isArchived: PropTypes.bool.isRequired,
+  lat: PropTypes.number.isRequired,
+  lon: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  start: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
+  waypoints: PropTypes.array.isRequired
 })
 
 export const UserPropTypes = PropTypes.shape({
