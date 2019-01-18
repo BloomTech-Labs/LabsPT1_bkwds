@@ -14,9 +14,16 @@ class Trips extends Component {
         <s.TripCardStyles>
           <div className="container">
             {!trips.length && "No unarchived trips!"}
-            {trips.map(trip => (
-              <TripCard key={trip.id} trip={trip} archived={false} />
-            ))}
+            {/* {trips.map(trip => (
+              if (!trip.isArchived) {
+                <TripCard key={trip.id} trip={trip} archived={false} />
+              }
+            ))} */}
+            {trips.map(trip => {
+              if (!trip.isArchived) {
+                return <TripCard key={trip.id} trip={trip} />
+              }
+            })}
             <AddTripButton
               className="AddTripButton"
               text={trips.length ? "Add New Trip" : "Add Your First Trip"}
