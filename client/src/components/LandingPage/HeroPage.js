@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import styled from "styled-components"
 import Nav from "./LandingPageNav"
 import LandingCTA from "./LandingCTA"
