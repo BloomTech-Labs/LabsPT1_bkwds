@@ -4,6 +4,7 @@ import { push } from "connected-react-router"
 import { SERVER_URI } from "../../config"
 import { toast } from "react-toastify"
 import { normalizeErrorMsg } from "../../utils/selectors"
+import { convertMarkerToWaypoint } from "../../utils"
 import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
@@ -22,12 +23,6 @@ import {
   TOGGLE_ARCHIVE_TRIP_SUCCESS,
   TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
-
-// const token = localStorage.getItem("token")
-// if (token) {
-//   // If token, set token as Authorization header on all axios requests:
-//   axios.defaults.headers.common["Authorization"] = token
-// }
 
 export const getTrips = () => dispatch => {
   const token = localStorage.getItem("token")
@@ -66,8 +61,9 @@ export const getArchivedTrips = () => dispatch => {
 }
 
 export const getSingleTrip = tripId => dispatch => {
-  dispatch({ type: GET_SINGLE_TRIP, payload: tripId.id })
-  dispatch(push("/app/trip/" + tripId.id))
+  axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
+    dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
+  })
 }
 
 // export const editTrip = tripId => dispatch => {
@@ -75,13 +71,26 @@ export const getSingleTrip = tripId => dispatch => {
 //   dispatch(push("/app/trip/edit/" + tripId))
 // }
 
-export const createTrip = trip => dispatch => {
+export const createTrip = (trip, markers) => dispatch => {
   dispatch({ type: CREATING_TRIP })
   axios
-    .post(`${SERVER_URI}/trips`, { ...trip })
-    .then(res => {
-      dispatch({ type: CREATING_TRIP_SUCCESS, payload: res.data })
-      dispatch(push("/app/trips/"))
+    .post(`${SERVER_URI}/trips`, trip)
+    .then(response => {
+      let waypoints = markers.map(marker => ({
+        ...convertMarkerToWaypoint(marker),
+        tripId: response.data.id
+      }))
+      axios
+        .post(`${SERVER_URI}/waypoints/batch`, waypoints)
+        .then(() => {
+          dispatch({ type: CREATING_TRIP_SUCCESS, payload: response.data })
+          setTimeout(() =>
+            dispatch(push(`/app/trip/${response.data.id}`), 2000)
+          )
+        })
+        .catch(err => {
+          console.log("Error saving waypoints to trip, err:", err)
+        })
     })
     .catch(err => {
       dispatch({ type: CREATING_TRIP_ERROR, payload: err })
