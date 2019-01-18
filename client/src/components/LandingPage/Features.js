@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import Nav from "./LandingPageNav"
 import LandingCTA from "./LandingCTA"
 import HeaderContainer from "./HeaderContainer"
 
@@ -23,21 +22,8 @@ const FeaturesContainer = styled.div`
   }
 `
 
-const CTAContainer = styled.div``
-
-class Features extends Component {
-  render() {
-    return (
-      <FeaturesContainer>
-        <HeaderContainer className="header" />
-        {/* <CTAContainer>
-                <BannerCTA />
-
-            </CTAContainer> */}
-        <LandingCTA className="main" />
-      </FeaturesContainer>
-    )
-  }
+const Features = () => {
+  return <FeaturesContainer />
 }
 
 export default Features

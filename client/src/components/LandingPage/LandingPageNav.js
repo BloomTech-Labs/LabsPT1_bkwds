@@ -29,22 +29,20 @@ const Menu = styled.div`
   }
 `
 
-class Nav extends Component {
-  render() {
-    return (
-      <NavigationMenu>
-        <div>
-          <Img src={logo} />
-        </div>
-        <Menu>
-          <Link to="/login">Features</Link>
-          <Link to="/login">About</Link>
-          <Link to="/login">Log in</Link>
-          <Link to="/login">Sign up</Link>
-        </Menu>
-      </NavigationMenu>
-    )
-  }
+const Nav = () => {
+  return (
+    <NavigationMenu>
+      <div>
+        <Img src={logo} />
+      </div>
+      <Menu>
+        <Link to="/login">Features</Link>
+        <Link to="/login">About</Link>
+        <Link to="/login">Log in</Link>
+        <Link to="/login">Sign up</Link>
+      </Menu>
+    </NavigationMenu>
+  )
 }
 
 export default Nav

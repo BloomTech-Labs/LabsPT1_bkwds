@@ -26,16 +26,14 @@ const CTAButton = styled.div`
     color: white !important;
   }
 `
-class ButtonCTA extends Component {
-  render() {
-    return (
-      <Link to="/login">
-        <CTAButton>
-          <h4>Hike with us.</h4>
-        </CTAButton>
-      </Link>
-    )
-  }
+const ButtonCTA = () => {
+  return (
+    <Link to="/login">
+      <CTAButton>
+        <h4>Hike with us.</h4>
+      </CTAButton>
+    </Link>
+  )
 }
 
 export default ButtonCTA

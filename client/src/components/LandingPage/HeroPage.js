@@ -15,17 +15,15 @@ const CTAContainer = styled.div`
   height: 100%;
 `
 
-class HeroPage extends Component {
-  render() {
-    return (
-      <Container>
-        <Nav />
-        <CTAContainer>
-          <LandingCTA />
-        </CTAContainer>
-      </Container>
-    )
-  }
+const HeroPage = () => {
+  return (
+    <Container>
+      <Nav />
+      <CTAContainer>
+        <LandingCTA />
+      </CTAContainer>
+    </Container>
+  )
 }
 
 export default HeroPage

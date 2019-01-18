@@ -28,25 +28,23 @@ const CallToAction = styled.div`
   }
 `
 
-class LandingCTA extends Component {
-  render() {
-    return (
-      <CallToAction>
-        <div>
-          <h1>The companion app for</h1>
-          <h1>
-            <span className="accent">+ </span>
-            hiking
-          </h1>
-          <h1>
-            <span className="accent">+ </span>
-            mountain climbing
-          </h1>
-          <ButtonCTA />
-        </div>
-      </CallToAction>
-    )
-  }
+const LandingCTA = () => {
+  return (
+    <CallToAction>
+      <div>
+        <h1>The companion app for</h1>
+        <h1>
+          <span className="accent">+ </span>
+          hiking
+        </h1>
+        <h1>
+          <span className="accent">+ </span>
+          mountain climbing
+        </h1>
+        <ButtonCTA />
+      </div>
+    </CallToAction>
+  )
 }
 
 export default LandingCTA

@@ -3,14 +3,12 @@ import styled from "styled-components"
 import HeroPage from "./HeroPage"
 const LandingPageContainer = styled.div``
 
-class LandingPage extends Component {
-  render() {
-    return (
-      <LandingPageContainer>
-        <HeroPage />
-      </LandingPageContainer>
-    )
-  }
+const LandingPage = () => {
+  return (
+    <LandingPageContainer>
+      <HeroPage />
+    </LandingPageContainer>
+  )
 }
 
 export default LandingPage
