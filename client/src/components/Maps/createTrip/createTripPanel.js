@@ -1,5 +1,4 @@
 import React, { Fragment } from "react"
-import { connect } from "react-redux"
 import { DateRangePicker } from "react-dates"
 import PropTypes from "prop-types"
 
@@ -118,11 +117,11 @@ class CreateTripPanel extends React.Component {
 }
 
 CreateTripPanel.propTypes = {
-  map: PropTypes.object,
-  userId: PropTypes.string.isRequired
+  addWaypoint: PropTypes.func.isRequired,
+  deleteListener: PropTypes.func.isRequired,
+  getDates: PropTypes.func.isRequired,
+  getTitle: PropTypes.func.isRequired,
+  saveTrip: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => {
-  return { userId: state.auth.user.id }
-}
-export default connect(mapStateToProps)(CreateTripPanel)
+export default CreateTripPanel

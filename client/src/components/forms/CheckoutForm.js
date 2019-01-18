@@ -114,7 +114,7 @@ class CheckoutForm extends Component {
 }
 
 CheckoutForm.propTypes = {
-  stripe: PropTypes.object.isRequired,
+  stripe: PropTypes.object,
   subscribe: PropTypes.func.isRequired,
   user: UserPropTypes
 }
