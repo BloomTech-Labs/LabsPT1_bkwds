@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
-import { TripPropTypes } from "../../propTypes"
+import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
 
 const dashSymbol = {
@@ -12,6 +12,12 @@ const dashSymbol = {
 }
 
 class SingleTripMap extends React.Component {
+  static defaultProps = {
+    getSingleTrip: () => {},
+    trip: getDefaultTripProps(),
+    tripId: ""
+  }
+
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
   }
@@ -95,7 +101,7 @@ class SingleTripMap extends React.Component {
 
 SingleTripMap.propTypes = {
   getSingleTrip: PropTypes.func.isRequired,
-  trip: TripPropTypes.isRequired,
+  trip: TripPropTypes,
   tripId: PropTypes.string.isRequired
 }
 
@@ -107,18 +113,3 @@ export default connect(
   mapStateToProps,
   { getSingleTrip }
 )(SingleTripMap)
-
-// const PanelHeader = Styled.h2`
-//     font-size:1.5rem;
-//     padding:.5rem;
-// `
-
-// const WaypointList = Styled.div`
-//     overflow:scroll;
-// `
-// const Waypoint = Styled.div`
-//     align-items:center;
-//     width: 90%;
-//     display:flex;
-//     margin:0 auto;
-// `

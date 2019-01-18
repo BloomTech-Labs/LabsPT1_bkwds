@@ -5,13 +5,29 @@ export const TripPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,
   inProgress: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  lat: PropTypes.number.isRequired,
-  lon: PropTypes.number.isRequired,
+  lat: PropTypes.number,
+  lon: PropTypes.number,
   name: PropTypes.string.isRequired,
   start: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   waypoints: PropTypes.array.isRequired
 })
+
+export const getDefaultTripProps = overrides => {
+  const defaults = {
+    end: "",
+    id: "",
+    inProgress: false,
+    isArchived: false,
+    lat: 0,
+    lon: 0,
+    name: "",
+    start: "",
+    userId: "",
+    waypoints: []
+  }
+  return Object.assign({}, defaults, overrides)
+}
 
 export const UserPropTypes = PropTypes.shape({
   createdAt: PropTypes.string.isRequired,
