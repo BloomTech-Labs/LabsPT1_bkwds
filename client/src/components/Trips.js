@@ -14,11 +14,6 @@ class Trips extends Component {
         <s.TripCardStyles>
           <div className="container">
             {!trips.length && "No unarchived trips!"}
-            {/* {trips.map(trip => (
-              if (!trip.isArchived) {
-                <TripCard key={trip.id} trip={trip} archived={false} />
-              }
-            ))} */}
             {trips.map(trip => {
               if (!trip.isArchived) {
                 return <TripCard key={trip.id} trip={trip} />
