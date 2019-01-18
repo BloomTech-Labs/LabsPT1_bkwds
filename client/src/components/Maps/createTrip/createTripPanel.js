@@ -258,7 +258,6 @@ class CreateTripPanel extends React.Component {
       Axios.post(`${SERVER_URI}/trips/`, {
         userId: this.props.userId,
         lat: this.state.center.lat,
-        isArchieved: false,
         lon: this.state.center.lng,
         waypoints: this.state.waypoints,
         start: this.state.startDate.utc().format(),

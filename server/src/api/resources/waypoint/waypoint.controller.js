@@ -10,6 +10,7 @@ export const getAllWaypoints = (req, res) => {
       res.status(500).send(err)
     })
 }
+
 export const createWaypoint = (req, res) => {
   const newWaypoint = new Waypoint({
     tripId: req.body.tripId,
@@ -124,5 +125,30 @@ export const deleteWaypointsByTrip = (req, res) => {
     })
     .catch(() => {
       res.status(404).json("No Waypoints found for specified Trip")
+    })
+}
+
+export const createManyWaypoints = (req, res) => {
+  let { tripId } = req.body[0]
+
+  Waypoint.insertMany(req.body)
+    .then(response => {
+      Trip.findByIdAndUpdate(
+        { _id: tripId },
+        {
+          $addToSet: {
+            waypoints: { $each: [...response.map(({ id }) => id)] }
+          }
+        }
+      )
+        .then(() => {
+          res.status(201).json(response)
+        })
+        .catch(() => {
+          res.status(500).json("Error linking waypoints to Trip")
+        })
+    })
+    .catch(err => {
+      res.status(500).json(err.message)
     })
 }
