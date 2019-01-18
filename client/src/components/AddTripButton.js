@@ -1,30 +1,18 @@
-import React, { Component } from "react"
-import { Button } from "../styles/theme/styledComponents"
+import React from "react"
+import { Link } from "react-router-dom"
 import * as s from "../styles/AddTripButton.styles"
-import PropTypes from "prop-types"
 
-class AddTripButton extends Component {
-  static contextTypes = {
-    router: PropTypes.object
-  }
-
-  handleClick = () => e => {
-    e.preventDefault()
-    this.context.router.history.push(`/app/trip/create`)
-  }
-
-  render() {
-    return (
-      <s.AddTripButtonStyles>
-        <a href="/" className="TripMsg">
-          Add trip
-        </a>
-        <Button className="AddTripButton" onClick={this.handleClick()}>
-          +
-        </Button>
-      </s.AddTripButtonStyles>
-    )
-  }
-}
+const AddTripButton = ({ text }) => (
+  <s.AddTripButtonStyles>
+    <div className="add-trip-card-wrapper">
+      <div className="add-trip-card-container">
+        <Link className="add-trip-card-link" to="/app/trip/create">
+          <h2>{text}</h2>
+          <span>＋</span>
+        </Link>
+      </div>
+    </div>
+  </s.AddTripButtonStyles>
+)
 
 export default AddTripButton

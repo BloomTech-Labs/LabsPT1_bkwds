@@ -5,6 +5,8 @@ import * as mock from "../mock"
 
 let userId
 let token
+let customerId
+let subscribeId
 
 describe("Test Subscribe and Cancel route", () => {
   beforeAll(async () => {
@@ -24,9 +26,23 @@ describe("Test Subscribe and Cancel route", () => {
         planId: process.env.STRIPE_PLAN_ID_TEST,
         source: { id: "tok_visa" }
       })
+
+    customerId = response.body.customerId
+    subscribeId = response.body.subscribeId
+
     expect(response.statusCode).toBe(200)
     expect(response.body.subscribed).toEqual(true)
     expect(response.body.subscribeId).toBe.string
+  })
+
+  test("POST retrieve invoices", async () => {
+    const response = await request(app)
+      .post(`/api/subscribe/invoices`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ customerId, subscribeId })
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body.length).toBeGreaterThan(0)
   })
 
   test("POST premium users cancel", async () => {

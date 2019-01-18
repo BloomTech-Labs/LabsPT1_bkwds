@@ -31,22 +31,26 @@ export const Input = styled.input`
 `
 
 export const GhostInput = styled.input`
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem 0.43rem;
   border-radius: 0.375rem;
-  border: 0;
-  font-size: 1.125rem;
-  background-color: ${props => props.theme.white};
-  -webkit-box-shadow: inset -0.0625rem 0 0.1875rem rgba(0, 0, 0, 0.3);
-  box-shadow: inset -0.0625rem 0 0.1875rem rgba(0, 0, 0, 0.3);
-  -webkit-transition: border-color 0.15s ease-out;
-  transition: border-color 0.15s ease-out;
+  border: 1px solid #d1d5da;
+  font-size: 1rem;
 `
 
 export const Form = styled.form`
   max-width: 100%;
+  padding: 30px 20px 20px 20px;
+  border-radius: 5px;
+  /* border: 1px solid #d8dee2; */
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0.3125rem 0.0625rem 0 rgba(0, 0, 0, 0.05),
+    0 0 0 0.0625rem rgba(0, 0, 0, 0.03), 0 0.0625rem 0 0 rgba(0, 0, 0, 0.05),
+    0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.01);
+
   input {
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
+    background: white;
   }
 
   button {
@@ -55,11 +59,12 @@ export const Form = styled.form`
 `
 
 export const Button = styled.button`
-  color: ${props => props.theme.white};
+  color: white;
   border-radius: 5px;
-  padding: 0.75rem 1.25rem;
+  margin-top: 8px;
   padding: 6px 12px;
   font-weight: 500;
+  width: ${props => props.width};
 
   background-color: ${props => props.theme.primaryDark};
   border-color: ${props => props.theme.primaryDark};
@@ -102,6 +107,11 @@ export const Button = styled.button`
     }
   }
 
+  &.btn-gray {
+    background-color: ${props => props.theme.lightGray};
+    border-color: ${props => props.theme.lightGray};
+  }
+
   &.btn-inverted {
     color: ${props => props.theme.primary};
     /* target anchors for when we nest Links inside buttons */
@@ -141,6 +151,7 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `
+
 export const CardButton = styled.button`
   position: absolute;
   right: 1%;
@@ -156,12 +167,12 @@ export const CardButton = styled.button`
   text-decoration: bold;
   color: #1abc9c;
   transition: all 0.3s ease;
-  &::after {
+  /* &::after {
     margin-left: 2%;
     content: "\f054";
     font-family: FontAwesome;
     line-height: 10%;
-  }
+  } */
 
   &:hover,
   &:focus {

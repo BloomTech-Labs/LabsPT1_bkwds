@@ -1,16 +1,17 @@
 import React, { Component } from "react"
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 const CTAButton = styled.div`
   display: flex;
-  margin-right: 3rem;
+  margin-top: 2rem;
   text-align: center;
   justify-content: center;
   color: white !important;
   border: none;
   background-color: #f26a21;
   width: 200px;
-  height: 75px;
+  height: 55px;
   border-radius: 12px;
   align-items: center;
 
@@ -18,6 +19,7 @@ const CTAButton = styled.div`
     font-size: 23px;
     color: white !important;
     align-self: center;
+    text-decoration: none;
   }
 
   h4 {
@@ -27,9 +29,11 @@ const CTAButton = styled.div`
 class ButtonCTA extends Component {
   render() {
     return (
-      <CTAButton>
-        <h4>Hike with us.</h4>
-      </CTAButton>
+      <Link to="/login">
+        <CTAButton>
+          <h4>Hike with us.</h4>
+        </CTAButton>
+      </Link>
     )
   }
 }

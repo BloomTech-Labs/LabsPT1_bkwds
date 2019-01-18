@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import styled from "styled-components"
 import logo from "../../assets/bkwdslogo.png"
+import { Link } from "react-router-dom"
 
 const NavigationMenu = styled.div`
   display: grid;
@@ -36,10 +37,10 @@ class Nav extends Component {
           <Img src={logo} />
         </div>
         <Menu>
-          <a>Features</a>
-          <a>About</a>
-          <a>Log in</a>
-          <a>Sign Up</a>
+          <Link to="/login">Features</Link>
+          <Link to="/login">About</Link>
+          <Link to="/login">Log in</Link>
+          <Link to="/login">Sign up</Link>
         </Menu>
       </NavigationMenu>
     )

@@ -53,3 +53,18 @@ export const cancel = async (req, res, stripe) => {
     return res.status(error.statusCode).send(error.message)
   }
 }
+
+export const retrieveInvoices = async (req, res, stripe) => {
+  const { customerId, subscribeId } = req.body
+  try {
+    const result = await stripe.invoices.list(
+      { customer: customerId, subscription: subscribeId },
+      {
+        api_key: process.env.STRIPE_KEY_SERVER_TEST
+      }
+    )
+    return res.status(200).send(result.data)
+  } catch (error) {
+    return res.status(error.statusCode).send(error.message)
+  }
+}

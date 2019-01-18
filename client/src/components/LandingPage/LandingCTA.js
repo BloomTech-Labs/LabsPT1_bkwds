@@ -15,7 +15,7 @@ const CallToAction = styled.div`
 
   h1 {
     color: white !important;
-    box-shadow: 1px black;
+    text-shadow: 0.5px 0.5px 0.5px #000000;
   }
   div {
     display: flex;
@@ -36,12 +36,12 @@ class LandingCTA extends Component {
           <h1>The companion app for</h1>
           <h1>
             <span className="accent">+ </span>
-            Hiking
+            hiking
           </h1>
-          <span className="accent">+</span>
-          <span className="accent">Hiking</span>
-          {/* <h1>+ hiking</h1> */}
-          <h1>+ mountain climbing</h1>
+          <h1>
+            <span className="accent">+ </span>
+            mountain climbing
+          </h1>
           <ButtonCTA />
         </div>
       </CallToAction>
