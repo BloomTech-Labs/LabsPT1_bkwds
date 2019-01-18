@@ -8,12 +8,10 @@ import "../createTrip/custom.css"
 
 class CreateTripPanel extends React.Component {
   state = {
-    center: {},
     title: "",
     startDate: null,
     endDate: null,
     focusedInput: null,
-    formError: null,
     location: "",
     isToggled: false
   }
@@ -25,7 +23,6 @@ class CreateTripPanel extends React.Component {
   handleLocation = event => {
     this.setState({ location: event.target.value })
     this.searchAutoComplete()
-    this.attachCenterListener()
   }
 
   searchAutoComplete = () => {
@@ -34,23 +31,11 @@ class CreateTripPanel extends React.Component {
     autoComplete.addListener("place_changed", () => {
       let place = autoComplete.getPlace()
       if (place.geometry !== undefined) {
-        let center = {
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
-        }
-        this.setState({ center })
         window.map.panTo({
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng()
         })
       }
-    })
-  }
-
-  attachCenterListener = () => {
-    window.map.addListener("center_changed", () => {
-      const newCenter = window.map.getCenter()
-      this.setState({ center: { lat: newCenter.lat(), lng: newCenter.lng() } })
     })
   }
 
