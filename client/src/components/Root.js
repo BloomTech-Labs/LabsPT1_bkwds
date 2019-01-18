@@ -1,7 +1,7 @@
 import React from "react"
 import { Switch } from "react-router-dom"
 import Dashboard from "./pages/Dashboard"
-import LandingPage from "./pages/LandingPage"
+import LandingPage from "./LandingPage/LandingPage"
 import CustomRoute from "../utils/CustomRoute"
 import Pages from "./pages/Pages"
 
