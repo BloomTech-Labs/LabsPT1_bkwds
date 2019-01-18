@@ -4,20 +4,21 @@ import styled from "styled-components"
 const ChevronSvg = ({
   width = "1rem",
   height = "1rem",
-  fill = "currentColor"
+  fill = "currentColor",
+  transform
 }) => {
   const Icon = styled.span`
+    width: ${width};
+    height: ${height};
+    fill: ${fill};
+    transform: ${transform};
+
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    pointer-events: none;
-
+    cursor: pointer;
     align-self: center;
-    width: ${width};
-    height: ${height};
-    margin-top: -1px;
-    margin-left: 0.375rem;
-    fill: ${fill};
+    margin-top: 1px;
 
     svg {
       position: absolute;

@@ -79,7 +79,7 @@ class LandingNav extends React.Component {
                 </div>
                 <div className="landing-page-mobile-links">
                   <Link to="/settings">
-                    <UserSvg width="1.188rem" height="1.313rem" />
+                    <UserSvg width="1.188" height="1.313" />
                   </Link>
                 </div>
               </div>

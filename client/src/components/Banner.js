@@ -41,7 +41,7 @@ class Banner extends Component {
       <s.Banner seconds={seconds}>
         <div className="landing-page-banner">
           <span className="banner-title">
-            <span className="banner-app-name">Backwoods Tracker</span>
+            <span className="banner-app-name">bkwds.</span>
             <span className="banner-rotating-tagline">
               {" ... "}
               {tagline.toLowerCase()}

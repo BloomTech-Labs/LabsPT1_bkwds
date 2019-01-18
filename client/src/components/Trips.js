@@ -4,55 +4,39 @@ import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
 
 import TripCard from "./TripCard"
-import { getTrips, createTrip } from "../redux/actions/trips"
+import { getTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
-import FirstTripButton from "./FirstTripButton"
 
 class Trips extends Component {
   componentDidMount() {
     this.props.getTrips()
   }
 
-  handleClick = () => e => {
-    e.preventDefault()
-    this.props.history.push("/app/trip/create")
-  }
-
   renderTrips() {
-    // let tripsRender
-    const { trips } = this.props
+    const { trips, loading } = this.props
 
-    if (this.props.trips.length > 0) {
-      return (
-        <div>
-          <s.TripCardStyles>
+    return (
+      <div>
+        <s.TripCardStyles>
+          {loading ? (
+            "Loading..."
+          ) : (
             <div className="container">
               {!trips.length && "No unarchived trips!"}
               {trips.map(trip => (
                 <TripCard key={trip.id} trip={trip} archived={false} />
               ))}
-              <AddTripButton className="AddTripButton" />
+              <AddTripButton
+                className="AddTripButton"
+                text={trips.length ? "Add New Trip" : "Add Your First Trip"}
+              />
             </div>
-          </s.TripCardStyles>
-        </div>
-      )
-    } else {
-      let firstTripRender
-      // we may need to add a firstTripCreated attribute
-      // and render FirstTrip is False, Trips if True
-      // if (this.props.user.firstTrip === True) {
-      //   firstTripRender = (
-      //     <FirstTripButton />
-      //   )
-      // }
-      // return firstTripRender
-      if (this.props.trips.length === 0) {
-        firstTripRender = <FirstTripButton />
-      }
-      return firstTripRender
-    }
+          )}
+        </s.TripCardStyles>
+      </div>
+    )
   }
 
   render() {
@@ -61,16 +45,16 @@ class Trips extends Component {
 }
 
 Trips.propTypes = {
-  createTrip: PropTypes.func.isRequired,
   getTrips: PropTypes.func.isRequired,
   trips: PropTypes.arrayOf(TripPropTypes)
 }
 
 const mapStateToProps = state => ({
-  trips: getTripsArray(state)
+  trips: getTripsArray(state),
+  loading: state.trips.loading
 })
 
-const mapDispatchToProps = { getTrips, createTrip }
+const mapDispatchToProps = { getTrips }
 
 export default connect(
   mapStateToProps,

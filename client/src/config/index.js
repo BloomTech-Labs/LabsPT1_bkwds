@@ -1,4 +1,5 @@
 // GENERAL
+export const APP_NAME = process.env.REACT_APP_NAME
 export const CLIENT_URI = process.env.REACT_APP_CLIENT_URI
 export const SERVER_URI = process.env.REACT_APP_SERVER_URI
 

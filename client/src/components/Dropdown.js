@@ -41,13 +41,13 @@ class NavDropdown extends Component {
           isOpen={this.state.dropdownOpen}
           toggle={this.toggle}
         >
-          <DropdownToggle>
+          <DropdownToggle className="navbar-toggle">
             Hi, {user.username ? user.username + "!" : "Account"}{" "}
             <ChevronSvg fill="#a3a3a3" />
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem>
-              <Link to="/settings" className="dropdown-list-item">
+              <Link to="/app/settings" className="dropdown-list-item">
                 Settings
               </Link>
             </DropdownItem>
@@ -77,14 +77,20 @@ class NavDropdown extends Component {
 }
 
 Dropdown.propTypes = {
-  active: PropTypes.bool.isRequired,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
-  direction: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   onMouseOver: PropTypes.func.isRequired,
   setActiveFromChild: PropTypes.bool,
   toggle: PropTypes.func.isRequired
+}
+
+Dropdown.defaultProps = {
+  active: false,
+  direction: "down",
+  inNavbar: true,
+  onMouseLeave: () => {},
+  onMouseOver: () => {}
 }
 
 const mapStateToProps = state => ({ user: state.auth.user })

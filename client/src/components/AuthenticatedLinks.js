@@ -12,7 +12,7 @@ class AuthenticatedLinks extends Component {
 
   render() {
     return (
-      <s.AuthenticatedLinksStyles className="AuthenticatedLinksStyles">
+      <s.AuthenticatedLinksStyles>
         <Dropdown />
         <li>
           <a href="/logout" onClick={this.handleLogout}>
