@@ -2,12 +2,14 @@ import React from "react"
 import { connect } from "react-redux"
 import { Formik } from "formik"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 import { Form } from "../../styles/theme/styledComponents"
 import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { updateEmail, updatePassword } from "../../redux/actions/settings"
 import { settingsValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
+// import { UserPropTypes } from "../propTypes"
 
 const SettingsFormStyles = styled.div`
   ${authFormErrorsMixin};
@@ -86,6 +88,14 @@ const SettingsForm = ({
     )}
   />
 )
+
+SettingsForm.propTypes = {
+  // TODO: Fix Redux issue where user is being stored differently on state
+  // user: UserPropTypes.isRequired,
+  updateEmail: PropTypes.func.isRequired,
+  updatePassword: PropTypes.func.isRequired,
+  updateSettingsError: PropTypes.object
+}
 
 const mapStateToProps = state => ({
   updateSettingsError: state.settings.error,

@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Formik } from "formik"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 import { Button, Form } from "../../styles/theme/styledComponents"
 import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
@@ -103,6 +104,13 @@ const RegisterForm = ({
     )}
   />
 )
+
+RegisterForm.propTypes = {
+  register: PropTypes.func.isRequired,
+  registerError: PropTypes.string,
+  registerWithOauth: PropTypes.func.isRequired,
+  pending: PropTypes.bool.isRequired
+}
 
 const mapStateToProps = state => ({
   registerError: state.auth.error,

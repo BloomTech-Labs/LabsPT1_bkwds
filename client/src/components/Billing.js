@@ -2,6 +2,7 @@ import React from "react"
 import * as s from "../styles/Billing.styles"
 import { connect } from "react-redux"
 import moment from "moment"
+import PropTypes from "prop-types"
 import {
   openCheckoutForm,
   cancelSubscription,
@@ -12,6 +13,7 @@ import { Elements, StripeProvider } from "react-stripe-elements"
 import CheckoutForm from "./forms/CheckoutForm"
 import { Button } from "../styles/theme/styledComponents"
 import { STRIPE_KEY } from "../config"
+//import { UserPropTypes } from "./propTypes"
 
 class Billing extends React.Component {
   state = {
@@ -144,6 +146,19 @@ class Billing extends React.Component {
       </StripeProvider>
     )
   }
+}
+
+Billing.propTypes = {
+  cancelSubscription: PropTypes.func.isRequired,
+  hasError: PropTypes.string,
+  invoices: PropTypes.arrayOf(PropTypes.object),
+  isCheckoutFormOpen: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  isPending: PropTypes.bool.isRequired,
+  openCheckoutForm: PropTypes.func.isRequired,
+  retrieveInvoices: PropTypes.func.isRequired
+  // TODO: figure out why we have Trip objects instead of IDs here!
+  // user: UserPropTypes
 }
 
 const mapStateToProps = state => {

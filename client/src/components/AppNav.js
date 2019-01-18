@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { withRouter, Link } from "react-router-dom"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import {
   Dropdown,
@@ -105,6 +106,12 @@ class AppNav extends Component {
       </div>
     )
   }
+}
+
+AppNav.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

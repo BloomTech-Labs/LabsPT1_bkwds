@@ -1,8 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
-import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+import { TripPropTypes } from "./propTypes"
+
+import { toggleArchive } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
@@ -48,7 +51,13 @@ const TripCard = ({ trip, archived, toggleArchive }) => (
   </div>
 )
 
-const mapDispatchToProps = { deleteTrip, toggleArchive }
+TripCard.propTypes = {
+  archived: PropTypes.bool.isRequired,
+  toggleArchive: PropTypes.func.isRequired,
+  trip: TripPropTypes
+}
+
+const mapDispatchToProps = { toggleArchive }
 
 export default connect(
   null,

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 
 import * as s from "../styles/Banner.styles"
 import { makeTaglineIterator } from "../utils"
@@ -34,7 +35,7 @@ class Banner extends Component {
   }
 
   render() {
-    const { seconds } = this.props || 9
+    const { seconds } = this.props
     const { tagline } = this.state
     return (
       <s.Banner seconds={seconds}>
@@ -50,6 +51,14 @@ class Banner extends Component {
       </s.Banner>
     )
   }
+}
+
+Banner.propTypes = {
+  seconds: PropTypes.number.isRequired
+}
+
+Banner.defaultProps = {
+  seconds: 9
 }
 
 export default Banner
