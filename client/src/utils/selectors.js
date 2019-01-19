@@ -24,22 +24,6 @@ export const getAllButDeleted = (state, id) =>
   filterOutTripById(id)(state.trips)
 
 /**
- * getArchivedTripsArray
- * Signature :: Array<ReduxTrip> -> Array<ReduxTrip>
- * Takes a flat array of trips and returns only the trips that are archived.
- */
-export const getArchivedTripsArray = trips =>
-  trips.filter(trip => trip.isArchived)
-
-/**
- * getUnarchivedTripsArray
- * Signature :: Array<ReduxTrip> -> Array<ReduxTrip>
- * Takes a flat array of trips and returns only the trips that are unarchived.
- */
-
-export const getUnarchivedTripsArray = trips =>
-  trips.filter(trip => !trip.isArchived)
-/**
  * normalizeUser
  * Signature :: Object<ServerUser> -> { Object<ReduxUser> }
  * Takes a user object from the server & returns an object with

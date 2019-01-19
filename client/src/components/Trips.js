@@ -22,7 +22,7 @@ class Trips extends Component {
           <div className="container">
             {trips.map(trip => {
               if (!trip.isArchived) {
-                return <TripCard key={trip.id} trip={trip} />
+                return <TripCard key={trip.id} trip={trip} archived={false} />
               }
             })}
             <AddTripButton
