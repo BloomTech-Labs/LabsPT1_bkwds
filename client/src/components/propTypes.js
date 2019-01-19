@@ -37,7 +37,7 @@ export const UserPropTypes = PropTypes.shape({
   subDate: PropTypes.string,
   subscribeId: PropTypes.string,
   subscribed: PropTypes.bool.isRequired,
-  trips: PropTypes.arrayOf(PropTypes.string),
+  trips: PropTypes.arrayOf(PropTypes.any),
   username: PropTypes.string.isRequired
 })
 
