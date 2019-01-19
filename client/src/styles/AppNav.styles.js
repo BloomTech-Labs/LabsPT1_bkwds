@@ -14,7 +14,7 @@ export const NavStyles = styled.div`
   width: 100%;
   ${boxShadowMixin};
 
-  padding-left: 2rem;
+  padding-left: 0.5rem;
   padding-right: 1.25rem;
 
   .nav-links-wrapper {
@@ -30,10 +30,12 @@ export const NavStyles = styled.div`
     flex-direction: row;
     justify-content: center;
   }
-
-  .hamburgerIcon {
+  .hamburger-icon-wrapper {
     display: flex;
-    margin-right: 5px;
+  }
+  .hamburger-icon {
+    display: flex;
+    margin-right: 30px;
   }
 
   ul {
