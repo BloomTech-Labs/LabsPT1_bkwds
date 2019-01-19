@@ -23,7 +23,7 @@ class Trips extends Component {
             {trips.map(trip => {
               if (!trip.isArchived) {
                 return <TripCard key={trip.id} trip={trip} archived={false} />
-              }
+              } else return null
             })}
             <AddTripButton
               className="AddTripButton"

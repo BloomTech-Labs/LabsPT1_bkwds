@@ -25,7 +25,7 @@ class ArchivedTrips extends Component {
             {trips.map(trip => {
               if (trip.isArchived) {
                 return <TripCard key={trip.id} trip={trip} archived={true} />
-              }
+              } else return null
             })}
           </div>
         )}
