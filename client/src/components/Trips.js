@@ -1,19 +1,23 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { getTrips } from "../redux/actions/trips"
 
 import TripCard from "./TripCard"
 import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
+import { getTripsArray } from "../utils/selectors"
 
 class Trips extends Component {
-  renderTrips() {
-    const { trips } = this.props
+  componentDidMount() {
+    this.props.getTrips(this.props.user)
+  }
 
+  render() {
+    const { trips } = this.props
     return (
       <div>
         <s.TripCardStyles>
           <div className="container">
-            {!trips.length && "No unarchived trips!"}
             {trips.map(trip => {
               if (!trip.isArchived) {
                 return <TripCard key={trip.id} trip={trip} />
@@ -28,14 +32,16 @@ class Trips extends Component {
       </div>
     )
   }
-
-  render() {
-    return <div className="firstTrip">{this.renderTrips()}</div>
-  }
 }
 
 const mapStateToProps = state => ({
-  trips: state.auth.user.trips
+  user: state.auth.user.id,
+  trips: getTripsArray(state)
 })
 
-export default connect(mapStateToProps)(Trips)
+const mapDispatchToProps = { getTrips }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Trips)
