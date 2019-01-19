@@ -43,6 +43,12 @@ export const TripCardStyles = styled.div`
     margin: 5%;
   }
 
+  .card-cta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   .card-image {
     display: flex;
     width: 100%;
