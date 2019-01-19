@@ -29,15 +29,15 @@ const AppNav = ({
   return (
     <div>
       <s.NavStyles>
-        <div className="logo">
+        <div className="hamburger-icon-wrapper">
           <HamburgerSpring
-            className="hamburgerIcon"
+            className="hamburger-icon"
             buttonWidth={20}
             barColor={`${theme.primary}`}
             isActive={isSidebarOpen}
             toggleButton={() => toggleSidebar(isSidebarOpen)}
           />
-          Backwoods Tracker
+          <div className="logo">Backwoods Tracker</div>
         </div>
         <div className="nav-links-wrapper">
           {isHomeOrAuthPath && !isLoggedIn ? (
