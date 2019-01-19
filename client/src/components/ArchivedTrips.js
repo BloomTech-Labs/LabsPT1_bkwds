@@ -12,6 +12,7 @@ class ArchivedTrips extends Component {
   state = {
     archivedExists: false
   }
+
   componentDidMount() {
     this.props.getTrips(this.props.userId)
 
