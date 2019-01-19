@@ -57,16 +57,14 @@ const SettingsForm = ({
               onBlur={handleBlur}
               placeholder="Email"
               values={values}
-              showLabel
             />
             <CustomInputWithError
               name="oldPassword"
               type="password"
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Old Password"
+              placeholder="Current password"
               values={values}
-              showLabel
             />
             <CustomInputWithError
               name="newPassword"
@@ -75,7 +73,6 @@ const SettingsForm = ({
               onBlur={handleBlur}
               placeholder="New password"
               values={values}
-              showLabel
             />
             <CustomButtonWithError
               text="Save"

@@ -33,7 +33,7 @@ const createStripeInstance = async () => {
 
 export const openCheckoutForm = () => async (dispatch, getState) => {
   // Check to see if we've already created a Stripe instance and re-use it else create one
-  let stripe = getState().billing.stripe || (await createStripeInstance())
+  const stripe = getState().billing.stripe || (await createStripeInstance())
 
   dispatch({ type: INIT_NEW_SUBSCRIPTION, stripe })
 }
