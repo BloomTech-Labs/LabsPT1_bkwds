@@ -18,6 +18,10 @@ export const NavStyles = styled.div`
   padding-right: 1.25rem;
   ${media.phone`padding-right: 0;`}
 
+  .appnav-left {
+    display: flex
+  }
+
   .logo {
     color: ${props => props.theme.primary};
     font-weight: 700;
