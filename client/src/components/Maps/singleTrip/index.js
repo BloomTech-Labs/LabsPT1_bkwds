@@ -17,7 +17,7 @@ class SingleTripMap extends React.Component {
   componentDidMount() {
     this.props.getWaypointsByTrip(this.props.trip.id)
   }
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.isWaypointsPending && !this.props.isWaypointsPending) {
       const { trip } = this.props
       const lat = trip.lat
