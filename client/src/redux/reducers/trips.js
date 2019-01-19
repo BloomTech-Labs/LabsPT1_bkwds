@@ -30,7 +30,7 @@ const defaultState = {
   pending: false,
   error: null,
   trips: {},
-  activeTrip: {}
+  activeTrip: null
 }
 
 export const tripReducer = (state = defaultState, action) => {

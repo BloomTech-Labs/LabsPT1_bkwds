@@ -72,7 +72,11 @@ export const authReducer = (state = defaultState, action) => {
         user: { username, email }
       }
     case REGISTRATION_FAILURE:
-      return { ...state, error: normalizeErrorMsg(action.payload) }
+      return {
+        ...state,
+        pending: false,
+        error: normalizeErrorMsg(action.payload)
+      }
 
     case ADD_TOKEN_TO_STATE:
       return { ...state, token: action.payload }

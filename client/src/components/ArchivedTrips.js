@@ -1,10 +1,12 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import TripCard from "./TripCard"
 import * as s from "../styles/TripCard.styles"
 import { getArchivedTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
+import { TripPropTypes } from "./propTypes"
 
 class ArchivedTrips extends Component {
   componentDidMount() {
@@ -28,6 +30,12 @@ class ArchivedTrips extends Component {
       </s.TripCardStyles>
     )
   }
+}
+
+ArchivedTrips.propTypes = {
+  getArchivedTrips: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  trips: PropTypes.arrayOf(TripPropTypes)
 }
 
 const mapStateToProps = state => ({

@@ -1,7 +1,10 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
+
 import * as s from "../../styles/CheckoutForm.styles"
 import { subscribe } from "../../redux/actions/billing"
+import { UserPropTypes } from "../propTypes"
 
 import { CardElement, injectStripe } from "react-stripe-elements"
 import { Input, Button } from "../../styles/theme/styledComponents"
@@ -108,6 +111,12 @@ class CheckoutForm extends Component {
       </s.CheckoutFormStyles>
     )
   }
+}
+
+CheckoutForm.propTypes = {
+  stripe: PropTypes.object,
+  subscribe: PropTypes.func.isRequired,
+  user: UserPropTypes
 }
 
 const mapStateToProps = state => {
