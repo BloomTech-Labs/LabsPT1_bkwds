@@ -49,9 +49,8 @@ class TripPanel extends React.Component {
     }
   }
 
-  renderWaypoints = (map, waypoints) => {
+  renderWaypoints = waypoints => {
     let markers = []
-    console.log("rw called")
     waypoints.forEach(waypoint => {
       console.log("iterator called")
       const center = {
@@ -60,7 +59,7 @@ class TripPanel extends React.Component {
       }
       let marker = new window.google.maps.Marker({
         position: center,
-        map: map,
+        map: window.map,
         title: waypoint.name,
         label: `${waypoint.order}`
       })

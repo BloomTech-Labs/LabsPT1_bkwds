@@ -1,6 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import { MapWrapper } from "../../../styles/CreateTrip.styles"
+import TripPanel from "../singleTrip/tripPanel"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
@@ -92,7 +94,7 @@ class SingleTripMap extends React.Component {
   render() {
     return (
       <MapWrapper>
-        <TripPanel map={this.state.map} trip={this.state.trip} />
+        <TripPanel trip={this.props.trip} />
         <div
           style={{ width: "100%", height: "100%", position: "absolute" }}
           id="Tripmap"
