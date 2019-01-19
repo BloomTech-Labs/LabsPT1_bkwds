@@ -59,7 +59,7 @@ Billing.propTypes = {
   isPending: PropTypes.bool.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
   isCheckoutFormOpen: PropTypes.bool.isRequired,
-  invoices: PropTypes.array
+  invoices: PropTypes.any
 }
 
 const mapStateToProps = state => {
