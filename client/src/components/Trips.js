@@ -11,7 +11,7 @@ import { getTripsArray } from "../utils/selectors"
 
 class Trips extends Component {
   componentDidMount() {
-    this.props.getTrips(this.props.user)
+    this.props.getTrips(this.props.userId)
   }
 
   render() {
@@ -42,7 +42,7 @@ Trips.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user.id,
+  userId: state.auth.user.id,
   trips: getTripsArray(state),
   loading: state.trips.loading
 })

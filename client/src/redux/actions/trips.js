@@ -21,7 +21,7 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
 
-export const getTrips = user => dispatch => {
+export const getTrips = userId => dispatch => {
   const token = localStorage.getItem("token")
   if (token) {
     // If token, set token as Authorization header on all axios requests:
@@ -30,7 +30,7 @@ export const getTrips = user => dispatch => {
 
   dispatch({ type: LOADING_TRIPS })
   return axios
-    .get(`${SERVER_URI}/users/${user}/trips`)
+    .get(`${SERVER_URI}/users/${userId}/trips`)
     .then(res => {
       dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
     })
