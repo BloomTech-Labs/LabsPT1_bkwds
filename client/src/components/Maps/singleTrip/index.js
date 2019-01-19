@@ -87,12 +87,11 @@ class SingleTripMap extends React.Component {
   }
 
   render() {
-    const { name, start, end } = this.props.trip
-    const { waypoints } = this.props
-    const props = { name, start, end, waypoints }
     return (
       <MapWrapper>
-        {this.props.waypoints && <SingleTripPanel {...props} />}
+        {!this.props.isWaypointsPending && (
+          <SingleTripPanel tripId={this.props.tripId} />
+        )}
         <div
           style={{ width: "100%", height: "100%", position: "absolute" }}
           id="SingleTripmap"
