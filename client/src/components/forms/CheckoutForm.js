@@ -63,6 +63,7 @@ class CheckoutForm extends Component {
             placeholder="Name on card"
             value={name}
             onChange={this.handleChangeOwnerInfo}
+            className="input-checkout"
           />
           <Input
             id="line1"
@@ -70,6 +71,7 @@ class CheckoutForm extends Component {
             placeholder="Address Line 1"
             value={line1}
             onChange={this.handleChangeOwnerInfo}
+            className="input-checkout"
           />
           <Input
             id="line2"
@@ -77,6 +79,7 @@ class CheckoutForm extends Component {
             placeholder="Address Line 2"
             value={line2}
             onChange={this.handleChangeOwnerInfo}
+            className="input-checkout"
           />
           <Input
             id="city"
@@ -84,6 +87,7 @@ class CheckoutForm extends Component {
             placeholder="City"
             value={city}
             onChange={this.handleChangeOwnerInfo}
+            className="input-checkout"
           />
           <Input
             id="state"
@@ -91,6 +95,7 @@ class CheckoutForm extends Component {
             placeholder="State"
             value={state}
             onChange={this.handleChangeOwnerInfo}
+            className="input-checkout"
           />
           <Input
             id="postal_code"
@@ -98,6 +103,7 @@ class CheckoutForm extends Component {
             placeholder="Postal Code"
             value={postal_code}
             onChange={this.handleChangeOwnerInfo}
+            className="input-checkout"
           />
           <Input
             id="country"
@@ -105,8 +111,11 @@ class CheckoutForm extends Component {
             placeholder="Country"
             value={country}
             onChange={this.handleChangeOwnerInfo}
+            className="input-checkout"
           />
-          <Button onClick={this.submit}>Subscribe Now</Button>
+          <Button className="input-button" onClick={this.submit}>
+            Subscribe Now
+          </Button>
         </div>
       </s.CheckoutFormStyles>
     )
