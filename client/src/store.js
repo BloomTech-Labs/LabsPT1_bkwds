@@ -10,6 +10,7 @@ import { tripReducer } from "./redux/reducers/trips"
 import { billingReducer } from "./redux/reducers/billing"
 import { settingsReducer } from "./redux/reducers/settings"
 import { waypointsReducer } from "./redux/reducers/waypoints"
+import { navigationReducer } from "./redux/reducers/navigation"
 
 export const history = createBrowserHistory()
 
@@ -24,6 +25,7 @@ const createRootReducer = history =>
     billing: billingReducer,
     settings: settingsReducer,
     waypoints: waypointsReducer,
+    navigation: navigationReducer,
     router: connectRouter(history)
   })
 
