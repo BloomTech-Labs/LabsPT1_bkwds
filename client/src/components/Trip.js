@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 
 import { deleteTrip, toggleArchive, editTrip } from "../redux/actions/trips"
-import { getSingleTrip } from "../redux/actions/trips"
 
 class Trip extends Component {
   handleDelete = tripId => e => {
@@ -66,7 +65,6 @@ class Trip extends Component {
 const mapDispatchToProps = {
   deleteTrip,
   toggleArchive,
-  getSingleTrip,
   editTrip
 }
 

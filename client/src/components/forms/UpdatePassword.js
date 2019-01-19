@@ -3,6 +3,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import { Button, GhostInput } from "../../styles/theme/styledComponents"
 import { SERVER_URI } from "../../config"
+import PropTypes from "prop-types"
 
 import { RecoverPasswordStyles as UpdatePasswordStyles } from "./RecoverPassword"
 
@@ -103,6 +104,11 @@ class UpdatePassword extends Component {
       </UpdatePasswordStyles>
     )
   }
+}
+
+UpdatePassword.propTypes = {
+  token: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired
 }
 
 export default UpdatePassword

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 
 import Dropdown from "./Dropdown"
 import * as s from "../styles/AuthenticatedLinks.styles"
@@ -11,7 +12,7 @@ class AuthenticatedLinks extends Component {
 
   render() {
     return (
-      <s.AuthenticatedLinksStyles className="AuthenticatedLinksStyles">
+      <s.AuthenticatedLinksStyles>
         <Dropdown />
         <li>
           <a href="/logout" onClick={this.handleLogout}>
@@ -21,6 +22,10 @@ class AuthenticatedLinks extends Component {
       </s.AuthenticatedLinksStyles>
     )
   }
+}
+
+AuthenticatedLinks.propTypes = {
+  logout: PropTypes.func.isRequired
 }
 
 export default AuthenticatedLinks

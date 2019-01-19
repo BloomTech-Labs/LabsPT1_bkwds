@@ -1,56 +1,54 @@
 import React from "react"
-// import Styled from "styled-components"
 import { connect } from "react-redux"
-import { SERVER_URI } from "../../../config"
-import Axios from "axios"
+import PropTypes from "prop-types"
 
-// const PanelHeader = Styled.h2`
-//     font-size:1.5rem;
-//     padding:.5rem;
-// `
+import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
+import { getSingleTrip } from "../../../redux/actions/trips"
 
-// const WaypointList = Styled.div`
-//     overflow:scroll;
-// `
-// const Waypoint = Styled.div`
-//     align-items:center;
-//     width: 90%;
-//     display:flex;
-//     margin:0 auto;
-// `
+const dashSymbol = {
+  path: "M 0,-1 0,1",
+  strokeOpacity: 1,
+  scale: 3
+}
 
 class SingleTripMap extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      trip: {}
-    }
+  static defaultProps = {
+    getSingleTrip: () => {},
+    trip: getDefaultTripProps(),
+    tripId: ""
   }
 
   componentDidMount() {
-    this.fetchTrip(this.props.tripId).then(res => {
-      this.setState({ trip: res }, () => {
-        const center = { lat: this.state.trip.lat, lng: this.state.trip.lon }
-        this.renderMap(center, this.state.trip.waypoints)
-      })
-    })
+    this.props.getSingleTrip(this.props.tripId)
   }
+
+  componentDidUpdate() {
+    const { trip } = this.props
+    const lat = trip.lat
+    const lng = trip.lon
+    const center = { lat, lng }
+    if (trip && trip.waypoints) this.renderMap(center, trip.waypoints)
+    this.drawPolyline()
+  }
+
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
-    const map = new window.google.maps.Map(document.getElementById("Tripmap"), {
-      center: center,
-      zoom: 9,
-      disableDefaultUI: true
-    })
+    window.map = new window.google.maps.Map(
+      document.getElementById("Tripmap"),
+      {
+        center: center,
+        zoom: 9,
+        disableDefaultUI: true
+      }
+    )
     if (waypoints) {
-      this.renderWaypoints(waypoints, map)
+      this.renderWaypoints(waypoints)
     }
   }
-  // renderWaypointList = waypoints => {}
 
-  //Attach waypoints to map
-  renderWaypoints = (waypoints, map) => {
+  // Attach waypoints to map
+  renderWaypoints = waypoints => {
     waypoints.forEach(waypoint => {
       const center = {
         lat: parseFloat(waypoint.lat.$numberDecimal),
@@ -58,18 +56,37 @@ class SingleTripMap extends React.Component {
       }
       new window.google.maps.Marker({
         position: center,
-        map: map,
+        map: window.map,
         title: waypoint.name,
-        label: waypoint.order
-      }).setMap(map)
+        label: waypoint.order.toString()
+      }).setMap(window.map)
     })
   }
 
-  //fetches trip details
-  async fetchTrip(tripId) {
-    const res = await Axios.get(`${SERVER_URI}/trips/${tripId}`)
-    const { data } = await res
-    return data
+  drawPolyline = () => {
+    const { waypoints } = this.props.trip
+    const path = waypoints.map(w => ({
+      lat: parseFloat(w.lat.$numberDecimal),
+      lng: parseFloat(w.lon.$numberDecimal)
+    }))
+
+    const polyline = new window.google.maps.Polyline({
+      path,
+      strokeColor: "#1e306e",
+      strokeOpacity: 0,
+      strokeWeight: 2,
+      icons: [
+        {
+          icon: dashSymbol,
+          offset: 0,
+          repeat: "20px"
+        }
+      ]
+    })
+
+    window.polyline = polyline
+
+    polyline.setMap(window.map)
   }
 
   render() {
@@ -82,7 +99,17 @@ class SingleTripMap extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { tripId: state.trips.activeTrip }
+SingleTripMap.propTypes = {
+  getSingleTrip: PropTypes.func.isRequired,
+  trip: TripPropTypes,
+  tripId: PropTypes.string.isRequired
 }
-export default connect(mapStateToProps)(SingleTripMap)
+
+const mapStateToProps = state => ({
+  trip: state.trips.activeTrip
+})
+
+export default connect(
+  mapStateToProps,
+  { getSingleTrip }
+)(SingleTripMap)

@@ -107,6 +107,11 @@ export const Button = styled.button`
     }
   }
 
+  &.btn-gray {
+    background-color: ${props => props.theme.lightGray};
+    border-color: ${props => props.theme.lightGray};
+  }
+
   &.btn-inverted {
     color: ${props => props.theme.primary};
     /* target anchors for when we nest Links inside buttons */
@@ -146,6 +151,7 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `
+
 export const CardButton = styled.button`
   position: absolute;
   right: 1%;
@@ -161,12 +167,12 @@ export const CardButton = styled.button`
   text-decoration: bold;
   color: #1abc9c;
   transition: all 0.3s ease;
-  &::after {
+  /* &::after {
     margin-left: 2%;
     content: "\f054";
     font-family: FontAwesome;
     line-height: 10%;
-  }
+  } */
 
   &:hover,
   &:focus {

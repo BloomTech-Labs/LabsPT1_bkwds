@@ -1,13 +1,14 @@
 /* eslint react/display-name: 0 */
-
 import React from "react"
 import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
+import PropTypes from "prop-types"
+
 import SingleTrip from "../Maps/singleTrip"
 import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"
-import Billing from "../Billing"
+import Billing from "../Billing/"
 import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import Settings from "../Settings"
@@ -76,6 +77,11 @@ const Dashboard = ({ match }) => {
       </Switch>
     </AppContainer>
   )
+}
+
+Dashboard.propTypes = {
+  match: PropTypes.object.isRequired,
+  trips: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
