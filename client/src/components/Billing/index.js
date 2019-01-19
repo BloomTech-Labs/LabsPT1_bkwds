@@ -12,6 +12,7 @@ import {
 import Invoices from "./Invoices"
 import PaymentDetails from "./PaymentDetails"
 import AccountType from "./AccountType"
+import Plans from "./Plans"
 
 class Billing extends React.Component {
   componentDidMount() {
@@ -39,8 +40,9 @@ class Billing extends React.Component {
 
     return (
       <s.BillingStyles>
-        <h3>Billing overview</h3>
-        {isPending || <AccountType />}
+        <h4>Choose a plan</h4>
+        <Plans />
+        {/* isPending || <AccountType /> */}
         {isCheckoutFormOpen && <PaymentDetails />}
         {isSubscribed && invoices && <Invoices invoices={invoices} />}
       </s.BillingStyles>
