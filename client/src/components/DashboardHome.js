@@ -24,7 +24,7 @@ const DashboardHome = ({ trips }) => {
 }
 
 DashboardHome.propTypes = {
-  trips: PropTypes.arrayOf(TripPropTypes)
+  trips: PropTypes.objectOf(TripPropTypes)
 }
 
 const mapStateToProps = state => ({
