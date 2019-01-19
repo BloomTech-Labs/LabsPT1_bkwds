@@ -9,9 +9,6 @@ import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
   LOADING_TRIPS_ERROR,
-  LOADING_ARCHIVED_TRIPS,
-  LOADING_ARCHIVED_TRIPS_SUCCESS,
-  LOADING_ARCHIVED_TRIPS_ERROR,
   GET_SINGLE_TRIP,
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
@@ -24,7 +21,7 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR
 } from "./types"
 
-export const getTrips = () => dispatch => {
+export const getTrips = userId => dispatch => {
   const token = localStorage.getItem("token")
   if (token) {
     // If token, set token as Authorization header on all axios requests:
@@ -33,27 +30,12 @@ export const getTrips = () => dispatch => {
 
   dispatch({ type: LOADING_TRIPS })
   return axios
-    .get(`${SERVER_URI}/trips`)
+    .get(`${SERVER_URI}/users/${userId}/trips`)
     .then(res => {
       dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
     })
     .catch(err => {
       dispatch({ type: LOADING_TRIPS_ERROR, payload: err })
-      toast.error(normalizeErrorMsg(err), {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-    })
-}
-
-export const getArchivedTrips = () => dispatch => {
-  dispatch({ type: LOADING_ARCHIVED_TRIPS })
-  return axios
-    .get(`${SERVER_URI}/trips`)
-    .then(res => {
-      dispatch({ type: LOADING_ARCHIVED_TRIPS_SUCCESS, payload: res.data })
-    })
-    .catch(err => {
-      dispatch({ type: LOADING_ARCHIVED_TRIPS_ERROR, payload: err })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -115,15 +97,15 @@ export const deleteTrip = tripId => dispatch => {
     })
 }
 
-export const toggleArchive = (tripId, archiveTrip) => dispatch => {
+export const toggleArchive = (tripId, archived, user) => dispatch => {
   dispatch({ type: TOGGLE_ARCHIVE_TRIP })
   axios
-    .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: archiveTrip })
+    .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: !archived })
     .then(() => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_SUCCESS })
     })
     .then(() => {
-      archiveTrip ? dispatch(getTrips()) : dispatch(getArchivedTrips())
+      dispatch(getTrips(user))
     })
     .catch(err => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_ERROR, payload: err })

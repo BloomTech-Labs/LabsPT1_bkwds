@@ -1,46 +1,38 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { getTrips } from "../redux/actions/trips"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
 
 import TripCard from "./TripCard"
-import { getTrips } from "../redux/actions/trips"
-import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
+import { getTripsArray } from "../utils/selectors"
 
 class Trips extends Component {
   componentDidMount() {
-    this.props.getTrips()
-  }
-
-  renderTrips() {
-    const { trips, loading } = this.props
-
-    return (
-      <div>
-        <s.TripCardStyles>
-          {loading ? (
-            "Loading..."
-          ) : (
-            <div className="container">
-              {!trips.length && "No unarchived trips!"}
-              {trips.map(trip => (
-                <TripCard key={trip.id} trip={trip} archived={false} />
-              ))}
-              <AddTripButton
-                className="AddTripButton"
-                text={trips.length ? "Add New Trip" : "Add Your First Trip"}
-              />
-            </div>
-          )}
-        </s.TripCardStyles>
-      </div>
-    )
+    this.props.getTrips(this.props.userId)
   }
 
   render() {
-    return <div className="firstTrip">{this.renderTrips()}</div>
+    const { trips } = this.props
+    return (
+      <div>
+        <s.TripCardStyles>
+          <div className="container">
+            {trips.map(trip => {
+              if (!trip.isArchived) {
+                return <TripCard key={trip.id} trip={trip} archived={false} />
+              }
+            })}
+            <AddTripButton
+              className="AddTripButton"
+              text={trips.length ? "Add New Trip" : "Add Your First Trip"}
+            />
+          </div>
+        </s.TripCardStyles>
+      </div>
+    )
   }
 }
 
@@ -50,6 +42,7 @@ Trips.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  userId: state.auth.user.id,
   trips: getTripsArray(state),
   loading: state.trips.loading
 })
