@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 const ChevronSvg = ({
   width = "1rem",
@@ -37,6 +38,13 @@ const ChevronSvg = ({
       </svg>
     </Icon>
   )
+}
+
+ChevronSvg.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string,
+  fill: PropTypes.string,
+  transform: PropTypes.string
 }
 
 export default ChevronSvg

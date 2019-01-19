@@ -10,7 +10,7 @@ import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
 
-const TripCard = ({ trip, archived, toggleArchive, user }) => (
+const TripCard = ({ trip, archived, toggleArchive, userId }) => (
   <div>
     {!trip.id && "Loading trip"}
     {trip.id && (
@@ -30,7 +30,7 @@ const TripCard = ({ trip, archived, toggleArchive, user }) => (
             <div>End: {trip.end}</div>
             <Button
               className={archived ? "btn-gray" : "btn"}
-              onClick={() => toggleArchive(trip.id, archived, user)}
+              onClick={() => toggleArchive(trip.id, archived, userId)}
             >
               {archived ? "Unarchive" : "Archive"}
             </Button>
@@ -54,13 +54,14 @@ const TripCard = ({ trip, archived, toggleArchive, user }) => (
 TripCard.propTypes = {
   archived: PropTypes.bool.isRequired,
   toggleArchive: PropTypes.func.isRequired,
-  trip: TripPropTypes
+  trip: TripPropTypes,
+  userId: PropTypes.string
 }
 
 const mapDispatchToProps = { toggleArchive }
 
 const mapStateToProps = state => ({
-  user: state.auth.user.id
+  userId: state.auth.user.id
 })
 
 export default connect(

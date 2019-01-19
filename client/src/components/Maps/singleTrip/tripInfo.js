@@ -1,6 +1,8 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 export const TripInfo = props => {
+  const trip = { props }
   const style = {
     padding: ".5rem",
     width: "30%",
@@ -13,7 +15,11 @@ export const TripInfo = props => {
   }
   return (
     <div style={style}>
-      <h1>{props.trip.name}</h1>
+      <h1>{trip.name}</h1>
     </div>
   )
+}
+
+TripInfo.propTypes = {
+  trip: PropTypes.object
 }

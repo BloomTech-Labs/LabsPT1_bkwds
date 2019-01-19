@@ -3,6 +3,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
 import PropTypes from "prop-types"
+import { MatchPropTypes, TripPropTypes } from "../propTypes"
 
 import SingleTrip from "../Maps/singleTrip"
 import AppContainer from "../AppContainer"
@@ -80,8 +81,11 @@ const Dashboard = ({ match }) => {
 }
 
 Dashboard.propTypes = {
-  match: PropTypes.object.isRequired,
-  trips: PropTypes.object.isRequired
+  match: MatchPropTypes
+}
+
+DashboardHome.propTypes = {
+  trips: PropTypes.arrayOf(TripPropTypes)
 }
 
 const mapStateToProps = state => ({

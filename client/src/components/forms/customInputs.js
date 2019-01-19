@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { ErrorMessage } from "formik"
 
 import { Label, GhostInput, Button } from "../../styles/theme/styledComponents"
@@ -54,3 +55,25 @@ export const CustomButtonWithError = ({
     )}
   </div>
 )
+
+CustomError.propTypes = {
+  name: PropTypes.string
+}
+
+CustomInputWithError.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  values: PropTypes.array,
+  classNames: PropTypes.array,
+  onChange: PropTypes.any,
+  onBlur: PropTypes.any,
+  placeholder: PropTypes.string,
+  showLabel: PropTypes.bool
+}
+
+CustomButtonWithError.propTypes = {
+  text: PropTypes.string.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  classNames: PropTypes.array,
+  submitError: PropTypes.string
+}

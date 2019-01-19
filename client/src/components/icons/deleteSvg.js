@@ -1,19 +1,21 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 const Delete = props => {
+  const { width, height } = props
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       x="0px"
       y="0px"
-      width={props.width}
-      height={props.height}
+      width={width}
+      height={height}
       viewBox="0 0 612 612"
     >
       <g>
         <g>
           <polygon
-            points="424.032,443.7 443.7,424.032 325.667,306 443.7,187.967 424.032,168.3 306,286.333 187.967,168.3 168.3,187.967 
+            points="424.032,443.7 443.7,424.032 325.667,306 443.7,187.967 424.032,168.3 306,286.333 187.967,168.3 168.3,187.967
                 286.333,306 168.3,424.032 187.967,443.7 306,325.667 		"
           />
           <path
@@ -25,6 +27,11 @@ const Delete = props => {
       </g>
     </svg>
   )
+}
+
+Delete.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string
 }
 
 export default Delete

@@ -38,7 +38,8 @@ class Trips extends Component {
 
 Trips.propTypes = {
   getTrips: PropTypes.func.isRequired,
-  trips: PropTypes.arrayOf(TripPropTypes)
+  trips: PropTypes.arrayOf(TripPropTypes),
+  userId: PropTypes.string
 }
 
 const mapStateToProps = state => ({

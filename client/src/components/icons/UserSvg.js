@@ -1,5 +1,7 @@
 import React from "react"
 import styled from "styled-components"
+import PropTypes from "prop-types"
+import { theme } from "../../styles/theme/variables"
 
 const UserSvg = ({ height, width }) => {
   const Icon = styled.span`
@@ -12,7 +14,7 @@ const UserSvg = ({ height, width }) => {
     svg {
       height: ${height}rem;
       width: ${width}rem;
-      fill: ${props => props.theme.primary};
+      fill: ${theme.primary};
       margin-top: 11px;
     }
   `
@@ -26,6 +28,11 @@ const UserSvg = ({ height, width }) => {
       </svg>
     </Icon>
   )
+}
+
+UserSvg.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string
 }
 
 export default UserSvg

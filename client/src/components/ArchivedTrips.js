@@ -35,8 +35,9 @@ class ArchivedTrips extends Component {
 }
 
 ArchivedTrips.propTypes = {
+  userId: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
   getTrips: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
   trips: PropTypes.arrayOf(TripPropTypes)
 }
 

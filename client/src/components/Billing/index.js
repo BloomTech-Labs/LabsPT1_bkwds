@@ -1,6 +1,7 @@
 import React from "react"
 import * as s from "../../styles/Billing.styles"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import {
   closeCheckoutForm,
@@ -12,6 +13,7 @@ import {
 import Invoices from "./Invoices"
 import PaymentDetails from "./PaymentDetails"
 import AccountType from "./AccountType"
+import { UserPropTypes } from "../propTypes"
 
 class Billing extends React.Component {
   componentDidMount() {
@@ -46,6 +48,18 @@ class Billing extends React.Component {
       </s.BillingStyles>
     )
   }
+}
+
+Billing.propTypes = {
+  user: UserPropTypes.isRequired,
+  closeCheckoutForm: PropTypes.func.isRequired,
+  openCheckoutForm: PropTypes.func.isRequired,
+  cancelSubscription: PropTypes.func.isRequired,
+  retrieveInvoices: PropTypes.func.isRequired,
+  isPending: PropTypes.bool.isRequired,
+  isSubscribed: PropTypes.bool.isRequired,
+  isCheckoutFormOpen: PropTypes.bool.isRequired,
+  invoices: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => {

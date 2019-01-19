@@ -40,3 +40,10 @@ export const UserPropTypes = PropTypes.shape({
   trips: PropTypes.arrayOf(PropTypes.string),
   username: PropTypes.string.isRequired
 })
+
+export const MatchPropTypes = PropTypes.shape({
+  isExact: PropTypes.bool.isRequired,
+  params: PropTypes.object,
+  path: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
+})
