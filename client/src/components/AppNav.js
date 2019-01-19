@@ -24,8 +24,6 @@ import { withTheme } from "styled-components"
 import * as s from "../styles/AppNav.styles"
 
 const protectedPaths = ["/", "/login", "/register"]
-
-// const AppNav = ({ location, logout, isLoggedIn }) => {
 class AppNav extends Component {
   state = { dropdownOpen: false }
 

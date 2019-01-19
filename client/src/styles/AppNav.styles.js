@@ -14,7 +14,7 @@ export const NavStyles = styled.div`
   width: 100%;
   ${boxShadowMixin};
 
-  padding-left: 2rem;
+  padding-left: 0.5rem;
   padding-right: 1.25rem;
   ${media.phone`padding-right: 0;`}
 
@@ -26,11 +26,14 @@ export const NavStyles = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-left: 10px;
   }
-
-  .hamburgerIcon {
+  .hamburger-icon-wrapper {
     display: flex;
-    margin-right: 5px;
+  }
+  .hamburger-icon {
+    display: flex;
+    margin-right: 20px;
   }
 
   ul {

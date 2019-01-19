@@ -15,22 +15,21 @@ export const SidebarStyles = styled.div`
     width: 100%;
     border-radius: 0;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    padding: 0;
+    padding: 6px 12px;
     border: none;
     margin-top: 2px;
-    a {
-      padding: 6px 12px;
+
+    i {
+      width: 26px;
     }
 
     a:last-child {
       white-space: nowrap;
       opacity: 0;
       width: 0;
-      height: 0;
-      padding: 0;
+      margin-left: 10px;
       transition: all ease-in-out 0.4s;
     }
   }
@@ -41,9 +40,6 @@ export const SidebarStyles = styled.div`
 
     a:last-child {
       opacity: 1;
-      width: initial;
-      height: initial;
-      padding: 6px 12px;
       transition: all ease-in-out 0.5s;
     }
   }
