@@ -63,7 +63,7 @@ CustomError.propTypes = {
 CustomInputWithError.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  values: PropTypes.array,
+  values: PropTypes.object,
   classNames: PropTypes.array,
   onChange: PropTypes.any,
   onBlur: PropTypes.any,
