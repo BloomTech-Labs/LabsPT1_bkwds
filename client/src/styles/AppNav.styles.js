@@ -23,7 +23,7 @@ export const NavStyles = styled.div`
   }
   .logo {
     color: ${props => props.theme.primary};
-    font-weight: 700
+    font-weight: 700;
     font-size: 1.75rem;
     letter-spacing: -0.0275rem;
     display: flex;
