@@ -14,7 +14,8 @@ const defaultState = {
   pending: false,
   error: null,
   isCheckoutFormOpen: false,
-  invoices: null
+  invoices: null,
+  stripe: null
 }
 
 export const billingReducer = (state = defaultState, action) => {
@@ -23,7 +24,8 @@ export const billingReducer = (state = defaultState, action) => {
       return {
         ...state,
         pending: true,
-        isCheckoutFormOpen: true
+        isCheckoutFormOpen: true,
+        stripe: action.stripe
       }
 
     case SUBSCRIBE_SUCCESS:
