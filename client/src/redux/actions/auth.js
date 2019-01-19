@@ -31,7 +31,7 @@ export const login = ({ username, password }) => dispatch => {
       localStorage.setItem("token", token)
       dispatch(addTokenToState())
 
-      dispatch(push("/app/trips"))
+      dispatch(push("/app/trip/create"))
     })
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })
@@ -116,10 +116,10 @@ export const checkDbForUser = token => dispatch => {
     })
 
   axios
-    .get(`${SERVER_URI}/user_from_token/${id}`)
+    .get(`${SERVER_URI}/users/${id}`)
     .then(res => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
-      dispatch(push("/app"))
+      dispatch(push("/app/trips"))
     })
     .catch(err => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
@@ -195,7 +195,7 @@ export const loginWithOauth = () => dispatch => {
           localStorage.setItem("token", token)
           dispatch(addTokenToState())
 
-          dispatch(push("/app/trips"))
+          dispatch(push("/app/trip/create"))
         })
         .catch(err => {
           dispatch({ type: LOGIN_FAILURE, payload: err })

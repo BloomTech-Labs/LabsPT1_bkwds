@@ -1,16 +1,19 @@
-import { createStore, applyMiddleware, combineReducers, compose } from "redux"
+import { createStore, applyMiddleware, combineReducers } from "redux"
 import { connectRouter, routerMiddleware } from "connected-react-router"
 import { createBrowserHistory } from "history"
+import { composeWithDevTools } from "redux-devtools-extension"
 import thunk from "redux-thunk"
 import logger from "redux-logger"
 
 import { authReducer } from "./redux/reducers/auth"
 import { tripReducer } from "./redux/reducers/trips"
 import { billingReducer } from "./redux/reducers/billing"
+import { settingsReducer } from "./redux/reducers/settings"
+import { navigationReducer } from "./redux/reducers/navigation"
 
 export const history = createBrowserHistory()
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancers = composeWithDevTools({ trace: true })
 const middleware = [thunk, logger, routerMiddleware(history)]
 
 // TODO: put in redux/reducers/index.js & import instead
@@ -19,6 +22,8 @@ const createRootReducer = history =>
     auth: authReducer,
     trips: tripReducer,
     billing: billingReducer,
+    settings: settingsReducer,
+    navigation: navigationReducer,
     router: connectRouter(history)
   })
 

@@ -1,49 +1,92 @@
 import React from "react"
-import Styled from "styled-components"
 import { connect } from "react-redux"
-import TripPanel from "../singleTrip/tripPanel"
-import { SERVER_URI } from "../../../config"
-import Axios from "axios"
+import PropTypes from "prop-types"
 
-const MapWrapper = Styled.div`
-  position:relative;
-  width:100%;
-  height:100%;
-`
+import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
+import { getSingleTrip } from "../../../redux/actions/trips"
+
+const dashSymbol = {
+  path: "M 0,-1 0,1",
+  strokeOpacity: 1,
+  scale: 3
+}
 
 class SingleTripMap extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      map: null,
-      trip: {}
-    }
+  static defaultProps = {
+    getSingleTrip: () => {},
+    trip: getDefaultTripProps(),
+    tripId: ""
   }
 
   componentDidMount() {
-    this.fetchTrip(this.props.tripId).then(res => {
-      this.setState({ trip: res }, () => {
-        const center = { lat: this.state.trip.lat, lng: this.state.trip.lon }
-        const map = this.renderMap(center, this.state.trip.waypoints)
-        this.setState({ map })
-      })
+    this.props.getSingleTrip(this.props.tripId)
+  }
+
+  componentDidUpdate() {
+    const { trip } = this.props
+    const lat = trip.lat
+    const lng = trip.lon
+    const center = { lat, lng }
+    if (trip && trip.waypoints) this.renderMap(center, trip.waypoints)
+    this.drawPolyline()
+  }
+
+  //Attaches Map to div
+  // TODO? Store users last zoom level for UX improvment - otherwise default to 9
+  renderMap = (center, waypoints) => {
+    window.map = new window.google.maps.Map(
+      document.getElementById("Tripmap"),
+      {
+        center: center,
+        zoom: 9,
+        disableDefaultUI: true
+      }
+    )
+    if (waypoints) {
+      this.renderWaypoints(waypoints)
+    }
+  }
+
+  // Attach waypoints to map
+  renderWaypoints = waypoints => {
+    waypoints.forEach(waypoint => {
+      const center = {
+        lat: parseFloat(waypoint.lat.$numberDecimal),
+        lng: parseFloat(waypoint.lon.$numberDecimal)
+      }
+      new window.google.maps.Marker({
+        position: center,
+        map: window.map,
+        title: waypoint.name,
+        label: waypoint.order.toString()
+      }).setMap(window.map)
     })
   }
 
-  async fetchTrip(tripId) {
-    const res = await Axios.get(`${SERVER_URI}/trips/${tripId}`)
-    const { data } = await res
-    return data
-  }
-  //Attaches Map to div
-  // TODO? Store users last zoom level for UX improvment - otherwise default to 9
-  renderMap = center => {
-    const map = new window.google.maps.Map(document.getElementById("Tripmap"), {
-      center: center,
-      zoom: 9,
-      disableDefaultUI: true
+  drawPolyline = () => {
+    const { waypoints } = this.props.trip
+    const path = waypoints.map(w => ({
+      lat: parseFloat(w.lat.$numberDecimal),
+      lng: parseFloat(w.lon.$numberDecimal)
+    }))
+
+    const polyline = new window.google.maps.Polyline({
+      path,
+      strokeColor: "#1e306e",
+      strokeOpacity: 0,
+      strokeWeight: 2,
+      icons: [
+        {
+          icon: dashSymbol,
+          offset: 0,
+          repeat: "20px"
+        }
+      ]
     })
-    return map
+
+    window.polyline = polyline
+
+    polyline.setMap(window.map)
   }
 
   render() {
@@ -59,7 +102,17 @@ class SingleTripMap extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { tripId: state.trips.activeTrip }
+SingleTripMap.propTypes = {
+  getSingleTrip: PropTypes.func.isRequired,
+  trip: TripPropTypes,
+  tripId: PropTypes.string.isRequired
 }
-export default connect(mapStateToProps)(SingleTripMap)
+
+const mapStateToProps = state => ({
+  trip: state.trips.activeTrip
+})
+
+export default connect(
+  mapStateToProps,
+  { getSingleTrip }
+)(SingleTripMap)

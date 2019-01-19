@@ -6,7 +6,7 @@ import LoginForm from "./forms/LoginForm"
 
 const Login = () => (
   <s.LoginStyles>
-    <h3>Log In</h3>
+    <h4>Log in</h4>
     <LoginForm />
     <Link to="/password/recover">Forgot your password?</Link>
   </s.LoginStyles>

@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, Redirect } from "react-router-dom"
+import PropTypes from "prop-types"
 
 import Banner from "./Banner"
 import ChevronSvg from "./icons/ChevronSvg"
@@ -40,7 +41,7 @@ class LandingNav extends React.Component {
 
   // eslint-disable-next-line no-unused-vars
   componentDidUpdate(_, prevState) {
-    const { scrollY } = this.props || 100
+    const { scrollY } = this.props
     if (this.state.scrollY > scrollY && prevState.drawerOpen) this.closeDrawer()
     if (this.state.scrollY < scrollY && !prevState.drawerOpen) this.openDrawer()
   }
@@ -78,7 +79,7 @@ class LandingNav extends React.Component {
                 </div>
                 <div className="landing-page-mobile-links">
                   <Link to="/settings">
-                    <UserSvg width="1.188rem" height="1.313rem" />
+                    <UserSvg width="1.188" height="1.313" />
                   </Link>
                 </div>
               </div>
@@ -155,6 +156,14 @@ class LandingNav extends React.Component {
       </>
     )
   }
+}
+
+LandingNav.propTypes = {
+  scrollY: PropTypes.number
+}
+
+LandingNav.defaultProps = {
+  scrollY: 100
 }
 
 export default LandingNav

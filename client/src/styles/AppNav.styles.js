@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { boxShadowMixin } from "./theme/mixins"
+import { boxShadowMixin, media } from "./theme/mixins"
 
 export const NavStyles = styled.div`
   background: ${props => props.theme.white};
@@ -14,18 +14,30 @@ export const NavStyles = styled.div`
   width: 100%;
   ${boxShadowMixin};
 
-  padding-left: 2rem;
+  padding-left: 0.5rem;
   padding-right: 1.25rem;
+  ${media.phone`padding-right: 0;`}
 
-  .nav-links-wrapper {
-    /* This is to offset the Github logo bc of its absolute position */
-    margin-right: 60px;
+  .appnav-left {
+    display: flex
   }
+
   .logo {
     color: ${props => props.theme.primary};
     font-weight: 700;
     font-size: 1.75rem;
     letter-spacing: -0.0275rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 10px;
+  }
+  .hamburger-icon-wrapper {
+    display: flex;
+  }
+  .hamburger-icon {
+    display: flex;
+    margin-right: 20px;
   }
 
   ul {
@@ -71,12 +83,67 @@ export const NavStyles = styled.div`
   }
 
   .call-to-action {
-    position: absolute;
+    ${media.tablet`display: none !important;`}
+  }
+
+  /* Aha! This didn't take forever, fucking Bootstrap */
+  .dropdown-menu {
+    width: 102vw;
+    right: 0;
     top: 0;
-    right: 1.25rem;
-    height: 100%;
-    & a {
-      height: 100%;
+    left: 0;
+    border-radius: 0;
+    margin: 0.05rem 0 0;
+    margin-left: -6px;
+  }
+
+  .mobile-links-wrapper {
+    display: none;
+    width: 100%;
+    li.dropdown.nav-item {
+      justify-content: flex-end !important;
+    }
+
+    ${media.phone`
+      display: block;
+
+      .mobile-dropdown-toggle {
+        background: transparent;
+      }
+    `}
+  }
+
+  .appnav-right {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .navlinks-wrapper {
+    display: block;
+    ${media.phone`display: none;`}
+  }
+
+  /* SHARED STYLES WITH DROPDOWN.STYLES.JS */
+  button.dropdown-item {
+    margin: 0;
+    padding: 0;
+    a {
+      transition: padding-left 0.15s ease-in, color 0.15s ease-in;
+      height: auto;
+      padding: 9px 20px;
+      font-size: 1rem;
+      font-weight: 300;
+
+      &:hover {
+        padding-left: 1.5rem;
+      }
+      &:last-child {
+        /* background-color: ${props => props.theme.primary};
+        color: ${props => props.theme.white};
+        font-weight: 400; */
+      }
     }
   }
 `

@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
 const UnauthenticatedLinks = ({ pathname }) => (
   <ul className="unauthenticated-links">
@@ -11,5 +12,9 @@ const UnauthenticatedLinks = ({ pathname }) => (
     ) : null}
   </ul>
 )
+
+UnauthenticatedLinks.propTypes = {
+  pathname: PropTypes.string.isRequired
+}
 
 export default UnauthenticatedLinks
