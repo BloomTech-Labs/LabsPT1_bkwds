@@ -1,5 +1,6 @@
 import React, { Fragment } from "react"
 import { DateRangePicker } from "react-dates"
+import PropTypes from "prop-types"
 
 import * as s from "../../../styles/CreateTripPanel.styles"
 import "react-dates/initialize"
@@ -113,6 +114,14 @@ class CreateTripPanel extends React.Component {
       </Fragment>
     )
   }
+}
+
+CreateTripPanel.propTypes = {
+  addWaypoint: PropTypes.func.isRequired,
+  deleteListener: PropTypes.func.isRequired,
+  getDates: PropTypes.func.isRequired,
+  getTitle: PropTypes.func.isRequired,
+  saveTrip: PropTypes.func.isRequired
 }
 
 export default CreateTripPanel

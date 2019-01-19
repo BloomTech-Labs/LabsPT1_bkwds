@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, withRouter } from "react-router-dom"
+import PropTypes from "prop-types"
 import { Button } from "../styles/theme/styledComponents"
 import * as s from "../styles/Sidebar.styles"
 
@@ -63,6 +64,21 @@ const Sidebar = ({ location }) => {
       </div>
     </s.SidebarStyles>
   )
+}
+
+Sidebar.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string,
+    key: PropTypes.string,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string
+  }).isRequired
+}
+
+SidebarLink.propTypes = {
+  displayName: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired
 }
 
 export default withRouter(Sidebar)

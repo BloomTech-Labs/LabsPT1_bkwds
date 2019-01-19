@@ -1,13 +1,13 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-
+import { Link } from "react-router-dom"
 import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from "reactstrap"
-import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
 import * as s from "../styles/Dropdown.styles"
 import ChevronSvg from "./icons/ChevronSvg"
@@ -74,6 +74,23 @@ class NavDropdown extends Component {
       </s.DropdownStyles>
     )
   }
+}
+
+Dropdown.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
+  onMouseOver: PropTypes.func.isRequired,
+  setActiveFromChild: PropTypes.bool,
+  toggle: PropTypes.func.isRequired
+}
+
+Dropdown.defaultProps = {
+  active: false,
+  direction: "down",
+  inNavbar: true,
+  onMouseLeave: () => {},
+  onMouseOver: () => {}
 }
 
 const mapStateToProps = state => ({ user: state.auth.user })

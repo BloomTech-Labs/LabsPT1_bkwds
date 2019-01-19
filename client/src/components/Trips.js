@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { getTrips } from "../redux/actions/trips"
+import PropTypes from "prop-types"
+import { TripPropTypes } from "./propTypes"
 
 import TripCard from "./TripCard"
 import * as s from "../styles/TripCard.styles"
@@ -34,9 +36,15 @@ class Trips extends Component {
   }
 }
 
+Trips.propTypes = {
+  getTrips: PropTypes.func.isRequired,
+  trips: PropTypes.arrayOf(TripPropTypes)
+}
+
 const mapStateToProps = state => ({
   user: state.auth.user.id,
-  trips: getTripsArray(state)
+  trips: getTripsArray(state),
+  loading: state.trips.loading
 })
 
 const mapDispatchToProps = { getTrips }

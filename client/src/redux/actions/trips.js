@@ -45,12 +45,15 @@ export const getTrips = user => dispatch => {
     })
 }
 
-export const getArchivedTrips = () => dispatch => {
+export const getArchivedTrips = user => dispatch => {
   dispatch({ type: LOADING_ARCHIVED_TRIPS })
   return axios
-    .get(`${SERVER_URI}/trips`)
+    .get(`${SERVER_URI}/users/${user}/trips`)
     .then(res => {
-      dispatch({ type: LOADING_ARCHIVED_TRIPS_SUCCESS, payload: res.data })
+      const archivedTrips = res.data.filter(trip => {
+        if (trip.isArchived) return trip
+      })
+      dispatch({ type: LOADING_ARCHIVED_TRIPS_SUCCESS, payload: archivedTrips })
     })
     .catch(err => {
       dispatch({ type: LOADING_ARCHIVED_TRIPS_ERROR, payload: err })
