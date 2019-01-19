@@ -183,10 +183,6 @@ Returns the deleted user and a confirmation message
 
 Returns an array of all Trips associated with user
 
-```
-WARNING: This endpoint is not ready. DO NOT USE
-```
-
 **URL**: `/api/users/:id/trips`
 
 **Method**: `GET`
@@ -204,7 +200,42 @@ WARNING: This endpoint is not ready. DO NOT USE
 **Example Content**
 
 ```
-
+[
+  {
+    "id": "5c36d200f9372c0371496eed",
+    "userId": "5c1529fd5069560a28ffe082",
+    "name": "TestTrip",
+    "lat": 234.245,
+    "lon": 123.34,
+    "start": "2019-01-10T05:02:12.031Z",
+    "end": "2019-01-10T05:02:12.031Z",
+    "isArchived": false,
+    "inProgress": false,
+    "waypoints": [
+        "5c36d200f9372c0371496eed",
+        "5c36d200f9372c0371496eed",
+        "5c36d200f9372c0371496eed",
+        "5c36d200f9372c0371496eed"
+    ]
+  },
+  {
+    "id": "5c36dae34b41701a9cefc9b6",
+    "userId": "5c1529fd5069560a28ffe082",
+    "name": "TestTrip2",
+    "lat": 234.245,
+    "lon": 123.34,
+    "start": "2019-01-10T05:02:12.031Z",
+    "end": "2019-01-10T05:02:12.031Z",
+    "isArchived": false,
+    "inProgress": false,
+    "waypoints": [
+        "5c36dbd015b9491b9cbdae08",
+        "5c36dce215b9491b9cbdae09",
+        "5c36ddc415b9491b9cbdae0d",
+        "5c36de6515b9491b9cbdae0e"
+    ]
+  }
+]
 ```
 
 ---

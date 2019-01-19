@@ -2,9 +2,6 @@ import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
   LOADING_TRIPS_ERROR,
-  LOADING_ARCHIVED_TRIPS,
-  LOADING_ARCHIVED_TRIPS_SUCCESS,
-  LOADING_ARCHIVED_TRIPS_ERROR,
   GET_SINGLE_TRIP,
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
@@ -21,9 +18,7 @@ import {
 import {
   normalizeTrip,
   normalizeTrips,
-  getArchivedTripsArray,
-  getAllButDeleted,
-  getUnarchivedTripsArray
+  getAllButDeleted
 } from "../../utils/selectors"
 
 const defaultState = {
@@ -42,21 +37,9 @@ export const tripReducer = (state = defaultState, action) => {
         ...state,
         pending: false,
         error: null,
-        trips: normalizeTrips(getUnarchivedTripsArray(action.payload))
+        trips: normalizeTrips(action.payload)
       }
     case LOADING_TRIPS_ERROR:
-      return { ...state, pending: false, error: action.payload }
-
-    case LOADING_ARCHIVED_TRIPS:
-      return { ...state, pending: true }
-    case LOADING_ARCHIVED_TRIPS_SUCCESS:
-      return {
-        ...state,
-        pending: false,
-        error: null,
-        trips: normalizeTrips(getArchivedTripsArray(action.payload))
-      }
-    case LOADING_ARCHIVED_TRIPS_ERROR:
       return { ...state, pending: false, error: action.payload }
 
     case GET_SINGLE_TRIP:
@@ -64,6 +47,7 @@ export const tripReducer = (state = defaultState, action) => {
 
     case CREATING_TRIP:
       return { ...state, pending: true }
+
     case CREATING_TRIP_SUCCESS:
       const newTrip = normalizeTrip(action.payload)
       return {
@@ -72,6 +56,7 @@ export const tripReducer = (state = defaultState, action) => {
         error: null,
         trips: { ...state.trips, ...newTrip }
       }
+
     case CREATING_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
     default:
