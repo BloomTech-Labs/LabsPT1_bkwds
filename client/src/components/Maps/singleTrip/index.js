@@ -1,9 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
+import SingleTripPanel from "./singleTripPanel"
+import { MapWrapper } from "../../../styles/MapWrapper.styles"
+import { TripPropTypes } from "../../propTypes"
+import { getWaypointsByTrip } from "../../../redux/actions/waypoints"
 import PropTypes from "prop-types"
-
-import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
-import { getSingleTrip } from "../../../redux/actions/trips"
+import { WaypointPropTypes } from "../../propTypes"
 
 const dashSymbol = {
   path: "M 0,-1 0,1",
@@ -12,30 +14,25 @@ const dashSymbol = {
 }
 
 class SingleTripMap extends React.Component {
-  static defaultProps = {
-    getSingleTrip: () => {},
-    trip: getDefaultTripProps(),
-    tripId: ""
-  }
-
   componentDidMount() {
-    this.props.getSingleTrip(this.props.tripId)
+    this.props.getWaypointsByTrip(this.props.trip.id)
   }
-
-  componentDidUpdate() {
-    const { trip } = this.props
-    const lat = trip.lat
-    const lng = trip.lon
-    const center = { lat, lng }
-    if (trip && trip.waypoints) this.renderMap(center, trip.waypoints)
-    this.drawPolyline()
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.isWaypointsPending && !this.props.isWaypointsPending) {
+      const { trip } = this.props
+      const lat = trip.lat
+      const lng = trip.lon
+      const center = { lat, lng }
+      this.renderMap(center, this.props.waypoints)
+      this.drawPolyline()
+    }
   }
 
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
     window.map = new window.google.maps.Map(
-      document.getElementById("Tripmap"),
+      document.getElementById("SingleTripmap"),
       {
         center: center,
         zoom: 9,
@@ -64,7 +61,7 @@ class SingleTripMap extends React.Component {
   }
 
   drawPolyline = () => {
-    const { waypoints } = this.props.trip
+    const { waypoints } = this.props
     const path = waypoints.map(w => ({
       lat: parseFloat(w.lat.$numberDecimal),
       lng: parseFloat(w.lon.$numberDecimal)
@@ -90,26 +87,34 @@ class SingleTripMap extends React.Component {
   }
 
   render() {
+    const { name, start, end } = this.props.trip
+    const { waypoints } = this.props
+    const props = { name, start, end, waypoints }
     return (
-      <div
-        style={{ width: "100%", height: "100%", position: "absolute" }}
-        id="Tripmap"
-      />
+      <MapWrapper>
+        {this.props.waypoints && <SingleTripPanel {...props} />}
+        <div
+          style={{ width: "100%", height: "100%", position: "absolute" }}
+          id="SingleTripmap"
+        />
+      </MapWrapper>
     )
   }
 }
 
 SingleTripMap.propTypes = {
-  getSingleTrip: PropTypes.func.isRequired,
+  isWaypointsPending: PropTypes.bool.isRequired,
   trip: TripPropTypes,
-  tripId: PropTypes.string.isRequired
+  waypoints: PropTypes.arrayOf(WaypointPropTypes)
 }
 
-const mapStateToProps = state => ({
-  trip: state.trips.activeTrip
+const mapStateToProps = (state, ownProps) => ({
+  isWaypointsPending: state.waypoints.pending,
+  trip: state.trips.trips[ownProps.tripId],
+  waypoints: state.waypoints.list
 })
 
 export default connect(
   mapStateToProps,
-  { getSingleTrip }
+  { getWaypointsByTrip }
 )(SingleTripMap)

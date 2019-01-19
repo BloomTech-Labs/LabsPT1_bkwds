@@ -40,3 +40,18 @@ export const UserPropTypes = PropTypes.shape({
   trips: PropTypes.arrayOf(PropTypes.string),
   username: PropTypes.string.isRequired
 })
+
+export const DecimalPropTypes = PropTypes.shape({
+  $numberDecimal: PropTypes.string
+})
+
+export const WaypointPropTypes = PropTypes.shape({
+  tripId: PropTypes.string.isRequired,
+  order: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  lat: PropTypes.objectOf(PropTypes.string),
+  lon: PropTypes.objectOf(PropTypes.string),
+  start: PropTypes.string.isRequired,
+  end: PropTypes.string.isRequired,
+  complete: PropTypes.bool
+})
