@@ -22,7 +22,6 @@ export const createTrip = (req, res) => {
     lat: req.body.lat,
     lon: req.body.lon
   })
-  console.log
   newTrip
     .save()
     .then(trip => {
