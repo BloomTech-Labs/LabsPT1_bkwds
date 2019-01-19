@@ -30,13 +30,15 @@ const AppNav = ({
     <div>
       <s.NavStyles>
         <div className="hamburger-icon-wrapper">
-          <HamburgerSpring
-            className="hamburger-icon"
-            buttonWidth={20}
-            barColor={`${theme.primary}`}
-            isActive={isSidebarOpen}
-            toggleButton={() => toggleSidebar(isSidebarOpen)}
-          />
+          {isLoggedIn && (
+            <HamburgerSpring
+              className="hamburger-icon"
+              buttonWidth={20}
+              barColor={`${theme.primary}`}
+              isActive={isSidebarOpen}
+              toggleButton={() => toggleSidebar(isSidebarOpen)}
+            />
+          )}
           <div className="logo">Backwoods Tracker</div>
         </div>
         <div className="nav-links-wrapper">
