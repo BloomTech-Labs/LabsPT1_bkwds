@@ -6,14 +6,16 @@ import moment from "moment"
 
 import {
   closeCheckoutForm,
-  openCheckoutForm,
-  cancelSubscription,
-  retrieveInvoices
+  openCheckoutForm
 } from "../../redux/actions/billing"
 import CheckoutForm from "../forms/CheckoutForm"
+import Pending from "./Pending"
 import StripeProvider from "./StripeProvider"
+import { media } from "../../styles/theme/mixins"
 
 const PaymentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 50px auto 0;
   padding: 50px 0;
   max-width: 500px;
@@ -46,6 +48,18 @@ const PaymentContainer = styled.div`
     display: flex;
     justify-content: space-between;
   }
+
+  ${media.phone`
+    width: 350px;
+
+    h4 {
+      padding: 0 25px;
+    }
+
+    .detail {
+      padding: 20px 25px;
+    }
+  `}
 `
 
 class PaymentDetails extends Component {
@@ -55,6 +69,13 @@ class PaymentDetails extends Component {
 
   componentWillUnmount() {
     this.props.closeCheckoutForm()
+  }
+
+  componentDidUpdate(prevProps) {
+    const { history, pending } = this.props
+    if (prevProps.pending && !pending) {
+      history.push("/app/billing")
+    }
   }
 
   render() {
@@ -80,19 +101,22 @@ class PaymentDetails extends Component {
             <CheckoutForm />
           </Elements>
         </StripeProvider>
+        {this.props.pending && <Pending />}
       </PaymentContainer>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  pending: state.billing.pending
+})
+
 const mapDispatchToProps = {
   closeCheckoutForm,
-  openCheckoutForm,
-  cancelSubscription,
-  retrieveInvoices
+  openCheckoutForm
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PaymentDetails)
