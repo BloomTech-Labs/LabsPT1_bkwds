@@ -13,69 +13,78 @@ const SidebarLink = ({ to, displayName, pathname }) => (
   </Button>
 )
 
-const Sidebar = ({ isSubscribed, location }) => {
-  return (
-    <s.SidebarStyles>
-      <div className="sidebar-links">
-        <div style={{ marginLeft: "2rem" }}>App:</div>
-        <SidebarLink
-          to="/app"
-          displayName="Dashboard"
-          pathname={location.pathname}
-        />
-        <SidebarLink
-          to="/app/trip/create"
-          displayName="Create a new trip"
-          pathname={location.pathname}
-        />
-        <SidebarLink
-          to="/app/trips"
-          displayName="Trips"
-          pathname={location.pathname}
-        />
-        <SidebarLink
-          to="/app/trips/archived"
-          displayName="Archived trips"
-          pathname={location.pathname}
-        />
-        {isSubscribed ? (
+const menuItems = [
+  {
+    displayName: "Dashboard",
+    icon: "fa-tachometer",
+    to: "/app"
+  },
+  {
+    displayName: "Create a new trip",
+    icon: "fa-plus-circle",
+    to: "/app/trip/create"
+  },
+  {
+    displayName: "Trips",
+    icon: "fa-map-marker",
+    to: "/app/trips"
+  },
+  {
+    displayName: "Archived Trips",
+    icon: "fa-map",
+    to: "/app/trips/archived"
+  },
+  {
+    displayName: "Billing",
+    icon: "fa-credit-card",
+    to: "/app/billing"
+  },
+  {
+    displayName: "Settings",
+    icon: "fa-cog",
+    to: "/app/settings"
+  },
+  {
+    displayName: "Landing Page",
+    icon: "fa-heart",
+    to: "/"
+  },
+  {
+    displayName: "Login",
+    icon: "fa-heart",
+    to: "/login"
+  },
+  {
+    displayName: "Register",
+    icon: "fa-heart",
+    to: "/register"
+  }
+]
+
+const Sidebar = ({ location, isSidebarOpen, isSubscribed }) => (
+  <s.SidebarStyles>
+    <div className={`sidebar-links ${isSidebarOpen ? "open" : ""}`}>
+      {menuItems.map(menuItem => {
+        if (menuItem.displayName === "Billing" && !isSubscribed) {
+          return (
+            <SidebarLink
+              to="/app/upgrade"
+              displayName="Upgrade to Premium"
+              pathname={location.pathname}
+            />
+          )
+        }
+        return (
           <SidebarLink
-            to="/app/billing"
-            displayName="Billing"
+            {...menuItem}
+            key={menuItem.displayName}
             pathname={location.pathname}
           />
-        ) : (
-          <SidebarLink
-            to="/app/upgrade"
-            displayName="Upgrade to Premium"
-            pathname={location.pathname}
-          />
-        )}
-        <SidebarLink
-          to="/app/settings"
-          displayName="Settings"
-          pathname={location.pathname}
-        />
-        <div style={{ marginLeft: "2rem" }}>Pages:</div>
-        <SidebarLink
-          to="/"
-          displayName="Landing Page"
-          pathname={location.pathname}
-        />
-        <SidebarLink
-          to="/login"
-          displayName="Login"
-          pathname={location.pathname}
-        />
-        <SidebarLink
-          to="/register"
-          displayName="Register"
-          pathname={location.pathname}
-        />
-      </div>
-    </s.SidebarStyles>
-  )
-}
+        )
+      })}
+    </div>
+  </s.SidebarStyles>
+)
 
 Sidebar.propTypes = {
   location: PropTypes.shape({
@@ -91,8 +100,11 @@ SidebarLink.propTypes = {
   pathname: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired
 }
-
+g
 export default compose(
   withRouter,
-  connect(({ auth }) => ({ isSubscribed: auth.user.subscribed }))
+  connect(({ auth, navigation: { isSidebarOpen } }) => ({
+    isSidebarOpen,
+    isSubscribed: auth.user.subscribed
+  }))
 )(Sidebar)
