@@ -4,6 +4,7 @@ import Scriptly from "scriptly"
 import { SERVER_URI } from "../../config"
 import {
   INIT_NEW_SUBSCRIPTION,
+  SUBSCRIBE_PENDING,
   SUBSCRIBE_SUCCESS,
   SUBSCRIBE_FAIL,
   INIT_NEW_CANCELLATION,
@@ -63,6 +64,7 @@ export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
 
 export const subscribe = ({ id, owner, stripe }) => async dispatch => {
   if (!token) return
+  dispatch({ type: SUBSCRIBE_PENDING })
 
   try {
     const { source } = await stripe.createSource({ type: "card" })
