@@ -1,12 +1,11 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { CardElement, injectStripe } from "react-stripe-elements"
 import PropTypes from "prop-types"
 
 import * as s from "../../styles/CheckoutForm.styles"
 import { subscribe } from "../../redux/actions/billing"
 import { UserPropTypes } from "../propTypes"
-
-import { CardElement, injectStripe } from "react-stripe-elements"
 import { Input, Button } from "../../styles/theme/styledComponents"
 
 class CheckoutForm extends Component {
@@ -20,7 +19,7 @@ class CheckoutForm extends Component {
     city: ""
   }
 
-  submit = async () => {
+  submit = () => {
     const { name, line1, line2, city, state, postal_code, country } = this.state
     const owner = {
       name,
@@ -50,13 +49,16 @@ class CheckoutForm extends Component {
 
   render() {
     const { name, line1, line2, city, state, postal_code, country } = this.state
+
     return (
       <s.CheckoutFormStyles>
-        <div>
-          <CardElement
-            onChange={this.handleChangeCard}
-            onReady={el => el.focus()}
-          />
+        <>
+          <div className="stripe-card-input">
+            <CardElement
+              onChange={this.handleChangeCard}
+              onReady={el => el.focus()}
+            />
+          </div>
           <Input
             id="name"
             type="text"
@@ -68,7 +70,7 @@ class CheckoutForm extends Component {
           <Input
             id="line1"
             type="text"
-            placeholder="Address Line 1"
+            placeholder="Address line 1"
             value={line1}
             onChange={this.handleChangeOwnerInfo}
             className="input-checkout"
@@ -76,35 +78,37 @@ class CheckoutForm extends Component {
           <Input
             id="line2"
             type="text"
-            placeholder="Address Line 2"
+            placeholder="Address line 2"
             value={line2}
             onChange={this.handleChangeOwnerInfo}
             className="input-checkout"
           />
-          <Input
-            id="city"
-            type="text"
-            placeholder="City"
-            value={city}
-            onChange={this.handleChangeOwnerInfo}
-            className="input-checkout"
-          />
-          <Input
-            id="state"
-            type="text"
-            placeholder="State"
-            value={state}
-            onChange={this.handleChangeOwnerInfo}
-            className="input-checkout"
-          />
-          <Input
-            id="postal_code"
-            type="number"
-            placeholder="Postal Code"
-            value={postal_code}
-            onChange={this.handleChangeOwnerInfo}
-            className="input-checkout"
-          />
+          <div className="form-city-state">
+            <Input
+              id="city"
+              type="text"
+              placeholder="City"
+              value={city}
+              onChange={this.handleChangeOwnerInfo}
+              className="input-checkout"
+            />
+            <Input
+              id="state"
+              type="text"
+              placeholder="State"
+              value={state}
+              onChange={this.handleChangeOwnerInfo}
+              className="input-checkout"
+            />
+            <Input
+              id="postal_code"
+              type="number"
+              placeholder="Zip"
+              value={postal_code}
+              onChange={this.handleChangeOwnerInfo}
+              className="input-checkout"
+            />
+          </div>
           <Input
             id="country"
             type="text"
@@ -113,10 +117,10 @@ class CheckoutForm extends Component {
             onChange={this.handleChangeOwnerInfo}
             className="input-checkout"
           />
-          <Button className="input-button" onClick={this.submit}>
+          <Button className="input-button" color="orange" onClick={this.submit}>
             Subscribe Now
           </Button>
-        </div>
+        </>
       </s.CheckoutFormStyles>
     )
   }
@@ -132,16 +136,12 @@ const mapStateToProps = state => {
   return { user: state.auth.user }
 }
 
-const mapDispatchToProps = {
-  subscribe
-}
-
 // We have to wrap connect in `injectStripe` to avoid bugs where shouldComponentUpdate
 // interferes with connect's own shouldComponent update.
 // See https://github.com/stripe/react-stripe-elements#troubleshooting
 export default injectStripe(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { subscribe }
   )(CheckoutForm)
 )

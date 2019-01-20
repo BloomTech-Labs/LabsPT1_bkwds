@@ -1,5 +1,5 @@
 import React from "react"
-import * as s from "../../styles/Billing.styles"
+import { BillingStyles } from "../../styles/Billing.styles"
 import { connect } from "react-redux"
 
 import {
@@ -10,8 +10,8 @@ import {
 } from "../../redux/actions/billing"
 
 import Invoices from "./Invoices"
-import PaymentDetails from "./PaymentDetails"
-import AccountType from "./AccountType"
+// import PaymentDetails from "./PaymentDetails"
+// import AccountType from "./AccountType"
 import Plans from "./Plans"
 
 class Billing extends React.Component {
@@ -31,21 +31,20 @@ class Billing extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.closeCheckoutForm()
-  }
+  // componentWillUnmount() {
+  //   this.props.closeCheckoutForm()
+  // }
 
   render() {
     const { isCheckoutFormOpen, invoices, isPending, isSubscribed } = this.props
 
     return (
-      <s.BillingStyles>
-        <h4>Choose a plan</h4>
-        <Plans />
+      <BillingStyles>
+        {/* <Plans /> */}
         {/* isPending || <AccountType /> */}
-        {isCheckoutFormOpen && <PaymentDetails />}
+        {/* {isCheckoutFormOpen && <PaymentDetails />} */}
         {isSubscribed && invoices && <Invoices invoices={invoices} />}
-      </s.BillingStyles>
+      </BillingStyles>
     )
   }
 }
