@@ -71,6 +71,7 @@ const Sidebar = ({ location, isSidebarOpen, isSubscribed }) => (
         if (menuItem.displayName === "Billing" && !isSubscribed) {
           return (
             <SidebarLink
+              icon="fa-star"
               to="/app/upgrade"
               displayName="Upgrade to Premium"
               pathname={location.pathname}
