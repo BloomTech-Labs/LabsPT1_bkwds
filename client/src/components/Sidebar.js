@@ -7,8 +7,11 @@ import PropTypes from "prop-types"
 import { Button } from "../styles/theme/styledComponents"
 import * as s from "../styles/Sidebar.styles"
 
-const SidebarLink = ({ to, displayName, pathname }) => (
+const SidebarLink = ({ icon, displayName, pathname, to }) => (
   <Button className={pathname === to ? "btn-inverted" : ""}>
+    <Link to={to}>
+      <i className={`fa ${icon}`} />
+    </Link>
     <Link to={to}>{displayName}</Link>
   </Button>
 )
@@ -92,7 +95,9 @@ Sidebar.propTypes = {
     key: PropTypes.string,
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
+  isSubscribed: PropTypes.bool.isRequired
 }
 
 SidebarLink.propTypes = {
@@ -100,7 +105,7 @@ SidebarLink.propTypes = {
   pathname: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired
 }
-g
+
 export default compose(
   withRouter,
   connect(({ auth, navigation: { isSidebarOpen } }) => ({
