@@ -9,6 +9,8 @@ import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"
 import Billing from "../Billing/"
+import PaymentDetails from "../Billing/PaymentDetails"
+import Plans from "../Billing/Plans"
 import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import Settings from "../Settings"
@@ -55,9 +57,19 @@ const dashboardRoutes = [
     component: Settings
   },
   {
+    path: "/billing/payment",
+    name: "Payment",
+    component: PaymentDetails
+  },
+  {
     path: "/billing",
     name: "Billing",
     component: Billing
+  },
+  {
+    path: "/upgrade",
+    name: "Upgrade",
+    component: Plans
   }
 ]
 
