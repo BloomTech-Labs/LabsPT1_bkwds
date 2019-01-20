@@ -96,8 +96,6 @@ Dashboard.propTypes = {
   trips: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => ({
-  trips: state.trips.trips
-})
+const mapStateToProps = ({ trips: { trips } }) => ({ trips })
 
 export default connect(mapStateToProps)(Dashboard)

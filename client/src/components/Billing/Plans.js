@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-import { cancelSubscription } from "../../redux/actions/billing"
 import { media } from "../../styles/theme/mixins"
 import { BillingStyles } from "../../styles/Billing.styles"
 
@@ -152,92 +151,79 @@ const PaidColumn = styled.div`
   `}
 `
 
-const Plans = ({ cancelSubscription, id, isSubscribed, subscribeId }) => {
-  const handleCancel = () => {
-    if (subscribeId) {
-      cancelSubscription({ id, subscribeId })
-    }
-  }
-
-  return (
-    <BillingStyles>
-      <h4>Choose a plan</h4>
-      <Container>
-        <Features>
-          <Spacer />
-          <span># of trips tracked</span>
-          <span># of archived trips</span>
-          <span># of trip photos</span>
-          <span>Safety features</span>
-          <span>Trip analysis</span>
-          <span>24/7 support</span>
-        </Features>
-        <FreeColumn>
-          <h2>$0</h2>
-          <span className="plans-monthly">per month</span>
-          <span>
-            Unlimited
-            <span className="plans-mobile">&nbsp;number of trips</span>
-          </span>
-          <span>
-            50
-            <span className="plans-mobile">&nbsp;archived trips</span>
-          </span>
-          <span>1 photo per trip</span>
-          <span className="plans-spacer">&nbsp;</span>
-          <span className="plans-spacer">&nbsp;</span>
-          <span className="plans-spacer">&nbsp;</span>
-          <span className="plans-current">
-            {isSubscribed ? <a onClick={handleCancel}>Free</a> : "Current plan"}
-          </span>
-        </FreeColumn>
-        <PaidColumn>
-          <h2>$10</h2>
-          <span className="plans-monthly">per month</span>
-          <span>
-            Unlimited
-            <span className="plans-mobile">&nbsp;number of trips</span>
-          </span>
-          <span>
-            Unlimited
-            <span className="plans-mobile">&nbsp;archived trips</span>
-          </span>
-          <span>
-            Unlimited
-            <span className="plans-mobile">&nbsp;trip photos</span>
-          </span>
-          <span>
-            <i className="fa fa-check" />
-            <span className="plans-mobile check">&nbsp;Safety features</span>
-          </span>
-          <span>
-            <i className="fa fa-check" />
-            <span className="plans-mobile check">&nbsp;Trip analysis</span>
-          </span>
-          <span>
-            <i className="fa fa-check" />
-            <span className="plans-mobile check">&nbsp;24/7 support</span>
-          </span>
-          <span className="plans-upgrade">
-            {isSubscribed ? (
-              "Current plan"
-            ) : (
-              <Link to="/app/billing/payment">Upgrade</Link>
-            )}
-          </span>
-        </PaidColumn>
-      </Container>
-    </BillingStyles>
-  )
-}
+const Plans = ({ isSubscribed }) => (
+  <BillingStyles>
+    <h4>Choose a plan</h4>
+    <Container>
+      <Features>
+        <Spacer />
+        <span># of trips tracked</span>
+        <span># of archived trips</span>
+        <span># of trip photos</span>
+        <span>Safety features</span>
+        <span>Trip analysis</span>
+        <span>24/7 support</span>
+      </Features>
+      <FreeColumn>
+        <h2>$0</h2>
+        <span className="plans-monthly">per month</span>
+        <span>
+          Unlimited
+          <span className="plans-mobile">&nbsp;number of trips</span>
+        </span>
+        <span>
+          50
+          <span className="plans-mobile">&nbsp;archived trips</span>
+        </span>
+        <span>1 photo per trip</span>
+        <span className="plans-spacer">&nbsp;</span>
+        <span className="plans-spacer">&nbsp;</span>
+        <span className="plans-spacer">&nbsp;</span>
+        <span className="plans-current">
+          {isSubscribed ? "Free" : "Current plan"}
+        </span>
+      </FreeColumn>
+      <PaidColumn>
+        <h2>$10</h2>
+        <span className="plans-monthly">per month</span>
+        <span>
+          Unlimited
+          <span className="plans-mobile">&nbsp;number of trips</span>
+        </span>
+        <span>
+          Unlimited
+          <span className="plans-mobile">&nbsp;archived trips</span>
+        </span>
+        <span>
+          Unlimited
+          <span className="plans-mobile">&nbsp;trip photos</span>
+        </span>
+        <span>
+          <i className="fa fa-check" />
+          <span className="plans-mobile check">&nbsp;Safety features</span>
+        </span>
+        <span>
+          <i className="fa fa-check" />
+          <span className="plans-mobile check">&nbsp;Trip analysis</span>
+        </span>
+        <span>
+          <i className="fa fa-check" />
+          <span className="plans-mobile check">&nbsp;24/7 support</span>
+        </span>
+        <span className="plans-upgrade">
+          {isSubscribed ? (
+            "Current plan"
+          ) : (
+            <Link to="/app/billing/payment">Upgrade</Link>
+          )}
+        </span>
+      </PaidColumn>
+    </Container>
+  </BillingStyles>
+)
 
 const mapStateToProps = ({ auth }) => ({
-  id: auth.user.id,
-  isSubscribed: auth.user.subscribed,
-  subscribeId: auth.user.subscribeId
+  isSubscribed: auth.user.subscribed
 })
 
-export default connect(
-  mapStateToProps,
-  { cancelSubscription }
-)(Plans)
+export default connect(mapStateToProps)(Plans)

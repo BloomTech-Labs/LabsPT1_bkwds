@@ -9,10 +9,7 @@ export const CheckoutFormStyles = styled.div`
 
   input {
     margin-bottom: 10px;
-    padding: 0.5rem 1rem 0.43rem;
-    border-radius: 0.375rem;
     border: 1px solid #d1d5da;
-    color: #f6f6f6;
     font-size: 0.95rem;
   }
 
@@ -45,40 +42,17 @@ export const CheckoutFormStyles = styled.div`
       width: inherit;
     }
   }
-  /* 
-  .input-checkout {
-    margin: 10px;
-  } */
-  /* 
-  .input-button {
-    margin-left: 30px;
-  } */
 
   ${media.phone`
-    .input-checkout {
-      display: flex;
-      /* width: 250px; */
-      float: none;
-      /* margin: 10px auto; */
-    }
+    width: 300px;
 
     .input-button {
-      width: 250px;
-      height: 50px;
+      width: 300px;
       float: none;
       margin: 10px auto;
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-  `}
-
-  ${media.phone`
-    width: 250px;
-    .StripeElement {
-      margin: 0;
-      width: 250px;
-      margin-top: 20px;
     }
   `}
 `

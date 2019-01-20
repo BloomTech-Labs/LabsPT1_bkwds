@@ -52,75 +52,66 @@ class CheckoutForm extends Component {
 
     return (
       <s.CheckoutFormStyles>
-        <>
-          <div className="stripe-card-input">
-            <CardElement
-              onChange={this.handleChangeCard}
-              onReady={el => el.focus()}
-            />
-          </div>
+        <div className="stripe-card-input">
+          <CardElement
+            onChange={this.handleChangeCard}
+            onReady={el => el.focus()}
+          />
+        </div>
+        <Input
+          id="name"
+          type="text"
+          placeholder="Name on card"
+          value={name}
+          onChange={this.handleChangeOwnerInfo}
+        />
+        <Input
+          id="line1"
+          type="text"
+          placeholder="Address line 1"
+          value={line1}
+          onChange={this.handleChangeOwnerInfo}
+        />
+        <Input
+          id="line2"
+          type="text"
+          placeholder="Address line 2"
+          value={line2}
+          onChange={this.handleChangeOwnerInfo}
+        />
+        <div className="form-city-state">
           <Input
-            id="name"
+            id="city"
             type="text"
-            placeholder="Name on card"
-            value={name}
+            placeholder="City"
+            value={city}
             onChange={this.handleChangeOwnerInfo}
-            className="input-checkout"
           />
           <Input
-            id="line1"
+            id="state"
             type="text"
-            placeholder="Address line 1"
-            value={line1}
+            placeholder="State"
+            value={state}
             onChange={this.handleChangeOwnerInfo}
-            className="input-checkout"
           />
           <Input
-            id="line2"
-            type="text"
-            placeholder="Address line 2"
-            value={line2}
+            id="postal_code"
+            type="number"
+            placeholder="Zip"
+            value={postal_code}
             onChange={this.handleChangeOwnerInfo}
-            className="input-checkout"
           />
-          <div className="form-city-state">
-            <Input
-              id="city"
-              type="text"
-              placeholder="City"
-              value={city}
-              onChange={this.handleChangeOwnerInfo}
-              className="input-checkout"
-            />
-            <Input
-              id="state"
-              type="text"
-              placeholder="State"
-              value={state}
-              onChange={this.handleChangeOwnerInfo}
-              className="input-checkout"
-            />
-            <Input
-              id="postal_code"
-              type="number"
-              placeholder="Zip"
-              value={postal_code}
-              onChange={this.handleChangeOwnerInfo}
-              className="input-checkout"
-            />
-          </div>
-          <Input
-            id="country"
-            type="text"
-            placeholder="Country"
-            value={country}
-            onChange={this.handleChangeOwnerInfo}
-            className="input-checkout"
-          />
-          <Button className="input-button" color="orange" onClick={this.submit}>
-            Subscribe Now
-          </Button>
-        </>
+        </div>
+        <Input
+          id="country"
+          type="text"
+          placeholder="Country"
+          value={country}
+          onChange={this.handleChangeOwnerInfo}
+        />
+        <Button className="input-button" color="orange" onClick={this.submit}>
+          Subscribe Now
+        </Button>
       </s.CheckoutFormStyles>
     )
   }
@@ -132,9 +123,7 @@ CheckoutForm.propTypes = {
   user: UserPropTypes
 }
 
-const mapStateToProps = state => {
-  return { user: state.auth.user }
-}
+const mapStateToProps = ({ auth: { user } }) => ({ user })
 
 // We have to wrap connect in `injectStripe` to avoid bugs where shouldComponentUpdate
 // interferes with connect's own shouldComponent update.
