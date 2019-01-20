@@ -84,14 +84,16 @@ Sidebar.propTypes = {
     key: PropTypes.string,
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  isSidebarOpen: PropTypes.bool
 }
 
 SidebarLink.propTypes = {
   displayName: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
-  isSidebarOpen: PropTypes.bool.isRequired
+  isSidebarOpen: PropTypes.bool.isRequired,
+  icon: PropTypes.string
 }
 
 const mapStateToProps = ({ navigation: { isSidebarOpen } }) => ({
