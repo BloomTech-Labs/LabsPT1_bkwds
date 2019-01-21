@@ -130,7 +130,6 @@ export const repeatTrip = (req, res) => {
     ...req,
     body: {
       ...req.body,
-      name: req.body.name + " REPEAT",
       isArchived: false,
       start: currentTime,
       end: currentTime + tripLength,
