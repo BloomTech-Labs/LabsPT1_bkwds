@@ -29,13 +29,13 @@ class SingleTripMap extends React.Component {
     const lat = trip.lat
     const lng = trip.lon
     const center = { lat, lng }
-    if (trip && trip.waypoints) this.renderMap(center, trip.waypoints)
-    this.drawPolyline()
+    if (trip && trip.waypoints) this.renderMap(center)
+    // this.drawPolyline()
   }
 
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
-  renderMap = (center, waypoints) => {
+  renderMap = center => {
     window.map = new window.google.maps.Map(
       document.getElementById("Tripmap"),
       {
@@ -44,29 +44,25 @@ class SingleTripMap extends React.Component {
         disableDefaultUI: true
       }
     )
-    if (waypoints) {
-      this.renderWaypoints(waypoints)
-    }
   }
 
   // Attach waypoints to map
-  renderWaypoints = waypoints => {
-    waypoints.forEach(waypoint => {
-      const center = {
-        lat: parseFloat(waypoint.lat.$numberDecimal),
-        lng: parseFloat(waypoint.lon.$numberDecimal)
-      }
-      new window.google.maps.Marker({
-        position: center,
-        map: window.map,
-        title: waypoint.name,
-        label: waypoint.order.toString()
-      }).setMap(window.map)
-    })
-  }
+  // renderWaypoints = waypoints => {
+  //   waypoints.forEach(waypoint => {
+  //     const center = {
+  //       lat: parseFloat(waypoint.lat.$numberDecimal),
+  //       lng: parseFloat(waypoint.lon.$numberDecimal)
+  //     }
+  //     new window.google.maps.Marker({
+  //       position: center,
+  //       map: window.map,
+  //       title: waypoint.name,
+  //       label: waypoint.order.toString()
+  //     }).setMap(window.map)
+  //   })
+  // }
 
-  drawPolyline = () => {
-    const { waypoints } = this.props.trip
+  drawPolyline = waypoints => {
     const path = waypoints.map(w => ({
       lat: parseFloat(w.lat.$numberDecimal),
       lng: parseFloat(w.lon.$numberDecimal)
@@ -94,7 +90,7 @@ class SingleTripMap extends React.Component {
   render() {
     return (
       <MapWrapper>
-        <TripPanel trip={this.props.trip} />
+        <TripPanel trip={this.props.trip} drawPolyline={this.drawPolyline} />
         <div
           style={{ width: "100%", height: "100%", position: "absolute" }}
           id="Tripmap"

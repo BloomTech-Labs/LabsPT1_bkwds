@@ -27,3 +27,5 @@ const EditIcon = props => {
     </svg>
   )
 }
+
+export default EditIcon
