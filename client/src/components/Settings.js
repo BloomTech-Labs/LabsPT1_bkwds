@@ -5,7 +5,7 @@ import * as s from "../styles/Settings.styles"
 
 const Settings = () => (
   <s.SettingsStyles>
-    <h3>Settings</h3>
+    <h4>Change email / password</h4>
     <SettingsForm />
   </s.SettingsStyles>
 )

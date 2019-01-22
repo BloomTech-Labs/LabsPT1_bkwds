@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 export const PuffIcon = props => {
   const { height, width } = props
-  // const heightSize, widthSize = { props }
+
   return (
     <svg
       width={width}
@@ -67,4 +67,4 @@ PuffIcon.propTypes = {
   width: PropTypes.string
 }
 
-// export default Puff
+export default PuffIcon

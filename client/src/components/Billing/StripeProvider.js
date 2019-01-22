@@ -8,7 +8,7 @@ const StripeElementsContainer = ({ children, stripe }) => (
 )
 
 StripeElementsContainer.propTypes = {
-  stripe: PropTypes.element.isRequired,
+  stripe: PropTypes.object,
   children: PropTypes.element.isRequired
 }
 
