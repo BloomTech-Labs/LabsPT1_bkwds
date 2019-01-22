@@ -12,6 +12,7 @@ import { GlobalStyles } from "../styles/theme/GlobalStyles"
 import { isProtectedPath } from "../utils"
 
 const Right = styled.div`
+  overflow-y: scroll;
   background: ${props => props.theme.ghostWhite};
   width: 100%;
 `
@@ -35,7 +36,7 @@ const AppContainer = ({ pathname, children, isLoggedIn }) => {
         {showSidebar ? (
           <div className="main-content with-sidebar">
             <Sidebar id="sidebar" />
-            <Right id="Right">{children}</Right>
+            <Right id="right">{children}</Right>
           </div>
         ) : (
           <div className="main-content">{children}</div>

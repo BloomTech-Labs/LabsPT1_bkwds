@@ -179,6 +179,11 @@ export const fontMixin = css`
     color: ${props => props.theme.primary};
   }
 
+  h2 {
+    font-size: 2.75rem;
+    font-weight: 500;
+  }
+
   h3 {
     font-size: 2.5rem;
     letter-spacing: 0.01875rem;
@@ -186,7 +191,7 @@ export const fontMixin = css`
 
   h4 {
     font-family: Wals;
-    font-weight: 300;
+    font-weight: 500;
     font-size: 1.75rem;
     margin-bottom: 16px;
   }

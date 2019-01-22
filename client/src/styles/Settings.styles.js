@@ -1,22 +1,21 @@
 import styled from "styled-components"
 
 export const SettingsStyles = styled.div`
-a {
-  text-decoration: underline;
-}
+  h4 {
+    text-align: center;
+  }
 
-.container {
-  max-width: 100%;
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  float: none;
   margin: 0 auto;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-width: 100%;
-padding: 30px;
-max-width: 400px
-float: none;
-margin: 0 auto;
-
 `

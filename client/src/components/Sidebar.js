@@ -1,7 +1,9 @@
 import React from "react"
-import { Link, withRouter } from "react-router-dom"
+import { compose } from "redux"
 import { connect } from "react-redux"
+import { Link, withRouter } from "react-router-dom"
 import PropTypes from "prop-types"
+
 import { Button } from "../styles/theme/styledComponents"
 import * as s from "../styles/Sidebar.styles"
 
@@ -62,21 +64,32 @@ const menuItems = [
   }
 ]
 
-const Sidebar = ({ location, isSidebarOpen }) => {
-  return (
-    <s.SidebarStyles>
-      <div className={`sidebar-links ${isSidebarOpen ? "open" : ""}`}>
-        {menuItems.map(menuItem => (
+const Sidebar = ({ location, isSidebarOpen, isSubscribed }) => (
+  <s.SidebarStyles>
+    <div className={`sidebar-links ${isSidebarOpen ? "open" : ""}`}>
+      {menuItems.map(menuItem => {
+        if (menuItem.displayName === "Billing" && !isSubscribed) {
+          return (
+            <SidebarLink
+              displayName="Upgrade to Premium"
+              icon="fa-star"
+              key="Upgrade"
+              pathname={location.pathname}
+              to="/app/upgrade"
+            />
+          )
+        }
+        return (
           <SidebarLink
             {...menuItem}
             key={menuItem.displayName}
             pathname={location.pathname}
           />
-        ))}
-      </div>
-    </s.SidebarStyles>
-  )
-}
+        )
+      })}
+    </div>
+  </s.SidebarStyles>
+)
 
 Sidebar.propTypes = {
   location: PropTypes.shape({
@@ -84,18 +97,21 @@ Sidebar.propTypes = {
     key: PropTypes.string,
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
+  isSubscribed: PropTypes.bool.isRequired
 }
 
 SidebarLink.propTypes = {
   displayName: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  isSidebarOpen: PropTypes.bool.isRequired
+  to: PropTypes.string.isRequired
 }
 
-const mapStateToProps = ({ navigation: { isSidebarOpen } }) => ({
-  isSidebarOpen
-})
-
-export default withRouter(connect(mapStateToProps)(Sidebar))
+export default compose(
+  withRouter,
+  connect(({ auth, navigation: { isSidebarOpen } }) => ({
+    isSidebarOpen,
+    isSubscribed: auth.user.subscribed
+  }))
+)(Sidebar)
