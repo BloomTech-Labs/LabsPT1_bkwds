@@ -2,8 +2,10 @@ import styled from "styled-components"
 import { media } from "../styles/theme/mixins"
 
 export const SidebarStyles = styled.div`
-  width: ${props => `${props.theme.sidebarWidth}px`};
-  ${media.tablet`display: none;`}
+  /* width: ${props => `${props.theme.sidebarWidth}px`}; */
+  ${media.tablet`
+    display: none;
+  `}
 
   > div {
     height: 100%;
