@@ -19,7 +19,11 @@ const TripCard = ({ trip, archived, toggleArchive, user }) => (
           <div className="card-image">
             <img
               className={archived ? "grayscale" : ""}
-              src="https://staticmapmaker.com/img/google.png"
+              src={
+                trip.image
+                  ? trip.image
+                  : "https://staticmapmaker.com/img/google.png"
+              }
               alt="Google Map of Albany, NY"
             />
             {archived && <div className="text-overlay">ARCHIVED</div>}

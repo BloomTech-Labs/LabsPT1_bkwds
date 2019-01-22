@@ -20,7 +20,8 @@ export const createTrip = (req, res) => {
     start: req.body.start,
     end: req.body.end,
     lat: req.body.lat,
-    lon: req.body.lon
+    lon: req.body.lon,
+    image: req.body.image
   })
   Trip.findOne({ name: req.body.name })
     .then(trip => {
@@ -59,13 +60,6 @@ export const getOneTrip = (req, res) => {
       return res.status(500).send(err)
     })
 }
-
-// export const getOneTrip = (req, res) => {
-//   Trip.findOne(req.params('id')).populateAll().exec(function(err, trip) {
-//       if (err) res.status(500).send(err)
-//       res.status(200).json(trip)
-//     })
-// }
 
 export const updateTrip = (req, res) => {
   const id = req.params.id
