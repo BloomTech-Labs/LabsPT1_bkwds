@@ -47,11 +47,10 @@ class DashboardHome extends Component {
     const { user } = this.props
     const { displayName } = this.state
     const { formattedAddress, location } = values
-    const update = {
-      displayName,
-      coordinates: [location.lat, location.lng],
-      formattedAddress
-    }
+    const update = { displayName }
+    if (location.lat && location.lng)
+      update.coordinates = [location.lat, location.lng]
+    if (formattedAddress) update.formattedAddress = formattedAddress
 
     this.props.updateUserWithMsg(user.id, update, "User update successful!")
     this.setState({ location, formattedAddress })
