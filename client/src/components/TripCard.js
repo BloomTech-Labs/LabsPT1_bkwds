@@ -20,6 +20,7 @@ const TripCard = ({
   isArchivedTripRoute
 }) => (
   <div>
+    {console.log(STATIC_MAP_KEY)}
     {!trip.id && "Loading trip"}
     {trip.id && (
       <>
@@ -75,7 +76,7 @@ TripCard.propTypes = {
   toggleArchive: PropTypes.func.isRequired,
   trip: TripPropTypes,
   userId: PropTypes.string,
-  isArchivedTripRoute: PropTypes.string.isRequired,
+  isArchivedTripRoute: PropTypes.bool,
   repeatTrip: PropTypes.func.isRequired
 }
 

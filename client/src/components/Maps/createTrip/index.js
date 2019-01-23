@@ -105,7 +105,7 @@ class CreateTripMap extends React.Component {
       .getCenter()
       .lng()
       .toString()
-    return `${staticMapAPI}center=${lat},${lon}&zoom=9&size=350x350&key=`
+    return `${staticMapAPI}center=${lat},${lon}&zoom=16&size=350x350&key=`
   }
 
   saveValidate = () => {
