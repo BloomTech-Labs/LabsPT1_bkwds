@@ -14,15 +14,30 @@ export const NavStyles = styled.div`
   width: 100%;
   ${boxShadowMixin};
 
-  padding-left: 2rem;
+  padding-left: 0.5rem;
   padding-right: 1.25rem;
   ${media.phone`padding-right: 0;`}
+
+  .appnav-left {
+    display: flex
+  }
 
   .logo {
     color: ${props => props.theme.primary};
     font-weight: 700;
     font-size: 1.75rem;
     letter-spacing: -0.0275rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 10px;
+  }
+  .hamburger-icon-wrapper {
+    display: flex;
+  }
+  .hamburger-icon {
+    display: flex;
+    margin-right: 20px;
   }
 
   ul {

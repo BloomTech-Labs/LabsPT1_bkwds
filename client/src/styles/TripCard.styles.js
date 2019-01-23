@@ -10,12 +10,14 @@ export const TripCardStyles = styled.div`
   }
 
   .container {
-    max-width: 100%;
-    margin: 0 auto;
+    overflow: auto;
     display: flex;
     justify-content: row;
     flex-wrap: wrap;
     align-items: start;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 100%;
   }
 
   .card {

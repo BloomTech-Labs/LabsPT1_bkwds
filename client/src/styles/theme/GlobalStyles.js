@@ -3,7 +3,13 @@ import { fontDeclarations, fontMixin } from "./mixins"
 
 export const GlobalStyles = createGlobalStyle`
   ${fontDeclarations};
+  html, body {
+    overflow: hidden;
+    height: 100vh;
+  }
+
   html {
+    background: ${props => props.theme.contentBackground};
     box-sizing: border-box;
   }
 
@@ -34,10 +40,6 @@ export const GlobalStyles = createGlobalStyle`
   button:focus, input:focus, textarea:focus {
     outline: 0;
   }
-
-  background: ${props => props.theme.contentBackground};
-  height: 100vh;
-  overflow: hidden;
 
   .main-wrapper {
     display: flex;
