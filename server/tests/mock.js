@@ -3,15 +3,18 @@ let date2 = new Date("March 18, 2019 11:45:00 AM")
 
 export const userOne = {
   password: "testpass",
-  email: "email@hotmail.com"
+  email: "email@hotmail.com",
+  displayName: "User One"
 }
 export const userTwo = {
   password: "testpass2",
-  email: "email@gmail.com"
+  email: "email@gmail.com",
+  displayName: "User Two"
 }
 export const userThree = {
   password: "testpass3",
-  email: "email@yahoo.com"
+  email: "email@yahoo.com",
+  displayName: "User Three"
 }
 
 export const tripOne = {

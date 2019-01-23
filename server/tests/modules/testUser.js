@@ -51,7 +51,7 @@ describe("Test User model and routes", () => {
       })
   })
   test("PUT update a user", done => {
-    const updated = { email: "fakeEmail@gmail.com" }
+    const updated = { displayName: "Updated Display Name User 1" }
     request(app)
       .put(`/api/users/${userID}`)
       .set("Authorization", `Bearer ${token}`)
@@ -59,8 +59,7 @@ describe("Test User model and routes", () => {
       .then(response => {
         expect(response.statusCode).toBe(200)
         expect(response.body.id).toEqual(userID)
-        expect(response.body.email).toBe("TestUser1")
-        expect(response.body.email).toBe("fakeEmail@gmail.com")
+        expect(response.body.displayName).toBe("Updated Display Name User 1")
         done()
       })
   })
