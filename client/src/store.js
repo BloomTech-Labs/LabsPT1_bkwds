@@ -23,8 +23,8 @@ const createRootReducer = history =>
     trips: tripReducer,
     billing: billingReducer,
     settings: settingsReducer,
-    navigation: navigationReducer,
-    router: connectRouter(history)
+    router: connectRouter(history),
+    navigation: navigationReducer
   })
 
 export const store = createStore(
