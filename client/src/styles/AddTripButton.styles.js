@@ -1,9 +1,11 @@
 import styled from "styled-components"
+import { media } from "./theme/mixins"
 
 export const AddTripButtonStyles = styled.div`
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 20px;
+  margin-bottom: 20px;
 
   .add-trip-card-wrapper {
     background: ${props => props.theme.white};
@@ -30,6 +32,11 @@ export const AddTripButtonStyles = styled.div`
         rgba(0, 0, 0, 0.05) 0px 0.125rem 0.3125rem;
       transform: translate3d(0px, -0.1875rem, 0px);
     }
+
+    ${media.tablet`
+      height: 300px;
+      width: 280px;
+    `}
   }
 
   .add-trip-card-link {
@@ -38,6 +45,7 @@ export const AddTripButtonStyles = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 5rem 2.5rem;
     height: 100%;
     width: 100%;
@@ -55,6 +63,10 @@ export const AddTripButtonStyles = styled.div`
     font-size: 2.25rem;
     padding: 0;
     margin: 0;
+
+    ${media.tablet`
+      font-size: 2.0rem;
+    `}
   }
   span {
     font-size: 3.5rem;
