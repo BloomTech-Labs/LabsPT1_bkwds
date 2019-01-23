@@ -86,7 +86,10 @@ export const deleteTrip = (req, res) => {
       if (!trip) return res.status(404).send("trip not found")
       Waypoint.deleteMany({ tripId: trip.id })
         .then(() => {
-          User.findByIdAndUpdate({ _id: trip.userId }, { trips: [] })
+          User.findByIdAndUpdate(
+            { _id: trip.userId },
+            { $pull: { trips: trip.id } }
+          )
             .then(() => {
               const payload = {
                 trip,
