@@ -10,7 +10,7 @@ describe("Test User model and routes", () => {
   beforeAll(async done => {
     const response = await request(app)
       .post("/api/login")
-      .send({ username: mock.userOne.username, password: "testpass" })
+      .send({ email: mock.userOne.email, password: "testpass" })
     userID = response.body.user.id
     token = response.body.token
     return done()
@@ -33,9 +33,8 @@ describe("Test User model and routes", () => {
       .then(response => {
         expect(response.statusCode).toBe(201)
         expect(response.body.id).toBeTruthy()
-        expect(response.body.username).toBe("TestUser3")
-        expect(response.body.subscribed).toEqual(false)
         expect(response.body.email).toBe("email@yahoo.com")
+        expect(response.body.subscribed).toEqual(false)
         done()
       })
   })
@@ -46,7 +45,7 @@ describe("Test User model and routes", () => {
       .then(response => {
         expect(response.statusCode).toBe(200)
         expect(response.body.id).toEqual(userID)
-        expect(response.body.username).toBe("TestUser1")
+        expect(response.body.email).toBe("email@hotmail.com")
         expect(response.body.trips.length).toEqual(1)
         done()
       })
@@ -60,7 +59,7 @@ describe("Test User model and routes", () => {
       .then(response => {
         expect(response.statusCode).toBe(200)
         expect(response.body.id).toEqual(userID)
-        expect(response.body.username).toBe("TestUser1")
+        expect(response.body.email).toBe("TestUser1")
         expect(response.body.email).toBe("fakeEmail@gmail.com")
         done()
       })
@@ -84,7 +83,6 @@ describe("Test User model and routes", () => {
       .then(response => {
         expect(response.statusCode).toBe(202)
         expect(response.body.user.id).toEqual(userID)
-        expect(response.body.user.username).toBe("TestUser1")
         expect(response.body.user.email).toBe("fakeEmail@gmail.com")
         expect(response.body.msg).toBe("User was deleted")
         done()

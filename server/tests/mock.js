@@ -2,17 +2,14 @@ let date = new Date("March 18, 2019 11:30:00 AM")
 let date2 = new Date("March 18, 2019 11:45:00 AM")
 
 export const userOne = {
-  username: "TestUser1",
   password: "testpass",
   email: "email@hotmail.com"
 }
 export const userTwo = {
-  username: "TestUser2",
   password: "testpass2",
   email: "email@gmail.com"
 }
 export const userThree = {
-  username: "TestUser3",
   password: "testpass3",
   email: "email@yahoo.com"
 }
