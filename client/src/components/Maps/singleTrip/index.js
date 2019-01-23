@@ -23,6 +23,7 @@ class SingleTripMap extends React.Component {
 
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
+    window.elevation = new window.google.maps.ElevationService()
   }
 
   componentDidUpdate() {

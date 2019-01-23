@@ -27,12 +27,15 @@ export const PanelHeader = Styled.div`
 `
 
 export const TripDetail = Styled.div`
+    margin-right:1rem;
+    align-items:center;
     display:flex;
+    & > * {
+        margin-right:.5rem;
+    }
 `
 export const PanelSubheader = Styled.div`
-    padding:1rem 1.25rem;
-    justify-content: space-between;
-    width:50%;
+    padding:.75rem 1.25rem 1.25rem 1.25rem;
     display:flex;
 `
 export const Waypoint = Styled.div`

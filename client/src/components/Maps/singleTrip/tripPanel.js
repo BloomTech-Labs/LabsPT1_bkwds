@@ -9,6 +9,7 @@ import AddIcon from "../../icons/AddSvg"
 import { connect } from "react-redux"
 import * as util from "./mapUtil"
 import * as s from "./components"
+import { UPDATE_SETTINGS_FAILURE } from "../../../redux/actions/types"
 
 class TripPanel extends React.Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class TripPanel extends React.Component {
       saveToggle: false,
       trip: {},
       markers: [],
-      elevation: null
+      elevation: null,
+      tripDistance: null
     }
   }
 
@@ -31,6 +33,7 @@ class TripPanel extends React.Component {
   componentDidUpdate(_, prevState) {
     if (prevState.markers !== this.state.markers) {
       this.getPathElevation()
+      this.getPathDistance()
     }
   }
 
@@ -59,6 +62,7 @@ class TripPanel extends React.Component {
       this.toggleDraggable()
     })
   }
+
   handleTitle = e => {
     this.setState({ trip: { ...this.state.trip, name: e.target.value } })
   }
@@ -157,7 +161,21 @@ class TripPanel extends React.Component {
         }
       })
       util.getPathElevation(latlngs).then(res => {
-        this.setState({ elevation: res })
+        this.setState({ elevation: res.toFixed(2) })
+      })
+    }
+  }
+
+  getPathDistance = () => {
+    if (this.state.markers.length > 1) {
+      let latngs = this.state.markers.map(marker => {
+        return {
+          lat: marker.getPosition().lat(),
+          lng: marker.getPosition().lng()
+        }
+      })
+      util.calcTotalDistance(latngs).then(res => {
+        this.setState({ tripDistance: res.toFixed(2) })
       })
     }
   }
@@ -194,10 +212,11 @@ class TripPanel extends React.Component {
         <s.PanelSubheader>
           <s.TripDetail>
             <DistanceIcon width="25px" height="25px" />
+            {this.state.tripDistance}m
           </s.TripDetail>
           <s.TripDetail>
             <ElevationIcon width="25px" height="25px" />
-            {this.state.elevation}
+            {this.state.elevation}m
           </s.TripDetail>
         </s.PanelSubheader>
         <s.WaypointsHeader>

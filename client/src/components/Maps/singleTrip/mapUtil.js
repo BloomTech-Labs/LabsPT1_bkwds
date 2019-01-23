@@ -8,12 +8,12 @@ export const calcDistance = (fromLat, fromLng, toLat, toLng) => {
 
 // Input: array of objects with lat: Number, lng:Number properties
 // Return: distance between input pairs in meters
-export const calcTotalDistance = latLngArray => {
-  let G_LatLngs = latLngArray.map(latLng => {
-    return window.google.maps.LatLng(latLng.lat, latLng.lng)
-  })
-  return window.google.maps.geometry.spherical.computeLength(G_LatLngs)
-}
+// export const calcTotalDistance = latLngArray => {
+//   let G_LatLngs = latLngArray.map(latLng => {
+//     return window.google.maps.LatLng(latLng.lat, latLng.lng)
+//   })
+//   return window.google.maps.geometry.spherical.computeLength(G_LatLngs)
+// }
 
 //TODO - add elev_service to window?
 //Returns an Elevation Object with a location(LatLng obhect),elevation,and resolution properties
@@ -33,6 +33,8 @@ export const getElevations = latLngArr => {
     return elevations
   })
 }
+
+//SYNC CALL -
 //Path arr is set of lat,lng object pairs, {lat:Number,lng:Number}
 //TODO: global window elev_service
 // export const getPathElevation = pathArr => {
@@ -62,8 +64,7 @@ export const getElevations = latLngArr => {
 
 export const getPathElevation = pathArr => {
   return new Promise((resolve, reject) => {
-    const elev_service = new window.google.maps.ElevationService()
-    elev_service.getElevationAlongPath(
+    window.elevation.getElevationAlongPath(
       {
         path: pathArr,
         samples: 128
@@ -80,5 +81,21 @@ export const getPathElevation = pathArr => {
         }
       }
     )
+  })
+}
+
+export const calcTotalDistance = latLngArray => {
+  return new Promise((resolve, reject) => {
+    let G_LatLngs = latLngArray.map(latLng => {
+      return new window.google.maps.LatLng(latLng.lat, latLng.lng)
+    })
+
+    let distance = window.google.maps.geometry.spherical.computeLength(
+      G_LatLngs
+    )
+    if (distance === 0) {
+      reject("Error")
+    }
+    resolve(distance)
   })
 }
