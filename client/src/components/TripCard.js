@@ -2,8 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
-
 import { TripPropTypes } from "./propTypes"
+
+import { STATIC_MAP_KEY } from "../config"
 
 import { toggleArchive } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
@@ -21,7 +22,7 @@ const TripCard = ({ trip, archived, toggleArchive, user }) => (
               className={archived ? "grayscale" : ""}
               src={
                 trip.image
-                  ? trip.image
+                  ? `${trip.image}${STATIC_MAP_KEY}`
                   : "https://staticmapmaker.com/img/google.png"
               }
               alt="Google Map of Albany, NY"
