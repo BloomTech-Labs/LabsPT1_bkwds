@@ -20,7 +20,6 @@ const TripCard = ({
   isArchivedTripRoute
 }) => (
   <div>
-    {console.log(STATIC_MAP_KEY)}
     {!trip.id && "Loading trip"}
     {trip.id && (
       <>
@@ -33,7 +32,7 @@ const TripCard = ({
                   ? `${trip.image}${STATIC_MAP_KEY}`
                   : "https://staticmapmaker.com/img/google.png"
               }
-              alt="Google Map of Albany, NY"
+              alt="Static Map Image"
             />
             {archived && <div className="text-overlay">ARCHIVED</div>}
           </div>
