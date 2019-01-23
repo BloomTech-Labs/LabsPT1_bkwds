@@ -1,5 +1,3 @@
-import { totalmem } from "os"
-
 //  Returns distance in meters between to latlngs
 export const calcDistance = (fromLat, fromLng, toLat, toLng) => {
   return window.google.maps.geometry.spherical.computeDistanceBetween(
@@ -37,28 +35,50 @@ export const getElevations = latLngArr => {
 }
 //Path arr is set of lat,lng object pairs, {lat:Number,lng:Number}
 //TODO: global window elev_service
+// export const getPathElevation = pathArr => {
+//   const elev_service = new window.google.maps.ElevationService()
+//   let avgElev;
+//   elev_service.getElevationAlongPath(
+//     {
+//       path: pathArr,
+//       samples: 256
+//     },
+//     (result, status) => {
+//       if (status === "OK") {
+//          let sum = 0;
+//         result.forEach(elev => {
+//             sum += elev.elevation
+//         })
+//         avgElev = sum/result.length;
+//         return
+//       } else {
+//         console.log(status)
+//       }
+//     }
+//   )
+//   console.log(avgElev);
+//   return avgElev;
+// }
+
 export const getPathElevation = pathArr => {
-  let pathAverage
-  const elev_service = new window.google.maps.ElevationService()
-  elev_service.getElevationAlongPath(
-    {
-      path: pathArr,
-      samples: 256
-    },
-    (result, status) => {
-      if (status === "OK") {
-        pathAverage = result.reduce((sum, val, index, arr) => {
-          sum += val.elevation
-          if (index === arr.length) {
-            return sum / arr.length
-          } else {
-            return totalmem
-          }
-        }, 0)
-      } else {
-        console.log(status)
+  return new Promise((resolve, reject) => {
+    const elev_service = new window.google.maps.ElevationService()
+    elev_service.getElevationAlongPath(
+      {
+        path: pathArr,
+        samples: 256
+      },
+      (result, status) => {
+        if (status === "OK") {
+          let sum = 0
+          result.forEach(elev => {
+            sum += elev.elevation
+          })
+          resolve(sum / result.length)
+        } else {
+          reject(status)
+        }
       }
-    }
-  )
-  return pathAverage
+    )
+  })
 }

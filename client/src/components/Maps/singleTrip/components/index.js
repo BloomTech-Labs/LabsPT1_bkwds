@@ -20,11 +20,20 @@ margin: 0 1rem;
 `
 
 export const PanelHeader = Styled.div`
-  padding:1.1rem;
+  padding:1.25rem;
   align-items:center;
   justify-content:space-between;
   display:flex;
+`
 
+export const TripDetail = Styled.div`
+    display:flex;
+`
+export const PanelSubheader = Styled.div`
+    padding:1rem 1.25rem;
+    justify-content: space-between;
+    width:50%;
+    display:flex;
 `
 export const Waypoint = Styled.div`
   align-items:center;
@@ -43,7 +52,7 @@ export const WaypointInput = Styled.input`
 export const TripTitleInput = Styled.input`
   box-sizing:border-box;
   font-size: 1.5rem;
-  width:75%;
+  width:80%;
   border:0;
   outline:0;
   background:transparent;

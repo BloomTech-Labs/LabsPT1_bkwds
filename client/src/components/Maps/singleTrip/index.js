@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { MapWrapper } from "../../../styles/CreateTrip.styles"
 import TripPanel from "../singleTrip/tripPanel"
+import ActiveTripPanel from "./activePanel"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
@@ -33,7 +34,6 @@ class SingleTripMap extends React.Component {
     // this.drawPolyline()
   }
 
-  //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = center => {
     window.map = new window.google.maps.Map(
@@ -87,16 +87,29 @@ class SingleTripMap extends React.Component {
     polyline.setMap(window.map)
   }
 
+  // Add conditional rendering for active Trip
   render() {
-    return (
-      <MapWrapper>
-        <TripPanel trip={this.props.trip} drawPolyline={this.drawPolyline} />
-        <div
-          style={{ width: "100%", height: "100%", position: "absolute" }}
-          id="Tripmap"
-        />
-      </MapWrapper>
-    )
+    if (this.props.trip !== null) {
+      console.log(this.props.trip.inProgress)
+      return (
+        <MapWrapper>
+          {!this.props.trip.inProgress ? (
+            <TripPanel
+              trip={this.props.trip}
+              drawPolyline={this.drawPolyline}
+            />
+          ) : (
+            <ActiveTripPanel />
+          )}
+          <div
+            style={{ width: "100%", height: "100%", position: "absolute" }}
+            id="Tripmap"
+          />
+        </MapWrapper>
+      )
+    } else {
+      return null
+    }
   }
 }
 

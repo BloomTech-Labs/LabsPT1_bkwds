@@ -1,120 +1,14 @@
 import React from "react"
 import { DateRangePicker } from "react-dates"
-import Styled from "styled-components"
 import EditIcon from "../../icons/EditSvg"
 import DeleteIcon from "../../icons/DeleteSvg"
+import DistanceIcon from "../../icons/DistanceSvg"
+import ElevationIcon from "../../icons/ElevationSvg"
 import SaveIcon from "../../icons/SaveSvg"
 import AddIcon from "../../icons/AddSvg"
 import { connect } from "react-redux"
-import { Z_BLOCK } from "zlib"
-// import { WaypointLabel } from "../../../styles/CreateTripPanel.styles";
-
-const Panel = Styled.div`
-    max-width:360px;
-    min-width:320px;
-    border-radius: .5rem;
-    display:flex;
-    flex-direction:column;
-    background:white;
-    position:absolute;
-    right:1.5rem;
-    top:1.5rem;
-    width:30%;
-    height:45%;
-    z-index:5;
-`
-
-const WaypointLabel = Styled.label`
-  margin: 0 1rem;
-`
-
-const PanelHeader = Styled.div`
-    padding:1.1rem;
-    align-items:center;
-    justify-content:space-between;
-    display:flex;
- 
-`
-const Waypoint = Styled.div`
-    align-items:center;
-    width: 90%;
-    display:flex;
-    margin: .5rem auto;
-`
-const WaypointInput = Styled.input`
-    box-sizing:border-box;
-    border:0;
-    outline:0;
-    background:transparent;
-    border-bottom: ${props =>
-      props.edit ? ".15rem solid black" : ".15rem solid transparent"};
-`
-const TripTitleInput = Styled.input`
-    box-sizing:border-box;
-    font-size: 1.5rem;
-    width:75%;
-    border:0;
-    outline:0;
-    background:transparent;
-    border-bottom: .15rem solid black;
-    border-bottom: ${props =>
-      props.edit ? ".15rem solid black" : ".15rem solid transparent"};
-`
-const EditButton = Styled.button`
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-`
-const DeleteButton = Styled.button`
-      visibility: ${props => (!props.edit ? "hidden" : "visible")};
-      background: none;
-      color: inherit;
-      border: none;
-    
-`
-
-const WaypointList = Styled.div`
-    overflow:scroll;
-`
-const WaypointsHeader = Styled.div`
-  margin: 0 1rem 1rem 1rem;
-  align-items:center;
-  color:#808080;
-  display:flex;
-  width:50%;
-  justify-content:space-between;
-    & h4 {
-    font-size:1.25rem;
-    margin: 0;
-   }
-   & button {
-     margin-left: 1rem;
-   }
-  
-`
-
-const SaveButton = Styled.button`
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-`
-const AddButton = Styled.button`
-   visibility: ${props => (!props.edit ? "hidden" : "visible")};
-   border:0;
-   background:transparent;
-`
-const StartButton = Styled.button`
-  box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
-  background:#45569e;
-   position:absolute;
-   bottom:1.5rem;
-   right:1.5rem;
-   color:white;
-   width:100px;
-   border-radius:5px;
-`
+import * as util from "./mapUtil"
+import * as s from "./components"
 
 class TripPanel extends React.Component {
   constructor(props) {
@@ -123,19 +17,17 @@ class TripPanel extends React.Component {
       isEditing: false,
       saveToggle: false,
       trip: {},
-      markers: []
+      markers: [],
+      elevation: null
     }
   }
 
-  //passing props to state? refactor to redux
-  componentDidUpdate(prevProps) {
-    if (this.props.trip !== prevProps.trip) {
-      this.setState({ trip: this.props.trip }, () => {
-        this.renderWaypoints()
-      })
-    }
+  // Refactor to use redux active trip: props to SetState not recommended
+  componentDidMount() {
+    this.setState({ trip: this.props.trip }, () => {
+      this.renderWaypoints()
+    })
   }
-
   renderWaypoints = () => {
     let markers = []
     this.state.trip.waypoints.forEach(waypoint => {
@@ -169,9 +61,9 @@ class TripPanel extends React.Component {
     if (waypoints) {
       return waypoints.map((_, i) => {
         return (
-          <Waypoint key={i}>
-            <WaypointLabel>{i + 1}</WaypointLabel>
-            <WaypointInput
+          <s.Waypoint key={i}>
+            <s.WaypointLabel>{i + 1}</s.WaypointLabel>
+            <s.WaypointInput
               type="text"
               disabled={this.state.isEditing === false}
               edit={this.state.isEditing}
@@ -182,7 +74,7 @@ class TripPanel extends React.Component {
               }}
             />
 
-            <DeleteButton
+            <s.DeleteButton
               disabled={this.state.isEditing === false}
               edit={this.state.isEditing}
               onClick={() => {
@@ -190,8 +82,8 @@ class TripPanel extends React.Component {
               }}
             >
               <DeleteIcon width="22px" height="22px" />
-            </DeleteButton>
-          </Waypoint>
+            </s.DeleteButton>
+          </s.Waypoint>
         )
       })
     }
@@ -213,7 +105,6 @@ class TripPanel extends React.Component {
   }
 
   toggleDraggable = () => {
-    console.log(this.state.isEditing)
     this.state.markers.forEach(marker => {
       marker.setDraggable(this.state.isEditing)
     })
@@ -251,11 +142,25 @@ class TripPanel extends React.Component {
     })
   }
 
+  getPathElevation = () => {
+    if (this.state.markers.length > 1) {
+      let latlngs = this.state.markers.map(marker => {
+        return {
+          lat: marker.getPosition().lat(),
+          lng: marker.getPosition().lng()
+        }
+      })
+      util.getPathElevation(latlngs).then(res => {
+        this.setState({ elevation: res })
+      })
+    }
+  }
+
   render() {
     return (
-      <Panel>
-        <PanelHeader>
-          <TripTitleInput
+      <s.Panel>
+        <s.PanelHeader>
+          <s.TripTitleInput
             type="text"
             edit={this.state.isEditing}
             value={this.state.trip.name}
@@ -263,37 +168,46 @@ class TripPanel extends React.Component {
             disabled={this.state.isEditing === false}
           />
           {!this.state.saveToggle ? (
-            <EditButton
+            <s.EditButton
               onClick={() => {
                 this.handleEditToggle()
               }}
             >
               <EditIcon width="20px" height="20px" />
-            </EditButton>
+            </s.EditButton>
           ) : (
-            <SaveButton
+            <s.SaveButton
               onClick={() => {
                 this.handleSave()
               }}
             >
               <SaveIcon width="20px" height="20px" />
-            </SaveButton>
+            </s.SaveButton>
           )}
-        </PanelHeader>
-        <WaypointsHeader>
+        </s.PanelHeader>
+        <s.PanelSubheader>
+          <s.TripDetail>
+            <DistanceIcon width="25px" height="25px" />
+          </s.TripDetail>
+          <s.TripDetail>
+            <ElevationIcon width="25px" height="25px" />
+            {this.getPathElevation()}
+          </s.TripDetail>
+        </s.PanelSubheader>
+        <s.WaypointsHeader>
           <h4>Waypoints</h4>
-          <AddButton
+          <s.AddButton
             disabled={this.state.isEditing === false}
             edit={this.state.isEditing}
           >
             <AddIcon height="18px" width="18px" />
-          </AddButton>
-        </WaypointsHeader>
-        <WaypointList>
+          </s.AddButton>
+        </s.WaypointsHeader>
+        <s.WaypointList>
           {this.renderWaypointList(this.state.trip.waypoints)}
-        </WaypointList>
-        <StartButton>Start Trip</StartButton>
-      </Panel>
+        </s.WaypointList>
+        <s.StartButton>Start Trip</s.StartButton>
+      </s.Panel>
     )
   }
 }
