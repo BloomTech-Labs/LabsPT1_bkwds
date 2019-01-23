@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
 export const SettingsStyles = styled.div`
-  a {
-    text-decoration: underline;
+  h4 {
+    text-align: center;
   }
 
   .container {
@@ -13,6 +13,9 @@ export const SettingsStyles = styled.div`
     flex-wrap: wrap;
   }
 
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   padding: 30px;
+  float: none;
+  margin: 0 auto;
 `

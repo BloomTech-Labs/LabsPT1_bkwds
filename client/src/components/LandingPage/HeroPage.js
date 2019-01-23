@@ -9,9 +9,11 @@ const HeroContainer = styled.div`
   background-image: url(./images/LPBackground.jpg);
   background-size: cover;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 `
 const CTAContainer = styled.div`
+  width: 100%;
+
   height: 100%;
 `
 

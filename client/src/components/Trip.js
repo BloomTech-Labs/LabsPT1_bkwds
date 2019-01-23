@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import { TripPropTypes } from "./propTypes"
 import { deleteTrip, toggleArchive } from "../redux/actions/trips"
 
 import { deleteTrip, toggleArchive, editTrip } from "../redux/actions/trips"
@@ -60,6 +61,13 @@ class Trip extends Component {
       </div>
     )
   }
+}
+
+Trip.propTypes = {
+  deleteTrip: PropTypes.func.isRequired,
+  toggleArchive: PropTypes.func.isRequired,
+  editTrip: PropTypes.func.isRequired,
+  trip: TripPropTypes
 }
 
 const mapDispatchToProps = {

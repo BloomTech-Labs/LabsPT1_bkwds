@@ -6,6 +6,7 @@ import * as mock from "../mock"
 let token
 let userId
 let tripId
+let trip
 
 describe("Test Trip model and routes", () => {
   beforeAll(async done => {
@@ -67,11 +68,26 @@ describe("Test Trip model and routes", () => {
       .set("Authorization", `Bearer ${token}`)
       .send(updated)
       .then(response => {
+        trip = response.body
         expect(response.statusCode).toBe(200)
         expect(response.body.id).toEqual(tripId)
         expect(response.body.name).toBe("tripOne")
         expect(response.body.inProgress).toBeTruthy()
         expect(response.body.waypoints.length).toEqual(2)
+        done()
+      })
+  })
+  test("POST repeat a trip", done => {
+    request(app)
+      .post(`/api/trips/repeat`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(trip)
+      .then(response => {
+        expect(response.statusCode).toBe(201)
+        expect(response.body.id).not.toEqual(trip.id)
+        expect(response.body.start).not.toEqual(trip.start)
+        expect(response.body.end).not.toEqual(trip.end)
+        expect(response.body.waypoints.length).toEqual(0)
         done()
       })
   })

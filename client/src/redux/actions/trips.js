@@ -9,9 +9,6 @@ import {
   LOADING_TRIPS,
   LOADING_TRIPS_SUCCESS,
   LOADING_TRIPS_ERROR,
-  LOADING_ARCHIVED_TRIPS,
-  LOADING_ARCHIVED_TRIPS_SUCCESS,
-  LOADING_ARCHIVED_TRIPS_ERROR,
   GET_SINGLE_TRIP,
   CREATING_TRIP,
   CREATING_TRIP_SUCCESS,
@@ -21,10 +18,13 @@ import {
   DELETING_TRIP_ERROR,
   TOGGLE_ARCHIVE_TRIP,
   TOGGLE_ARCHIVE_TRIP_SUCCESS,
-  TOGGLE_ARCHIVE_TRIP_ERROR
+  TOGGLE_ARCHIVE_TRIP_ERROR,
+  REPEAT_TRIP,
+  REPEAT_TRIP_SUCCESS,
+  REPEAT_TRIP_ERROR
 } from "./types"
 
-export const getTrips = () => dispatch => {
+export const getTrips = userId => dispatch => {
   const token = localStorage.getItem("token")
   if (token) {
     // If token, set token as Authorization header on all axios requests:
@@ -33,27 +33,12 @@ export const getTrips = () => dispatch => {
 
   dispatch({ type: LOADING_TRIPS })
   return axios
-    .get(`${SERVER_URI}/trips`)
+    .get(`${SERVER_URI}/users/${userId}/trips`)
     .then(res => {
       dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
     })
     .catch(err => {
       dispatch({ type: LOADING_TRIPS_ERROR, payload: err })
-      toast.error(normalizeErrorMsg(err), {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-    })
-}
-
-export const getArchivedTrips = () => dispatch => {
-  dispatch({ type: LOADING_ARCHIVED_TRIPS })
-  return axios
-    .get(`${SERVER_URI}/trips`)
-    .then(res => {
-      dispatch({ type: LOADING_ARCHIVED_TRIPS_SUCCESS, payload: res.data })
-    })
-    .catch(err => {
-      dispatch({ type: LOADING_ARCHIVED_TRIPS_ERROR, payload: err })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -115,15 +100,15 @@ export const deleteTrip = tripId => dispatch => {
     })
 }
 
-export const toggleArchive = (tripId, archiveTrip) => dispatch => {
+export const toggleArchive = (tripId, archived, user) => dispatch => {
   dispatch({ type: TOGGLE_ARCHIVE_TRIP })
   axios
-    .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: archiveTrip })
+    .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: !archived })
     .then(() => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_SUCCESS })
     })
     .then(() => {
-      archiveTrip ? dispatch(getTrips()) : dispatch(getArchivedTrips())
+      dispatch(getTrips(user))
     })
     .catch(err => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_ERROR, payload: err })
@@ -131,4 +116,47 @@ export const toggleArchive = (tripId, archiveTrip) => dispatch => {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
+}
+
+export const repeatTrip = trip => async dispatch => {
+  dispatch({ type: REPEAT_TRIP })
+
+  try {
+    // duplicate original trip with empty waypoints
+    const repeatedTripReponse = await axios.post(`${SERVER_URI}/trips/repeat`, {
+      ...trip
+    })
+
+    const repeatedTrip = repeatedTripReponse.data
+    // calculate different time between two trips
+    const diffTime = Date.parse(repeatedTrip.start) - Date.parse(trip.start)
+    // get waypoints details of original trip
+    const oldWaypointsResponse = await axios.get(
+      `${SERVER_URI}/trips/${trip.id}`
+    )
+    const newWaypoints = oldWaypointsResponse.data.waypoints
+    // copy waypoints from original trip
+    newWaypoints.forEach(waypoint => {
+      console.log(waypoint)
+      // reset each waypoint completion
+      waypoint.complete = false
+      // add up different time to each waypoint end date
+      waypoint.end = Date.parse(waypoint.end) + diffTime
+      // remove waypoint id, db will generate new waypoint id
+      delete waypoint.id
+      // replace tripId with repeat trip id
+      waypoint.tripId = repeatedTrip.id
+    })
+
+    // paste waypoints to repeated trip
+    await axios.post(`${SERVER_URI}/waypoints/batch`, newWaypoints)
+
+    dispatch({ type: REPEAT_TRIP_SUCCESS, payload: repeatedTrip })
+    dispatch(push(`/app/trip/${repeatedTrip.id}`))
+  } catch (err) {
+    dispatch({ type: REPEAT_TRIP_ERROR, payload: err.toString() })
+    toast.error(normalizeErrorMsg(err), {
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
+  }
 }

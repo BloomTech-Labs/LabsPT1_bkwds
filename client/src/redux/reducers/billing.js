@@ -1,5 +1,6 @@
 import {
   INIT_NEW_SUBSCRIPTION,
+  SUBSCRIBE_PENDING,
   SUBSCRIBE_SUCCESS,
   SUBSCRIBE_FAIL,
   INIT_NEW_CANCELLATION,
@@ -14,7 +15,8 @@ const defaultState = {
   pending: false,
   error: null,
   isCheckoutFormOpen: false,
-  invoices: null
+  invoices: null,
+  stripe: null
 }
 
 export const billingReducer = (state = defaultState, action) => {
@@ -22,9 +24,12 @@ export const billingReducer = (state = defaultState, action) => {
     case INIT_NEW_SUBSCRIPTION:
       return {
         ...state,
-        pending: true,
-        isCheckoutFormOpen: true
+        isCheckoutFormOpen: true,
+        stripe: action.stripe
       }
+
+    case SUBSCRIBE_PENDING:
+      return { ...state, pending: true }
 
     case SUBSCRIBE_SUCCESS:
       return {

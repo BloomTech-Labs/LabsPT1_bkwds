@@ -1,48 +1,49 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { getTrips } from "../redux/actions/trips"
+import PropTypes from "prop-types"
+import { TripPropTypes } from "./propTypes"
 
 import TripCard from "./TripCard"
-import { getTrips } from "../redux/actions/trips"
-import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
+import { getTripsArray } from "../utils/selectors"
 
 class Trips extends Component {
   componentDidMount() {
-    this.props.getTrips()
+    this.props.getTrips(this.props.userId)
   }
 
-  renderTrips() {
-    const { trips, loading } = this.props
-
+  render() {
+    const { trips } = this.props
     return (
       <div>
         <s.TripCardStyles>
-          {loading ? (
-            "Loading..."
-          ) : (
-            <div className="container">
-              {!trips.length && "No unarchived trips!"}
-              {trips.map(trip => (
-                <TripCard key={trip.id} trip={trip} archived={false} />
-              ))}
-              <AddTripButton
-                className="AddTripButton"
-                text={trips.length ? "Add New Trip" : "Add Your First Trip"}
-              />
-            </div>
-          )}
+          <div className="container">
+            {trips.map(trip => {
+              if (!trip.isArchived) {
+                return <TripCard key={trip.id} trip={trip} archived={false} />
+              } else return null
+            })}
+            <AddTripButton
+              className="AddTripButton"
+              text={trips.length ? "Add New Trip" : "Add Your First Trip"}
+            />
+          </div>
         </s.TripCardStyles>
       </div>
     )
   }
+}
 
-  render() {
-    return <div className="firstTrip">{this.renderTrips()}</div>
-  }
+Trips.propTypes = {
+  getTrips: PropTypes.func.isRequired,
+  trips: PropTypes.arrayOf(TripPropTypes),
+  userId: PropTypes.string
 }
 
 const mapStateToProps = state => ({
+  userId: state.auth.user.id,
   trips: getTripsArray(state),
   loading: state.trips.loading
 })

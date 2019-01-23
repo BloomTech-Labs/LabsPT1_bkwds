@@ -1,8 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Link, Redirect } from "react-router-dom"
+import PropTypes from "prop-types"
 
 import * as s from "../styles/Dashboard.styles"
+import { TripPropTypes } from "./propTypes"
 
 const DashboardHome = ({ trips }) => {
   return (
@@ -19,6 +21,10 @@ const DashboardHome = ({ trips }) => {
       </div>
     </s.DashboardStyles>
   )
+}
+
+DashboardHome.propTypes = {
+  trips: PropTypes.objectOf(TripPropTypes)
 }
 
 const mapStateToProps = state => ({

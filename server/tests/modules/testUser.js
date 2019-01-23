@@ -65,6 +65,18 @@ describe("Test User model and routes", () => {
         done()
       })
   })
+  test("GET all trips from a user", done => {
+    request(app)
+      .get(`/api/users/${userID}/trips`)
+      .set("Authorization", `Bearer ${token}`)
+      .then(response => {
+        expect(response.statusCode).toBe(200)
+        expect(response.body.length).toEqual(1)
+        expect(response.body[0].userId).toBe(userID)
+        expect(response.body[0].name).toBe("tripOne")
+        done()
+      })
+  })
   test("DELETE remove a user", done => {
     request(app)
       .delete(`/api/users/${userID}`)

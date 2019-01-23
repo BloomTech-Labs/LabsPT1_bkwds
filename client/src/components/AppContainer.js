@@ -2,15 +2,17 @@ import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import { ToastContainer } from "react-toastify"
+import PropTypes from "prop-types"
+
 import "react-toastify/dist/ReactToastify.css"
 
 import AppNav from "./AppNav"
 import Sidebar from "./Sidebar"
 import { GlobalStyles } from "../styles/theme/GlobalStyles"
-import { logout } from "../redux/actions/auth"
 import { isProtectedPath } from "../utils"
 
 const Right = styled.div`
+  overflow-y: scroll;
   background: ${props => props.theme.ghostWhite};
   width: 100%;
 `
@@ -34,7 +36,7 @@ const AppContainer = ({ pathname, children, isLoggedIn }) => {
         {showSidebar ? (
           <div className="main-content with-sidebar">
             <Sidebar id="sidebar" />
-            <Right id="Right">{children}</Right>
+            <Right id="right">{children}</Right>
           </div>
         ) : (
           <div className="main-content">{children}</div>
@@ -45,14 +47,15 @@ const AppContainer = ({ pathname, children, isLoggedIn }) => {
   )
 }
 
+AppContainer.propTypes = {
+  children: PropTypes.element.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  pathname: PropTypes.string.isRequired
+}
+
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   pathname: state.router.location.pathname
 })
 
-const mapDispatchToProps = { handleSignOut: logout }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppContainer)
+export default connect(mapStateToProps)(AppContainer)

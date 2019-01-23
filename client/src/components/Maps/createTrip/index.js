@@ -116,9 +116,9 @@ class CreateTripMap extends React.Component {
     let props = {
       addWaypoint: this.addWaypoint,
       deleteListener: this.deleteListener,
+      getDates: this.getDates,
       getTitle: this.getTitle,
-      saveTrip: this.saveTrip,
-      getDates: this.getDates
+      saveTrip: this.saveTrip
     }
     return (
       <MapWrapper>

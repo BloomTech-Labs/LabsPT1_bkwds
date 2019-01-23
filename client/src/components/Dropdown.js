@@ -1,16 +1,16 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-
+import { Link } from "react-router-dom"
 import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from "reactstrap"
-import { Link } from "react-router-dom"
 
 import * as s from "../styles/Dropdown.styles"
 import ChevronSvg from "./icons/ChevronSvg"
+import { UserPropTypes } from "./propTypes"
 
 class NavDropdown extends Component {
   state = {
@@ -74,6 +74,10 @@ class NavDropdown extends Component {
       </s.DropdownStyles>
     )
   }
+}
+
+NavDropdown.propTypes = {
+  user: UserPropTypes.isRequired
 }
 
 const mapStateToProps = state => ({ user: state.auth.user })

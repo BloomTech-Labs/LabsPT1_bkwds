@@ -10,6 +10,8 @@ tripRouter
   .get(tripController.getAllTrips)
   .post(tripController.createTrip)
 
+tripRouter.route("/repeat").post(tripController.repeatTrip)
+
 tripRouter
   .route("/:id")
   .get(tripController.getOneTrip)

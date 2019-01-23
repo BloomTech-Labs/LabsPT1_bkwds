@@ -9,6 +9,7 @@ import { authReducer } from "./redux/reducers/auth"
 import { tripReducer } from "./redux/reducers/trips"
 import { billingReducer } from "./redux/reducers/billing"
 import { settingsReducer } from "./redux/reducers/settings"
+import { navigationReducer } from "./redux/reducers/navigation"
 
 export const history = createBrowserHistory()
 
@@ -22,7 +23,8 @@ const createRootReducer = history =>
     trips: tripReducer,
     billing: billingReducer,
     settings: settingsReducer,
-    router: connectRouter(history)
+    router: connectRouter(history),
+    navigation: navigationReducer
   })
 
 export const store = createStore(

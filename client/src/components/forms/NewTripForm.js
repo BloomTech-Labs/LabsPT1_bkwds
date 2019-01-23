@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Formik } from "formik"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 import { Form } from "../../styles/theme/styledComponents"
 import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
@@ -102,6 +103,13 @@ const NewTripForm = ({ userId, createTrip, newTripError, tripIndex }) => {
       )}
     />
   )
+}
+
+NewTripForm.propTypes = {
+  userId: PropTypes.string.isRequired,
+  newTripError: PropTypes.string.isRequired,
+  tripIndex: PropTypes.number.isRequired,
+  createTrip: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

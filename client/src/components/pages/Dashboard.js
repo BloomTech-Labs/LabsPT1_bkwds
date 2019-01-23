@@ -1,13 +1,17 @@
 /* eslint react/display-name: 0 */
-
+/* eslint react/prop-types: 0 */
 import React from "react"
 import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
+import { MatchPropTypes } from "../propTypes"
+
 import SingleTrip from "../Maps/singleTrip"
 import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"
-import Billing from "../Billing"
+import Billing from "../Billing/"
+import PaymentDetails from "../Billing/PaymentDetails"
+import Plans from "../Billing/Plans"
 import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import Settings from "../Settings"
@@ -54,9 +58,19 @@ const dashboardRoutes = [
     component: Settings
   },
   {
+    path: "/billing/payment",
+    name: "Payment",
+    component: PaymentDetails
+  },
+  {
     path: "/billing",
     name: "Billing",
     component: Billing
+  },
+  {
+    path: "/upgrade",
+    name: "Upgrade",
+    component: Plans
   }
 ]
 
@@ -78,8 +92,10 @@ const Dashboard = ({ match }) => {
   )
 }
 
-const mapStateToProps = state => ({
-  trips: state.trips.trips
-})
+Dashboard.propTypes = {
+  match: MatchPropTypes
+}
+
+const mapStateToProps = ({ trips: { trips } }) => ({ trips })
 
 export default connect(mapStateToProps)(Dashboard)

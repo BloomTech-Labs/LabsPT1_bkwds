@@ -16,12 +16,8 @@ export const Input = styled.input`
   background-color: ${props => props.theme.white};
   color: ${props => props.theme.inputTextColor};
   border: ${props => `1px ${props.theme.inputBorderColor} solid`};
-  border-radius: 5px;
-  padding: 0.4rem 0.6rem;
-
-  &::placeholder {
-    color: ${props => props.theme.placeholderColor};
-  }
+  padding: 0.5rem 1rem 0.43rem;
+  border-radius: 0.375rem;
 
   &:focus {
     outline: none;
@@ -33,15 +29,14 @@ export const Input = styled.input`
 export const GhostInput = styled.input`
   padding: 0.5rem 1rem 0.43rem;
   border-radius: 0.375rem;
-  border: 1px solid #d1d5da;
+  border: ${props => `1px ${props.theme.inputBorderColor} solid`};
   font-size: 1rem;
 `
 
 export const Form = styled.form`
-  max-width: 100%;
+  width: 100%;
   padding: 30px 20px 20px 20px;
   border-radius: 5px;
-  /* border: 1px solid #d8dee2; */
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 0 0.3125rem 0.0625rem 0 rgba(0, 0, 0, 0.05),
     0 0 0 0.0625rem rgba(0, 0, 0, 0.03), 0 0.0625rem 0 0 rgba(0, 0, 0, 0.05),
@@ -66,12 +61,16 @@ export const Button = styled.button`
   font-weight: 500;
   width: ${props => props.width};
 
-  background-color: ${props => props.theme.primaryDark};
-  border-color: ${props => props.theme.primaryDark};
+  background-color: ${({ color, theme }) =>
+    color === "orange" ? "#f26a21" : theme.primaryDark};
+  border-color: ${({ color, theme }) =>
+    color === "orange" ? "#f26a21" : theme.primaryDark};
   &:hover,
   &:focus {
-    background-color: ${props => props.theme.primary};
-    border-color: ${props => props.theme.primary};
+    background-color: ${({ color, theme }) =>
+      color === "orange" ? "#f37837" : theme.tertiary};
+    border-color: ${({ color, theme }) =>
+      color === "orange" ? "#f37837" : theme.tertiary};
   }
 
   /* Styles for Link/anchor elements that might be children of Button */

@@ -15,11 +15,17 @@
     "sourceType": "module"
   },
   "rules": {
+    "array-callback-return": "off",
     "no-unused-vars": "error",
     "prettier/prettier": "error",
-    "react/prop-types": 0,
+    "react/prop-types": 2,
     "react/no-unescaped-entities": 0,
     "react/prefer-es6-class": "error",
     "react/prefer-stateless-function": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "16.6.3"
+    }
   }
 }

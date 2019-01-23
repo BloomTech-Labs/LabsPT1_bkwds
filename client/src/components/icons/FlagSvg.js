@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 const FlagSvg = ({ height = "32px", width = "32px", fill }) => {
   return (
@@ -13,6 +14,12 @@ const FlagSvg = ({ height = "32px", width = "32px", fill }) => {
       </g>
     </svg>
   )
+}
+
+FlagSvg.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string,
+  fill: PropTypes.string
 }
 
 export default FlagSvg

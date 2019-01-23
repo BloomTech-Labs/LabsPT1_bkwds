@@ -1,13 +1,23 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
-import { deleteTrip, toggleArchive } from "../redux/actions/trips"
+import { TripPropTypes } from "./propTypes"
+
+import { toggleArchive, repeatTrip } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
 
-const TripCard = ({ trip, archived, toggleArchive }) => (
+const TripCard = ({
+  trip,
+  archived,
+  toggleArchive,
+  repeatTrip,
+  userId,
+  isArchivedTripRoute
+}) => (
   <div>
     {!trip.id && "Loading trip"}
     {trip.id && (
@@ -25,12 +35,19 @@ const TripCard = ({ trip, archived, toggleArchive }) => (
             <div>{trip.name}</div>
             <div>Start: {trip.start}</div>
             <div>End: {trip.end}</div>
-            <Button
-              className={archived ? "btn-gray" : "btn"}
-              onClick={() => toggleArchive(trip.id, !trip.isArchived)}
-            >
-              {archived ? "Unarchive" : "Archive"}
-            </Button>
+            <div className="card-cta">
+              <Button
+                className={archived ? "btn-gray" : "btn"}
+                onClick={() => toggleArchive(trip.id, archived, userId)}
+              >
+                {archived ? "Unarchive" : "Archive"}
+              </Button>
+              {isArchivedTripRoute && (
+                <Button className="btn" onClick={() => repeatTrip(trip)}>
+                  Repeat
+                </Button>
+              )}
+            </div>
             <Link to={`/app/trip/${trip.id}`}>
               <CardButton>
                 <ChevronSvg
@@ -48,9 +65,23 @@ const TripCard = ({ trip, archived, toggleArchive }) => (
   </div>
 )
 
-const mapDispatchToProps = { deleteTrip, toggleArchive }
+TripCard.propTypes = {
+  archived: PropTypes.bool.isRequired,
+  toggleArchive: PropTypes.func.isRequired,
+  trip: TripPropTypes,
+  userId: PropTypes.string,
+  isArchivedTripRoute: PropTypes.string.isRequired,
+  repeatTrip: PropTypes.func.isRequired
+}
+
+const mapDispatchToProps = { toggleArchive, repeatTrip }
+
+const mapStateToProps = state => ({
+  userId: state.auth.user.id,
+  isArchivedTripRoute: state.router.location.pathname === "/app/trips/archived"
+})
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(TripCard)
