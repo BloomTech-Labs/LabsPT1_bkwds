@@ -90,14 +90,10 @@ class SingleTripMap extends React.Component {
   // Add conditional rendering for active Trip
   render() {
     if (this.props.trip !== null) {
-      console.log(this.props.trip.inProgress)
       return (
         <MapWrapper>
           {!this.props.trip.inProgress ? (
-            <TripPanel
-              trip={this.props.trip}
-              drawPolyline={this.drawPolyline}
-            />
+            <TripPanel drawPolyline={this.drawPolyline} />
           ) : (
             <ActiveTripPanel />
           )}

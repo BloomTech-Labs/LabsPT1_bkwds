@@ -66,7 +66,7 @@ export const getPathElevation = pathArr => {
     elev_service.getElevationAlongPath(
       {
         path: pathArr,
-        samples: 256
+        samples: 128
       },
       (result, status) => {
         if (status === "OK") {

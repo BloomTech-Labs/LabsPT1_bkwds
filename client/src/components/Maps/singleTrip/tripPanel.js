@@ -28,6 +28,12 @@ class TripPanel extends React.Component {
       this.renderWaypoints()
     })
   }
+  componentDidUpdate(_, prevState) {
+    if (prevState.markers !== this.state.markers) {
+      this.getPathElevation()
+    }
+  }
+
   renderWaypoints = () => {
     let markers = []
     this.state.trip.waypoints.forEach(waypoint => {
@@ -191,7 +197,7 @@ class TripPanel extends React.Component {
           </s.TripDetail>
           <s.TripDetail>
             <ElevationIcon width="25px" height="25px" />
-            {this.getPathElevation()}
+            {this.state.elevation}
           </s.TripDetail>
         </s.PanelSubheader>
         <s.WaypointsHeader>
@@ -213,6 +219,6 @@ class TripPanel extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { tripId: state.trips.activeTrip }
+  return { trip: state.trips.activeTrip }
 }
 export default connect(mapStateToProps)(TripPanel)
