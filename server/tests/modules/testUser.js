@@ -82,7 +82,10 @@ describe("Test User model and routes", () => {
       .then(response => {
         expect(response.statusCode).toBe(202)
         expect(response.body.user.id).toEqual(userID)
-        expect(response.body.user.email).toBe("fakeEmail@gmail.com")
+        expect(response.body.user.email).toBe("email@hotmail.com")
+        expect(response.body.user.displayName).toBe(
+          "Updated Display Name User 1"
+        )
         expect(response.body.msg).toBe("User was deleted")
         done()
       })
