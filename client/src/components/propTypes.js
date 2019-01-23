@@ -38,7 +38,7 @@ export const UserPropTypes = PropTypes.shape({
   subscribeId: PropTypes.string,
   subscribed: PropTypes.bool.isRequired,
   trips: PropTypes.arrayOf(PropTypes.any),
-  username: PropTypes.string.isRequired
+  email: PropTypes.string.isRequired
 })
 
 export const MatchPropTypes = PropTypes.shape({

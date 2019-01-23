@@ -36,11 +36,7 @@ export const updateEmail = (userId, email) => dispatch => {
     })
 }
 
-export const updatePassword = (
-  username,
-  oldPassword,
-  newPassword
-) => dispatch => {
+export const updatePassword = (email, oldPassword, newPassword) => dispatch => {
   if (oldPassword === newPassword) {
     toast.error("Your old and new password are the same.", {
       position: toast.POSITION.BOTTOM_RIGHT
@@ -51,7 +47,7 @@ export const updatePassword = (
 
   axios
     .post(`${SERVER_URI}/changePassword`, {
-      username,
+      email,
       oldPassword,
       newPassword
     })

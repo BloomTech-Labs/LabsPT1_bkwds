@@ -21,10 +21,10 @@ import {
 
 import { authRef, provider } from "../../config/firebase"
 
-export const login = ({ username, password }) => dispatch => {
+export const login = ({ email, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
   axios
-    .post(`${SERVER_URI}/login`, { username, password })
+    .post(`${SERVER_URI}/login`, { email, password })
     .then(res => {
       const { token, user } = res.data
       dispatch({ type: LOGIN_SUCCESS, payload: user })
@@ -41,14 +41,14 @@ export const login = ({ username, password }) => dispatch => {
     })
 }
 
-export const register = ({ email, username, password }) => dispatch => {
+export const register = ({ email, password }) => dispatch => {
   dispatch({ type: AUTH_LOADING })
 
   axios
-    .post(`${SERVER_URI}/register`, { email, username, password })
+    .post(`${SERVER_URI}/register`, { email, password })
     .then(res => {
-      const { token } = res.data
-      dispatch({ type: REGISTRATION_SUCCESS, payload: { username, email } })
+      const { token, user } = res.data
+      dispatch({ type: REGISTRATION_SUCCESS, payload: user })
       localStorage.setItem("token", token)
       dispatch(addTokenToState())
     })
@@ -136,7 +136,6 @@ export const registerWithOauth = () => dispatch => {
     .then(({ user }) => {
       const oauthUser = {
         email: user.email,
-        username: user.email,
         password: user.uid
       }
 
@@ -145,10 +144,10 @@ export const registerWithOauth = () => dispatch => {
       axios
         .post(`${SERVER_URI}/register`, oauthUser)
         .then(res => {
-          const { token } = res.data
+          const { token, user } = res.data
           dispatch({
             type: REGISTRATION_SUCCESS,
-            payload: { username: oauthUser.username, email: oauthUser.email }
+            payload: user
           })
           localStorage.setItem("token", token)
           dispatch(addTokenToState())
@@ -178,7 +177,6 @@ export const loginWithOauth = () => dispatch => {
     .then(({ user }) => {
       const oauthUser = {
         email: user.email,
-        username: user.email,
         password: user.uid
       }
 
@@ -186,7 +184,7 @@ export const loginWithOauth = () => dispatch => {
       dispatch({ type: AUTH_LOADING })
       axios
         .post(`${SERVER_URI}/login`, {
-          username: oauthUser.username,
+          email: oauthUser.email,
           password: oauthUser.password
         })
         .then(res => {
