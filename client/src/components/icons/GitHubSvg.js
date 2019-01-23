@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 const GitHubSvg = ({ width = "32px", height = "32px" }) => {
   const Icon = styled.a`
@@ -29,6 +30,11 @@ const GitHubSvg = ({ width = "32px", height = "32px" }) => {
       </svg>
     </Icon>
   )
+}
+
+GitHubSvg.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string
 }
 
 export default GitHubSvg

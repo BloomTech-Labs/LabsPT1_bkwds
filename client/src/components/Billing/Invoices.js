@@ -1,6 +1,7 @@
 import React from "react"
 import moment from "moment"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 import { media } from "../../styles/theme/mixins"
 
@@ -61,5 +62,9 @@ const Invoices = ({ invoices }) => (
     </TableWrapper>
   </InvoicesContainer>
 )
+
+Invoices.propTypes = {
+  invoices: PropTypes.array.isRequired
+}
 
 export default Invoices

@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import { Button, Form, Input } from "../../styles/theme/styledComponents"
 import { saveWaypoint } from "../../redux/actions/trips"
@@ -63,6 +64,10 @@ class WaypointForm extends Component {
       </div>
     )
   }
+}
+
+WaypointForm.propTypes = {
+  saveWaypoint: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = { saveWaypoint }

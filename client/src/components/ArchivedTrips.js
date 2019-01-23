@@ -9,23 +9,35 @@ import { getTripsArray } from "../utils/selectors"
 import { TripPropTypes } from "./propTypes"
 
 class ArchivedTrips extends Component {
+  state = {
+    archivedExists: false
+  }
+
   componentDidMount() {
     this.props.getTrips(this.props.userId)
+
+    this.props.trips.forEach(trip => {
+      if (trip.isArchived) {
+        this.setState({ archivedExists: true })
+        return
+      }
+    })
   }
 
   render() {
     const { trips, loading } = this.props
+    const { archivedExists } = this.state
     return (
       <s.TripCardStyles>
         {loading ? (
           "Loading..."
         ) : (
           <div className="container">
-            {!trips.length && "No archived trips!"}
+            {archivedExists ? null : "No Archived Trips"}
             {trips.map(trip => {
               if (trip.isArchived) {
                 return <TripCard key={trip.id} trip={trip} archived={true} />
-              }
+              } else return null
             })}
           </div>
         )}
@@ -35,8 +47,9 @@ class ArchivedTrips extends Component {
 }
 
 ArchivedTrips.propTypes = {
+  userId: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
   getTrips: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
   trips: PropTypes.arrayOf(TripPropTypes)
 }
 

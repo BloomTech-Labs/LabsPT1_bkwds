@@ -127,7 +127,10 @@ class AppNav extends Component {
 AppNav.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+  theme: PropTypes.any.isRequired
 }
 
 const mapStateToProps = state => ({

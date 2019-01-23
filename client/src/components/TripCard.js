@@ -15,7 +15,7 @@ const TripCard = ({
   archived,
   toggleArchive,
   repeatTrip,
-  user,
+  userId,
   isArchivedTripRoute
 }) => (
   <div>
@@ -38,7 +38,7 @@ const TripCard = ({
             <div className="card-cta">
               <Button
                 className={archived ? "btn-gray" : "btn"}
-                onClick={() => toggleArchive(trip.id, archived, user)}
+                onClick={() => toggleArchive(trip.id, archived, userId)}
               >
                 {archived ? "Unarchive" : "Archive"}
               </Button>
@@ -68,13 +68,16 @@ const TripCard = ({
 TripCard.propTypes = {
   archived: PropTypes.bool.isRequired,
   toggleArchive: PropTypes.func.isRequired,
-  trip: TripPropTypes
+  trip: TripPropTypes,
+  userId: PropTypes.string,
+  isArchivedTripRoute: PropTypes.string.isRequired,
+  repeatTrip: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = { toggleArchive, repeatTrip }
 
 const mapStateToProps = state => ({
-  user: state.auth.user.id,
+  userId: state.auth.user.id,
   isArchivedTripRoute: state.router.location.pathname === "/app/trips/archived"
 })
 

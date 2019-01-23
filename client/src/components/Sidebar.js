@@ -105,6 +105,7 @@ Sidebar.propTypes = {
 SidebarLink.propTypes = {
   displayName: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   to: PropTypes.string.isRequired
 }
 

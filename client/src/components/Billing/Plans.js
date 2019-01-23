@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 import { media } from "../../styles/theme/mixins"
 import { BillingStyles } from "../../styles/Billing.styles"
@@ -221,6 +222,10 @@ const Plans = ({ isSubscribed }) => (
     </Container>
   </BillingStyles>
 )
+
+Plans.propTypes = {
+  isSubscribed: PropTypes.bool.isRequired
+}
 
 const mapStateToProps = ({ auth }) => ({
   isSubscribed: auth.user.subscribed

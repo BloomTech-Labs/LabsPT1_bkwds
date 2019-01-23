@@ -1,8 +1,9 @@
 /* eslint react/display-name: 0 */
+/* eslint react/prop-types: 0 */
 import React from "react"
 import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
-import PropTypes from "prop-types"
+import { MatchPropTypes } from "../propTypes"
 
 import SingleTrip from "../Maps/singleTrip"
 import AppContainer from "../AppContainer"
@@ -92,8 +93,7 @@ const Dashboard = ({ match }) => {
 }
 
 Dashboard.propTypes = {
-  match: PropTypes.object.isRequired,
-  trips: PropTypes.object.isRequired
+  match: MatchPropTypes
 }
 
 const mapStateToProps = ({ trips: { trips } }) => ({ trips })
