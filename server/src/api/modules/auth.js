@@ -5,11 +5,11 @@ import { User } from "../resources/user/user.model"
 const JWT_SECRET = config.secrets.JWT_SECRET
 
 export const register = (req, res) => {
-  const { password, email } = req.body
+  const { email, password, ...rest } = req.body
   User.findOne({ email: email })
     .then(existingUser => {
       if (existingUser) return res.status(404).send("Email already exists")
-      let user = new User({ password, email })
+      let user = new User({ email, password, ...rest })
       const token = jwt.sign({ id: user._id }, JWT_SECRET, {
         expiresIn: 86400 // 24 hours
       })
@@ -34,22 +34,29 @@ export const register = (req, res) => {
 
 export const login = (req, res) => {
   const { email, password } = req.body
-  User.findOne({ email: email })
+  const now = Date.now()
+  User.findOneAndUpdate(
+    { email: email },
+    // Update lastLogin, increment loginCount:
+    { lastLogin: now, $inc: { loginCount: 1 } },
+    // Get back old user, not new one!
+    { new: false }
+  )
     .populate("trips")
     .exec()
-    .then(user => {
-      if (!user) return res.status(404).send("User does not exist")
-      user.comparePassword(password, (err, isMatch) => {
+    .then(oldUser => {
+      if (!oldUser) return res.status(404).send("User does not exist")
+      oldUser.comparePassword(password, (err, isMatch) => {
         if (err) {
           return res.status(401).send("Unauthorized")
         }
         if (isMatch) {
           // let token = generateToken(user)
-          const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+          const token = jwt.sign({ id: oldUser._id }, JWT_SECRET, {
             expiresIn: 86400 // 24 hours
           })
 
-          const payload = { user, token }
+          const payload = { user: oldUser, token }
           res.status(200).json(payload)
         } else {
           return res.status(401).send("Invalid password")

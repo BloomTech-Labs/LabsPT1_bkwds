@@ -11,10 +11,7 @@ export const getAllUsers = (req, res) => {
 }
 
 export const createUser = (req, res) => {
-  const newUser = new User({
-    password: req.body.password,
-    email: req.body.email
-  })
+  const newUser = new User(req.body)
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) return res.status(400).send("User already exists")
