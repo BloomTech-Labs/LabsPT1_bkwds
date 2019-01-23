@@ -34,11 +34,10 @@ export const register = (req, res) => {
 
 export const login = (req, res) => {
   const { email, password } = req.body
-  const now = Date.now()
   User.findOneAndUpdate(
     { email: email },
     // Update lastLogin, increment loginCount:
-    { lastLogin: now, $inc: { loginCount: 1 } },
+    { lastLogin: Date.now(), $inc: { loginCount: 1 } },
     // Get back old user, not new one!
     { new: false }
   )
