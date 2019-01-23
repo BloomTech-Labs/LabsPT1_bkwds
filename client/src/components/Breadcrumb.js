@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
 const Breadcrumb = ({ linkpath, name, last }) => {
   return (
@@ -11,4 +12,9 @@ const Breadcrumb = ({ linkpath, name, last }) => {
   )
 }
 
+Breadcrumb.propTypes = {
+  linkpath: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  last: PropTypes.bool
+}
 export default Breadcrumb

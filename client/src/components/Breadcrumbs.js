@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, withRouter } from "react-router-dom"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 import Breadcrumb from "./Breadcrumb"
 
 const BreadcrumbsStyles = styled.div`
@@ -77,6 +78,10 @@ const Breadcrumbs = ({ location }) => {
       </ol>
     </BreadcrumbsStyles>
   )
+}
+
+Breadcrumbs.propTypes = {
+  location: PropTypes.string.isRequired
 }
 
 export default withRouter(Breadcrumbs)
