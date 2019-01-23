@@ -119,7 +119,7 @@ export const checkDbForUser = token => dispatch => {
     .get(`${SERVER_URI}/users/${id}`)
     .then(res => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
-      dispatch(push("/app/trips"))
+      dispatch(push("/app/dashboard"))
     })
     .catch(err => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
