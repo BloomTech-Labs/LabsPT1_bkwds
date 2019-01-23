@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import { flexCenterMixin } from "../../styles/theme/mixins"
@@ -27,20 +27,15 @@ const ModalWrapper = styled.div`
   top: calc(50% - (66% / 2));
 `
 
-class Modal extends Component {
-  render() {
-    return (
-      <ModalContainer isOpen={this.props.isOpen} className="ModalContainer">
-        <ModalWrapper className="ModalWrapper">
-          {this.props.children()}
-        </ModalWrapper>
-      </ModalContainer>
-    )
-  }
-}
+const Modal = ({ children, isOpen }) => (
+  <ModalContainer isOpen={isOpen} className="ModalContainer">
+    <ModalWrapper className="ModalWrapper">{children()}</ModalWrapper>
+  </ModalContainer>
+)
 
 Modal.propTypes = {
-  children: PropTypes.func.isRequired
+  children: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired
 }
 
 export default Modal
