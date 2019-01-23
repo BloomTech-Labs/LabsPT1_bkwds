@@ -42,7 +42,8 @@ class NavDropdown extends Component {
           toggle={this.toggle}
         >
           <DropdownToggle className="navbar-toggle">
-            Hi, {user.email ? user.email + "!" : "Account"}{" "}
+            {!user.displayName && user.email}
+            {user.displayName && "Hi, " + user.displayName + "!"}
             <ChevronSvg fill="#a3a3a3" />
           </DropdownToggle>
           <DropdownMenu>
