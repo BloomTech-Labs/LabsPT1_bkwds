@@ -12,7 +12,10 @@ import {
   DELETING_TRIP_ERROR,
   TOGGLE_ARCHIVE_TRIP,
   TOGGLE_ARCHIVE_TRIP_SUCCESS,
-  TOGGLE_ARCHIVE_TRIP_ERROR
+  TOGGLE_ARCHIVE_TRIP_ERROR,
+  REPEAT_TRIP,
+  REPEAT_TRIP_SUCCESS,
+  REPEAT_TRIP_ERROR
 } from "../actions/types"
 
 import {
@@ -82,6 +85,21 @@ export const tripReducer = (state = defaultState, action) => {
     case TOGGLE_ARCHIVE_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
 
+    case REPEAT_TRIP:
+      return {
+        ...state,
+        pending: true
+      }
+
+    case REPEAT_TRIP_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        trips: { ...state.trips, [action.payload.id]: action.payload }
+      }
+
+    case REPEAT_TRIP_ERROR:
+      return { ...state, pending: false, error: action.payload }
     // IMPLEMENT!
     case CREATING_WAYPOINT:
       return { ...state, pending: true }
