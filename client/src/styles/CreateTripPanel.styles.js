@@ -90,6 +90,14 @@ export const CreateTripPanelStyles = styled.div`
     }
   `}
 
+  .btn-neutral {
+    &:focus {
+      background-color: ${props => props.theme.offWhite};
+      border-color: ${props => props.theme.offWhite};
+      color: midGray;
+    }
+  }
+
   .active-button {
     background-color: ${props => props.theme.primary};
     border-color: ${props => props.theme.primary};
