@@ -11,12 +11,8 @@ export const getAllUsers = (req, res) => {
 }
 
 export const createUser = (req, res) => {
-  const newUser = new User({
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email
-  })
-  User.findOne({ username: req.body.username })
+  const newUser = new User(req.body)
+  User.findOne({ email: req.body.email })
     .then(user => {
       if (user) return res.status(400).send("User already exists")
       newUser
@@ -52,8 +48,7 @@ export const updateUser = (req, res) => {
   if (Object.keys(update).length === 0) {
     return res.status(400).send("Bad Request")
   }
-  if (update.username)
-    return res.status(401).send("Username change not allowed")
+  if (update.email) return res.status(401).send("Email change not allowed")
   if (update.password)
     return res.status(401).send("Password cannot be changed from this endpoint")
   if (update.trips)

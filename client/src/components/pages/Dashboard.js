@@ -21,10 +21,9 @@ import CustomRoute from "../../utils/CustomRoute"
 
 const dashboardRoutes = [
   {
-    path: "/",
+    path: "/dashboard",
     name: "Dashboard",
-    component: ({ trips }) => <DashboardHome trips={trips} />,
-    exact: true
+    component: DashboardHome
   },
   {
     path: "/trip/create",

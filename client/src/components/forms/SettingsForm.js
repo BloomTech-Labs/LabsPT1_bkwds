@@ -26,7 +26,6 @@ const SettingsForm = ({
     validate={validate}
     initialValues={{
       email: user.email,
-      username: user.username,
       oldPassword: "",
       newPassword: ""
     }}
@@ -38,7 +37,7 @@ const SettingsForm = ({
       }
 
       if (oldPassword && newPassword) {
-        updatePassword(user.username, oldPassword, newPassword)
+        updatePassword(user.email, oldPassword, newPassword)
       }
     }}
     render={({
