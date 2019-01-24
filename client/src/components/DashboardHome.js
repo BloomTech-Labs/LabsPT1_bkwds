@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import moment from "moment"
-import styled from "styled-components"
 
 import * as s from "../styles/Dashboard.styles"
 import Modal from "./Modals/Modal"

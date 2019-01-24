@@ -53,25 +53,39 @@ class SingleTripMap extends React.Component {
     return true
   }
 
-  //Attaches Map to div
-  // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
     window.map = new window.google.maps.Map(this.mapRef.current, {
       center: center,
       zoom: 9,
       disableDefaultUI: true
     })
-    if (waypoints) {
+    if (waypoints && waypoints.length) {
       this.renderWaypoints(waypoints)
     }
   }
 
+  // renderMap = (center, waypoints) => {
+  //   let latLngs
+  //   window.map = new window.google.maps.Map(this.mapRef.current, {
+  //     center: center,
+  //     zoom: 9,
+  //     disableDefaultUI: true
+  //   })
+  //   if (waypoints) latLngs = this.renderWaypoints(waypoints)
+  //   let bounds = new window.google.maps.LatLngBounds()
+  //   latLngs.forEach(latLng => bounds.extend(latLng))
+  //   window.map.fitBounds(bounds)
+  //   window.map.setCenter(bounds.getCenter())
+  // }
+
   // Attach waypoints to map
   renderWaypoints = waypoints => {
+    // let latLngs = []
+
     waypoints.forEach(waypoint => {
       const center = {
-        lat: parseFloat(waypoint.lat.$numberDecimal),
-        lng: parseFloat(waypoint.lon.$numberDecimal)
+        lat: waypoint.lat,
+        lng: waypoint.lon
       }
       new window.google.maps.Marker({
         position: center,
@@ -79,7 +93,10 @@ class SingleTripMap extends React.Component {
         title: waypoint.name,
         label: waypoint.order.toString()
       }).setMap(window.map)
+      // wp.setMap(window.map)
+      // latLngs.push(center)
     })
+    // return latLngs
   }
 
   drawPolyline = () => {
