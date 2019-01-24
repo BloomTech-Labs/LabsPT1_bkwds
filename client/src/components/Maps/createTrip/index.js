@@ -96,11 +96,24 @@ class CreateTripMap extends React.Component {
         start: this.state.startDate.utc().format(),
         end: this.state.endDate.utc().format(),
         lat: window.map.getCenter().lat(),
-        lon: window.map.getCenter().lng()
+        lon: window.map.getCenter().lng(),
+        image: this.generateMapImageUrl()
       }
-
       this.props.createTrip(trip, markers)
     }
+  }
+
+  generateMapImageUrl = () => {
+    const staticMapAPI = "https://maps.googleapis.com/maps/api/staticmap?"
+    let lat = window.map
+      .getCenter()
+      .lat()
+      .toString()
+    let lon = window.map
+      .getCenter()
+      .lng()
+      .toString()
+    return `${staticMapAPI}center=${lat},${lon}&zoom=16&size=350x350&key=`
   }
 
   saveValidate = () => {

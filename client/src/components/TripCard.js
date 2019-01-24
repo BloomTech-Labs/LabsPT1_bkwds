@@ -2,8 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
-
 import { TripPropTypes } from "./propTypes"
+
+import { STATIC_MAP_KEY } from "../config"
 
 import { toggleArchive, repeatTrip } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
@@ -26,8 +27,12 @@ const TripCard = ({
           <div className="card-image">
             <img
               className={archived ? "grayscale" : ""}
-              src="https://staticmapmaker.com/img/google.png"
-              alt="Google Map of Albany, NY"
+              src={
+                trip.image
+                  ? `${trip.image}${STATIC_MAP_KEY}`
+                  : "https://staticmapmaker.com/img/google.png"
+              }
+              alt="Static Map Image"
             />
             {archived && <div className="text-overlay">ARCHIVED</div>}
           </div>
@@ -70,7 +75,7 @@ TripCard.propTypes = {
   toggleArchive: PropTypes.func.isRequired,
   trip: TripPropTypes,
   userId: PropTypes.string,
-  isArchivedTripRoute: PropTypes.string.isRequired,
+  isArchivedTripRoute: PropTypes.bool,
   repeatTrip: PropTypes.func.isRequired
 }
 
