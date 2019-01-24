@@ -12,34 +12,40 @@ const ContentContainer = styled.div`
 
 const BrandedContent = styled.div`
   display: flex;
-  flex-direction: end;
-  text-align: center;
-  justify-content: space-around;
+  flex-direction: column;
+  align-self: flex-end;
+  justify-content: center;
+  margin-top: 53px;
+  margin-right: 2rem;
+
+  h1 {
+    color: white !important;
+    font-weight: bold;
+  }
 
   a {
-    font-size: 20px;
     color: white !important;
   }
 
   .accent {
     color: #f26a21 !important;
+    font-weight: bold;
   }
 `
 
-const PageContentContainer = () => {
+const LandingPageContent = () => {
   return (
     <ContentContainer>
       <BrandedContent>
-        <a>
+        <h1>
           bkwds<span className="accent">.</span>
-        </a>
-        <a>
+        </h1>
+        <h1>
           <span className="accent">+</span>go there
-        </a>
-      </BrandedContent>{" "}
-      />
+        </h1>
+      </BrandedContent>
     </ContentContainer>
   )
 }
 
-export default PageContentContainer
+export default LandingPageContent
