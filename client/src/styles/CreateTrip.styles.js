@@ -3,7 +3,11 @@ import { media } from "./theme/mixins"
 
 export const MapWrapper = Styled.div`
   position:relative;
-  width:100%;
+  margin-left: -50px;
+  ${media.tablet`
+    margin-left: 0;
+  `}
+
   height:100%;
 
   #plus-icon{

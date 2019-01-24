@@ -2,19 +2,14 @@ import styled from "styled-components"
 import { media } from "../styles/theme/mixins"
 
 export const SidebarStyles = styled.div`
+  position: absolute;
+  z-index: 6;
+
   .sidebar-links {
-    z-index: 1;
-    position: absolute;
-    background: white;
-  }
-
-  ${media.tablet`
-    visibility: ${props => (props.isSidebarOpen ? "visible" : "hidden")};
-  `}
-
-  > div {
     width: 50px;
-    transition: visibility 0.2s, width ease-in-out 0.3s;
+    background: transparent;
+    /* Sidebar open & close transition (Desktop) */
+    transition: visibility, width ease-in-out 0.3s;
   }
 
   button {
@@ -41,7 +36,6 @@ export const SidebarStyles = styled.div`
       opacity: 0;
       width: 0;
       padding: 6px 0;
-      transition: all ease-in-out 0.4s;
       width: 100%;
       text-align: left;
       display: ${props => (props.isSidebarOpen ? "block" : "none")};
@@ -50,11 +44,29 @@ export const SidebarStyles = styled.div`
 
   .open {
     width: ${props => `${props.theme.sidebarWidth}px`};
-    transition: visibility 0s, width ease-in-out 0.3s;
-
     a:last-child {
       opacity: 1;
-      transition: all ease-in-out 0.5s;
     }
   }
+
+  /* MEDIA QUERIES */
+  ${media.tablet`
+    height: ${props => (props.isSidebarOpen ? "100vh" : "inherit")};
+    min-width: ${props => (props.isSidebarOpen ? "100vw" : "inherit")};
+    background: rgba(0, 0, 0, 0.5);
+    z-index: ${props => (props.isSidebarOpen ? 6 : -1)}
+
+    .sidebar-links {
+      opacity: ${props => (props.isSidebarOpen ? 1 : 0)};
+      /* Sidebar open & close transition (Tablet & Phone) */
+      transition: opacity ease-in-out 0.3s;
+      width: 100%;
+      button {
+        height: 54px;
+        a {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  `}
 `

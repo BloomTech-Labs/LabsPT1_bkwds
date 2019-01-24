@@ -46,7 +46,6 @@ export const NavStyles = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-left: 0.5rem;
     &:hover {
       color: ${props => props.theme.black};
       .logo-flourish {
