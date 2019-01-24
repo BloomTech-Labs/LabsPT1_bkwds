@@ -31,6 +31,11 @@ class SingleTripMap extends React.Component {
     this.drawPolyline()
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.isSidebarOpen !== this.props.isSidebarOpen) return false
+    return true
+  }
+
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
@@ -101,12 +106,14 @@ class SingleTripMap extends React.Component {
 
 SingleTripMap.propTypes = {
   getSingleTrip: PropTypes.func.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
   trip: TripPropTypes,
   tripId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
-  trip: state.trips.activeTrip
+  trip: state.trips.activeTrip,
+  isSidebarOpen: state.navigation.isSidebarOpen
 })
 
 export default connect(
