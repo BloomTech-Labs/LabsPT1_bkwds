@@ -8,17 +8,19 @@ export const MapWrapper = Styled.div`
     margin-left: 0;
   `}
 
-  height:100%;
+  height: 100%;
 
-  #plus-icon{
+  #plus-icon {
     visibility: hidden;
 
     ${media.tablet`
       visibility: visible;
       cursor: pointer;
-      right: 5%;
-      bottom: 30%;
+      right: 20px;
+      bottom: 20px;
+      background: white;
+      border-radius: 50%;
       position: absolute;
-      `}
-    }
+    `}
+  }
 `

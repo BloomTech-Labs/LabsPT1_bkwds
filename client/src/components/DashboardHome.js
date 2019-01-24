@@ -7,22 +7,15 @@ import styled from "styled-components"
 import * as s from "../styles/Dashboard.styles"
 import Modal from "./Modals/Modal"
 import Autocomplete from "./Maps/Autocomplete"
-import { Form, GhostInput, Button } from "../styles/theme/styledComponents"
+import {
+  Form,
+  GhostInput,
+  Button,
+  CloseModalIcon
+} from "../styles/theme/styledComponents"
 import { UserPropTypes } from "./propTypes"
 import { openModal, closeModal } from "../redux/actions/modal"
 import { updateUserWithMsg } from "../redux/actions/settings"
-
-export const CloseModalIcon = styled.button`
-  position: absolute;
-  right: 4rem;
-  border: 0;
-  cursor: pointer;
-  color: rgba(128, 128, 128, 0.5);
-  padding: 0;
-  font-size: 2rem;
-  padding: 0 !important;
-  font-weight: 300;
-`
 
 class DashboardHome extends Component {
   constructor(props) {
