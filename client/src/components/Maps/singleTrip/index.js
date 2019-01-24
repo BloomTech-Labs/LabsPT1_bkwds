@@ -1,9 +1,21 @@
 import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import styled from "styled-components"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
+import { media } from "../../../styles/theme/mixins"
+
+const SingleTripMapStyles = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin-left: -50px;
+  ${media.tablet`
+    margin-left: 0;
+  `}
+`
 
 const dashSymbol = {
   path: "M 0,-1 0,1",
@@ -16,6 +28,11 @@ class SingleTripMap extends React.Component {
     getSingleTrip: () => {},
     trip: getDefaultTripProps(),
     tripId: ""
+  }
+
+  constructor(props) {
+    super(props)
+    this.mapRef = React.createRef()
   }
 
   componentDidMount() {
@@ -40,7 +57,8 @@ class SingleTripMap extends React.Component {
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
     window.map = new window.google.maps.Map(
-      document.getElementById("Tripmap"),
+      // document.getElementById("Tripmap"),
+      this.mapRef.current,
       {
         center: center,
         zoom: 9,
@@ -95,12 +113,7 @@ class SingleTripMap extends React.Component {
   }
 
   render() {
-    return (
-      <div
-        style={{ width: "100%", height: "100%", position: "absolute" }}
-        id="Tripmap"
-      />
-    )
+    return <SingleTripMapStyles ref={this.mapRef} />
   }
 }
 
