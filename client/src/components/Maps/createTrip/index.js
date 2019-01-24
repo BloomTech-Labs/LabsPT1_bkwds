@@ -18,10 +18,18 @@ class CreateTripMap extends React.Component {
   }
 
   componentDidMount() {
+    const { center } = this.props
+    const userCenter = center.length
+      ? {
+          lat: parseFloat(center[0].$numberDecimal),
+          lng: parseFloat(center[1].$numberDecimal)
+        }
+      : null
+
     window.map = new window.google.maps.Map(
       document.getElementById("createTripMap"),
       {
-        center: { lat: 39.0997, lng: -94.5786 },
+        center: userCenter ? userCenter : { lat: 39.0997, lng: -94.5786 },
         zoom: 9,
         disableDefaultUI: true
       }
@@ -153,7 +161,8 @@ class CreateTripMap extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  userId: state.auth.user.id
+  userId: state.auth.user.id,
+  center: state.auth.user.coordinates
 })
 
 const mapDispatchToProps = { createTrip }
