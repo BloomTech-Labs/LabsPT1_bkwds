@@ -36,6 +36,15 @@ class CreateTripPanel extends React.Component {
     this.searchAutoComplete()
   }
 
+  componentDidMount() {
+    this.inputRef.current.focus()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.searchToggled && this.state.searchToggled)
+      this.inputRef.current.focus()
+  }
+
   searchAutoComplete = () => {
     const autoComplete = new window.google.maps.places.Autocomplete(
       this.inputRef.current

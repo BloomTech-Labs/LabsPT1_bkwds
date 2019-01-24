@@ -267,7 +267,6 @@ export const SearchCenterInput = styled.input`
     left: ${({ searchToggled }) => (searchToggled ? "0" : "unset")};
     visibility: ${props => (props.searchToggled ? "visible" : "hidden")};
     z-index: ${props => (props.searchToggled ? "2000" : "inherit")};
-    color: ${props => (props.searchToggled ? "tomato !important" : "inherit")};
   `}
 `
 
