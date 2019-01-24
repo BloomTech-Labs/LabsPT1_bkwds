@@ -17,7 +17,7 @@ export const TripCardStyles = styled.div`
     max-width: 100%;
     height: 100%;
 
-    @media (max-width: 80.875em) {
+    @media (max-width: 40.25em) {
       justify-content: center;
     }
   }
@@ -38,10 +38,10 @@ export const TripCardStyles = styled.div`
       rgba(0, 0, 5, 0.1) 0px 0.0625rem 0.125rem,
       rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem;
 
-    ${media.tablet`
+    @media (max-width: 55.875em) {
       height: 300px;
       width: 280px;
-    `}
+    }
   }
 
   .card:hover {

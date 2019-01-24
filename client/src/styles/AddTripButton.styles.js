@@ -33,10 +33,10 @@ export const AddTripButtonStyles = styled.div`
       transform: translate3d(0px, -0.1875rem, 0px);
     }
 
-    ${media.tablet`
+    @media (max-width: 55.875em) {
       height: 300px;
       width: 280px;
-    `}
+    }
   }
 
   .add-trip-card-link {
@@ -64,9 +64,9 @@ export const AddTripButtonStyles = styled.div`
     padding: 0;
     margin: 0;
 
-    ${media.tablet`
-      font-size: 2.0rem;
-    `}
+    @media (max-width: 55.875em) {
+      font-size: 2rem;
+    }
   }
   span {
     font-size: 3.5rem;
