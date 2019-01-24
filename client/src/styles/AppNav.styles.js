@@ -93,7 +93,7 @@ export const NavStyles = styled.div`
     cursor: pointer;
     border: none;
     &:hover {
-      text-decoration: underline;
+      text-decoration: none;
     }
     padding-top: 0;
     padding-bottom: 0;

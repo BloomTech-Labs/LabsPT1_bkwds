@@ -46,6 +46,10 @@ export const GlobalStyles = createGlobalStyle`
     outline: 0;
   }
 
+  button:hover {
+    text-decoration: none;
+  }
+
   .main-wrapper {
     display: flex;
     flex-direction: column;
