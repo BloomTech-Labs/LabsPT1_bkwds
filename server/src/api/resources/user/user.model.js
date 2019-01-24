@@ -72,6 +72,11 @@ export const schema = {
     type: String,
     required: true,
     default: "email"
+  },
+  // Emergency contact info
+  contact: {
+    name: String,
+    number: String
   }
 }
 
