@@ -117,7 +117,7 @@ SidebarLink.propTypes = {
   pathname: PropTypes.string.isRequired,
   icon: PropTypes.string,
   to: PropTypes.string.isRequired,
-  toggleSidebar: PropTypes.func.isRequired
+  toggleSidebar: PropTypes.func
 }
 
 const mapStateToProps = state => ({
