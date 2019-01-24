@@ -19,7 +19,7 @@ export const SidebarStyles = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 6px 12px;
+    padding: 0;
     border: none;
     margin-top: 2px;
 
@@ -27,12 +27,19 @@ export const SidebarStyles = styled.div`
       width: 26px;
     }
 
+    a:first-child {
+      padding: 6px 12px;
+      min-width: 50px;
+    }
+
     a:last-child {
       white-space: nowrap;
       opacity: 0;
       width: 0;
-      margin-left: 10px;
+      padding: 6px 0;
       transition: all ease-in-out 0.4s;
+      width: 100%;
+      text-align: left;
     }
   }
 

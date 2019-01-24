@@ -64,7 +64,9 @@ export const SaveButton = Styled.button`
     color:white;
     width: 105px;
     border-radius:4px;
-    background: #0e153f;
+    background: ${props => props.theme.primaryDark};
+    border-color: ${props => props.theme.primaryDark};
+    cursor: pointer;
 
     ${media.tablet`
       display: ${props => (props.isToggled ? "flex" : "none")};
@@ -77,7 +79,9 @@ export const SaveButton = Styled.button`
 
 export const WaypointButton = Styled.button`
     color:white;
-    background: #0e153f;
+    background: ${props => props.theme.primaryDark};
+    border-color: ${props => props.theme.primaryDark};
+    cursor: pointer;
     border-radius: 4px;
     width:105px;
 
