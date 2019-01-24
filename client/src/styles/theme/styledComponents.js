@@ -61,24 +61,33 @@ export const Button = styled.button`
   font-weight: 500;
   width: ${props => props.width};
 
-  background-color: ${({ color, theme }) =>
-    color === "orange" ? "#f26a21" : theme.primaryDark};
-  border-color: ${({ color, theme }) =>
-    color === "orange" ? "#f26a21" : theme.primaryDark};
+  /* Button & btn-primary */
+  will-change: background-color, border-color, color;
+  -webkit-transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease;
+  background-color: ${props => props.theme.primary};
+  border-color: ${props => props.theme.primary};
   &:hover,
   &:focus {
-    background-color: ${({ color, theme }) =>
-      color === "orange" ? "#f37837" : theme.tertiary};
-    border-color: ${({ color, theme }) =>
-      color === "orange" ? "#f37837" : theme.tertiary};
+    background-color: ${props => props.theme.primaryHover};
+    border-color: ${props => props.theme.primaryHover};
   }
 
   /* Styles for Link/anchor elements that might be children of Button */
   a {
     color: ${props => props.theme.white};
+    &:hover {
+      color: ${props => props.theme.white};
+    }
   }
 
-  &.btn {
+  &.btn-primary {
+    border: 0;
+  }
+
+  &.btn-tertiary {
     background-color: ${props => props.theme.tertiary};
     border-color: ${props => props.theme.tertiary};
     color: ${props => props.theme.white};
@@ -86,14 +95,10 @@ export const Button = styled.button`
     border-radius: 6px;
     &:hover,
     &:focus {
-      background-color: ${props => props.theme.tertiary};
-      border-color: ${props => props.theme.tertiary};
+      background-color: ${props => props.theme.tertiaryHover};
+      border-color: ${props => props.theme.tertiaryHover};
       color: ${props => props.theme.white};
     }
-  }
-
-  &.btn-primary {
-    border: 0;
   }
 
   &.btn-light {
@@ -112,38 +117,32 @@ export const Button = styled.button`
   }
 
   &.btn-inverted {
-    color: ${props => props.theme.primary};
+    color: ${props => props.theme.white};
     /* target anchors for when we nest Links inside buttons */
     & a {
-      color: ${props => props.theme.primary};
+      color: ${props => props.theme.white};
     }
-    background-color: ${props => props.theme.primaryLight};
-    border-color: ${props => props.theme.primaryLight};
+    background-color: ${props => props.theme.primary};
+    border-color: ${props => props.theme.primary};
     &:hover,
     &:focus {
-      background-color: ${props => props.theme.primary};
-      border-color: ${props => props.theme.primary};
-      color: ${props => props.theme.white};
+      background-color: ${props => props.theme.primaryLight};
+      border-color: ${props => props.theme.primaryLight};
+      color: ${props => props.theme.primary};
       & a {
-        color: ${props => props.theme.white};
+        color: ${props => props.theme.primary};
       }
     }
   }
 
   &.btn-secondary {
-    background-color: ${props => props.theme.secondary};
-    border-color: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.secondaryDark};
+    border-color: ${props => props.theme.secondaryDark};
     &:hover,
     &:focus {
-      background-color: ${props => props.theme.secondaryDark};
-      border-color: ${props => props.theme.secondaryDark};
+      background-color: ${props => props.theme.secondary};
+      border-color: ${props => props.theme.secondary};
     }
-  }
-
-  &:hover,
-  &:focus {
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   }
 
   &:not(:disabled) {

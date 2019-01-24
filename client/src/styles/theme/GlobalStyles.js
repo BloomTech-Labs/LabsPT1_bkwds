@@ -31,8 +31,13 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   a {
-    color: ${props => props.theme.primaryDark};
+    will-change: color;
+    -webkit-transition: color 0.15s ease;
+    transition: color 0.15s ease;
+
+    color: ${props => props.theme.linkColor};
     &:hover {
+      color: ${props => props.theme.linkColorHover};
       text-decoration: none;
     }
   }
