@@ -113,7 +113,7 @@ class CreateTripPanel extends React.Component {
           inputRef={this.inputRef}
           map={null}
         >
-          {({ location, viewport, formattedAddress }) => (
+          {({ formattedAddress }) => (
             <div className="desktop-create-trip-panel">
               <s.Panel menuToggled={menuToggled}>
                 <s.PanelHeader className="hide-mobile">
