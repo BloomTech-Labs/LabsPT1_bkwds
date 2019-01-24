@@ -16,24 +16,11 @@ class CreateTripPanel extends React.Component {
       startDate: null,
       endDate: null,
       focusedInput: null,
-      location: "",
+      query: "",
       searchToggled: false,
       menuToggled: false
     }
     this.inputRef = React.createRef()
-  }
-
-  toggleMenu = () => {
-    this.setState({ menuToggled: !this.state.menuToggled })
-  }
-
-  toggleSearch = () => {
-    this.setState({ searchToggled: !this.state.searchToggled })
-  }
-
-  handleLocation = event => {
-    this.setState({ location: event.target.value })
-    this.searchAutoComplete()
   }
 
   componentDidMount() {
@@ -45,20 +32,33 @@ class CreateTripPanel extends React.Component {
       this.inputRef.current.focus()
   }
 
-  searchAutoComplete = () => {
-    const autoComplete = new window.google.maps.places.Autocomplete(
-      this.inputRef.current
-    )
-    autoComplete.addListener("place_changed", () => {
-      let place = autoComplete.getPlace()
-      if (place.geometry !== undefined) {
-        window.map.panTo({
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
-        })
-      }
-    })
+  toggleMenu = () => {
+    this.setState({ menuToggled: !this.state.menuToggled })
   }
+
+  toggleSearch = () => {
+    this.setState({ searchToggled: !this.state.searchToggled })
+  }
+
+  handleSearch = event => {
+    this.setState({ query: event.target.value })
+    // this.searchAutoComplete()
+  }
+
+  // searchAutoComplete = () => {
+  //   const autoComplete = new window.google.maps.places.Autocomplete(
+  //     this.inputRef.current
+  //   )
+  //   autoComplete.addListener("place_changed", () => {
+  //     let place = autoComplete.getPlace()
+  //     if (place.geometry !== undefined) {
+  //       window.map.panTo({
+  //         lat: place.geometry.location.lat(),
+  //         lng: place.geometry.location.lng()
+  //       })
+  //     }
+  //   })
+  // }
 
   handleTitle = e => {
     e.persist()
@@ -124,13 +124,15 @@ class CreateTripPanel extends React.Component {
                   searchToggled={searchToggled}
                   className="panel-input-wrapper"
                 >
-                  <s.InputLabel className="hide-mobile">Location</s.InputLabel>
+                  <s.InputLabel className="hide-mobile">
+                    {formattedAddress ? formattedAddress : "Location"}
+                  </s.InputLabel>
                   <s.SearchCenterInput
                     ref={this.inputRef}
                     searchToggled={searchToggled}
                     placeholder="Enter Location OR drag map"
-                    value={this.state.location}
-                    onChange={this.handleLocation}
+                    value={this.state.query}
+                    onChange={this.handleSearch}
                   />
                 </s.SearchWrapper>
 

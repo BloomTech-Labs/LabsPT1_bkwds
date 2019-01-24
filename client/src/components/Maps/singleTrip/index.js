@@ -53,57 +53,57 @@ class SingleTripMap extends React.Component {
     return true
   }
 
-  renderMap = (center, waypoints) => {
-    window.map = new window.google.maps.Map(this.mapRef.current, {
-      center: center,
-      zoom: 9,
-      disableDefaultUI: true
-    })
-    if (waypoints && waypoints.length) {
-      this.renderWaypoints(waypoints)
-    }
-  }
-
   // renderMap = (center, waypoints) => {
-  //   let latLngs
   //   window.map = new window.google.maps.Map(this.mapRef.current, {
   //     center: center,
   //     zoom: 9,
   //     disableDefaultUI: true
   //   })
-  //   if (waypoints) latLngs = this.renderWaypoints(waypoints)
-  //   let bounds = new window.google.maps.LatLngBounds()
-  //   latLngs.forEach(latLng => bounds.extend(latLng))
-  //   window.map.fitBounds(bounds)
-  //   window.map.setCenter(bounds.getCenter())
+  //   if (waypoints && waypoints.length) {
+  //     this.renderWaypoints(waypoints)
+  //   }
   // }
+
+  renderMap = (center, waypoints) => {
+    let latLngs
+    window.map = new window.google.maps.Map(this.mapRef.current, {
+      center: center,
+      zoom: 9,
+      disableDefaultUI: true
+    })
+    if (waypoints) latLngs = this.renderWaypoints(waypoints)
+    let bounds = new window.google.maps.LatLngBounds()
+    latLngs.forEach(latLng => bounds.extend(latLng))
+    window.map.fitBounds(bounds)
+    window.map.setCenter(bounds.getCenter())
+  }
 
   // Attach waypoints to map
   renderWaypoints = waypoints => {
-    // let latLngs = []
+    let latLngs = []
 
     waypoints.forEach(waypoint => {
       const center = {
         lat: waypoint.lat,
         lng: waypoint.lon
       }
-      new window.google.maps.Marker({
+      let wp = new window.google.maps.Marker({
         position: center,
         map: window.map,
         title: waypoint.name,
         label: waypoint.order.toString()
-      }).setMap(window.map)
-      // wp.setMap(window.map)
-      // latLngs.push(center)
+      })
+      wp.setMap(window.map)
+      latLngs.push(center)
     })
-    // return latLngs
+    return latLngs
   }
 
   drawPolyline = () => {
     const { waypoints } = this.props.trip
     const path = waypoints.map(w => ({
-      lat: parseFloat(w.lat.$numberDecimal),
-      lng: parseFloat(w.lon.$numberDecimal)
+      lat: w.lat,
+      lng: w.lon
     }))
 
     const polyline = new window.google.maps.Polyline({
