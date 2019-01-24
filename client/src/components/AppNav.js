@@ -49,13 +49,15 @@ class AppNav extends Component {
         <s.NavStyles>
           <div className="appnav-left">
             <HamburgerSpring
-              className="hamburgerIcon"
+              className="hamburger-icon"
               buttonWidth={20}
               barColor={`${theme.primary}`}
               isActive={isSidebarOpen}
               toggleButton={() => toggleSidebar(isSidebarOpen)}
             />
-            <div className="logo">bkwds.</div>
+            <div className="logo">
+              bkwds<span className="logo-flourish">.</span>
+            </div>
           </div>
           <div className="appnav-right">
             <div className="navlinks-wrapper">

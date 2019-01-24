@@ -40,6 +40,7 @@ export const SidebarStyles = styled.div`
       transition: all ease-in-out 0.4s;
       width: 100%;
       text-align: left;
+      display: ${props => (props.isSidebarOpen ? "block" : "none")};
     }
   }
 

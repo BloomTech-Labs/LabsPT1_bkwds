@@ -65,7 +65,7 @@ const menuItems = [
 ]
 
 const Sidebar = ({ location, isSidebarOpen, isSubscribed }) => (
-  <s.SidebarStyles>
+  <s.SidebarStyles isSidebarOpen={isSidebarOpen}>
     <div className={`sidebar-links ${isSidebarOpen ? "open" : ""}`}>
       {menuItems.map(menuItem => {
         if (menuItem.displayName === "Billing" && !isSubscribed) {

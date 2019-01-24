@@ -7,6 +7,7 @@ const offWhite = "#f0f0f0"
 const ghostWhite = "#f5f5fa" // light light blue
 const lightGray = "#bababa"
 const midGray = "#646565"
+const darkGray = "#333333"
 const offBlack = "#222222"
 const black = "rgb(32, 34, 51)"
 
@@ -16,7 +17,7 @@ const primaryHover = "#f9873b"
 const primaryLight = "#facbb1"
 const primaryDark = "#e4580d"
 const secondary = midGray
-const secondaryDark = offBlack
+const secondaryDark = darkGray
 const tertiary = "rgba(0, 90, 132, 1)"
 const tertiaryHover = "rgba(0, 90, 132, 0.8)"
 const tertiaryLight = "#899ac6"
@@ -74,8 +75,8 @@ export const theme = {
   offWhite,
   ghostWhite,
   lightGray,
-  // lighterGray,
   midGray,
+  darkGray,
   offBlack,
   black,
 
