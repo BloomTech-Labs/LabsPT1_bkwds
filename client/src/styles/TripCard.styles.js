@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { media } from "./theme/mixins"
 
 export const TripCardStyles = styled.div`
   display: flex;
@@ -15,29 +16,44 @@ export const TripCardStyles = styled.div`
   }
 
   .container {
-    overflow: auto;
     display: flex;
-    justify-content: row;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    align-items: start;
-    margin: 0 auto;
+    max-width: 100%;
     height: 100%;
+
+    @media (max-width: 40.25em) {
+      justify-content: center;
+    }
   }
 
   .card {
     display: flex;
     justify-content: flex-start;
-    margin-top: 5%;
-    margin-right: 2.5%;
-    margin-left: 2.5%;
-    padding-bottom: 1%;
-    border: none !important;
-    overflow: hidden;
+    align-self: center;
     border-radius: 0.25rem;
+    height: 400px;
+    width: 380px;
+    max-height: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0.0625rem 0px,
+      rgba(0, 0, 5, 0.1) 0px 0.0625rem 0.125rem,
+      rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem;
+
+    @media (max-width: 55.875em) {
+      height: 300px;
+      width: 280px;
+    }
   }
 
   .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem,
+      rgba(0, 0, 0, 0.1) 0px 0.3125rem 0.3125rem,
+      rgba(0, 0, 0, 0.05) 0px 0.125rem 0.3125rem;
+    transform: translate3d(0px, -0.1875rem, 0px);
     img {
       transform: scale(1.05, 1.05);
       transition: all 1s ease;
@@ -60,8 +76,11 @@ export const TripCardStyles = styled.div`
     width: 100%;
     justify-content: center;
     align-items: center;
-    position: relative;
     overflow: hidden;
+
+    ${media.tablet`
+      width: 100%;
+    `}
 
     img {
       transition: all 1.86s ease;
