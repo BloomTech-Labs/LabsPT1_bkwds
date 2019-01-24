@@ -176,7 +176,7 @@ export const PanelHeader = styled.h2`
 `
 
 export const DateLabel = styled.label`
-  margin: 0.5rem auto 0rem auto;
+  margin: 0.25rem 1.25rem;
   color: #808080;
 
   ${media.tablet`
