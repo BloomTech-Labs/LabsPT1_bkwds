@@ -64,7 +64,7 @@ export const SidebarStyles = styled.div`
       button {
         height: 54px;
         a {
-          font-size: 1.5rem;
+          font-size: 1.35rem;
         }
       }
     }
