@@ -31,7 +31,7 @@ export const theme = {
   boxShadow: "0 2px 16px 1px rgba(0, 0, 0, 0.15)",
 
   // * Default Dimensions ----------------------
-  sidebarWidth: 265,
+  sidebarWidth: 215,
   navHeight: "3.125rem",
 
   // * Buttons ---------------------------------

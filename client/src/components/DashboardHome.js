@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import moment from "moment"
+import styled from "styled-components"
 
 import * as s from "../styles/Dashboard.styles"
 import Modal from "./Modals/Modal"
@@ -11,6 +12,18 @@ import { UserPropTypes } from "./propTypes"
 import { openModal, closeModal } from "../redux/actions/modal"
 import { updateUserWithMsg } from "../redux/actions/settings"
 
+export const CloseModalIcon = styled.button`
+  position: absolute;
+  right: 4rem;
+  border: 0;
+  cursor: pointer;
+  color: rgba(128, 128, 128, 0.5);
+  padding: 0;
+  font-size: 2rem;
+  padding: 0 !important;
+  font-weight: 300;
+`
+
 class DashboardHome extends Component {
   constructor(props) {
     super(props)
@@ -18,6 +31,7 @@ class DashboardHome extends Component {
       formattedAddress: null,
       displayName: "",
       location: null,
+      firstTimeLogin: false,
       query: ""
     }
     this.inputRef = React.createRef()
@@ -25,15 +39,16 @@ class DashboardHome extends Component {
 
   componentDidMount() {
     const { user } = this.props
-    if ((user && user.loginCount === 0) || !user.formattedAddress) {
-      this.setState({ displayName: user.displayName || "" })
+
+    if (!user.formattedAddress) {
       this.props.openModal()
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.user.formattedAddress && !prevProps.user.formattedAddress) {
-      this.props.closeModal()
+    if (user && user.loginCount === 0) {
+      this.setState({
+        firstTimeLogin: true,
+        displayName: user.displayName || ""
+      })
     }
   }
 
@@ -78,7 +93,13 @@ class DashboardHome extends Component {
                 <Modal isOpen={modalIsOpen}>
                   {() => (
                     <div className="onboarding-flow">
+                      <CloseModalIcon onClick={this.props.closeModal}>
+                        x
+                      </CloseModalIcon>
                       <div className="flow-header">
+                        {this.state.firstTimeLogin && (
+                          <p>Welcome, first timer!</p>
+                        )}
                         <h4>Create your profile</h4>
                         <div>
                           This will give you a place to store trips and plan new
