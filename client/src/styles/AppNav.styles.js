@@ -14,30 +14,54 @@ export const NavStyles = styled.div`
   width: 100%;
   ${boxShadowMixin};
 
-  padding-left: 0.5rem;
+  /* padding-left: 0.5rem; */
   padding-right: 1.25rem;
   ${media.phone`padding-right: 0;`}
 
   .appnav-left {
-    display: flex
+    display: flex;
+    align-items: center;
+    height: 50px;
   }
 
-  .logo {
-    color: ${props => props.theme.primary};
-    font-weight: 700;
+  .logo a, .logo-flourish {
     font-size: 1.75rem;
+    font-weight: 700;
     letter-spacing: -0.0275rem;
+  }
+
+  .logo-flourish {
+    color: ${props => props.theme.primary};
+    will-change: color;
+    -webkit-transition: color 0.15s ease;
+    transition: color 0.15s ease;
+  }
+
+  .logo a {
+    color: ${props => props.theme.darkGray};
+    will-change: color;
+    -webkit-transition: color 0.15s ease;
+    transition: color 0.15s ease;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-left: 10px;
+    &:hover {
+      color: ${props => props.theme.black};
+      .logo-flourish {
+        color: ${props => props.theme.linkColorHover};
+      }
+    }
   }
+
   .hamburger-icon-wrapper {
     display: flex;
   }
   .hamburger-icon {
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 100%;
     display: flex;
-    margin-right: 20px;
   }
 
   ul {
@@ -69,7 +93,7 @@ export const NavStyles = styled.div`
     cursor: pointer;
     border: none;
     &:hover {
-      text-decoration: underline;
+      text-decoration: none;
     }
     padding-top: 0;
     padding-bottom: 0;

@@ -60,9 +60,7 @@ const AccountType = ({
     }
   }
   const upgradeButton = (
-    <Button color="orange" onClick={() => history.push("/app/upgrade")}>
-      Upgrade
-    </Button>
+    <Button onClick={() => history.push("/app/upgrade")}>Upgrade</Button>
   )
   const unsubscribeButton = <Button onClick={handleCancel}>Unsubscribe</Button>
 

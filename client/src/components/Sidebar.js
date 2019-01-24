@@ -5,16 +5,26 @@ import { Link, withRouter } from "react-router-dom"
 import PropTypes from "prop-types"
 
 import { Button } from "../styles/theme/styledComponents"
+import { toggleSidebar } from "../redux/actions/navigation"
 import * as s from "../styles/Sidebar.styles"
 
-const SidebarLink = ({ icon, displayName, pathname, to }) => (
-  <Button className={pathname === to ? "btn-inverted" : ""}>
+// TODO: add window.innerWidth to state?
+let SidebarLink = ({ icon, displayName, pathname, to, toggleSidebar }) => (
+  <Button
+    onClick={window.innerWidth < 769 ? toggleSidebar : () => null}
+    className={pathname === to ? "btn-inverted" : "btn-secondary"}
+  >
     <Link to={to}>
       <i className={`fa ${icon}`} />
     </Link>
     <Link to={to}>{displayName}</Link>
   </Button>
 )
+
+SidebarLink = connect(
+  null,
+  { toggleSidebar }
+)(SidebarLink)
 
 const menuItems = [
   {
@@ -65,7 +75,7 @@ const menuItems = [
 ]
 
 const Sidebar = ({ location, isSidebarOpen, isSubscribed }) => (
-  <s.SidebarStyles>
+  <s.SidebarStyles isSidebarOpen={isSidebarOpen}>
     <div className={`sidebar-links ${isSidebarOpen ? "open" : ""}`}>
       {menuItems.map(menuItem => {
         if (menuItem.displayName === "Billing" && !isSubscribed) {
@@ -106,13 +116,16 @@ SidebarLink.propTypes = {
   displayName: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
   icon: PropTypes.string,
-  to: PropTypes.string.isRequired
+  to: PropTypes.string.isRequired,
+  toggleSidebar: PropTypes.func
 }
+
+const mapStateToProps = state => ({
+  isSidebarOpen: state.navigation.isSidebarOpen,
+  isSubscribed: state.auth.user.subscribed
+})
 
 export default compose(
   withRouter,
-  connect(({ auth, navigation: { isSidebarOpen } }) => ({
-    isSidebarOpen,
-    isSubscribed: auth.user.subscribed
-  }))
+  connect(mapStateToProps)
 )(Sidebar)

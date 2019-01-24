@@ -1,25 +1,30 @@
 // * Root Colors ----------------------
 const themeColor = localStorage.getItem("themeColor")
 const transparent = "rgba(0, 0, 0, 0)"
+
 const white = "#fff"
-const offWhite = "#f5f5f5" // royal blue
-const ghostWhite = "#ebf5fb" // light light blue
-const lighterGray = "#f6f6f6"
-// const lightGray = "#505050"
-const lightGray = "#d1d5da"
-const midGray = "#525252" // body text
-const offBlack = "rgb(62, 62, 62)"
+const offWhite = "#f0f0f0"
+const ghostWhite = "#f5f5fa" // light light blue
+const lightGray = "#bababa"
+const midGray = "#646565"
+const darkGray = "#333333"
+const offBlack = "#222222"
 const black = "rgb(32, 34, 51)"
 
-// const primaryLight = "#526699"
-const primary = themeColor || "#1e306e"
-const primaryLight = "#a5cde9"
-const primaryDark = "#0e153f"
-// const primaryDark = "#05267c"
-const secondary = "#f66"
-const secondaryDark = "#ea554b"
-const tertiary = "#45569e"
+const primary = themeColor || "rgba(244, 105, 4, 1)"
+// const primaryHover = "rgba(244, 105, 4, 0.8)"
+const primaryHover = "#f9873b"
+const primaryLight = "#facbb1"
+const primaryDark = "#e4580d"
+const secondary = midGray
+const secondaryDark = darkGray
+const tertiary = "rgba(0, 90, 132, 1)"
+const tertiaryHover = "rgba(0, 90, 132, 0.8)"
 const tertiaryLight = "#899ac6"
+
+const linkColor = primaryDark
+const linkColorHover = "#526699"
+// const linkColorHover = "#1e306e"
 
 export const theme = {
   // * Misc. -----------------------------------
@@ -54,19 +59,25 @@ export const theme = {
   // * Color Theme Variables -------------------
   // Primary Styles
   primary,
+  primaryHover,
   secondary,
   tertiary,
+  tertiaryHover,
   primaryDark,
   secondaryDark,
   tertiaryLight,
   primaryLight,
+
+  linkColor,
+  linkColorHover,
+
   transparent,
   white,
   offWhite,
   ghostWhite,
   lightGray,
-  lighterGray,
   midGray,
+  darkGray,
   offBlack,
   black,
 

@@ -1,7 +1,6 @@
 import mongoose from "mongoose"
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
-const Decimal128 = Schema.Types.Decimal128
 
 export const schema = {
   tripId: {
@@ -18,11 +17,11 @@ export const schema = {
     required: [true, "Name for waypoint required."]
   },
   lat: {
-    type: Decimal128,
+    type: Number,
     require: [true]
   },
   lon: {
-    type: Decimal128,
+    type: Number,
     require: [true]
   },
   start: {

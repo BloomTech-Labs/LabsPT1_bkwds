@@ -89,7 +89,7 @@ export const logout = () => dispatch => {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
-  dispatch(push("/"))
+  dispatch(push("/login"))
 }
 
 export const addTokenToState = () => dispatch => {

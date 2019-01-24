@@ -1,9 +1,21 @@
 import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import styled from "styled-components"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
+import { media } from "../../../styles/theme/mixins"
+
+const SingleTripMapStyles = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin-left: -50px;
+  ${media.tablet`
+    margin-left: 0;
+  `}
+`
 
 const dashSymbol = {
   path: "M 0,-1 0,1",
@@ -16,6 +28,11 @@ class SingleTripMap extends React.Component {
     getSingleTrip: () => {},
     trip: getDefaultTripProps(),
     tripId: ""
+  }
+
+  constructor(props) {
+    super(props)
+    this.mapRef = React.createRef()
   }
 
   componentDidMount() {
@@ -36,43 +53,57 @@ class SingleTripMap extends React.Component {
     return true
   }
 
-  //Attaches Map to div
-  // TODO? Store users last zoom level for UX improvment - otherwise default to 9
+  // renderMap = (center, waypoints) => {
+  //   window.map = new window.google.maps.Map(this.mapRef.current, {
+  //     center: center,
+  //     zoom: 9,
+  //     disableDefaultUI: true
+  //   })
+  //   if (waypoints && waypoints.length) {
+  //     this.renderWaypoints(waypoints)
+  //   }
+  // }
+
   renderMap = (center, waypoints) => {
-    window.map = new window.google.maps.Map(
-      document.getElementById("Tripmap"),
-      {
-        center: center,
-        zoom: 9,
-        disableDefaultUI: true
-      }
-    )
-    if (waypoints) {
-      this.renderWaypoints(waypoints)
-    }
+    let latLngs
+    window.map = new window.google.maps.Map(this.mapRef.current, {
+      center: center,
+      zoom: 9,
+      disableDefaultUI: true
+    })
+    if (waypoints) latLngs = this.renderWaypoints(waypoints)
+    let bounds = new window.google.maps.LatLngBounds()
+    latLngs.forEach(latLng => bounds.extend(latLng))
+    window.map.fitBounds(bounds)
+    window.map.setCenter(bounds.getCenter())
   }
 
   // Attach waypoints to map
   renderWaypoints = waypoints => {
+    let latLngs = []
+
     waypoints.forEach(waypoint => {
       const center = {
-        lat: parseFloat(waypoint.lat.$numberDecimal),
-        lng: parseFloat(waypoint.lon.$numberDecimal)
+        lat: waypoint.lat,
+        lng: waypoint.lon
       }
-      new window.google.maps.Marker({
+      let wp = new window.google.maps.Marker({
         position: center,
         map: window.map,
         title: waypoint.name,
         label: waypoint.order.toString()
-      }).setMap(window.map)
+      })
+      wp.setMap(window.map)
+      latLngs.push(center)
     })
+    return latLngs
   }
 
   drawPolyline = () => {
     const { waypoints } = this.props.trip
     const path = waypoints.map(w => ({
-      lat: parseFloat(w.lat.$numberDecimal),
-      lng: parseFloat(w.lon.$numberDecimal)
+      lat: w.lat,
+      lng: w.lon
     }))
 
     const polyline = new window.google.maps.Polyline({
@@ -95,12 +126,7 @@ class SingleTripMap extends React.Component {
   }
 
   render() {
-    return (
-      <div
-        style={{ width: "100%", height: "100%", position: "absolute" }}
-        id="Tripmap"
-      />
-    )
+    return <SingleTripMapStyles ref={this.mapRef} />
   }
 }
 
