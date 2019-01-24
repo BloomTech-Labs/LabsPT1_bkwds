@@ -49,7 +49,10 @@ const TripCard = ({
                 {archived ? "Unarchive" : "Archive"}
               </Button>
               {isArchivedTripRoute && (
-                <Button className="btn" onClick={() => repeatTrip(trip)}>
+                <Button
+                  className="btn-primary"
+                  onClick={() => repeatTrip(trip)}
+                >
                   Repeat
                 </Button>
               )}

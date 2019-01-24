@@ -176,7 +176,7 @@ export const CardButton = styled.button`
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
   text-align: center;
   text-decoration: bold;
-  color: #1abc9c;
+  color: ${props => props.theme.tertiary};
   transition: all 0.3s ease;
   /* &::after {
     margin-left: 2%;
@@ -187,9 +187,9 @@ export const CardButton = styled.button`
 
   &:hover,
   &:focus {
-    background: #1abc9c;
+    background: ${props => props.theme.tertiary};
     color: #fff;
-    box-shadow: 0 2px 8px 0 rgba(#1abc9c, 0.4);
+    box-shadow: 0 2px 8px 0 rgba(${props => props.theme.tertiary}, 0.4);
     &::after {
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }

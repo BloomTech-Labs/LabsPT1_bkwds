@@ -13,6 +13,7 @@ export const TripCardStyles = styled.div`
 
   button {
     margin-top: 1.25rem;
+    cursor: pointer;
   }
 
   .container {
@@ -94,9 +95,12 @@ export const TripCardStyles = styled.div`
     .text-overlay {
       position: absolute;
       color: rgba(30, 33, 37, 0.25);
-      font-size: 5rem;
+      font-size: 3.75rem;
       font-weight: 600;
       transform: rotate(45deg);
+      @media all and (max-width: 894px) {
+        font-size: 2.125rem;
+      }
     }
   }
 `
