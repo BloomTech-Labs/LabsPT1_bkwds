@@ -281,7 +281,7 @@ const mapStateToProps = state => {
   return { trip: state.trips.activeTrip }
 }
 
-TripPanel.PropTypes = {
+TripPanel.propTypes = {
   trip: TripPropTypes
 }
 
