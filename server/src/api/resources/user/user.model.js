@@ -123,7 +123,8 @@ userSchema.set("toJSON", {
       token: ret.token,
       trips: ret.trips,
       type: ret.type,
-      updatedAt: ret.updatedAt
+      updatedAt: ret.updatedAt,
+      contact: ret.contact
     }
     return retJson
   }
