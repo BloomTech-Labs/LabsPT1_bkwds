@@ -56,15 +56,11 @@ class SingleTripMap extends React.Component {
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = (center, waypoints) => {
-    window.map = new window.google.maps.Map(
-      // document.getElementById("Tripmap"),
-      this.mapRef.current,
-      {
-        center: center,
-        zoom: 9,
-        disableDefaultUI: true
-      }
-    )
+    window.map = new window.google.maps.Map(this.mapRef.current, {
+      center: center,
+      zoom: 9,
+      disableDefaultUI: true
+    })
     if (waypoints) {
       this.renderWaypoints(waypoints)
     }
