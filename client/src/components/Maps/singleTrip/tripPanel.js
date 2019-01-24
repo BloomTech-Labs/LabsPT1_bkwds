@@ -9,7 +9,6 @@ import AddIcon from "../../icons/AddSvg"
 import { connect } from "react-redux"
 import * as util from "./mapUtil"
 import * as s from "./components"
-import { UPDATE_SETTINGS_FAILURE } from "../../../redux/actions/types"
 
 class TripPanel extends React.Component {
   constructor(props) {
@@ -24,7 +23,6 @@ class TripPanel extends React.Component {
     }
   }
 
-  // Refactor to use redux active trip: props to SetState not recommended
   componentDidMount() {
     this.setState({ trip: this.props.trip }, () => {
       this.renderWaypoints()
@@ -35,6 +33,41 @@ class TripPanel extends React.Component {
       this.getPathElevation()
       this.getPathDistance()
     }
+  }
+
+  //TODO - fix map updates with added waypoint movements
+  addWaypoint = () => {
+    const index = this.state.markers.length
+    let marker = new window.google.maps.Marker({
+      position: window.map.getCenter(),
+      map: window.map,
+      draggable: true,
+      title: (index + 1).toString(),
+      label: (index + 1).toString(),
+      index: index
+    })
+    let markers = this.state.markers
+    marker.addListener("dragend", ev => {
+      let waypoints = this.state.trip.waypoints.map((item, i) => {
+        if (index === i)
+          return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+        else return item
+      })
+      this.setState({ trip: { ...this.state.trip, waypoints } })
+    })
+    let waypoint = {
+      name: `Checkpoint ${index}`,
+      tripId: this.props.tridId,
+      order: index + 1,
+      lat: marker.getPosition().lat(),
+      lon: marker.getPosition().lng(),
+      start: new Date(),
+      end: new Date()
+    }
+    let waypoints = this.state.trip.waypoints
+    waypoints.push(waypoint)
+    markers.push(marker)
+    this.setState({ markers, trip: { ...this.state.trip, waypoints } })
   }
 
   renderWaypoints = () => {
@@ -224,6 +257,9 @@ class TripPanel extends React.Component {
           <s.AddButton
             disabled={this.state.isEditing === false}
             edit={this.state.isEditing}
+            onClick={() => {
+              this.addWaypoint()
+            }}
           >
             <AddIcon height="18px" width="18px" />
           </s.AddButton>
@@ -238,6 +274,6 @@ class TripPanel extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { trip: state.trips.activeTrip }
+  return { trip: state.trips.activeTrip, userId: state.auth.user.id }
 }
 export default connect(mapStateToProps)(TripPanel)
