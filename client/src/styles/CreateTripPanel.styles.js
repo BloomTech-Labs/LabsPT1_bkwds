@@ -2,9 +2,6 @@ import styled from "styled-components"
 import { media } from "./theme/mixins"
 
 export const CreateTripPanelStyles = styled.div`
-  /* height: ${props =>
-    props.menuToggled || props.searchToggled ? "100vh" : "unset"}; */
-
   .mobile-create-trip-panel {
     display: none;
   }
@@ -76,6 +73,8 @@ export const CreateTripPanelStyles = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        border-radius: 0;
+        margin: 0;
       }
       i {
         font-size: 1.5rem;
@@ -90,6 +89,22 @@ export const CreateTripPanelStyles = styled.div`
       display: none;
     }
   `}
+
+  .active-button {
+    background-color: ${props => props.theme.primary};
+    border-color: ${props => props.theme.primary};
+    color: white;
+    i {
+      font-size: 1.5rem;
+      color: white;
+    }
+    &:hover,
+    &:focus {
+      background-color: ${props => props.theme.primary};
+      border-color: ${props => props.theme.primary};
+      color: white;
+    }
+  }
 `
 
 export const Panel = styled.div`

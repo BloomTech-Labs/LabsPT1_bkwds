@@ -116,6 +116,19 @@ export const Button = styled.button`
     border-color: ${props => props.theme.lightGray};
   }
 
+  &.btn-neutral {
+    background-color: ${props => props.theme.offWhite};
+    border-color: ${props => props.theme.offWhite};
+    color: ${props => props.theme.midGray};
+
+    &:hover,
+    &:focus {
+      background-color: ${props => props.theme.lightGray};
+      border-color: ${props => props.theme.lightGray};
+      color: ${props => props.theme.darkGray};
+    }
+  }
+
   &.btn-inverted {
     color: ${props => props.theme.white};
     /* target anchors for when we nest Links inside buttons */

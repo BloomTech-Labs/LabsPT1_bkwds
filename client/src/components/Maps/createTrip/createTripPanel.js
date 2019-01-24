@@ -65,24 +65,38 @@ class CreateTripPanel extends React.Component {
   }
 
   render() {
+    const {
+      menuToggled,
+      searchToggled,
+      title,
+      startDate,
+      endDate,
+      focusedInput
+    } = this.state
     return (
       <s.CreateTripPanelStyles
-        menuToggled={this.state.menuToggled}
-        searchToggled={this.state.searchToggled}
+        menuToggled={menuToggled}
+        searchToggled={searchToggled}
         className="CreateTripPanelStyles"
       >
         <div className="mobile-create-trip-panel">
-          <button onClick={this.toggleSearch}>
-            <i id="down-angle" className="fas fa-search fa-2x" />
-          </button>
+          <Button
+            onClick={this.toggleSearch}
+            className={`btn-neutral ${searchToggled ? "active-button" : ""}`}
+          >
+            <i id="down-angle" className="fas fa-search" />
+          </Button>
 
-          <button onClick={this.toggleMenu}>
-            <i id="" className="fas fa-cog fa-2x" />
-          </button>
+          <Button
+            onClick={this.toggleMenu}
+            className={`btn-neutral ${menuToggled ? "active-button" : ""}`}
+          >
+            <i id="" className="fas fa-cog" />
+          </Button>
 
-          <button onClick={this.props.saveTrip}>
-            <i id="" className="fas fa-floppy-o fa-2x" />
-          </button>
+          <Button onClick={this.props.saveTrip} className={"btn-neutral"}>
+            <i id="" className="fas fa-floppy-o" />
+          </Button>
         </div>
 
         <Autocomplete
@@ -92,19 +106,19 @@ class CreateTripPanel extends React.Component {
         >
           {({ location, viewport, formattedAddress }) => (
             <div className="desktop-create-trip-panel">
-              <s.Panel menuToggled={this.state.menuToggled}>
+              <s.Panel menuToggled={menuToggled}>
                 <s.PanelHeader className="hide-mobile">
                   Create Your Trip
                 </s.PanelHeader>
 
                 <s.SearchWrapper
-                  searchToggled={this.state.searchToggled}
+                  searchToggled={searchToggled}
                   className="panel-input-wrapper"
                 >
                   <s.InputLabel className="hide-mobile">Location</s.InputLabel>
                   <s.SearchCenterInput
                     ref={this.inputRef}
-                    searchToggled={this.state.searchToggled}
+                    searchToggled={searchToggled}
                     placeholder="Enter Location OR drag map"
                     value={this.state.location}
                     onChange={this.handleLocation}
@@ -113,33 +127,33 @@ class CreateTripPanel extends React.Component {
 
                 <div className="trip-title-wrapper panel-input-wrapper">
                   <s.TripTitleInput
-                    menuToggled={this.state.menuToggled}
+                    menuToggled={menuToggled}
                     placeholder="Trip Name"
                     onChange={this.handleTitle}
-                    value={this.state.title}
+                    value={title}
                   />
                 </div>
 
                 <s.DateLabel className="hide-mobile">Trip Date</s.DateLabel>
-                <s.DateRangeStyle menuToggled={this.state.menuToggled}>
+                <s.DateRangeStyle menuToggled={menuToggled}>
                   <DateRangePicker
                     numberOfMonths={1}
                     startDateId="startDate"
                     endDateId="endDate"
-                    startDate={this.state.startDate}
+                    startDate={startDate}
                     horizontalMargin={5}
-                    endDate={this.state.endDate}
+                    endDate={endDate}
                     onDatesChange={({ startDate, endDate }) => {
                       this.handleDate({ startDate, endDate })
                     }}
-                    focusedInput={this.state.focusedInput}
+                    focusedInput={focusedInput}
                     onFocusChange={focusedInput => {
                       this.setState({ focusedInput })
                     }}
                   />
                 </s.DateRangeStyle>
 
-                <s.ButtonGroup menuToggled={this.state.menuToggled}>
+                <s.ButtonGroup menuToggled={menuToggled}>
                   <s.WaypointButton
                     className="hide-mobile"
                     onClick={this.props.addWaypoint}
@@ -148,12 +162,12 @@ class CreateTripPanel extends React.Component {
                   </s.WaypointButton>
                   <Button
                     onClick={this.toggleMenu}
-                    className="close-trip-settings btn-primary"
+                    className="close-trip-settings btn-neutral"
                   >
                     Close Trip Settings
                   </Button>
                   <s.SaveButton
-                    menuToggled={this.state.menuToggled}
+                    menuToggled={menuToggled}
                     onClick={() => this.props.saveTrip()}
                   >
                     Create Trip
