@@ -30,14 +30,23 @@ export const getDefaultTripProps = overrides => {
 }
 
 export const UserPropTypes = PropTypes.shape({
+  coordinates: PropTypes.arrayOf(PropTypes.number),
   createdAt: PropTypes.string.isRequired,
   customerId: PropTypes.string,
+  displayName: PropTypes.string,
   email: PropTypes.string.isRequired,
+  formattedAddress: PropTypes.string,
   id: PropTypes.string.isRequired,
+  lastLogin: PropTypes.string.isRequired,
+  loginCount: PropTypes.number.isRequired,
+  picture: PropTypes.string,
   subDate: PropTypes.string,
-  subscribeId: PropTypes.string,
   subscribed: PropTypes.bool.isRequired,
-  trips: PropTypes.arrayOf(PropTypes.any)
+  subscribeId: PropTypes.string,
+  token: PropTypes.string,
+  trips: PropTypes.arrayOf(PropTypes.any),
+  type: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired
 })
 
 export const MatchPropTypes = PropTypes.shape({
