@@ -1,8 +1,12 @@
 import styled from "styled-components"
 import { media } from "../styles/theme/mixins"
 
-export const SidebarStyles = styled.div`
+export const SidebarStyles = styled.div`gitk
+
   /* width: ${props => `${props.theme.sidebarWidth}px`}; */
+  z-index: 1;
+  position: absolute;
+
   ${media.tablet`
     display: none;
   `}
