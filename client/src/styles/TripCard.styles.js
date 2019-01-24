@@ -1,6 +1,11 @@
 import styled from "styled-components"
 
 export const TripCardStyles = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
   a {
     text-decoration: underline;
   }
@@ -15,7 +20,6 @@ export const TripCardStyles = styled.div`
     justify-content: row;
     flex-wrap: wrap;
     align-items: start;
-    max-width: 100%;
     margin: 0 auto;
     height: 100%;
   }
