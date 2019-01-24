@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import Puff from "../icons/Puff"
+import PuffIcon from "../icons/Puff"
 
 const Dimmer = styled.div`
   background: rgba(0, 0, 0, 0.25);
@@ -37,7 +37,7 @@ const Pending = () => (
   <>
     <Spinner>
       <span>Please wait...</span>
-      <Puff />
+      <PuffIcon />
     </Spinner>
     <Dimmer />
   </>

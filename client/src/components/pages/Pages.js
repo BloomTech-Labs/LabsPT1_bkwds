@@ -9,6 +9,8 @@ import CustomRoute from "../../utils/CustomRoute"
 import RecoverPassword from "../forms/RecoverPassword"
 import UpdatePassword from "../forms/UpdatePassword"
 
+import { MatchPropTypes } from "../propTypes"
+
 const UpdatePasswordForm = ({ match }) => (
   <UpdatePassword userId={match.params.userId} token={match.params.token} />
 )
@@ -48,6 +50,14 @@ const Pages = ({ match }) => {
       </Switch>
     </AppContainer>
   )
+}
+
+Pages.propTypes = {
+  match: MatchPropTypes
+}
+
+UpdatePasswordForm.propTypes = {
+  match: MatchPropTypes
 }
 
 export default Pages

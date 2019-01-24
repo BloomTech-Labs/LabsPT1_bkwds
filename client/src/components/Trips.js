@@ -20,15 +20,15 @@ class Trips extends Component {
       <div>
         <s.TripCardStyles>
           <div className="container">
-            {trips.map(trip => {
-              if (!trip.isArchived) {
-                return <TripCard key={trip.id} trip={trip} archived={false} />
-              }
-            })}
             <AddTripButton
               className="AddTripButton"
               text={trips.length ? "Add New Trip" : "Add Your First Trip"}
             />
+            {trips.map(trip => {
+              if (!trip.isArchived) {
+                return <TripCard key={trip.id} trip={trip} archived={false} />
+              } else return null
+            })}
           </div>
         </s.TripCardStyles>
       </div>
@@ -38,7 +38,8 @@ class Trips extends Component {
 
 Trips.propTypes = {
   getTrips: PropTypes.func.isRequired,
-  trips: PropTypes.arrayOf(TripPropTypes)
+  trips: PropTypes.arrayOf(TripPropTypes),
+  userId: PropTypes.string
 }
 
 const mapStateToProps = state => ({

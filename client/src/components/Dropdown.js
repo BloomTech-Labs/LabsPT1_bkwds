@@ -7,10 +7,10 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap"
-import PropTypes from "prop-types"
 
 import * as s from "../styles/Dropdown.styles"
 import ChevronSvg from "./icons/ChevronSvg"
+import { UserPropTypes } from "./propTypes"
 
 class NavDropdown extends Component {
   state = {
@@ -42,7 +42,8 @@ class NavDropdown extends Component {
           toggle={this.toggle}
         >
           <DropdownToggle className="navbar-toggle">
-            Hi, {user.username ? user.username + "!" : "Account"}{" "}
+            {!user.displayName && user.email}
+            {user.displayName && "Hi, " + user.displayName + "!"}
             <ChevronSvg fill="#a3a3a3" />
           </DropdownToggle>
           <DropdownMenu>
@@ -76,21 +77,8 @@ class NavDropdown extends Component {
   }
 }
 
-Dropdown.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
-  onMouseOver: PropTypes.func.isRequired,
-  setActiveFromChild: PropTypes.bool,
-  toggle: PropTypes.func.isRequired
-}
-
-Dropdown.defaultProps = {
-  active: false,
-  direction: "down",
-  inNavbar: true,
-  onMouseLeave: () => {},
-  onMouseOver: () => {}
+NavDropdown.propTypes = {
+  user: UserPropTypes.isRequired
 }
 
 const mapStateToProps = state => ({ user: state.auth.user })

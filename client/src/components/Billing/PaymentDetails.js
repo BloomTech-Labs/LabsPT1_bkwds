@@ -3,6 +3,7 @@ import { Elements } from "react-stripe-elements"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import moment from "moment"
+import PropTypes from "prop-types"
 
 import {
   closeCheckoutForm,
@@ -105,6 +106,15 @@ class PaymentDetails extends Component {
       </PaymentContainer>
     )
   }
+}
+
+PaymentDetails.propTypes = {
+  pending: PropTypes.bool.isRequired,
+  closeCheckoutForm: PropTypes.func.isRequired,
+  openCheckoutForm: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 }
 
 const mapStateToProps = state => ({

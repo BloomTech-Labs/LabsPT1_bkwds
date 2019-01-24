@@ -16,7 +16,7 @@ export const resetPasswordTemplate = (user, url) => {
   const to = user.email
   const subject = "🌻 Backwoods Password Reset 🌻"
   const html = `
-  <p>Hey ${user.username},</p>
+  <p>Hey ${user.displayName || user.email},</p>
   <p>We heard that you lost your Backwoods password. Sorry about that!</p>
   <p>But don’t worry! You can use the following link to reset your password:</p>
   <a href=${url}>${url}</a>

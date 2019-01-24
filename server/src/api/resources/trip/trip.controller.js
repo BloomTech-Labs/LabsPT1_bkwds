@@ -20,31 +20,25 @@ export const createTrip = (req, res) => {
     start: req.body.start,
     end: req.body.end,
     lat: req.body.lat,
-    lon: req.body.lon
+    lon: req.body.lon,
+    image: req.body.image
   })
-  Trip.findOne({ name: req.body.name })
+  newTrip
+    .save()
     .then(trip => {
-      if (trip) return res.status(400).send("trip already exists")
-      newTrip
-        .save()
-        .then(trip => {
-          User.findOneAndUpdate(
-            { _id: req.body.userId },
-            { $addToSet: { trips: trip.id } }
-          )
-            .then(() => {
-              res.status(201).json(trip)
-            })
-            .catch(() => {
-              res.status(500).json("Error linking trip to User")
-            })
+      User.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $addToSet: { trips: trip.id } }
+      )
+        .then(() => {
+          res.status(201).json(trip)
         })
-        .catch(err => {
-          res.status(500).send(err.message)
+        .catch(() => {
+          res.status(500).json("Error linking trip to User")
         })
     })
     .catch(err => {
-      res.status(500).send(err)
+      res.status(500).send(err.message)
     })
 }
 
@@ -59,13 +53,6 @@ export const getOneTrip = (req, res) => {
       return res.status(500).send(err)
     })
 }
-
-// export const getOneTrip = (req, res) => {
-//   Trip.findOne(req.params('id')).populateAll().exec(function(err, trip) {
-//       if (err) res.status(500).send(err)
-//       res.status(200).json(trip)
-//     })
-// }
 
 export const updateTrip = (req, res) => {
   const id = req.params.id
@@ -99,7 +86,10 @@ export const deleteTrip = (req, res) => {
       if (!trip) return res.status(404).send("trip not found")
       Waypoint.deleteMany({ tripId: trip.id })
         .then(() => {
-          User.findByIdAndUpdate({ _id: trip.userId }, { trips: [] })
+          User.findByIdAndUpdate(
+            { _id: trip.userId },
+            { $pull: { trips: trip.id } }
+          )
             .then(() => {
               const payload = {
                 trip,
@@ -127,4 +117,22 @@ export const populateWaypoints = (req, res) => {
       if (err) res.status(500).send(err)
       res.status(200).json(trip.waypoints)
     })
+}
+
+export const repeatTrip = (req, res) => {
+  const tripLength = Date.parse(req.body.end) - Date.parse(req.body.start)
+  const currentTime = Date.now()
+
+  const updatedRequest = {
+    ...req,
+    body: {
+      ...req.body,
+      isArchived: false,
+      start: currentTime,
+      end: currentTime + tripLength,
+      waypoints: []
+    }
+  }
+  delete updatedRequest.body.id
+  createTrip(updatedRequest, res)
 }

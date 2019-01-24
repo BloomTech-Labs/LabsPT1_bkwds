@@ -12,7 +12,7 @@ describe("Test Subscribe and Cancel route", () => {
   beforeAll(async () => {
     const response = await request(app)
       .post("/api/login")
-      .send({ username: mock.userOne.username, password: "testpass" })
+      .send({ email: mock.userOne.email, password: "testpass" })
 
     userId = response.body.user.id
     token = response.body.token

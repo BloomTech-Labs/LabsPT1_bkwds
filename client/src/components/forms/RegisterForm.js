@@ -9,7 +9,7 @@ import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { register, registerWithOauth } from "../../redux/actions/auth"
 import { registerValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
-import Puff from "../icons/Puff"
+import { PuffIcon } from "../icons/Puff"
 import GoogleIcon from "../icons/GoogleIcon"
 
 const RegisterFormStyles = styled.div`
@@ -26,7 +26,6 @@ const RegisterForm = ({
     validate={validate}
     initialValues={{
       email: "",
-      username: "",
       password: "",
       passwordConfirm: ""
     }}
@@ -53,14 +52,6 @@ const RegisterForm = ({
               values={values}
             />
             <CustomInputWithError
-              name="username"
-              type="text"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder="Username"
-              values={values}
-            />
-            <CustomInputWithError
               name="password"
               type="password"
               onChange={handleChange}
@@ -78,7 +69,7 @@ const RegisterForm = ({
             />
             {pending && (
               <div className="spinner">
-                <Puff width="60px" height="60px" />
+                <PuffIcon width="60px" height="60px" />
               </div>
             )}
             {!pending && (

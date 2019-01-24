@@ -1,11 +1,13 @@
 import React from "react"
 import { BillingStyles } from "../../styles/Billing.styles"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 import { retrieveInvoices } from "../../redux/actions/billing"
 import Pending from "./Pending"
 import Invoices from "./Invoices"
 import AccountType from "./AccountType"
+import { UserPropTypes } from "../propTypes"
 
 class Billing extends React.Component {
   componentDidMount() {
@@ -35,6 +37,13 @@ class Billing extends React.Component {
       </BillingStyles>
     )
   }
+}
+
+Billing.propTypes = {
+  invoices: PropTypes.array,
+  isPending: PropTypes.bool.isRequired,
+  retrieveInvoices: PropTypes.func,
+  user: UserPropTypes
 }
 
 const mapStateToProps = ({ billing, auth }) => ({

@@ -1,8 +1,9 @@
 /* eslint react/display-name: 0 */
+/* eslint react/prop-types: 0 */
 import React from "react"
 import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
-import PropTypes from "prop-types"
+import { MatchPropTypes } from "../propTypes"
 
 import SingleTrip from "../Maps/singleTrip"
 import AppContainer from "../AppContainer"
@@ -20,10 +21,9 @@ import CustomRoute from "../../utils/CustomRoute"
 
 const dashboardRoutes = [
   {
-    path: "/",
+    path: "/dashboard",
     name: "Dashboard",
-    component: ({ trips }) => <DashboardHome trips={trips} />,
-    exact: true
+    component: DashboardHome
   },
   {
     path: "/trip/create",
@@ -92,8 +92,7 @@ const Dashboard = ({ match }) => {
 }
 
 Dashboard.propTypes = {
-  match: PropTypes.object.isRequired,
-  trips: PropTypes.object.isRequired
+  match: MatchPropTypes
 }
 
 const mapStateToProps = ({ trips: { trips } }) => ({ trips })

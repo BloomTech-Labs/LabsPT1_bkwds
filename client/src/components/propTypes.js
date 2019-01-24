@@ -37,6 +37,12 @@ export const UserPropTypes = PropTypes.shape({
   subDate: PropTypes.string,
   subscribeId: PropTypes.string,
   subscribed: PropTypes.bool.isRequired,
-  trips: PropTypes.arrayOf(PropTypes.string),
-  username: PropTypes.string.isRequired
+  trips: PropTypes.arrayOf(PropTypes.any)
+})
+
+export const MatchPropTypes = PropTypes.shape({
+  isExact: PropTypes.bool.isRequired,
+  params: PropTypes.object,
+  path: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
 })

@@ -9,17 +9,17 @@ import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { login, loginWithOauth } from "../../redux/actions/auth"
 import { loginValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
-import Puff from "../icons/Puff"
+import { PuffIcon } from "../icons/Puff"
 import GoogleIcon from "../icons/GoogleIcon"
 
 const LoginFormStyles = styled.div`
   ${authFormErrorsMixin};
 `
 
-// Get username and password from parent, if applicable
+// Get email and password from parent, if applicable
 // (for example, after registering):
 const LoginForm = ({
-  username = "",
+  email = "",
   password = "",
   login,
   loginError,
@@ -28,7 +28,7 @@ const LoginForm = ({
 }) => (
   <Formik
     validate={validate}
-    initialValues={{ username, password }}
+    initialValues={{ email, password }}
     onSubmit={(values, actions) => {
       actions.setSubmitting(false)
       login(values)
@@ -45,11 +45,11 @@ const LoginForm = ({
           <Form onSubmit={handleSubmit}>
             <div className="relative-positioning">
               <CustomInputWithError
-                name="username"
-                type="text"
+                name="email"
+                type="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="Username or email"
+                placeholder="Email address"
                 values={values}
               />
 
@@ -63,7 +63,7 @@ const LoginForm = ({
               />
               {pending && (
                 <div className="spinner">
-                  <Puff width="60px" height="60px" />
+                  <PuffIcon width="60px" height="60px" />
                 </div>
               )}
               {!pending && (
@@ -92,7 +92,7 @@ const LoginForm = ({
 )
 
 LoginForm.propTypes = {
-  username: PropTypes.string,
+  email: PropTypes.string,
   password: PropTypes.string,
   login: PropTypes.func.isRequired,
   loginError: PropTypes.string,
@@ -102,7 +102,7 @@ LoginForm.propTypes = {
 
 const mapStateToProps = state => ({
   loginError: state.auth.error,
-  username: state.auth.user.username,
+  email: state.auth.user.email,
   pending: state.auth.pending
 })
 

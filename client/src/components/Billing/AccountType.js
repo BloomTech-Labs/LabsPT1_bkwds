@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 import { Link, withRouter } from "react-router-dom"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 import { cancelSubscription } from "../../redux/actions/billing"
 import { Button } from "../../styles/theme/styledComponents"
@@ -82,6 +83,16 @@ const AccountType = ({
       </div>
     </Container>
   )
+}
+
+AccountType.propTypes = {
+  isSubscribed: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  subscribeId: PropTypes.string.isRequired,
+  cancelSubscription: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 }
 
 const mapStateToProps = ({ auth }) => ({

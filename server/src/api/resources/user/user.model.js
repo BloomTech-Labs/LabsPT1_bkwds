@@ -1,41 +1,78 @@
 import mongoose from "mongoose"
+const { Decimal128, ObjectId } = mongoose.Schema.Types
 import bcrypt from "bcryptjs"
 
 const Schema = mongoose.Schema
 const SALT_WORK_FACTOR = 10
 
 export const schema = {
-  username: {
+  coordinates: {
+    required: false,
+    type: [Decimal128]
+  },
+  customerId: {
+    sparse: true,
     type: String,
-    required: [true, "Username is required."]
+    unique: true
+  },
+  displayName: {
+    required: false,
+    type: String
   },
   email: {
+    required: [true, "User email is required."],
     type: String,
-    unique: true,
-    required: [true, "User email is required."]
+    unique: true
+  },
+  formattedAddress: {
+    required: false,
+    type: String
+  },
+  lastLogin: {
+    default: Date.now(),
+    required: true,
+    type: Date
+  },
+  loginCount: {
+    default: 0,
+    type: Number
   },
   password: {
-    type: String,
-    require: [true, "User password is required."]
+    required: [true, "User password is required."],
+    type: String
   },
-  subscribed: {
-    type: Boolean,
-    default: false
+  picture: {
+    required: false,
+    type: String
   },
   subDate: {
     type: Date
   },
-  customerId: {
-    type: String,
-    unique: true,
-    sparse: true
+  subscribed: {
+    default: false,
+    type: Boolean
   },
   subscribeId: {
+    sparse: true,
     type: String,
-    unique: true,
-    sparse: true
+    unique: true
   },
-  trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }]
+  token: {
+    type: String,
+    required: false
+  },
+  trips: [
+    {
+      ref: "Trip",
+      type: ObjectId
+    }
+  ],
+  // one of: "email", "facebook" or "google"
+  type: {
+    type: String,
+    required: true,
+    default: "email"
+  }
 }
 
 const userSchema = new Schema(schema, { timestamps: true })
@@ -65,15 +102,23 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 userSchema.set("toJSON", {
   transform: function(doc, ret) {
     let retJson = {
-      id: ret._id,
-      username: ret.username,
-      email: ret.email,
-      subscribed: ret.subscribed,
-      subDate: ret.subDate,
-      customerId: ret.customerId,
-      subscribeId: ret.subscribeId,
+      coordinates: ret.coordinates,
       createdAt: ret.createdAt,
-      trips: ret.trips
+      customerId: ret.customerId,
+      displayName: ret.displayName,
+      email: ret.email,
+      formattedAddress: ret.formattedAddress,
+      id: ret._id,
+      lastLogin: ret.lastLogin,
+      loginCount: ret.loginCount,
+      picture: ret.picture,
+      subDate: ret.subDate,
+      subscribed: ret.subscribed,
+      subscribeId: ret.subscribeId,
+      token: ret.token,
+      trips: ret.trips,
+      type: ret.type,
+      updatedAt: ret.updatedAt
     }
     return retJson
   }

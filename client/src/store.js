@@ -8,6 +8,7 @@ import logger from "redux-logger"
 import { authReducer } from "./redux/reducers/auth"
 import { tripReducer } from "./redux/reducers/trips"
 import { billingReducer } from "./redux/reducers/billing"
+import { modalReducer } from "./redux/reducers/modal"
 import { settingsReducer } from "./redux/reducers/settings"
 import { navigationReducer } from "./redux/reducers/navigation"
 
@@ -22,9 +23,10 @@ const createRootReducer = history =>
     auth: authReducer,
     trips: tripReducer,
     billing: billingReducer,
+    modal: modalReducer,
     settings: settingsReducer,
-    navigation: navigationReducer,
-    router: connectRouter(history)
+    router: connectRouter(history),
+    navigation: navigationReducer
   })
 
 export const store = createStore(

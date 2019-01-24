@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 import * as s from "../styles/AddTripButton.styles"
 
 const AddTripButton = ({ text }) => (
@@ -14,5 +15,9 @@ const AddTripButton = ({ text }) => (
     </div>
   </s.AddTripButtonStyles>
 )
+
+AddTripButton.propTypes = {
+  text: PropTypes.string.isRequired
+}
 
 export default AddTripButton

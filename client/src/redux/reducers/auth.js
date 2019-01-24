@@ -16,7 +16,6 @@ import { normalizeUser, normalizeErrorMsg } from "../../utils/selectors"
 
 const defaultUser = {
   id: null,
-  username: "",
   email: "",
   subscribed: false,
   subscribeId: null,
@@ -64,12 +63,11 @@ export const authReducer = (state = defaultState, action) => {
       }
 
     case REGISTRATION_SUCCESS:
-      const { username, email } = action.payload
       return {
         ...state,
         pending: false,
         error: null,
-        user: { username, email }
+        user: action.payload
       }
     case REGISTRATION_FAILURE:
       return {

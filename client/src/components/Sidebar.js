@@ -20,7 +20,7 @@ const menuItems = [
   {
     displayName: "Dashboard",
     icon: "fa-tachometer",
-    to: "/app"
+    to: "/app/dashboard"
   },
   {
     displayName: "Create a new trip",
@@ -105,6 +105,7 @@ Sidebar.propTypes = {
 SidebarLink.propTypes = {
   displayName: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   to: PropTypes.string.isRequired
 }
 

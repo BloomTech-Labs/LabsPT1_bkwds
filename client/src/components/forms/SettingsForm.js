@@ -4,6 +4,7 @@ import { Formik } from "formik"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 
+import { UserPropTypes } from "../propTypes"
 import { Form } from "../../styles/theme/styledComponents"
 import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { updateEmail, updatePassword } from "../../redux/actions/settings"
@@ -25,7 +26,6 @@ const SettingsForm = ({
     validate={validate}
     initialValues={{
       email: user.email,
-      username: user.username,
       oldPassword: "",
       newPassword: ""
     }}
@@ -37,7 +37,7 @@ const SettingsForm = ({
       }
 
       if (oldPassword && newPassword) {
-        updatePassword(user.username, oldPassword, newPassword)
+        updatePassword(user.email, oldPassword, newPassword)
       }
     }}
     render={({
@@ -88,7 +88,7 @@ const SettingsForm = ({
 
 SettingsForm.propTypes = {
   // TODO: Fix Redux issue where user is being stored differently on state
-  // user: UserPropTypes.isRequired,
+  user: UserPropTypes.isRequired,
   updateEmail: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
   updateSettingsError: PropTypes.object

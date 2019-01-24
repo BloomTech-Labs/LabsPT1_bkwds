@@ -1,16 +1,25 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import moment from "moment"
 import PropTypes from "prop-types"
-
 import { TripPropTypes } from "./propTypes"
 
-import { toggleArchive } from "../redux/actions/trips"
+import { STATIC_MAP_KEY } from "../config"
+
+import { toggleArchive, repeatTrip } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
 
-const TripCard = ({ trip, archived, toggleArchive, user }) => (
+const TripCard = ({
+  trip,
+  archived,
+  toggleArchive,
+  repeatTrip,
+  userId,
+  isArchivedTripRoute
+}) => (
   <div>
     {!trip.id && "Loading trip"}
     {trip.id && (
@@ -19,21 +28,32 @@ const TripCard = ({ trip, archived, toggleArchive, user }) => (
           <div className="card-image">
             <img
               className={archived ? "grayscale" : ""}
-              src="https://staticmapmaker.com/img/google.png"
-              alt="Google Map of Albany, NY"
+              src={
+                trip.image
+                  ? `${trip.image}${STATIC_MAP_KEY}`
+                  : "https://staticmapmaker.com/img/google.png"
+              }
+              alt="Static Map"
             />
             {archived && <div className="text-overlay">ARCHIVED</div>}
           </div>
           <div className="card-content">
-            <div>{trip.name}</div>
-            <div>Start: {trip.start}</div>
-            <div>End: {trip.end}</div>
-            <Button
-              className={archived ? "btn-gray" : "btn"}
-              onClick={() => toggleArchive(trip.id, archived, user)}
-            >
-              {archived ? "Unarchive" : "Archive"}
-            </Button>
+            <h5>{trip.name}</h5>
+            <div>Start: {moment(trip.start).format("LL")}</div>
+            <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
+            <div className="card-cta">
+              <Button
+                className={archived ? "btn-gray" : "btn"}
+                onClick={() => toggleArchive(trip.id, archived, userId)}
+              >
+                {archived ? "Unarchive" : "Archive"}
+              </Button>
+              {isArchivedTripRoute && (
+                <Button className="btn" onClick={() => repeatTrip(trip)}>
+                  Repeat
+                </Button>
+              )}
+            </div>
             <Link to={`/app/trip/${trip.id}`}>
               <CardButton>
                 <ChevronSvg
@@ -54,13 +74,17 @@ const TripCard = ({ trip, archived, toggleArchive, user }) => (
 TripCard.propTypes = {
   archived: PropTypes.bool.isRequired,
   toggleArchive: PropTypes.func.isRequired,
-  trip: TripPropTypes
+  trip: TripPropTypes,
+  userId: PropTypes.string,
+  isArchivedTripRoute: PropTypes.bool,
+  repeatTrip: PropTypes.func.isRequired
 }
 
-const mapDispatchToProps = { toggleArchive }
+const mapDispatchToProps = { toggleArchive, repeatTrip }
 
 const mapStateToProps = state => ({
-  user: state.auth.user.id
+  userId: state.auth.user.id,
+  isArchivedTripRoute: state.router.location.pathname === "/app/trips/archived"
 })
 
 export default connect(
