@@ -9,12 +9,12 @@ export const SidebarStyles = styled.div`
   }
 
   ${media.tablet`
-    display: none;
+    visibility: ${props => (props.isSidebarOpen ? "visible" : "hidden")};
   `}
 
   > div {
     width: 50px;
-    transition: width ease-in-out 0.3s;
+    transition: visibility 0.2s, width ease-in-out 0.3s;
   }
 
   button {
@@ -50,7 +50,7 @@ export const SidebarStyles = styled.div`
 
   .open {
     width: ${props => `${props.theme.sidebarWidth}px`};
-    transition: width ease-in-out 0.3s;
+    transition: visibility 0s, width ease-in-out 0.3s;
 
     a:last-child {
       opacity: 1;
