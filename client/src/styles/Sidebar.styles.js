@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { media } from "../styles/theme/mixins"
 
 export const SidebarStyles = styled.div`
-  /* width: ${props => `${props.theme.sidebarWidth}px`}; */
   .sidebar-links {
     z-index: 1;
     position: absolute;
