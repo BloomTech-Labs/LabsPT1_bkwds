@@ -47,26 +47,10 @@ class SingleTripMap extends React.Component {
     )
   }
 
-  // Attach waypoints to map
-  // renderWaypoints = waypoints => {
-  //   waypoints.forEach(waypoint => {
-  //     const center = {
-  //       lat: parseFloat(waypoint.lat.$numberDecimal),
-  //       lng: parseFloat(waypoint.lon.$numberDecimal)
-  //     }
-  //     new window.google.maps.Marker({
-  //       position: center,
-  //       map: window.map,
-  //       title: waypoint.name,
-  //       label: waypoint.order.toString()
-  //     }).setMap(window.map)
-  //   })
-  // }
-
   drawPolyline = waypoints => {
     const path = waypoints.map(w => ({
-      lat: parseFloat(w.lat.$numberDecimal),
-      lng: parseFloat(w.lon.$numberDecimal)
+      lat: w.lat,
+      lng: w.lon
     }))
 
     const polyline = new window.google.maps.Polyline({

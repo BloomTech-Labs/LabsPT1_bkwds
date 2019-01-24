@@ -18,11 +18,11 @@ export const schema = {
     required: [true, "Name for waypoint required."]
   },
   lat: {
-    type: Decimal128,
+    type: Number,
     require: [true]
   },
   lon: {
-    type: Decimal128,
+    type: Number,
     require: [true]
   },
   start: {

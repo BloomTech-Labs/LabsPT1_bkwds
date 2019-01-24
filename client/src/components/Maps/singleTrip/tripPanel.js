@@ -48,7 +48,6 @@ class TripPanel extends React.Component {
       label: (index + 1).toString(),
       index: index
     })
-    let markers = this.state.markers
     marker.addListener("dragend", ev => {
       let waypoints = this.state.trip.waypoints.map((item, i) => {
         if (index === i)
@@ -56,6 +55,7 @@ class TripPanel extends React.Component {
         else return item
       })
       this.setState({ trip: { ...this.state.trip, waypoints } })
+      this.getPathDistance()
     })
     let waypoint = {
       name: `Checkpoint ${index}`,
@@ -66,18 +66,17 @@ class TripPanel extends React.Component {
       start: new Date(),
       end: new Date()
     }
-    let waypoints = this.state.trip.waypoints
-    waypoints.push(waypoint)
-    markers.push(marker)
+    let waypoints = this.state.trip.waypoints.concat(waypoint)
+    let markers = this.state.markers.concat(marker)
     this.setState({ markers, trip: { ...this.state.trip, waypoints } })
   }
 
   renderWaypoints = () => {
     let markers = []
-    this.state.trip.waypoints.forEach(waypoint => {
+    this.state.trip.waypoints.forEach((waypoint, i) => {
       const center = {
-        lat: parseFloat(waypoint.lat.$numberDecimal),
-        lng: parseFloat(waypoint.lon.$numberDecimal)
+        lat: waypoint.lat,
+        lng: waypoint.lon
       }
       let marker = new window.google.maps.Marker({
         position: center,
@@ -86,7 +85,15 @@ class TripPanel extends React.Component {
         label: `${waypoint.order}`,
         draggable: false
       })
-
+      marker.addListener("dragend", ev => {
+        let waypoints = this.state.trip.waypoints.map((item, index) => {
+          if (index === i)
+            return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+          else return item
+        })
+        this.setState({ trip: { ...this.state.trip, waypoints } })
+        this.getPathDistance()
+      })
       markers.push(marker)
     })
     this.setState({ markers })
@@ -205,13 +212,15 @@ class TripPanel extends React.Component {
 
   getPathDistance = () => {
     if (this.state.markers.length > 1) {
-      let latngs = this.state.markers.map(marker => {
+      let latlngs = this.state.markers.map(marker => {
         return {
           lat: marker.getPosition().lat(),
           lng: marker.getPosition().lng()
         }
       })
-      util.calcTotalDistance(latngs).then(res => {
+      console.log(latlngs)
+      util.calcTotalDistance(latlngs).then(res => {
+        console.log(res)
         this.setState({ tripDistance: res.toFixed(2) })
       })
     }

@@ -34,34 +34,6 @@ export const getElevations = latLngArr => {
   })
 }
 
-//SYNC CALL -
-//Path arr is set of lat,lng object pairs, {lat:Number,lng:Number}
-//TODO: global window elev_service
-// export const getPathElevation = pathArr => {
-//   const elev_service = new window.google.maps.ElevationService()
-//   let avgElev;
-//   elev_service.getElevationAlongPath(
-//     {
-//       path: pathArr,
-//       samples: 256
-//     },
-//     (result, status) => {
-//       if (status === "OK") {
-//          let sum = 0;
-//         result.forEach(elev => {
-//             sum += elev.elevation
-//         })
-//         avgElev = sum/result.length;
-//         return
-//       } else {
-//         console.log(status)
-//       }
-//     }
-//   )
-//   console.log(avgElev);
-//   return avgElev;
-// }
-
 export const getPathElevation = pathArr => {
   return new Promise((resolve, reject) => {
     window.elevation.getElevationAlongPath(
