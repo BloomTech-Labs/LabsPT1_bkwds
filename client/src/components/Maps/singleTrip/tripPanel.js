@@ -1,7 +1,7 @@
 import React from "react"
-import { DateRangePicker } from "react-dates"
 import EditIcon from "../../icons/EditSvg"
 import DeleteIcon from "../../icons/DeleteSvg"
+import { TripPropTypes } from "../../propTypes"
 import DistanceIcon from "../../icons/DistanceSvg"
 import ElevationIcon from "../../icons/ElevationSvg"
 import SaveIcon from "../../icons/SaveSvg"
@@ -28,9 +28,11 @@ class TripPanel extends React.Component {
       this.renderWaypoints()
     })
   }
+
+  //Use Andrews Elevation Implementation
   componentDidUpdate(_, prevState) {
     if (prevState.markers !== this.state.markers) {
-      this.getPathElevation()
+      // this.getPathElevation()
       this.getPathDistance()
     }
   }
@@ -57,7 +59,7 @@ class TripPanel extends React.Component {
     })
     let waypoint = {
       name: `Checkpoint ${index}`,
-      tripId: this.props.tridId,
+      tripId: this.props.trip.id,
       order: index + 1,
       lat: marker.getPosition().lat(),
       lon: marker.getPosition().lng(),
@@ -185,19 +187,21 @@ class TripPanel extends React.Component {
     })
   }
 
-  getPathElevation = () => {
-    if (this.state.markers.length > 1) {
-      let latlngs = this.state.markers.map(marker => {
-        return {
-          lat: marker.getPosition().lat(),
-          lng: marker.getPosition().lng()
-        }
-      })
-      util.getPathElevation(latlngs).then(res => {
-        this.setState({ elevation: res.toFixed(2) })
-      })
-    }
-  }
+  // Use Andrews Elevation implementation
+
+  // getPathElevation = () => {
+  //   if (this.state.markers.length > 1) {
+  //     let latlngs = this.state.markers.map(marker => {
+  //       return {
+  //         lat: marker.getPosition().lat(),
+  //         lng: marker.getPosition().lng()
+  //       }
+  //     })
+  //     util.getPathElevation(latlngs).then(res => {
+  //       this.setState({ elevation: res.toFixed(2) })
+  //     })
+  //   }
+  // }
 
   getPathDistance = () => {
     if (this.state.markers.length > 1) {
@@ -274,6 +278,11 @@ class TripPanel extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { trip: state.trips.activeTrip, userId: state.auth.user.id }
+  return { trip: state.trips.activeTrip }
 }
+
+TripPanel.PropTypes = {
+  trip: TripPropTypes
+}
+
 export default connect(mapStateToProps)(TripPanel)
