@@ -24,30 +24,45 @@ export const NavStyles = styled.div`
     height: 50px;
   }
 
-  .logo, .logo-flourish {
+  .logo a, .logo-flourish {
     font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.0275rem;
   }
 
   .logo-flourish {
     color: ${props => props.theme.primary};
+    will-change: color;
+    -webkit-transition: color 0.15s ease;
+    transition: color 0.15s ease;
   }
 
-  .logo {
+  .logo a {
     color: ${props => props.theme.darkGray};
-    font-weight: 700;
-    letter-spacing: -0.0275rem;
+    will-change: color;
+    -webkit-transition: color 0.15s ease;
+    transition: color 0.15s ease;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-left: 0.5rem;
+    &:hover {
+      color: ${props => props.theme.black};
+      .logo-flourish {
+        color: ${props => props.theme.linkColorHover};
+      }
+    }
   }
+
   .hamburger-icon-wrapper {
     display: flex;
   }
   .hamburger-icon {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 15px;
+    padding-right: 15px;
     height: 100%;
-    /* display: flex; */
+    display: flex;
   }
 
   ul {

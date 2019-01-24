@@ -56,7 +56,9 @@ class AppNav extends Component {
               toggleButton={() => toggleSidebar(isSidebarOpen)}
             />
             <div className="logo">
-              bkwds<span className="logo-flourish">.</span>
+              <Link to="/">
+                bkwds<span className="logo-flourish">.</span>
+              </Link>
             </div>
           </div>
           <div className="appnav-right">

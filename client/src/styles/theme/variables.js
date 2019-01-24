@@ -23,7 +23,8 @@ const tertiaryHover = "rgba(0, 90, 132, 0.8)"
 const tertiaryLight = "#899ac6"
 
 const linkColor = primaryDark
-const linkColorHover = offBlack
+const linkColorHover = "#526699"
+// const linkColorHover = "#1e306e"
 
 export const theme = {
   // * Misc. -----------------------------------
