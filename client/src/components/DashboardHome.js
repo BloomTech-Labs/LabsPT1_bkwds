@@ -107,7 +107,7 @@ class DashboardHome extends Component {
                         <div>{formattedAddress}</div>
                         <div>{location.lat && location.lat + location.lng}</div>
                         <div className="text-align-right">
-                          <Button className="btn">Save</Button>
+                          <Button className="btn-primary">Save</Button>
                         </div>
                       </Form>
                     </div>

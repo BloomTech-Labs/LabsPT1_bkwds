@@ -109,7 +109,7 @@ class CheckoutForm extends Component {
           value={country}
           onChange={this.handleChangeOwnerInfo}
         />
-        <Button className="input-button" color="orange" onClick={this.submit}>
+        <Button className="input-button" onClick={this.submit}>
           Subscribe Now
         </Button>
       </s.CheckoutFormStyles>

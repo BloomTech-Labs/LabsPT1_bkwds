@@ -8,7 +8,7 @@ import { Button } from "../styles/theme/styledComponents"
 import * as s from "../styles/Sidebar.styles"
 
 const SidebarLink = ({ icon, displayName, pathname, to }) => (
-  <Button className={pathname === to ? "btn-inverted" : ""}>
+  <Button className={pathname === to ? "btn-inverted" : "btn-secondary"}>
     <Link to={to}>
       <i className={`fa ${icon}`} />
     </Link>
