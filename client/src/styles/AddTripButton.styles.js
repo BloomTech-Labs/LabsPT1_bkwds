@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { media } from "./theme/mixins"
 
 export const AddTripButtonStyles = styled.div`
   margin-left: 10px;
