@@ -3,7 +3,7 @@ import { media } from "../styles/theme/mixins"
 
 export const SidebarStyles = styled.div`
   position: absolute;
-  z-index: 6;
+  z-index: 7;
 
   .sidebar-links {
     width: 50px;
@@ -54,7 +54,7 @@ export const SidebarStyles = styled.div`
     height: ${props => (props.isSidebarOpen ? "100vh" : "inherit")};
     min-width: ${props => (props.isSidebarOpen ? "100vw" : "inherit")};
     background: rgba(0, 0, 0, 0.5);
-    z-index: ${props => (props.isSidebarOpen ? 6 : -1)}
+    z-index: ${props => (props.isSidebarOpen ? 7 : -1)}
 
     .sidebar-links {
       opacity: ${props => (props.isSidebarOpen ? 1 : 0)};
