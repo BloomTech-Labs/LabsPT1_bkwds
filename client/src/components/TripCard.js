@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import moment from "moment"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
 
@@ -32,14 +33,14 @@ const TripCard = ({
                   ? `${trip.image}${STATIC_MAP_KEY}`
                   : "https://staticmapmaker.com/img/google.png"
               }
-              alt="Static Map Image"
+              alt="Static Map"
             />
             {archived && <div className="text-overlay">ARCHIVED</div>}
           </div>
           <div className="card-content">
-            <div>{trip.name}</div>
-            <div>Start: {trip.start}</div>
-            <div>End: {trip.end}</div>
+            <h5>{trip.name}</h5>
+            <div>Start: {moment(trip.start).format("LL")}</div>
+            <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
             <div className="card-cta">
               <Button
                 className={archived ? "btn-gray" : "btn"}
