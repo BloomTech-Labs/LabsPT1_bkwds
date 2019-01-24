@@ -50,7 +50,7 @@ const TripCard = ({
               </Button>
               {isArchivedTripRoute && (
                 <Button
-                  className="btn-primary"
+                  className="btn-tertiary"
                   onClick={() => repeatTrip(trip)}
                 >
                   Repeat

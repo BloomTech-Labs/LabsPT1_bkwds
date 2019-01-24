@@ -44,6 +44,8 @@ export const TripCardStyles = styled.div`
       rgba(0, 0, 5, 0.1) 0px 0.0625rem 0.125rem,
       rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem;
 
+    transition: transform 0.22s ease-out 0s, box-shadow;
+
     @media (max-width: 55.875em) {
       height: 300px;
       width: 280px;
