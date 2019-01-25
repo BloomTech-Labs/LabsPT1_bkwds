@@ -1,4 +1,6 @@
 import React from "react"
+import PropTypes from "prop-types"
+
 import EditIcon from "../../icons/EditSvg"
 import DeleteIcon from "../../icons/DeleteSvg"
 import { TripPropTypes } from "../../propTypes"
@@ -294,6 +296,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = { editTrip, startTrip }
 
 TripPanel.propTypes = {
+  editTrip: PropTypes.func.isRequired,
+  startTrip: PropTypes.func.isRequired,
   trip: TripPropTypes
 }
 

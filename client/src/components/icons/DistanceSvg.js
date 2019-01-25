@@ -1,14 +1,15 @@
 import React from "react"
+import PropTypes from "prop-types"
 
-const DistanceIcon = props => {
+const DistanceIcon = ({ width = "25px", height = "25px" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       x="0px"
       y="0px"
       viewBox="0 0 512 512"
-      width={props.width}
-      height={props.height}
+      width={width}
+      height={height}
     >
       <g>
         <g>
@@ -70,6 +71,11 @@ const DistanceIcon = props => {
       </g>
     </svg>
   )
+}
+
+DistanceIcon.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.width
 }
 
 export default DistanceIcon
