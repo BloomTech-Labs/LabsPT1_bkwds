@@ -34,4 +34,4 @@ DeleteIcon.propTypes = {
   width: PropTypes.string
 }
 
-export default Delete
+export default DeleteIcon
