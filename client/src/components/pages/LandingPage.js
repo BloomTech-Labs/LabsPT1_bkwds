@@ -1,12 +1,8 @@
 import React from "react"
-import Landing from "../Landing"
-import LandingNav from "../LandingNav"
-import { GlobalStyles } from "../../styles/theme/GlobalStyles"
 import Features from "../LandingPage/Features"
-import ArchivedTrips from "../ArchivedTrips"
-import DashboardHome from "../DashboardHome"
-import Settings from "../Settings"
-import EditTrip from "../EditTrip"
+import FooterContent from "../LandingPage/FooterContent"
+import Hero from "../LandingPage/Hero"
+import Features from "../LandingPage/Features"
 
 import CustomRoute from "../../utils/CustomRoute"
 
@@ -22,14 +18,14 @@ const landingPageRoutes = [
     component: Features
   },
   {
-    path: "/features",
-    name: "Features",
-    component: Features
+    path: "/",
+    name: "Home",
+    component: Hero
   },
   {
-    path: "/features",
-    name: "Features",
-    component: Features
+    path: "/contact",
+    name: "FooterContent",
+    component: FooterContent
   }
 ]
 
