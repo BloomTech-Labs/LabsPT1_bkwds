@@ -34,21 +34,26 @@ export const sendSMSAlert = async (req, res) => {
     })
 }
 
-export const gatherResources = async params => {
+const gatherResources = async params => {
   const user = await User.findOne({ _id: params.userId })
   const trip = await Trip.findOne({ _id: params.tripId }).populate({
     path: "waypoints",
     model: "Waypoint"
   })
-  const waypoints = trip.waypoints.filter(waypoint => {
-    if (waypoint.complete) return waypoint
-  })
-  const lastLocation = waypoints.length - 1
+  const location = findLastLocation(trip.waypoints)
   return {
     number: user.contact.number,
     name: user.contact.name,
-    lat: waypoints[lastLocation].lat,
-    lon: waypoints[lastLocation].lon,
+    lat: location.lat,
+    lon: location.lon,
     user: user.displayName
   }
+}
+
+const findLastLocation = waypoints => {
+  let filtered = waypoints.filter(waypoint => {
+    if (waypoint.complete) return waypoint
+  })
+  let lastLocation = filtered.length - 1
+  return filtered[lastLocation]
 }
