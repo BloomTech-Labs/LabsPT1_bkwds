@@ -12,6 +12,9 @@ import { connect } from "react-redux"
 import * as util from "./mapUtil"
 import * as s from "./components"
 import { editTrip, startTrip } from "../../../redux/actions/trips"
+import { SERVER_URI } from "../../../config"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 class TripPanel extends React.Component {
   constructor(props) {
@@ -40,7 +43,6 @@ class TripPanel extends React.Component {
     }
   }
 
-  //TODO - fix map updates with added waypoint movements
   addWaypoint = () => {
     const index = this.state.markers.length
     let marker = new window.google.maps.Marker({
@@ -148,9 +150,18 @@ class TripPanel extends React.Component {
     const temp = this.state.trip.waypoints.filter((_, index) => {
       return i !== index
     })
+
     const reOrder = this.updateOrder(temp)
-    this.setState({ trip: { ...this.state.trip, waypoints: reOrder } })
+
     this.deleteMapMarkers(i)
+    if (this.state.trip.waypoints[i].id !== undefined) {
+      axios
+        .delete(`${SERVER_URI}/waypoints/${this.state.trip.waypoints[i].id}`)
+        .then(() => {
+          toast("Waypoint Deleted")
+        })
+    }
+    this.setState({ trip: { ...this.state.trip, waypoints: reOrder } })
   }
 
   updateOrder = waypoints => {
@@ -197,22 +208,6 @@ class TripPanel extends React.Component {
       this.props.editTrip(this.state.trip)
     })
   }
-
-  // Use Andrews Elevation implementation
-
-  // getPathElevation = () => {
-  //   if (this.state.markers.length > 1) {
-  //     let latlngs = this.state.markers.map(marker => {
-  //       return {
-  //         lat: marker.getPosition().lat(),
-  //         lng: marker.getPosition().lng()
-  //       }
-  //     })
-  //     util.getPathElevation(latlngs).then(res => {
-  //       this.setState({ elevation: res.toFixed(2) })
-  //     })
-  //   }
-  // }
 
   getPathDistance = () => {
     if (this.state.markers.length > 1) {
