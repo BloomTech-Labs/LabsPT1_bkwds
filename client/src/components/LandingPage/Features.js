@@ -3,6 +3,7 @@ import styled from "styled-components"
 import iphone from "../../assets/iphone.png"
 import mapview from "../../assets/mapview.png"
 import plan from "../../assets/iphoneplan.png"
+import list from "../../assets/iphonelist.png"
 
 //WIP --VIC
 
@@ -85,8 +86,8 @@ class Features extends Component {
       case "share":
         image = iphone
         break
-      case "peace":
-        image = mapview
+      case "list":
+        image = list
         break
       default:
         image = iphone
@@ -152,7 +153,7 @@ class Features extends Component {
               </p>
             </div>
             <div
-              id="peace"
+              id="list"
               onMouseEnter={this.handleMouseOver}
               className="features-content"
             >
