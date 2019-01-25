@@ -75,7 +75,7 @@ const DistanceIcon = ({ width = "25px", height = "25px" }) => {
 
 DistanceIcon.propTypes = {
   height: PropTypes.string,
-  width: PropTypes.width
+  width: PropTypes.string
 }
 
 export default DistanceIcon

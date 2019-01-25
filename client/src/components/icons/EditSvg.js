@@ -31,7 +31,7 @@ const EditIcon = ({ width = "20px", height = "20px" }) => {
 
 EditIcon.propTypes = {
   width: PropTypes.string,
-  height: PropTypes.height
+  height: PropTypes.string
 }
 
 export default EditIcon
