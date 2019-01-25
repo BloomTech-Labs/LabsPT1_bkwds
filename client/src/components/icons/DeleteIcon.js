@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const Delete = props => {
+const DeleteIcon = props => {
   const { width, height } = props
   return (
     <svg
@@ -29,7 +29,7 @@ const Delete = props => {
   )
 }
 
-Delete.propTypes = {
+DeleteIcon.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string
 }

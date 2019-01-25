@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import EditIcon from "../../icons/EditSvg"
-import DeleteIcon from "../../icons/DeleteSvg"
+import DeleteIcon from "../../icons/DeleteIcon"
 import { TripPropTypes } from "../../propTypes"
 import DistanceIcon from "../../icons/DistanceSvg"
 import ElevationIcon from "../../icons/ElevationSvg"
