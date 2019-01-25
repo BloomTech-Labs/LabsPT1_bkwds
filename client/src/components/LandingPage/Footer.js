@@ -44,15 +44,6 @@ const Img = styled.img`
   margin-left: 90px;
 `
 
-const CTAContainer = styled.div`
-  width: 100%;
-
-  height: 100%;
-  h3 {
-    color: white !important;
-  }
-`
-
 const Footer = () => {
   return (
     <FooterContainer>
