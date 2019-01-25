@@ -43,8 +43,8 @@ class SingleTripMap extends React.Component {
 
   componentDidUpdate() {
     const { trip } = this.props
-    if (trip && trip.waypoints) this.renderMap(trip)
-    // this.drawPolyline()
+    if (trip && trip.waypoints) this.renderMap(trip, trip.waypoints)
+    this.drawPolyline(trip.waypoints)
   }
 
   shouldComponentUpdate(nextProps) {
@@ -60,11 +60,13 @@ class SingleTripMap extends React.Component {
       zoom: 9,
       disableDefaultUI: true
     })
-    if (waypoints) latLngs = this.renderWaypoints(waypoints)
-    const bounds = new window.google.maps.LatLngBounds()
-    latLngs.forEach(latLng => bounds.extend(latLng))
-    window.map.fitBounds(bounds)
-    window.map.setCenter(bounds.getCenter())
+    if (waypoints) {
+      latLngs = this.renderWaypoints(waypoints)
+      const bounds = new window.google.maps.LatLngBounds()
+      latLngs.forEach(latLng => bounds.extend(latLng))
+      window.map.fitBounds(bounds)
+      window.map.setCenter(bounds.getCenter())
+    }
   }
 
   // Attach waypoints to map
