@@ -6,6 +6,9 @@ import styled from "styled-components"
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
 import { media } from "../../../styles/theme/mixins"
+import marker from "../../icons/orange-marker.svg"
+import startMarker from "../../icons/green-marker.svg"
+import endMarker from "../../icons/black-marker.svg"
 
 const SingleTripMapStyles = styled.div`
   width: 100%;
@@ -30,10 +33,7 @@ class SingleTripMap extends React.Component {
     tripId: ""
   }
 
-  constructor(props) {
-    super(props)
-    this.mapRef = React.createRef()
-  }
+  mapRef = React.createRef()
 
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
@@ -41,10 +41,7 @@ class SingleTripMap extends React.Component {
 
   componentDidUpdate() {
     const { trip } = this.props
-    const lat = trip.lat
-    const lng = trip.lon
-    const center = { lat, lng }
-    if (trip && trip.waypoints) this.renderMap(center, trip.waypoints)
+    if (trip && trip.waypoints) this.renderMap(trip, trip.waypoints)
     this.drawPolyline()
   }
 
@@ -53,26 +50,15 @@ class SingleTripMap extends React.Component {
     return true
   }
 
-  // renderMap = (center, waypoints) => {
-  //   window.map = new window.google.maps.Map(this.mapRef.current, {
-  //     center: center,
-  //     zoom: 9,
-  //     disableDefaultUI: true
-  //   })
-  //   if (waypoints && waypoints.length) {
-  //     this.renderWaypoints(waypoints)
-  //   }
-  // }
-
   renderMap = (center, waypoints) => {
     let latLngs
     window.map = new window.google.maps.Map(this.mapRef.current, {
-      center: center,
+      center,
       zoom: 9,
       disableDefaultUI: true
     })
     if (waypoints) latLngs = this.renderWaypoints(waypoints)
-    let bounds = new window.google.maps.LatLngBounds()
+    const bounds = new window.google.maps.LatLngBounds()
     latLngs.forEach(latLng => bounds.extend(latLng))
     window.map.fitBounds(bounds)
     window.map.setCenter(bounds.getCenter())
@@ -80,21 +66,54 @@ class SingleTripMap extends React.Component {
 
   // Attach waypoints to map
   renderWaypoints = waypoints => {
-    let latLngs = []
+    const latLngs = []
+    const { maps } = window.google
+    const baseIcon = {
+      anchor: new maps.Point(15, 30),
+      scaledSize: new maps.Size(30, 30),
+      labelOrigin: new maps.Point(15, 13)
+    }
+    const icons = {
+      start: {
+        url: startMarker,
+        ...baseIcon
+      },
+      end: {
+        url: endMarker,
+        ...baseIcon
+      },
+      marker: {
+        url: marker,
+        ...baseIcon
+      }
+    }
 
-    waypoints.forEach(waypoint => {
-      const center = {
+    waypoints.forEach((waypoint, i) => {
+      const position = {
         lat: waypoint.lat,
         lng: waypoint.lon
       }
-      let wp = new window.google.maps.Marker({
-        position: center,
+      const icon =
+        i === 0
+          ? icons.start
+          : i === waypoints.length - 1
+          ? icons.end
+          : icons.marker
+      const label = {
+        text: waypoint.order.toString(),
+        color: "white",
+        fontFamily: "Wals",
+        fontWeight: "bold"
+      }
+      const wp = new maps.Marker({
+        icon,
+        position,
         map: window.map,
         title: waypoint.name,
-        label: waypoint.order.toString()
+        label
       })
       wp.setMap(window.map)
-      latLngs.push(center)
+      latLngs.push(position)
     })
     return latLngs
   }
