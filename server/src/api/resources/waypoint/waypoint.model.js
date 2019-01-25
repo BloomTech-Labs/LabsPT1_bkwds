@@ -1,7 +1,6 @@
 import mongoose from "mongoose"
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
-const Decimal128 = Schema.Types.Decimal128
 
 export const schema = {
   tripId: {
