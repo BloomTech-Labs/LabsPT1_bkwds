@@ -30,9 +30,10 @@ class TripPanel extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ trip: this.props.trip }, () => {
+    this.setState({ trip: this.props.trip })
+    setTimeout(() => {
       this.renderWaypoints()
-    })
+    }, 500)
   }
 
   //Use Andrews Elevation Implementation
@@ -230,7 +231,7 @@ class TripPanel extends React.Component {
           <s.TripTitleInput
             type="text"
             edit={this.state.isEditing}
-            value={this.state.trip.name}
+            value={this.state.trip.name || ""}
             onChange={this.handleTitle}
             disabled={this.state.isEditing === false}
           />
