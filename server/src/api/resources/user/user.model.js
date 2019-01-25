@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-const { Decimal128, ObjectId } = mongoose.Schema.Types
+const { ObjectId } = mongoose.Schema.Types
 import bcrypt from "bcryptjs"
 
 const Schema = mongoose.Schema
@@ -8,7 +8,7 @@ const SALT_WORK_FACTOR = 10
 export const schema = {
   coordinates: {
     required: false,
-    type: [Decimal128]
+    type: [Number]
   },
   customerId: {
     sparse: true,

@@ -9,12 +9,17 @@ import "react-toastify/dist/ReactToastify.css"
 import AppNav from "./AppNav"
 import Sidebar from "./Sidebar"
 import { GlobalStyles } from "../styles/theme/GlobalStyles"
+import { media } from "../styles/theme/mixins"
 import { isProtectedPath } from "../utils"
 
 const Right = styled.div`
   overflow-y: scroll;
   background: ${props => props.theme.ghostWhite};
   width: 100%;
+  padding-left: 50px;
+  ${media.tablet`
+    padding-left: 0;
+  `};
 `
 
 const AppContainer = ({ pathname, children, isLoggedIn }) => {

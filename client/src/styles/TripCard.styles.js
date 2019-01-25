@@ -1,39 +1,62 @@
 import styled from "styled-components"
+import { media } from "./theme/mixins"
 
 export const TripCardStyles = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
   a {
     text-decoration: underline;
   }
 
   button {
     margin-top: 1.25rem;
+    cursor: pointer;
   }
 
   .container {
-    overflow: auto;
     display: flex;
-    justify-content: row;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    align-items: start;
     max-width: 100%;
-    margin: 0 auto;
     height: 100%;
+
+    @media (max-width: 40.25em) {
+      justify-content: center;
+    }
   }
 
   .card {
     display: flex;
     justify-content: flex-start;
-    margin-top: 5%;
-    margin-right: 2.5%;
-    margin-left: 2.5%;
-    padding-bottom: 1%;
-    border: none !important;
-    overflow: hidden;
+    align-self: center;
     border-radius: 0.25rem;
+    height: 400px;
+    width: 380px;
+    max-height: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0.0625rem 0px,
+      rgba(0, 0, 5, 0.1) 0px 0.0625rem 0.125rem,
+      rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem;
+
+    transition: transform 0.22s ease-out 0s, box-shadow;
+
+    @media (max-width: 55.875em) {
+      height: 300px;
+      width: 280px;
+    }
   }
 
   .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem,
+      rgba(0, 0, 0, 0.1) 0px 0.3125rem 0.3125rem,
+      rgba(0, 0, 0, 0.05) 0px 0.125rem 0.3125rem;
+    transform: translate3d(0px, -0.1875rem, 0px);
     img {
       transform: scale(1.05, 1.05);
       transition: all 1s ease;
@@ -56,8 +79,11 @@ export const TripCardStyles = styled.div`
     width: 100%;
     justify-content: center;
     align-items: center;
-    position: relative;
     overflow: hidden;
+
+    ${media.tablet`
+      width: 100%;
+    `}
 
     img {
       transition: all 1.86s ease;
@@ -71,9 +97,12 @@ export const TripCardStyles = styled.div`
     .text-overlay {
       position: absolute;
       color: rgba(30, 33, 37, 0.25);
-      font-size: 5rem;
+      font-size: 3.75rem;
       font-weight: 600;
       transform: rotate(45deg);
+      @media all and (max-width: 894px) {
+        font-size: 2.125rem;
+      }
     }
   }
 `

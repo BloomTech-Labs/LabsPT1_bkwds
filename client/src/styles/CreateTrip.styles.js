@@ -3,18 +3,24 @@ import { media } from "./theme/mixins"
 
 export const MapWrapper = Styled.div`
   position:relative;
-  width:100%;
-  height:100%;
+  margin-left: -50px;
+  ${media.tablet`
+    margin-left: 0;
+  `}
 
-  #plus-icon{
+  height: 100%;
+
+  #plus-icon {
     visibility: hidden;
 
     ${media.tablet`
       visibility: visible;
       cursor: pointer;
-      right: 5%;
-      bottom: 30%;
+      right: 20px;
+      bottom: 20px;
+      background: white;
+      border-radius: 50%;
       position: absolute;
-      `}
-    }
+    `}
+  }
 `

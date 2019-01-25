@@ -6,7 +6,12 @@ import moment from "moment"
 import * as s from "../styles/Dashboard.styles"
 import Modal from "./Modals/Modal"
 import Autocomplete from "./Maps/Autocomplete"
-import { Form, GhostInput, Button } from "../styles/theme/styledComponents"
+import {
+  Form,
+  GhostInput,
+  Button,
+  CloseModalIcon
+} from "../styles/theme/styledComponents"
 import { UserPropTypes } from "./propTypes"
 import { openModal, closeModal } from "../redux/actions/modal"
 import { updateUserWithMsg } from "../redux/actions/settings"
@@ -18,6 +23,7 @@ class DashboardHome extends Component {
       formattedAddress: null,
       displayName: "",
       location: null,
+      firstTimeLogin: false,
       query: ""
     }
     this.inputRef = React.createRef()
@@ -25,15 +31,16 @@ class DashboardHome extends Component {
 
   componentDidMount() {
     const { user } = this.props
-    if ((user && user.loginCount === 0) || !user.formattedAddress) {
-      this.setState({ displayName: user.displayName || "" })
+
+    if (!user.formattedAddress) {
       this.props.openModal()
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.user.formattedAddress && !prevProps.user.formattedAddress) {
-      this.props.closeModal()
+    if (user && user.loginCount === 0) {
+      this.setState({
+        firstTimeLogin: true,
+        displayName: user.displayName || ""
+      })
     }
   }
 
@@ -78,7 +85,13 @@ class DashboardHome extends Component {
                 <Modal isOpen={modalIsOpen}>
                   {() => (
                     <div className="onboarding-flow">
+                      <CloseModalIcon onClick={this.props.closeModal}>
+                        x
+                      </CloseModalIcon>
                       <div className="flow-header">
+                        {this.state.firstTimeLogin && (
+                          <p>Welcome, first timer!</p>
+                        )}
                         <h4>Create your profile</h4>
                         <div>
                           This will give you a place to store trips and plan new
@@ -107,7 +120,7 @@ class DashboardHome extends Component {
                         <div>{formattedAddress}</div>
                         <div>{location.lat && location.lat + location.lng}</div>
                         <div className="text-align-right">
-                          <Button className="btn">Save</Button>
+                          <Button className="btn-primary">Save</Button>
                         </div>
                       </Form>
                     </div>

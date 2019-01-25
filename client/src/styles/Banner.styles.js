@@ -27,7 +27,7 @@ export const Banner = styled.div`
     ${media.tablet`height: 70px;`}
 
     color: ${props => props.theme.white};
-    background-color: ${props => props.theme.primaryDark};
+    background-color: ${props => props.theme.secondaryDark};
     /* background-color: #0e153f; */
     width: 100%;
     display: flex;

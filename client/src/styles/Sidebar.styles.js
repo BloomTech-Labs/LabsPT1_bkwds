@@ -2,15 +2,14 @@ import styled from "styled-components"
 import { media } from "../styles/theme/mixins"
 
 export const SidebarStyles = styled.div`
-  /* width: ${props => `${props.theme.sidebarWidth}px`}; */
-  ${media.tablet`
-    display: none;
-  `}
+  position: absolute;
+  z-index: 7;
 
-  > div {
-    height: 100%;
+  .sidebar-links {
     width: 50px;
-    transition: width ease-in-out 0.3s;
+    background: transparent;
+    /* Sidebar open & close transition (Desktop) */
+    transition: visibility, width ease-in-out 0.3s;
   }
 
   button {
@@ -19,7 +18,7 @@ export const SidebarStyles = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 6px 12px;
+    padding: 0;
     border: none;
     margin-top: 2px;
 
@@ -27,22 +26,47 @@ export const SidebarStyles = styled.div`
       width: 26px;
     }
 
+    a:first-child {
+      padding: 6px 12px;
+      min-width: 50px;
+    }
+
     a:last-child {
       white-space: nowrap;
       opacity: 0;
       width: 0;
-      margin-left: 10px;
-      transition: all ease-in-out 0.4s;
+      padding: 6px 0;
+      width: 100%;
+      text-align: left;
+      display: ${props => (props.isSidebarOpen ? "block" : "none")};
     }
   }
 
   .open {
     width: ${props => `${props.theme.sidebarWidth}px`};
-    transition: width ease-in-out 0.3s;
-
     a:last-child {
       opacity: 1;
-      transition: all ease-in-out 0.5s;
     }
   }
+
+  /* MEDIA QUERIES */
+  ${media.tablet`
+    height: ${props => (props.isSidebarOpen ? "100vh" : "inherit")};
+    min-width: ${props => (props.isSidebarOpen ? "100vw" : "inherit")};
+    background: rgba(0, 0, 0, 0.5);
+    z-index: ${props => (props.isSidebarOpen ? 7 : -1)}
+
+    .sidebar-links {
+      opacity: ${props => (props.isSidebarOpen ? 1 : 0)};
+      /* Sidebar open & close transition (Tablet & Phone) */
+      transition: opacity ease-in-out 0.3s;
+      width: 100%;
+      button {
+        height: 54px;
+        a {
+          font-size: 1.35rem;
+        }
+      }
+    }
+  `}
 `
