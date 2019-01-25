@@ -24,10 +24,7 @@ describe("Test sending SMS alert with Twilio", () => {
       .set("Authorization", `Bearer ${token}`)
       .then(response => {
         expect(response.statusCode).toBe(200)
-        expect(response.body.from).toBe("+15005550006")
-        expect(response.body.accountSid).toBe(
-          "AC5cf333ff18d7b94390f3a663e931cda3"
-        )
+        expect(response.body).toBe("SMS alert successfully sent")
         done()
       })
   })

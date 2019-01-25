@@ -26,11 +26,10 @@ export const sendSMSAlert = async (req, res) => {
       from: twilioNumber,
       to: data.number
     })
-    .then(message => {
-      res.status(200).json(message)
+    .then(() => {
+      res.status(200).json("SMS alert successfully sent")
     })
-    .catch(err => {
-      console.log(err)
+    .catch(() => {
       res.status(500).json("Error sending message")
     })
 }
