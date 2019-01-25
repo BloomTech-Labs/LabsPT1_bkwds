@@ -79,7 +79,7 @@ export const editTrip = trip => dispatch => {
             order: waypoint.order
           })
         })
-        axios.all(updates).then(_ => {
+        axios.all(updates).then(() => {
           dispatch({ type: EDIT_TRIP_SUCCESS })
         })
       })
