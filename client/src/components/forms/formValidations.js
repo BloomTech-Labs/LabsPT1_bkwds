@@ -2,7 +2,7 @@ import { validateEmail } from "../../utils/"
 
 export const loginValidations = values => {
   let errors = {}
-  if (!values.username) errors.username = "Username or email is required"
+  if (!values.email) errors.email = "Email is required"
   if (!values.password) errors.password = "Password is required"
   if (values.password && values.password.length < 8)
     errors.password = "Password must be at least 8 characters"
@@ -12,7 +12,6 @@ export const loginValidations = values => {
 
 export const registerValidations = values => {
   let errors = {}
-  if (!values.username) errors.username = "Username is required"
   if (!values.email) {
     errors.email = "Email is required"
   } else if (validateEmail(values.email)) {

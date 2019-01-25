@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import logo from "../../assets/bkwdslogo.png"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 const NavigationMenu = styled.div`
   display: grid;
@@ -26,6 +26,7 @@ const Menu = styled.div`
   a {
     font-size: 20px;
     color: white !important;
+    text-decoration: none;
   }
 `
 
@@ -36,8 +37,8 @@ const Nav = () => {
         <Img src={logo} />
       </div>
       <Menu>
-        <Link to="/login">Features</Link>
-        <Link to="/login">About</Link>
+        <NavLink to="/features">Features</NavLink>
+        <Link to="/about">About</Link>
         <Link to="/login">Log in</Link>
         <Link to="/login">Sign up</Link>
       </Menu>

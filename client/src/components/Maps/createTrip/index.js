@@ -18,10 +18,18 @@ class CreateTripMap extends React.Component {
   }
 
   componentDidMount() {
+    const { center } = this.props
+    const userCenter = center.length
+      ? {
+          lat: parseFloat(center[0].$numberDecimal),
+          lng: parseFloat(center[1].$numberDecimal)
+        }
+      : null
+
     window.map = new window.google.maps.Map(
       document.getElementById("createTripMap"),
       {
-        center: { lat: 39.0997, lng: -94.5786 },
+        center: userCenter ? userCenter : { lat: 39.0997, lng: -94.5786 },
         zoom: 9,
         disableDefaultUI: true
       }
@@ -88,11 +96,24 @@ class CreateTripMap extends React.Component {
         start: this.state.startDate.utc().format(),
         end: this.state.endDate.utc().format(),
         lat: window.map.getCenter().lat(),
-        lon: window.map.getCenter().lng()
+        lon: window.map.getCenter().lng(),
+        image: this.generateMapImageUrl()
       }
-
       this.props.createTrip(trip, markers)
     }
+  }
+
+  generateMapImageUrl = () => {
+    const staticMapAPI = "https://maps.googleapis.com/maps/api/staticmap?"
+    let lat = window.map
+      .getCenter()
+      .lat()
+      .toString()
+    let lon = window.map
+      .getCenter()
+      .lng()
+      .toString()
+    return `${staticMapAPI}center=${lat},${lon}&zoom=16&size=350x350&key=`
   }
 
   saveValidate = () => {
@@ -140,7 +161,8 @@ class CreateTripMap extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  userId: state.auth.user.id
+  userId: state.auth.user.id,
+  center: state.auth.user.coordinates
 })
 
 const mapDispatchToProps = { createTrip }

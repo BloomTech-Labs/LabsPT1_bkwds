@@ -26,7 +26,6 @@ const RegisterForm = ({
     validate={validate}
     initialValues={{
       email: "",
-      username: "",
       password: "",
       passwordConfirm: ""
     }}
@@ -50,14 +49,6 @@ const RegisterForm = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="Email"
-              values={values}
-            />
-            <CustomInputWithError
-              name="username"
-              type="text"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder="Username"
               values={values}
             />
             <CustomInputWithError

@@ -5,11 +5,11 @@ import { User } from "../resources/user/user.model"
 const JWT_SECRET = config.secrets.JWT_SECRET
 
 export const register = (req, res) => {
-  const { username, password, email } = req.body
-  User.findOne({ username: username })
+  const { email, password, ...rest } = req.body
+  User.findOne({ email: email })
     .then(existingUser => {
-      if (existingUser) return res.status(404).send("Username already exists")
-      let user = new User({ username, password, email })
+      if (existingUser) return res.status(404).send("Email already exists")
+      let user = new User({ email, password, ...rest })
       const token = jwt.sign({ id: user._id }, JWT_SECRET, {
         expiresIn: 86400 // 24 hours
       })
@@ -33,23 +33,29 @@ export const register = (req, res) => {
 }
 
 export const login = (req, res) => {
-  const { username, password } = req.body
-  User.findOne({ username: username })
+  const { email, password } = req.body
+  User.findOneAndUpdate(
+    { email: email },
+    // Update lastLogin, increment loginCount:
+    { lastLogin: Date.now(), $inc: { loginCount: 1 } },
+    // Get back old user, not new one!
+    { new: false }
+  )
     .populate("trips")
     .exec()
-    .then(user => {
-      if (!user) return res.status(404).send("User does not exist")
-      user.comparePassword(password, (err, isMatch) => {
+    .then(oldUser => {
+      if (!oldUser) return res.status(404).send("User does not exist")
+      oldUser.comparePassword(password, (err, isMatch) => {
         if (err) {
           return res.status(401).send("Unauthorized")
         }
         if (isMatch) {
           // let token = generateToken(user)
-          const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+          const token = jwt.sign({ id: oldUser._id }, JWT_SECRET, {
             expiresIn: 86400 // 24 hours
           })
 
-          const payload = { user, token }
+          const payload = { user: oldUser, token }
           res.status(200).json(payload)
         } else {
           return res.status(401).send("Invalid password")
@@ -78,9 +84,9 @@ export const protect = (req, res, next) => {
 }
 
 export const changePassword = async (req, res) => {
-  const { username, oldPassword, newPassword } = req.body
+  const { email, oldPassword, newPassword } = req.body
   // find if old password is valid
-  User.findOne({ username: username })
+  User.findOne({ email: email })
     .then(oldUser => {
       if (!oldUser) return res.status(404).send("User does not exist")
       oldUser.comparePassword(oldPassword, (err, isMatch) => {

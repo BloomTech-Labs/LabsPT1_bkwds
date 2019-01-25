@@ -54,7 +54,7 @@ const NewTripForm = ({ userId, createTrip, newTripError, tripIndex }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="Username"
+                placeholder="Email"
                 values={values}
                 classNames={["new-trip-form-field"]}
               />

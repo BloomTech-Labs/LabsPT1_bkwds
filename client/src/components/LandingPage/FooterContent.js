@@ -3,7 +3,6 @@ import styled from "styled-components"
 import ButtonCTA from "./ButtonCTA"
 import GoogleIcon from "../icons/GoogleIcon"
 import { loginWithOauth } from "../../redux/actions/auth"
-import { Button } from "../../styles/theme/styledComponents"
 
 const ContentContainer = styled.div`
   display: flex;
@@ -11,7 +10,7 @@ const ContentContainer = styled.div`
   background-image: url(./images/hikerscontent2.png);
   background-size: cover;
   justify-content: center;
-  height: 100vh;
+  height: 60vh;
   width: 100vw;
 `
 
@@ -36,9 +35,17 @@ const BrandedContent = styled.div`
     color: #f26a21 !important;
     font-weight: bold;
   }
+
+
+  .googleSignIn {
+      height: 55px;
+      width: 200px;
+      margin: 3rem
+      border-radius: 12px;
+  }
 `
 
-const LandingPageContent2 = () => {
+const FooterContent = () => {
   return (
     <ContentContainer>
       <BrandedContent>
@@ -46,12 +53,12 @@ const LandingPageContent2 = () => {
           Explore without boundaries<span className="accent">.</span>
         </h3>
         <ButtonCTA />
-        <Button className="btn-ghost" width="300px" onClick={loginWithOauth}>
+        <button className="googleSignIn" width="300px" onClick={loginWithOauth}>
           <GoogleIcon /> Log in with Google
-        </Button>
+        </button>
       </BrandedContent>
     </ContentContainer>
   )
 }
 
-export default LandingPageContent2
+export default FooterContent

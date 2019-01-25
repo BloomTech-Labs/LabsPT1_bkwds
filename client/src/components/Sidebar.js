@@ -20,7 +20,7 @@ const menuItems = [
   {
     displayName: "Dashboard",
     icon: "fa-tachometer",
-    to: "/app"
+    to: "/app/dashboard"
   },
   {
     displayName: "Create a new trip",

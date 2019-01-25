@@ -3,7 +3,8 @@ import styled from "styled-components"
 import HeroPage from "./HeroPage"
 import Features from "./Features"
 import LandingPageContent from "./LandingPageContent"
-import LandingPageContent2 from "./LandingPageContent2"
+import FooterContent from "./FooterContent"
+import Footer from "./Footer"
 
 const LandingPageContainer = styled.div``
 
@@ -13,7 +14,8 @@ const LandingPage = () => {
       <HeroPage />
       <Features />
       <LandingPageContent />
-      <LandingPageContent2 />
+      <FooterContent />
+      <Footer />
     </LandingPageContainer>
   )
 }

@@ -11,7 +11,7 @@ describe("Test Waypoint model and routes", () => {
   beforeAll(async done => {
     const response = await request(app)
       .post("/api/login")
-      .send({ username: mock.userOne.username, password: "testpass" })
+      .send({ email: mock.userOne.email, password: "testpass" })
     token = response.body.token
     return done()
   })
