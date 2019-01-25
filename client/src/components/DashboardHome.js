@@ -63,6 +63,7 @@ class DashboardHome extends Component {
     if (formattedAddress) update.formattedAddress = formattedAddress
 
     if (contactName && contactNumber) {
+      //TODO add input validation for phone number
       let contactInfo = {
         name: contactName,
         number: `+1${contactNumber}`
@@ -133,13 +134,11 @@ class DashboardHome extends Component {
                           value={this.state.contactName}
                           onChange={this.handleChange("contactName")}
                           placeholder="Name"
-                          ref={this.inputRef}
                         />
                         <GhostInput
                           value={this.state.contactNumber}
                           onChange={this.handleChange("contactNumber")}
                           placeholder="Phone ( e.g. 5125551234 )"
-                          ref={this.inputRef}
                         />
                         <div>{formattedAddress}</div>
                         <div>{location.lat && location.lat + location.lng}</div>
