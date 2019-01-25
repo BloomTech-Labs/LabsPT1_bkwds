@@ -21,7 +21,13 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR,
   REPEAT_TRIP,
   REPEAT_TRIP_SUCCESS,
-  REPEAT_TRIP_ERROR
+  REPEAT_TRIP_ERROR,
+  EDIT_TRIP,
+  EDIT_TRIP_ERROR,
+  EDIT_TRIP_SUCCESS,
+  START_TRIP,
+  START_TRIP_SUCCESS,
+  START_TRIP_ERROR
 } from "./types"
 
 export const getTrips = userId => dispatch => {
@@ -49,6 +55,47 @@ export const getSingleTrip = tripId => dispatch => {
   axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
     dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
   })
+}
+
+export const editTrip = trip => dispatch => {
+  dispatch({ type: EDIT_TRIP })
+  axios.put(`${SERVER_URI}/trips/${trip.id}`, { name: trip.name }).then(() => {
+    let newWaypoints = trip.waypoints.filter(waypoint => {
+      return waypoint.id === undefined
+    })
+    axios
+      .post(`${SERVER_URI}/waypoints/batch`, newWaypoints)
+      .then(() => {
+        let updatedWaypoints = trip.waypoints.filter(waypoint => {
+          return waypoint.id !== undefined
+        })
+
+        let updates = updatedWaypoints.map(waypoint => {
+          return axios.put(`${SERVER_URI}/waypoints/${waypoint.id}`, {
+            lat: waypoint.lat,
+            lon: waypoint.lon,
+            name: waypoint.name,
+            order: waypoint.order
+          })
+        })
+        axios.all(updates).then(_ => {
+          dispatch({ type: EDIT_TRIP_SUCCESS })
+        })
+      })
+      .catch(err => dispatch({ type: EDIT_TRIP_ERROR, payload: err }))
+  })
+}
+
+export const startTrip = trip => dispatch => {
+  dispatch({ type: START_TRIP })
+  axios
+    .put(`${SERVER_URI}/trips/${trip.id}`, { inProgress: true })
+    .then(res => {
+      dispatch({ type: START_TRIP_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: START_TRIP_ERROR, payload: err })
+    })
 }
 
 // export const editTrip = tripId => dispatch => {

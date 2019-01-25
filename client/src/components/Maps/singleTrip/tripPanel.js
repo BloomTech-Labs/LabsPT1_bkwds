@@ -9,6 +9,7 @@ import AddIcon from "../../icons/AddSvg"
 import { connect } from "react-redux"
 import * as util from "./mapUtil"
 import * as s from "./components"
+import { editTrip, startTrip } from "../../../redux/actions/trips"
 
 class TripPanel extends React.Component {
   constructor(props) {
@@ -67,6 +68,7 @@ class TripPanel extends React.Component {
       end: new Date()
     }
     let waypoints = this.state.trip.waypoints.concat(waypoint)
+    this.setState({ trip: { ...this.state.trip, waypoints } })
     let markers = this.state.markers.concat(marker)
     this.setState({ markers, trip: { ...this.state.trip, waypoints } })
   }
@@ -191,6 +193,7 @@ class TripPanel extends React.Component {
   handleSave = () => {
     this.setState({ saveToggle: false, isEditing: false }, () => {
       this.toggleDraggable()
+      this.props.editTrip(this.state.trip)
     })
   }
 
@@ -218,9 +221,7 @@ class TripPanel extends React.Component {
           lng: marker.getPosition().lng()
         }
       })
-      console.log(latlngs)
       util.calcTotalDistance(latlngs).then(res => {
-        console.log(res)
         this.setState({ tripDistance: res.toFixed(2) })
       })
     }
@@ -280,7 +281,13 @@ class TripPanel extends React.Component {
         <s.WaypointList>
           {this.renderWaypointList(this.state.trip.waypoints)}
         </s.WaypointList>
-        <s.StartButton>Start Trip</s.StartButton>
+        <s.StartButton
+          onClick={() => {
+            this.props.startTrip(this.state.trip)
+          }}
+        >
+          Start Trip
+        </s.StartButton>
       </s.Panel>
     )
   }
@@ -290,8 +297,13 @@ const mapStateToProps = state => {
   return { trip: state.trips.activeTrip }
 }
 
+const mapDispatchToProps = { editTrip, startTrip }
+
 TripPanel.propTypes = {
   trip: TripPropTypes
 }
 
-export default connect(mapStateToProps)(TripPanel)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TripPanel)
