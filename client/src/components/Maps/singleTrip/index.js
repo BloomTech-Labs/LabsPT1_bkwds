@@ -1,6 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import { MapWrapper } from "../../../styles/CreateTrip.styles"
+import TripPanel from "../singleTrip/tripPanel"
+import ActiveTripPanel from "./activePanel"
 import styled from "styled-components"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
@@ -16,8 +19,8 @@ const SingleTripMapStyles = styled.div`
   position: absolute;
   margin-left: -50px;
   ${media.tablet`
-    margin-left: 0;
-  `}
+   margin-left: 0;
+ `}
 `
 
 const dashSymbol = {
@@ -33,16 +36,15 @@ class SingleTripMap extends React.Component {
     tripId: ""
   }
 
-  mapRef = React.createRef()
-
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
+    window.elevation = new window.google.maps.ElevationService()
   }
 
   componentDidUpdate() {
     const { trip } = this.props
-    if (trip && trip.waypoints) this.renderMap(trip, trip.waypoints)
-    this.drawPolyline()
+    if (trip && trip.waypoints) this.renderMap(trip)
+    // this.drawPolyline()
   }
 
   shouldComponentUpdate(nextProps) {
@@ -52,7 +54,8 @@ class SingleTripMap extends React.Component {
 
   renderMap = (center, waypoints) => {
     let latLngs
-    window.map = new window.google.maps.Map(this.mapRef.current, {
+    const Tripmap = document.getElementById("Tripmap")
+    window.map = new window.google.maps.Map(Tripmap, {
       center,
       zoom: 9,
       disableDefaultUI: true
@@ -118,8 +121,7 @@ class SingleTripMap extends React.Component {
     return latLngs
   }
 
-  drawPolyline = () => {
-    const { waypoints } = this.props.trip
+  drawPolyline = waypoints => {
     const path = waypoints.map(w => ({
       lat: w.lat,
       lng: w.lon
@@ -144,8 +146,27 @@ class SingleTripMap extends React.Component {
     polyline.setMap(window.map)
   }
 
+  // Add conditional rendering for active Trip
   render() {
-    return <SingleTripMapStyles ref={this.mapRef} />
+    if (this.props.trip !== null) {
+      return (
+        <SingleTripMapStyles>
+          <MapWrapper>
+            {!this.props.trip.inProgress ? (
+              <TripPanel drawPolyline={this.drawPolyline} />
+            ) : (
+              <ActiveTripPanel />
+            )}
+            <div
+              style={{ width: "100%", height: "100%", position: "absolute" }}
+              id="Tripmap"
+            />
+          </MapWrapper>
+        </SingleTripMapStyles>
+      )
+    } else {
+      return null
+    }
   }
 }
 
