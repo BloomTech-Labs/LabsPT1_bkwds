@@ -68,7 +68,6 @@ class TripPanel extends React.Component {
       end: new Date()
     }
     let waypoints = this.state.trip.waypoints.concat(waypoint)
-    this.setState({ trip: { ...this.state.trip, waypoints } })
     let markers = this.state.markers.concat(marker)
     this.setState({ markers, trip: { ...this.state.trip, waypoints } })
   }

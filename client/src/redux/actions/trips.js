@@ -63,6 +63,7 @@ export const editTrip = trip => dispatch => {
     let newWaypoints = trip.waypoints.filter(waypoint => {
       return waypoint.id === undefined
     })
+    console.log(newWaypoints)
     axios
       .post(`${SERVER_URI}/waypoints/batch`, newWaypoints)
       .then(() => {
