@@ -144,7 +144,7 @@ class DashboardHome extends Component {
 }
 
 DashboardHome.propTypes = {
-  user: PropTypes.objectOf(UserPropTypes),
+  user: UserPropTypes,
   modalIsOpen: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   updateUserWithMsg: PropTypes.func.isRequired,
