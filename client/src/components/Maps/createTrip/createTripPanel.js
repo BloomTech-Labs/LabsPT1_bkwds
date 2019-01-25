@@ -1,44 +1,64 @@
-import React, { Fragment } from "react"
+import React from "react"
 import { DateRangePicker } from "react-dates"
 import PropTypes from "prop-types"
-
-import * as s from "../../../styles/CreateTripPanel.styles"
 import "react-dates/initialize"
 import "react-dates/lib/css/_datepicker.css"
-import "../createTrip/custom.css"
+
+import * as s from "../../../styles/CreateTripPanel.styles"
+import { Button } from "../../../styles/theme/styledComponents"
+import Autocomplete from "../Autocomplete"
 
 class CreateTripPanel extends React.Component {
-  state = {
-    title: "",
-    startDate: null,
-    endDate: null,
-    focusedInput: null,
-    location: "",
-    isToggled: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: "",
+      startDate: null,
+      endDate: null,
+      focusedInput: null,
+      query: "",
+      searchToggled: false,
+      menuToggled: false
+    }
+    this.inputRef = React.createRef()
   }
 
-  toggleDropdown = () => {
-    this.setState({ isToggled: !this.state.isToggled })
+  componentDidMount() {
+    this.inputRef.current.focus()
   }
 
-  handleLocation = event => {
-    this.setState({ location: event.target.value })
-    this.searchAutoComplete()
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.searchToggled && this.state.searchToggled)
+      this.inputRef.current.focus()
   }
 
-  searchAutoComplete = () => {
-    const input = document.getElementById("mapSearch")
-    const autoComplete = new window.google.maps.places.Autocomplete(input)
-    autoComplete.addListener("place_changed", () => {
-      let place = autoComplete.getPlace()
-      if (place.geometry !== undefined) {
-        window.map.panTo({
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
-        })
-      }
-    })
+  toggleMenu = () => {
+    this.setState({ menuToggled: !this.state.menuToggled })
   }
+
+  toggleSearch = () => {
+    this.setState({ searchToggled: !this.state.searchToggled })
+  }
+
+  handleSearch = event => {
+    this.setState({ query: event.target.value })
+    // this.searchAutoComplete()
+  }
+
+  // searchAutoComplete = () => {
+  //   const autoComplete = new window.google.maps.places.Autocomplete(
+  //     this.inputRef.current
+  //   )
+  //   autoComplete.addListener("place_changed", () => {
+  //     let place = autoComplete.getPlace()
+  //     if (place.geometry !== undefined) {
+  //       window.map.panTo({
+  //         lat: place.geometry.location.lat(),
+  //         lng: place.geometry.location.lng()
+  //       })
+  //     }
+  //   })
+  // }
 
   handleTitle = e => {
     e.persist()
@@ -54,64 +74,121 @@ class CreateTripPanel extends React.Component {
   }
 
   render() {
+    const {
+      menuToggled,
+      searchToggled,
+      title,
+      startDate,
+      endDate,
+      focusedInput
+    } = this.state
     return (
-      <Fragment>
-        <s.Panel isToggled={this.state.isToggled}>
-          <s.PanelHeader>Create Your Trip</s.PanelHeader>
-          <s.InputLabel>Location</s.InputLabel>
-          <s.SearchCenterInput
-            id="mapSearch"
-            placeholder="Enter Location OR drag map"
-            value={this.state.location}
-            onChange={this.handleLocation}
-          />
+      <s.CreateTripPanelStyles
+        menuToggled={menuToggled}
+        searchToggled={searchToggled}
+        className="CreateTripPanelStyles"
+      >
+        <div className="mobile-create-trip-panel">
+          <Button
+            onClick={this.toggleSearch}
+            className={`btn-neutral ${searchToggled ? "active-button" : ""}`}
+          >
+            <i id="down-angle" className="fas fa-search" />
+          </Button>
 
-          <s.TripTitleInput
-            isToggled={this.state.isToggled}
-            placeholder="Trip Name"
-            onChange={this.handleTitle}
-            value={this.state.title}
-          />
+          <Button
+            onClick={this.toggleMenu}
+            className={`btn-neutral ${menuToggled ? "active-button" : ""}`}
+          >
+            <i id="" className="fas fa-cog" />
+          </Button>
 
-          <s.DateLabel>Trip Date</s.DateLabel>
-          <s.DateRangeStyle isToggled={this.state.isToggled}>
-            <DateRangePicker
-              numberOfMonths={1}
-              startDateId="startDate"
-              endDateId="endDate"
-              startDate={this.state.startDate}
-              horizontalMargin={5}
-              endDate={this.state.endDate}
-              onDatesChange={({ startDate, endDate }) => {
-                this.handleDate({ startDate, endDate })
-              }}
-              focusedInput={this.state.focusedInput}
-              onFocusChange={focusedInput => {
-                this.setState({ focusedInput })
-              }}
-            />
-          </s.DateRangeStyle>
+          <Button onClick={this.props.saveTrip} className={"btn-neutral"}>
+            <i id="" className="fas fa-floppy-o" />
+          </Button>
+        </div>
 
-          <s.ButtonGroup isToggled={this.state.isToggled}>
-            <s.WaypointButton onClick={this.props.addWaypoint}>
-              + Waypoint
-            </s.WaypointButton>
-            <s.SaveButton
-              isToggled={this.state.isToggled}
-              onClick={() => this.props.saveTrip()}
-            >
-              Create Trip
-            </s.SaveButton>
-          </s.ButtonGroup>
-          <s.Toggle>
-            <i
-              id="down-angle"
-              className="fas fa-angle-down fa-2x"
-              onClick={this.toggleDropdown}
-            />
-          </s.Toggle>
-        </s.Panel>
-      </Fragment>
+        <Autocomplete
+          google={window.google}
+          inputRef={this.inputRef}
+          map={null}
+        >
+          {({ formattedAddress }) => (
+            <div className="desktop-create-trip-panel">
+              <s.Panel menuToggled={menuToggled}>
+                <s.PanelHeader className="hide-mobile">
+                  Create Your Trip
+                </s.PanelHeader>
+
+                <s.SearchWrapper
+                  searchToggled={searchToggled}
+                  className="panel-input-wrapper"
+                >
+                  <s.InputLabel className="hide-mobile">
+                    {formattedAddress ? formattedAddress : "Location"}
+                  </s.InputLabel>
+                  <s.SearchCenterInput
+                    ref={this.inputRef}
+                    searchToggled={searchToggled}
+                    placeholder="Enter Location OR drag map"
+                    value={this.state.query}
+                    onChange={this.handleSearch}
+                  />
+                </s.SearchWrapper>
+
+                <div className="trip-title-wrapper panel-input-wrapper">
+                  <s.TripTitleInput
+                    menuToggled={menuToggled}
+                    placeholder="Trip Name"
+                    onChange={this.handleTitle}
+                    value={title}
+                  />
+                </div>
+
+                <s.DateLabel className="hide-mobile">Trip Date</s.DateLabel>
+                <s.DateRangeStyle menuToggled={menuToggled}>
+                  <DateRangePicker
+                    numberOfMonths={1}
+                    startDateId="startDate"
+                    endDateId="endDate"
+                    startDate={startDate}
+                    horizontalMargin={5}
+                    endDate={endDate}
+                    onDatesChange={({ startDate, endDate }) => {
+                      this.handleDate({ startDate, endDate })
+                    }}
+                    focusedInput={focusedInput}
+                    onFocusChange={focusedInput => {
+                      this.setState({ focusedInput })
+                    }}
+                  />
+                </s.DateRangeStyle>
+
+                <s.ButtonGroup menuToggled={menuToggled}>
+                  <s.WaypointButton
+                    className="hide-mobile"
+                    onClick={this.props.addWaypoint}
+                  >
+                    + Waypoint
+                  </s.WaypointButton>
+                  <Button
+                    onClick={this.toggleMenu}
+                    className="close-trip-settings btn-neutral"
+                  >
+                    Close Trip Settings
+                  </Button>
+                  <s.SaveButton
+                    menuToggled={menuToggled}
+                    onClick={() => this.props.saveTrip()}
+                  >
+                    Create Trip
+                  </s.SaveButton>
+                </s.ButtonGroup>
+              </s.Panel>
+            </div>
+          )}
+        </Autocomplete>
+      </s.CreateTripPanelStyles>
     )
   }
 }

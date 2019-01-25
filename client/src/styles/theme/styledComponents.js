@@ -61,24 +61,33 @@ export const Button = styled.button`
   font-weight: 500;
   width: ${props => props.width};
 
-  background-color: ${({ color, theme }) =>
-    color === "orange" ? "#f26a21" : theme.primaryDark};
-  border-color: ${({ color, theme }) =>
-    color === "orange" ? "#f26a21" : theme.primaryDark};
+  /* Button & btn-primary */
+  will-change: background-color, border-color, color;
+  -webkit-transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease;
+  background-color: ${props => props.theme.primary};
+  border-color: ${props => props.theme.primary};
   &:hover,
   &:focus {
-    background-color: ${({ color, theme }) =>
-      color === "orange" ? "#f37837" : theme.tertiary};
-    border-color: ${({ color, theme }) =>
-      color === "orange" ? "#f37837" : theme.tertiary};
+    background-color: ${props => props.theme.primaryHover};
+    border-color: ${props => props.theme.primaryHover};
   }
 
   /* Styles for Link/anchor elements that might be children of Button */
   a {
     color: ${props => props.theme.white};
+    &:hover {
+      color: ${props => props.theme.white};
+    }
   }
 
-  &.btn {
+  &.btn-primary {
+    border: 0;
+  }
+
+  &.btn-tertiary {
     background-color: ${props => props.theme.tertiary};
     border-color: ${props => props.theme.tertiary};
     color: ${props => props.theme.white};
@@ -86,14 +95,10 @@ export const Button = styled.button`
     border-radius: 6px;
     &:hover,
     &:focus {
-      background-color: ${props => props.theme.tertiary};
-      border-color: ${props => props.theme.tertiary};
+      background-color: ${props => props.theme.tertiaryHover};
+      border-color: ${props => props.theme.tertiaryHover};
       color: ${props => props.theme.white};
     }
-  }
-
-  &.btn-primary {
-    border: 0;
   }
 
   &.btn-light {
@@ -111,39 +116,46 @@ export const Button = styled.button`
     border-color: ${props => props.theme.lightGray};
   }
 
-  &.btn-inverted {
-    color: ${props => props.theme.primary};
-    /* target anchors for when we nest Links inside buttons */
-    & a {
-      color: ${props => props.theme.primary};
-    }
-    background-color: ${props => props.theme.primaryLight};
-    border-color: ${props => props.theme.primaryLight};
+  &.btn-neutral {
+    background-color: ${props => props.theme.offWhite};
+    border-color: ${props => props.theme.offWhite};
+    color: ${props => props.theme.midGray};
+
     &:hover,
     &:focus {
-      background-color: ${props => props.theme.primary};
-      border-color: ${props => props.theme.primary};
+      background-color: ${props => props.theme.lightGray};
+      border-color: ${props => props.theme.lightGray};
+      color: ${props => props.theme.darkGray};
+    }
+  }
+
+  &.btn-inverted {
+    color: ${props => props.theme.white};
+    /* target anchors for when we nest Links inside buttons */
+    & a {
       color: ${props => props.theme.white};
+    }
+    background-color: ${props => props.theme.primary};
+    border-color: ${props => props.theme.primary};
+    &:hover,
+    &:focus {
+      background-color: ${props => props.theme.primaryLight};
+      border-color: ${props => props.theme.primaryLight};
+      color: ${props => props.theme.primary};
       & a {
-        color: ${props => props.theme.white};
+        color: ${props => props.theme.primary};
       }
     }
   }
 
   &.btn-secondary {
-    background-color: ${props => props.theme.secondary};
-    border-color: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.secondaryDark};
+    border-color: ${props => props.theme.secondaryDark};
     &:hover,
     &:focus {
-      background-color: ${props => props.theme.secondaryDark};
-      border-color: ${props => props.theme.secondaryDark};
+      background-color: ${props => props.theme.secondary};
+      border-color: ${props => props.theme.secondary};
     }
-  }
-
-  &:hover,
-  &:focus {
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   }
 
   &:not(:disabled) {
@@ -164,7 +176,7 @@ export const CardButton = styled.button`
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
   text-align: center;
   text-decoration: bold;
-  color: #1abc9c;
+  color: ${props => props.theme.tertiary};
   transition: all 0.3s ease;
   /* &::after {
     margin-left: 2%;
@@ -175,11 +187,23 @@ export const CardButton = styled.button`
 
   &:hover,
   &:focus {
-    background: #1abc9c;
+    background: ${props => props.theme.tertiary};
     color: #fff;
-    box-shadow: 0 2px 8px 0 rgba(#1abc9c, 0.4);
+    box-shadow: 0 2px 8px 0 rgba(${props => props.theme.tertiary}, 0.4);
     &::after {
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
   }
+`
+
+export const CloseModalIcon = styled.button`
+  position: absolute;
+  right: 4rem;
+  border: 0;
+  cursor: pointer;
+  color: rgba(128, 128, 128, 0.5);
+  padding: 0;
+  font-size: 2rem;
+  padding: 0 !important;
+  font-weight: 300;
 `

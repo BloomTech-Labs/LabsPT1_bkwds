@@ -13,6 +13,7 @@ export const TripCardStyles = styled.div`
 
   button {
     margin-top: 1.25rem;
+    cursor: pointer;
   }
 
   .container {
@@ -42,6 +43,8 @@ export const TripCardStyles = styled.div`
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0.0625rem 0px,
       rgba(0, 0, 5, 0.1) 0px 0.0625rem 0.125rem,
       rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem;
+
+    transition: transform 0.22s ease-out 0s, box-shadow;
 
     @media (max-width: 55.875em) {
       height: 300px;
@@ -94,9 +97,12 @@ export const TripCardStyles = styled.div`
     .text-overlay {
       position: absolute;
       color: rgba(30, 33, 37, 0.25);
-      font-size: 5rem;
+      font-size: 3.75rem;
       font-weight: 600;
       transform: rotate(45deg);
+      @media all and (max-width: 894px) {
+        font-size: 2.125rem;
+      }
     }
   }
 `

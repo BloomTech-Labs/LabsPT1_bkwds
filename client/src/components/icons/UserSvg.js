@@ -14,7 +14,7 @@ const UserSvg = ({ height, width }) => {
     svg {
       height: ${height}rem;
       width: ${width}rem;
-      fill: ${theme.primary};
+      fill: ${theme.secondaryDark};
       margin-top: 11px;
     }
   `

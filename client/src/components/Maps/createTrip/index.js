@@ -19,12 +19,7 @@ class CreateTripMap extends React.Component {
 
   componentDidMount() {
     const { center } = this.props
-    const userCenter = center.length
-      ? {
-          lat: parseFloat(center[0].$numberDecimal),
-          lng: parseFloat(center[1].$numberDecimal)
-        }
-      : null
+    const userCenter = center.length ? { lat: center[0], lng: center[1] } : null
 
     window.map = new window.google.maps.Map(
       document.getElementById("createTripMap"),

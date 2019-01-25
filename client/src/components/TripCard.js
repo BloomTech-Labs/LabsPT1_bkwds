@@ -43,13 +43,16 @@ const TripCard = ({
             <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
             <div className="card-cta">
               <Button
-                className={archived ? "btn-gray" : "btn"}
+                className={archived ? "btn-gray" : "btn-primary"}
                 onClick={() => toggleArchive(trip.id, archived, userId)}
               >
                 {archived ? "Unarchive" : "Archive"}
               </Button>
               {isArchivedTripRoute && (
-                <Button className="btn" onClick={() => repeatTrip(trip)}>
+                <Button
+                  className="btn-tertiary"
+                  onClick={() => repeatTrip(trip)}
+                >
                   Repeat
                 </Button>
               )}

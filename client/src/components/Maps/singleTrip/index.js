@@ -7,6 +7,17 @@ import ActiveTripPanel from "./activePanel"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
+import { media } from "../../../styles/theme/mixins"
+
+const SingleTripMapStyles = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin-left: -50px;
+  ${media.tablet`
+    margin-left: 0;
+  `}
+`
 
 const dashSymbol = {
   path: "M 0,-1 0,1",
@@ -19,6 +30,11 @@ class SingleTripMap extends React.Component {
     getSingleTrip: () => {},
     trip: getDefaultTripProps(),
     tripId: ""
+  }
+
+  constructor(props) {
+    super(props)
+    this.mapRef = React.createRef()
   }
 
   componentDidMount() {

@@ -31,14 +31,23 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   a {
-    color: ${props => props.theme.primaryDark};
+    will-change: color;
+    -webkit-transition: color 0.15s ease;
+    transition: color 0.15s ease;
+
+    color: ${props => props.theme.linkColor};
     &:hover {
+      color: ${props => props.theme.linkColorHover};
       text-decoration: none;
     }
   }
 
   button:focus, input:focus, textarea:focus {
     outline: 0;
+  }
+
+  button:hover {
+    text-decoration: none;
   }
 
   .main-wrapper {
