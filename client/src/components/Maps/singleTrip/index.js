@@ -9,9 +9,6 @@ import styled from "styled-components"
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
 import { media } from "../../../styles/theme/mixins"
-import marker from "../../icons/orange-marker.svg"
-import startMarker from "../../icons/green-marker.svg"
-import endMarker from "../../icons/black-marker.svg"
 
 const SingleTripMapStyles = styled.div`
   width: 100%;
@@ -43,7 +40,10 @@ class SingleTripMap extends React.Component {
 
   componentDidUpdate() {
     const { trip } = this.props
-    if (trip && trip.waypoints) this.renderMap(trip, trip.waypoints)
+    const lat = trip.lat
+    const lng = trip.lon
+    const center = { lat, lng }
+    if (trip && trip.waypoints) this.renderMap(center)
     this.drawPolyline(trip.waypoints)
   }
 
@@ -52,75 +52,15 @@ class SingleTripMap extends React.Component {
     return true
   }
 
-  renderMap = (center, waypoints) => {
-    let latLngs
-    const Tripmap = document.getElementById("Tripmap")
-    window.map = new window.google.maps.Map(Tripmap, {
-      center,
-      zoom: 9,
-      disableDefaultUI: true
-    })
-    if (waypoints) {
-      latLngs = this.renderWaypoints(waypoints)
-      const bounds = new window.google.maps.LatLngBounds()
-      latLngs.forEach(latLng => bounds.extend(latLng))
-      window.map.fitBounds(bounds)
-      window.map.setCenter(bounds.getCenter())
-    }
-  }
-
-  // Attach waypoints to map
-  renderWaypoints = waypoints => {
-    const latLngs = []
-    const { maps } = window.google
-    const baseIcon = {
-      anchor: new maps.Point(15, 30),
-      scaledSize: new maps.Size(30, 30),
-      labelOrigin: new maps.Point(15, 13)
-    }
-    const icons = {
-      start: {
-        url: startMarker,
-        ...baseIcon
-      },
-      end: {
-        url: endMarker,
-        ...baseIcon
-      },
-      marker: {
-        url: marker,
-        ...baseIcon
+  renderMap = center => {
+    window.map = new window.google.maps.Map(
+      document.getElementById("Tripmap"),
+      {
+        center: center,
+        zoom: 9,
+        disableDefaultUI: true
       }
-    }
-
-    waypoints.forEach((waypoint, i) => {
-      const position = {
-        lat: waypoint.lat,
-        lng: waypoint.lon
-      }
-      const icon =
-        i === 0
-          ? icons.start
-          : i === waypoints.length - 1
-          ? icons.end
-          : icons.marker
-      const label = {
-        text: waypoint.order.toString(),
-        color: "white",
-        fontFamily: "Wals",
-        fontWeight: "bold"
-      }
-      const wp = new maps.Marker({
-        icon,
-        position,
-        map: window.map,
-        title: waypoint.name,
-        label
-      })
-      wp.setMap(window.map)
-      latLngs.push(position)
-    })
-    return latLngs
+    )
   }
 
   drawPolyline = waypoints => {
@@ -148,7 +88,6 @@ class SingleTripMap extends React.Component {
     polyline.setMap(window.map)
   }
 
-  // Add conditional rendering for active Trip
   render() {
     if (this.props.trip !== null) {
       return (
