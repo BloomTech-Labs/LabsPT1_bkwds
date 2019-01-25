@@ -1,13 +1,14 @@
 import React from "react"
+import PropTypes from "prop-types"
 
-const EditIcon = props => {
+const EditIcon = ({ width = "20px", height = "20px" }) => {
   return (
     <svg
       x="0px"
       y="0px"
       xmlns="http://www.w3.org/2000/svg"
-      width={props.width}
-      height={props.height}
+      width={width}
+      height={height}
       viewBox="0 0 612 612"
     >
       <g>
@@ -26,6 +27,11 @@ const EditIcon = props => {
       </g>
     </svg>
   )
+}
+
+EditIcon.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.height
 }
 
 export default EditIcon

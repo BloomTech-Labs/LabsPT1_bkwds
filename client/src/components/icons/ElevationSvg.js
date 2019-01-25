@@ -1,13 +1,14 @@
 import React from "react"
+import PropTypes from "prop-types"
 
-const ElevationIcon = props => {
+const ElevationIcon = ({ width = "25px", height = "25px" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       x="0px"
       y="0px"
-      width={props.width}
-      height={props.height}
+      width={width}
+      height={height}
       viewBox="0 0 512 512"
     >
       <g>
@@ -51,6 +52,11 @@ const ElevationIcon = props => {
       </g>
     </svg>
   )
+}
+
+ElevationIcon.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.height
 }
 
 export default ElevationIcon

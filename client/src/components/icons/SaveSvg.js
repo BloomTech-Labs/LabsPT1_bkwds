@@ -1,13 +1,14 @@
 import React from "react"
+import PropTypes from "prop-types"
 
-const SaveSvg = props => {
+const SaveSvg = ({ width = "20px", height = "20px" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       x="0px"
       y="0px"
-      width={props.width}
-      height={props.height}
+      width={width}
+      height={height}
       viewBox="0 0 249.425 249.425"
     >
       <g>
@@ -23,6 +24,11 @@ const SaveSvg = props => {
       </g>
     </svg>
   )
+}
+
+SaveSvg.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.height
 }
 
 export default SaveSvg
