@@ -25,6 +25,7 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   top: calc(50% - (66% / 2));
+  height: 650px;
 `
 
 const Modal = ({ children, isOpen }) => (

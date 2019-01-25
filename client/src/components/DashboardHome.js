@@ -24,7 +24,9 @@ class DashboardHome extends Component {
       displayName: "",
       location: null,
       firstTimeLogin: false,
-      query: ""
+      query: "",
+      contactName: "",
+      contactNumber: ""
     }
     this.inputRef = React.createRef()
   }
@@ -52,12 +54,21 @@ class DashboardHome extends Component {
   updateUserValues = values => e => {
     e.preventDefault()
     const { user } = this.props
-    const { displayName } = this.state
+    const { displayName, contactName, contactNumber } = this.state
     const { formattedAddress, location } = values
     const update = { displayName }
     if (location.lat && location.lng)
       update.coordinates = [location.lat, location.lng]
+
     if (formattedAddress) update.formattedAddress = formattedAddress
+
+    if (contactName && contactNumber) {
+      let contactInfo = {
+        name: contactName,
+        number: `+1${contactNumber}`
+      }
+      update.contact = contactInfo
+    }
 
     this.props.updateUserWithMsg(user.id, update, "User update successful!")
     this.setState({ location, formattedAddress })
@@ -115,6 +126,19 @@ class DashboardHome extends Component {
                           value={this.state.query}
                           onChange={this.handleChange("query")}
                           placeholder="Search for location..."
+                          ref={this.inputRef}
+                        />
+                        <label>Emergency Contact Info</label>
+                        <GhostInput
+                          value={this.state.contactName}
+                          onChange={this.handleChange("contactName")}
+                          placeholder="Name"
+                          ref={this.inputRef}
+                        />
+                        <GhostInput
+                          value={this.state.contactNumber}
+                          onChange={this.handleChange("contactNumber")}
+                          placeholder="Phone ( e.g. 5125551234 )"
                           ref={this.inputRef}
                         />
                         <div>{formattedAddress}</div>
