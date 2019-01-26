@@ -219,6 +219,7 @@ export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
     .put(`${SERVER_URI}/trips/${trip.id}`, { timeLimit: hours })
     .then(trip => {
       dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: trip })
+      // TODO CONNECT TO SMS ENDPOINT
     })
     .catch(err => {
       dispatch({ type: ADD_TRIP_TIME_LIMIT_ERROR, payload: err.toString() })

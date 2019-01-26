@@ -259,7 +259,7 @@ class TripPanel extends React.Component {
   validateSafetyModalInput = () => {
     let { hours } = this.state
 
-    if (hours == "") {
+    if (hours === "") {
       toast("Please enter a number")
       return false
     } else {
