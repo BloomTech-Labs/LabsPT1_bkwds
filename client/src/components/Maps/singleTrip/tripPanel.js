@@ -251,7 +251,7 @@ class TripPanel extends React.Component {
 
     if (this.validateSafetyModalInput()) {
       const { hours } = this.state
-      this.props.addTripSafetyTimeLimit(hours)
+      this.props.addTripSafetyTimeLimit(trip.trip, hours)
       this.props.startTrip(trip.trip)
     }
   }

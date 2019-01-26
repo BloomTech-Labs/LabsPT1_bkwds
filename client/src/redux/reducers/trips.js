@@ -21,7 +21,10 @@ import {
   EDIT_TRIP_ERROR,
   START_TRIP_SUCCESS,
   START_TRIP,
-  START_TRIP_ERROR
+  START_TRIP_ERROR,
+  ADD_TRIP_TIME_LIMIT,
+  ADD_TRIP_TIME_LIMIT_SUCCESS,
+  ADD_TRIP_TIME_LIMIT_ERROR
 } from "../actions/types"
 
 import {
@@ -123,5 +126,23 @@ export const tripReducer = (state = defaultState, action) => {
     // IMPLEMENT!
     case CREATING_WAYPOINT:
       return { ...state, pending: true }
+
+    case ADD_TRIP_TIME_LIMIT:
+      return {
+        ...state,
+        pending: true
+      }
+    case ADD_TRIP_TIME_LIMIT_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        trips: { ...state.trips, [action.payload.id]: action.payload }
+      }
+    case ADD_TRIP_TIME_LIMIT_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.payload
+      }
   }
 }

@@ -212,6 +212,18 @@ export const repeatTrip = trip => async dispatch => {
   }
 }
 
-export const addTripSafetyTimeLimit = params => dispatch => {
+export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
   dispatch({ type: ADD_TRIP_TIME_LIMIT })
+
+  axios
+    .put(`${SERVER_URI}/trips/${trip.id}`, { timeLimit: hours })
+    .then(trip => {
+      dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: trip })
+    })
+    .catch(err => {
+      dispatch({ type: ADD_TRIP_TIME_LIMIT_ERROR, payload: err.toString() })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
 }
