@@ -33,11 +33,6 @@ class SingleTripMap extends React.Component {
     tripId: ""
   }
 
-  constructor(props) {
-    super(props)
-    this.mapRef = React.createRef()
-  }
-
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
     window.elevation = new window.google.maps.ElevationService()
@@ -49,7 +44,7 @@ class SingleTripMap extends React.Component {
     const lng = trip.lon
     const center = { lat, lng }
     if (trip && trip.waypoints) this.renderMap(center)
-    // this.drawPolyline()
+    this.drawPolyline(trip.waypoints)
   }
 
   shouldComponentUpdate(nextProps) {
@@ -57,8 +52,6 @@ class SingleTripMap extends React.Component {
     return true
   }
 
-  //Attaches Map to div
-  // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = center => {
     window.map = new window.google.maps.Map(
       document.getElementById("Tripmap"),
@@ -95,7 +88,6 @@ class SingleTripMap extends React.Component {
     polyline.setMap(window.map)
   }
 
-  // Add conditional rendering for active Trip
   render() {
     if (this.props.trip !== null) {
       return (

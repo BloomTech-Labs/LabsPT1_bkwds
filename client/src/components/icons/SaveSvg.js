@@ -28,7 +28,7 @@ const SaveSvg = ({ width = "20px", height = "20px" }) => {
 
 SaveSvg.propTypes = {
   width: PropTypes.string,
-  height: PropTypes.height
+  height: PropTypes.string
 }
 
 export default SaveSvg

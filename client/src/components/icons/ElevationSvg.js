@@ -56,7 +56,7 @@ const ElevationIcon = ({ width = "25px", height = "25px" }) => {
 
 ElevationIcon.propTypes = {
   width: PropTypes.string,
-  height: PropTypes.height
+  height: PropTypes.string
 }
 
 export default ElevationIcon
