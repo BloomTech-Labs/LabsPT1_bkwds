@@ -30,8 +30,6 @@ export const login = ({ email, password }) => dispatch => {
       dispatch({ type: LOGIN_SUCCESS, payload: user })
       localStorage.setItem("token", token)
       dispatch(addTokenToState())
-
-      dispatch(push("/app/trip/create"))
     })
     .catch(err => {
       dispatch({ type: LOGIN_FAILURE, payload: err })
@@ -192,8 +190,7 @@ export const loginWithOauth = () => dispatch => {
           dispatch({ type: LOGIN_SUCCESS, payload: user })
           localStorage.setItem("token", token)
           dispatch(addTokenToState())
-
-          dispatch(push("/app/trip/create"))
+          dispatch(push("/app/dashboard"))
         })
         .catch(err => {
           dispatch({ type: LOGIN_FAILURE, payload: err })
