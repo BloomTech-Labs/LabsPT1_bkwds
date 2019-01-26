@@ -206,4 +206,5 @@ export const CloseModalIcon = styled.button`
   font-size: 2rem;
   padding: 0 !important;
   font-weight: 300;
+  background: white;
 `
