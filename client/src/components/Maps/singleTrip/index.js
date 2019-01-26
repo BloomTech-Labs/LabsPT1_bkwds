@@ -29,6 +29,7 @@ const dashSymbol = {
 class SingleTripMap extends React.Component {
   static defaultProps = {
     getSingleTrip: () => {},
+    removeActiveTrip: () => {},
     trip: getDefaultTripProps(),
     tripId: ""
   }
@@ -123,6 +124,7 @@ class SingleTripMap extends React.Component {
 
 SingleTripMap.propTypes = {
   getSingleTrip: PropTypes.func.isRequired,
+  removeActiveTrip: PropTypes.func.isRequired,
   isSidebarOpen: PropTypes.bool.isRequired,
   trip: TripPropTypes,
   tripId: PropTypes.string.isRequired
