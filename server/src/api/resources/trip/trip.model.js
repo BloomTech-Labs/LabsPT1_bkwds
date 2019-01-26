@@ -39,6 +39,9 @@ export const schema = {
     type: Boolean,
     default: false
   },
+  timeLimit: {
+    type: Number
+  },
   waypoints: [{ type: ObjectId, ref: "Waypoint" }]
 }
 
@@ -57,6 +60,7 @@ tripSchema.set("toJSON", {
       image: ret.image,
       isArchived: ret.isArchived,
       inProgress: ret.inProgress,
+      timeLimit: ret.timeLimit,
       waypoints: ret.waypoints
     }
     return retJson
