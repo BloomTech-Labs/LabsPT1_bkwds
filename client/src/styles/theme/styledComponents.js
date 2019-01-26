@@ -51,6 +51,15 @@ export const Form = styled.form`
   button {
     width: 100%;
   }
+
+  .text-align-right {
+    text-align: right;
+    button {
+      width: unset;
+      padding-left: 3.5rem;
+      padding-right: 3.5rem;
+    }
+  }
 `
 
 export const Button = styled.button`

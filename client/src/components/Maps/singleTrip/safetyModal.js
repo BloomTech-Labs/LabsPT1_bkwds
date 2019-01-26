@@ -3,8 +3,23 @@ import { connect } from "react-redux"
 import Modal from "../../Modals/Modal"
 import { openModal, closeModal } from "../../../redux/actions/modal"
 
+import {
+  editTrip,
+  startTrip,
+  addTripSafetyTimeLimit
+} from "../../../redux/actions/trips"
+
+import {
+  Form,
+  GhostInput,
+  Button
+} from "../../../styles/theme/styledComponents"
+
 class SafetyModal extends React.Component {
-  state = {}
+  state = {
+    disableSafety: false,
+    hours: ""
+  }
   render() {
     return (
       <Modal isOpen={this.props.modalIsOpen}>
@@ -45,6 +60,19 @@ class SafetyModal extends React.Component {
       </Modal>
     )
   }
+}
+
+const mapStateToProps = state => ({
+  trip: state.trips.activeTrip,
+  modalIsOpen: state.modal.isOpen
+})
+
+const mapDispatchToProps = {
+  editTrip,
+  startTrip,
+  openModal,
+  closeModal,
+  addTripSafetyTimeLimit
 }
 
 export default connect(

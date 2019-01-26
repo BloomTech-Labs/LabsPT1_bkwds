@@ -27,7 +27,10 @@ import {
   EDIT_TRIP_SUCCESS,
   START_TRIP,
   START_TRIP_SUCCESS,
-  START_TRIP_ERROR
+  START_TRIP_ERROR,
+  ADD_TRIP_TIME_LIMIT,
+  ADD_TRIP_TIME_LIMIT_SUCCESS,
+  ADD_TRIP_TIME_LIMIT_ERROR
 } from "./types"
 
 export const getTrips = userId => dispatch => {
@@ -207,4 +210,8 @@ export const repeatTrip = trip => async dispatch => {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }
+}
+
+export const addTripSafetyTimeLimit = params => dispatch => {
+  dispatch({ type: ADD_TRIP_TIME_LIMIT })
 }

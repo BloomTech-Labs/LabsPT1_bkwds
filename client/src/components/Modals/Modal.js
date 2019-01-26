@@ -25,7 +25,48 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   top: calc(50% - (66% / 2));
-  height: 650px;
+
+  .onboarding-flow {
+    z-index: 101;
+    max-width: 630px;
+    max-height: 590px;
+    padding: 2rem;
+    height: 650px;
+  }
+
+  .startTrip-flow {
+    z-index: 101;
+    max-width: 630px;
+    max-height: 590px;
+    padding: 2rem;
+  }
+
+  .flow-header {
+    padding: 0px 30px 0 30px;
+    margin-bottom: 24px;
+    h4 {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+  }
+  .text-align-right {
+    text-align: right;
+    button {
+      width: unset;
+      padding-left: 3.5rem;
+      padding-right: 3.5rem;
+    }
+  }
+
+  .dual-buttons {
+    display: flex;
+    justify-content: space-around;
+    button {
+      width: unset;
+      padding-left: 3.5rem;
+      padding-right: 3.5rem;
+    }
+  }
 `
 
 const Modal = ({ children, isOpen }) => (
