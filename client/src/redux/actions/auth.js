@@ -114,7 +114,11 @@ export const checkDbForUser = token => dispatch => {
     })
 
   axios
-    .get(`${SERVER_URI}/users/${id}`)
+    .get(`${SERVER_URI}/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then(res => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
       dispatch(push("/app/dashboard"))
