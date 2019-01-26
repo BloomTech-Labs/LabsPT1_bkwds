@@ -51,6 +51,10 @@ class DashboardHome extends Component {
       [key]: e.target.value
     })
 
+  retrieveFormattedAddress = address => {
+    this.setState({ query: address })
+  }
+
   updateUserValues = values => e => {
     e.preventDefault()
     const { user } = this.props
@@ -89,6 +93,7 @@ class DashboardHome extends Component {
           google={window.google}
           inputRef={this.inputRef}
           map={null}
+          getFormattedAddress={this.retrieveFormattedAddress}
         >
           {({ location, viewport, formattedAddress }) => {
             console.log("RENDER ARGS:", location, viewport, formattedAddress)
