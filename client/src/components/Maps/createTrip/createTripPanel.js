@@ -42,7 +42,6 @@ class CreateTripPanel extends React.Component {
 
   handleSearch = event => {
     this.setState({ query: event.target.value })
-    // this.searchAutoComplete()
   }
 
   // searchAutoComplete = () => {
@@ -71,6 +70,10 @@ class CreateTripPanel extends React.Component {
     this.setState({ startDate, endDate }, () => {
       this.props.getDates({ startDate, endDate })
     })
+  }
+
+  retrieveFormattedAddress = address => {
+    this.setState({ query: address })
   }
 
   render() {
@@ -112,21 +115,19 @@ class CreateTripPanel extends React.Component {
           google={window.google}
           inputRef={this.inputRef}
           map={null}
+          getFormattedAddress={this.retrieveFormattedAddress}
         >
-          {({ formattedAddress }) => (
+          {() => (
             <div className="desktop-create-trip-panel">
               <s.Panel menuToggled={menuToggled}>
                 <s.PanelHeader className="hide-mobile">
                   Create Your Trip
                 </s.PanelHeader>
-
                 <s.SearchWrapper
                   searchToggled={searchToggled}
                   className="panel-input-wrapper"
                 >
-                  <s.InputLabel className="hide-mobile">
-                    {formattedAddress ? formattedAddress : "Location"}
-                  </s.InputLabel>
+                  <s.InputLabel className="hide-mobile">Location</s.InputLabel>
                   <s.SearchCenterInput
                     ref={this.inputRef}
                     searchToggled={searchToggled}
