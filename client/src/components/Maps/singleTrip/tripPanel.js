@@ -331,8 +331,9 @@ class TripPanel extends React.Component {
               />
             ))}
         </s.WaypointList>
-        {/* <s.StartButton onClick={() => this.props.startTrip(trip)}> */}
         <s.StartButton onClick={this.props.openModal}>Start Trip</s.StartButton>
+
+        {/* Safety Modal - Appears when StartButton is clicked */}
         <Modal isOpen={this.props.modalIsOpen}>
           {() => (
             <div className="startTrip-flow">
