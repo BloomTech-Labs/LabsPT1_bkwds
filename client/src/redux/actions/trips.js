@@ -27,7 +27,9 @@ import {
   EDIT_TRIP_SUCCESS,
   START_TRIP,
   START_TRIP_SUCCESS,
-  START_TRIP_ERROR
+  START_TRIP_ERROR,
+  TOGGLE_WAYPOINT_SUCCESS,
+  TOGGLE_WAYPOINT_ERROR
 } from "./types"
 
 export const getTrips = userId => dispatch => {
@@ -212,4 +214,18 @@ export const repeatTrip = trip => async dispatch => {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }
+}
+
+export const toggleWaypoint = (waypointId, isCompleted) => dispatch => {
+  return axios
+    .put(`${SERVER_URI}/waypoints/${waypointId}`, { complete: !isCompleted })
+    .then(res => {
+      dispatch({ type: TOGGLE_WAYPOINT_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: TOGGLE_WAYPOINT_ERROR, payload: err })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
 }
