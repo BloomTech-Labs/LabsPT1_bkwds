@@ -9,6 +9,7 @@ import {
   UPDATE_USER_IN_STORE
 } from "./types"
 
+import { normalizeErrorMsg } from "../../utils/selectors"
 import { toast } from "react-toastify"
 
 const token = localStorage.getItem("token")
@@ -30,8 +31,11 @@ export const updateUserWithMsg = (userId, values, msg) => dispatch => {
       dispatch({ type: CLOSE_MODAL })
     })
     .catch(err => {
-      dispatch({ type: UPDATE_SETTINGS_FAILURE, payload: err })
-      toast.error(err.toString(), {
+      dispatch({
+        type: UPDATE_SETTINGS_FAILURE,
+        payload: normalizeErrorMsg(err)
+      })
+      toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
@@ -51,8 +55,11 @@ export const updateEmail = (userId, email) => dispatch => {
       })
     })
     .catch(err => {
-      dispatch({ type: UPDATE_SETTINGS_FAILURE, payload: err })
-      toast.error(err.toString(), {
+      dispatch({
+        type: UPDATE_SETTINGS_FAILURE,
+        payload: normalizeErrorMsg(err)
+      })
+      toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
@@ -80,8 +87,11 @@ export const updatePassword = (email, oldPassword, newPassword) => dispatch => {
       })
     })
     .catch(err => {
-      dispatch({ type: UPDATE_SETTINGS_FAILURE, payload: err })
-      toast.error(err.toString(), {
+      dispatch({
+        type: UPDATE_SETTINGS_FAILURE,
+        payload: normalizeErrorMsg(err)
+      })
+      toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })

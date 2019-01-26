@@ -32,7 +32,7 @@ export const login = ({ email, password }) => dispatch => {
       dispatch(addTokenToState())
     })
     .catch(err => {
-      dispatch({ type: LOGIN_FAILURE, payload: err })
+      dispatch({ type: LOGIN_FAILURE, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -51,7 +51,7 @@ export const register = ({ email, password }) => dispatch => {
       dispatch(addTokenToState())
     })
     .catch(err => {
-      dispatch({ type: REGISTRATION_FAILURE, payload: err })
+      dispatch({ type: REGISTRATION_FAILURE, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -120,7 +120,10 @@ export const checkDbForUser = token => dispatch => {
       dispatch(push("/app/dashboard"))
     })
     .catch(err => {
-      dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
+      dispatch({
+        type: QUERYING_USER_BY_TOKEN_ERROR,
+        payload: normalizeErrorMsg(err)
+      })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -149,11 +152,13 @@ export const registerWithOauth = () => dispatch => {
           })
           localStorage.setItem("token", token)
           dispatch(addTokenToState())
-          dispatch(checkDbForUser(token))
         })
         .catch(err => {
-          dispatch({ type: REGISTRATION_FAILURE, payload: err })
-          toast.error("You already registered. Please log in instead.", {
+          dispatch({
+            type: REGISTRATION_FAILURE,
+            payload: normalizeErrorMsg(err)
+          })
+          toast.error(normalizeErrorMsg(err), {
             position: toast.POSITION.BOTTOM_RIGHT
           })
         })
@@ -193,7 +198,7 @@ export const loginWithOauth = () => dispatch => {
           dispatch(push("/app/dashboard"))
         })
         .catch(err => {
-          dispatch({ type: LOGIN_FAILURE, payload: err })
+          dispatch({ type: LOGIN_FAILURE, payload: normalizeErrorMsg(err) })
           toast.error("Cannot find your account", {
             position: toast.POSITION.BOTTOM_RIGHT
           })
