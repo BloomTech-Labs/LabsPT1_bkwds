@@ -30,11 +30,9 @@ export const login = ({ email, password }) => dispatch => {
       dispatch({ type: LOGIN_SUCCESS, payload: user })
       localStorage.setItem("token", token)
       dispatch(addTokenToState())
-
-      dispatch(push("/app/trip/create"))
     })
     .catch(err => {
-      dispatch({ type: LOGIN_FAILURE, payload: err })
+      dispatch({ type: LOGIN_FAILURE, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -53,7 +51,7 @@ export const register = ({ email, password }) => dispatch => {
       dispatch(addTokenToState())
     })
     .catch(err => {
-      dispatch({ type: REGISTRATION_FAILURE, payload: err })
+      dispatch({ type: REGISTRATION_FAILURE, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -116,13 +114,20 @@ export const checkDbForUser = token => dispatch => {
     })
 
   axios
-    .get(`${SERVER_URI}/users/${id}`)
+    .get(`${SERVER_URI}/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then(res => {
       dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: res.data })
       dispatch(push("/app/dashboard"))
     })
     .catch(err => {
-      dispatch({ type: QUERYING_USER_BY_TOKEN_ERROR, payload: err })
+      dispatch({
+        type: QUERYING_USER_BY_TOKEN_ERROR,
+        payload: normalizeErrorMsg(err)
+      })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -151,11 +156,13 @@ export const registerWithOauth = () => dispatch => {
           })
           localStorage.setItem("token", token)
           dispatch(addTokenToState())
-          dispatch(checkDbForUser(token))
         })
         .catch(err => {
-          dispatch({ type: REGISTRATION_FAILURE, payload: err })
-          toast.error("You already registered. Please log in instead.", {
+          dispatch({
+            type: REGISTRATION_FAILURE,
+            payload: normalizeErrorMsg(err)
+          })
+          toast.error(normalizeErrorMsg(err), {
             position: toast.POSITION.BOTTOM_RIGHT
           })
         })
@@ -192,11 +199,10 @@ export const loginWithOauth = () => dispatch => {
           dispatch({ type: LOGIN_SUCCESS, payload: user })
           localStorage.setItem("token", token)
           dispatch(addTokenToState())
-
-          dispatch(push("/app/trip/create"))
+          dispatch(push("/app/dashboard"))
         })
         .catch(err => {
-          dispatch({ type: LOGIN_FAILURE, payload: err })
+          dispatch({ type: LOGIN_FAILURE, payload: normalizeErrorMsg(err) })
           toast.error("Cannot find your account", {
             position: toast.POSITION.BOTTOM_RIGHT
           })
