@@ -89,9 +89,7 @@ class Typewriter extends Component {
     }
   }
 
-  startTyping = () => {
-    this._timeout = setTimeout(() => this.type(), 550)
-  }
+  startTyping = () => (this._timeout = setTimeout(() => this.type(), 550))
 
   render() {
     return (

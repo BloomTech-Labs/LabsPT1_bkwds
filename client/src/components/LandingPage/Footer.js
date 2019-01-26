@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import logo from "../../assets/bkwdslogo.png"
 
 const FooterContainer = styled.div`
   display: grid;
@@ -48,7 +47,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <div className="logo">
-        <Img src={logo} />
+        <Img src="/images/bckwdslogo.png" />
       </div>
       <div className="menu">
         <h5>Menu</h5>

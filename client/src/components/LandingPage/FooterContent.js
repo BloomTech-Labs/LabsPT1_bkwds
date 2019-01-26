@@ -1,8 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import ButtonCTA from "./ButtonCTA"
-import GoogleIcon from "../icons/GoogleIcon"
-import { loginWithOauth } from "../../redux/actions/auth"
+
+import ButtonCTA from "./Button"
 
 const ContentContainer = styled.div`
   display: flex;
@@ -45,20 +44,15 @@ const BrandedContent = styled.div`
   }
 `
 
-const FooterContent = () => {
-  return (
-    <ContentContainer>
-      <BrandedContent>
-        <h3>
-          Explore without boundaries<span className="accent">.</span>
-        </h3>
-        <ButtonCTA />
-        <button className="googleSignIn" width="300px" onClick={loginWithOauth}>
-          <GoogleIcon /> Log in with Google
-        </button>
-      </BrandedContent>
-    </ContentContainer>
-  )
-}
+const FooterContent = () => (
+  <ContentContainer>
+    <BrandedContent>
+      <h3>
+        Explore without boundaries<span className="accent">.</span>
+      </h3>
+      <ButtonCTA text="Join us!" to="/register" />
+    </BrandedContent>
+  </ContentContainer>
+)
 
 export default FooterContent
