@@ -26,6 +26,7 @@ export const sendSMSAlert = async (req, res) => {
     data.lat
   }, ${data.lon}`
 
+  // Return 202 response and start background task
   res.status(202).end("Safety alert timer started", async () => {
     await sleep(data.timeLimit) // sleep until time limit has expired
     try {
@@ -80,7 +81,6 @@ const findLastLocation = waypoints => {
 }
 
 const sleep = hours => {
-  // let ms = hours * 3600000
-  let ms = hours * 1000
+  let ms = hours * 3600000
   return new Promise(resolve => setTimeout(resolve, ms))
 }
