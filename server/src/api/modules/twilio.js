@@ -52,7 +52,7 @@ const gatherResources = async params => {
     path: "waypoints",
     model: "Waypoint"
   })
-  let location = await findLastLocation(trip.waypoints)
+  let location = findLastLocation(trip.waypoints)
 
   if (!location) {
     // If no waypoints are complete, then set location to be starting waypoint
