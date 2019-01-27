@@ -34,11 +34,6 @@ class SingleTripMap extends React.Component {
     tripId: ""
   }
 
-  constructor(props) {
-    super(props)
-    this.mapRef = React.createRef()
-  }
-
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
     window.elevation = new window.google.maps.ElevationService()
@@ -98,7 +93,6 @@ class SingleTripMap extends React.Component {
     polyline.setMap(window.map)
   }
 
-  // Add conditional rendering for active Trip
   render() {
     if (this.props.trip !== null) {
       return (

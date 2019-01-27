@@ -19,7 +19,7 @@ const AddSvg = ({ width = "18px", height = "18px" }) => {
 
 AddSvg.propTypes = {
   width: PropTypes.string,
-  height: PropTypes.height
+  height: PropTypes.string
 }
 
 export default AddSvg

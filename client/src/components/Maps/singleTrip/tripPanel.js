@@ -1,20 +1,23 @@
 import React from "react"
+import { connect } from "react-redux"
 import PropTypes from "prop-types"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 import EditIcon from "../../icons/EditSvg"
-import DeleteIcon from "../../icons/DeleteIcon"
 import { TripPropTypes } from "../../propTypes"
 import DistanceIcon from "../../icons/DistanceSvg"
 import ElevationIcon from "../../icons/ElevationSvg"
 import SaveIcon from "../../icons/SaveSvg"
 import AddIcon from "../../icons/AddSvg"
-import { connect } from "react-redux"
 import * as util from "./mapUtil"
 import * as s from "./components"
 import { editTrip, startTrip } from "../../../redux/actions/trips"
 import { SERVER_URI } from "../../../config"
-import axios from "axios"
-import { toast } from "react-toastify"
+import Waypoint from "./Waypoint"
+import marker from "../../icons/orange-marker.svg"
+import startMarker from "../../icons/green-marker.svg"
+import endMarker from "../../icons/black-marker.svg"
 
 class TripPanel extends React.Component {
   constructor(props) {
@@ -46,7 +49,7 @@ class TripPanel extends React.Component {
 
   addWaypoint = () => {
     const index = this.state.markers.length
-    let marker = new window.google.maps.Marker({
+    const marker = new window.google.maps.Marker({
       position: window.map.getCenter(),
       map: window.map,
       draggable: true,
@@ -55,7 +58,7 @@ class TripPanel extends React.Component {
       index: index
     })
     marker.addListener("dragend", ev => {
-      let waypoints = this.state.trip.waypoints.map((item, i) => {
+      const waypoints = this.state.trip.waypoints.map((item, i) => {
         if (index === i)
           return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
         else return item
@@ -63,7 +66,7 @@ class TripPanel extends React.Component {
       this.setState({ trip: { ...this.state.trip, waypoints } })
       this.getPathDistance()
     })
-    let waypoint = {
+    const waypoint = {
       name: `Checkpoint ${index}`,
       tripId: this.props.trip.id,
       order: index + 1,
@@ -72,36 +75,73 @@ class TripPanel extends React.Component {
       start: new Date(),
       end: new Date()
     }
-    let waypoints = this.state.trip.waypoints.concat(waypoint)
-    let markers = this.state.markers.concat(marker)
+    const waypoints = this.state.trip.waypoints.concat(waypoint)
+    const markers = this.state.markers.concat(marker)
     this.setState({ markers, trip: { ...this.state.trip, waypoints } })
   }
 
   renderWaypoints = () => {
-    let markers = []
-    this.state.trip.waypoints.forEach((waypoint, i) => {
-      const center = {
+    console.log("rw called")
+    const { maps } = window.google
+    const { waypoints } = this.state.trip
+    const markers = []
+    const baseIcon = {
+      anchor: new maps.Point(15, 30),
+      scaledSize: new maps.Size(30, 30),
+      labelOrigin: new maps.Point(15, 13)
+    }
+    const icons = {
+      start: {
+        url: startMarker,
+        ...baseIcon
+      },
+      end: {
+        url: endMarker,
+        ...baseIcon
+      },
+      marker: {
+        url: marker,
+        ...baseIcon
+      }
+    }
+
+    waypoints.forEach((waypoint, i) => {
+      const position = {
         lat: waypoint.lat,
         lng: waypoint.lon
       }
-      let marker = new window.google.maps.Marker({
-        position: center,
+      const icon =
+        i === 0
+          ? icons.start
+          : i === waypoints.length - 1
+          ? icons.end
+          : icons.marker
+      const label = {
+        text: `${waypoint.order}`,
+        color: "white",
+        fontFamily: "Wals",
+        fontWeight: "bold"
+      }
+      const marker = new maps.Marker({
+        icon,
+        position,
         map: window.map,
         title: waypoint.name,
-        label: `${waypoint.order}`,
-        draggable: false
+        label
       })
-      marker.addListener("dragend", ev => {
-        let waypoints = this.state.trip.waypoints.map((item, index) => {
-          if (index === i)
-            return { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
-          else return item
+      marker.setMap(window.map)
+      marker.addListener("dragend", ({ latLng }) => {
+        const updatedWaypoints = waypoints.map((item, index) =>
+          index === i ? { ...item, lat: latLng.lat(), lon: latLng.lng() } : item
+        )
+        this.setState({
+          trip: { ...this.state.trip, waypoints: updatedWaypoints }
         })
-        this.setState({ trip: { ...this.state.trip, waypoints } })
         this.getPathDistance()
       })
       markers.push(marker)
     })
+
     this.setState({ markers })
   }
 
@@ -113,38 +153,6 @@ class TripPanel extends React.Component {
 
   handleTitle = e => {
     this.setState({ trip: { ...this.state.trip, name: e.target.value } })
-  }
-
-  renderWaypointList = waypoints => {
-    if (waypoints) {
-      return waypoints.map((_, i) => {
-        return (
-          <s.Waypoint key={i}>
-            <s.WaypointLabel>{i + 1}</s.WaypointLabel>
-            <s.WaypointInput
-              type="text"
-              disabled={this.state.isEditing === false}
-              edit={this.state.isEditing}
-              placeholder="waypoint title"
-              value={this.state.trip.waypoints[i].name}
-              onChange={e => {
-                this.handleEdit(e, i)
-              }}
-            />
-
-            <s.DeleteButton
-              disabled={this.state.isEditing === false}
-              edit={this.state.isEditing}
-              onClick={() => {
-                this.handleDelete(i)
-              }}
-            >
-              <DeleteIcon width="22px" height="22px" />
-            </s.DeleteButton>
-          </s.Waypoint>
-        )
-      })
-    }
   }
 
   handleDelete = i => {
@@ -193,12 +201,8 @@ class TripPanel extends React.Component {
         item.setMap(null)
       }
     })
-    let updatedMarkers = this.state.markers.filter((_, index) => {
-      return i !== index
-    })
-    updatedMarkers.forEach((item, index) => {
-      item.setLabel(`${index + 1}`)
-    })
+    const updatedMarkers = this.state.markers.filter((_, index) => i !== index)
+    updatedMarkers.forEach((item, index) => item.setLabel(`${index + 1}`))
 
     this.setState({ markers: updatedMarkers })
   }
@@ -212,12 +216,10 @@ class TripPanel extends React.Component {
 
   getPathDistance = () => {
     if (this.state.markers.length > 1) {
-      let latlngs = this.state.markers.map(marker => {
-        return {
-          lat: marker.getPosition().lat(),
-          lng: marker.getPosition().lng()
-        }
-      })
+      let latlngs = this.state.markers.map(marker => ({
+        lat: marker.getPosition().lat(),
+        lng: marker.getPosition().lng()
+      }))
       util.calcTotalDistance(latlngs).then(res => {
         this.setState({ tripDistance: res.toFixed(2) })
       })
@@ -225,30 +227,24 @@ class TripPanel extends React.Component {
   }
 
   render() {
+    const { elevation, isEditing, saveToggle, trip, tripDistance } = this.state
+
     return (
       <s.Panel>
         <s.PanelHeader>
           <s.TripTitleInput
             type="text"
-            edit={this.state.isEditing}
-            value={this.state.trip.name || ""}
+            edit={isEditing}
+            value={trip.name || ""}
             onChange={this.handleTitle}
-            disabled={this.state.isEditing === false}
+            disabled={isEditing === false}
           />
-          {!this.state.saveToggle ? (
-            <s.EditButton
-              onClick={() => {
-                this.handleEditToggle()
-              }}
-            >
+          {!saveToggle ? (
+            <s.EditButton onClick={() => this.handleEditToggle()}>
               <EditIcon width="20px" height="20px" />
             </s.EditButton>
           ) : (
-            <s.SaveButton
-              onClick={() => {
-                this.handleSave()
-              }}
-            >
+            <s.SaveButton onClick={() => this.handleSave()}>
               <SaveIcon width="20px" height="20px" />
             </s.SaveButton>
           )}
@@ -256,33 +252,37 @@ class TripPanel extends React.Component {
         <s.PanelSubheader>
           <s.TripDetail>
             <DistanceIcon width="25px" height="25px" />
-            {this.state.tripDistance}m
+            {tripDistance}m
           </s.TripDetail>
           <s.TripDetail>
             <ElevationIcon width="25px" height="25px" />
-            {this.state.elevation}m
+            {elevation}m
           </s.TripDetail>
         </s.PanelSubheader>
         <s.WaypointsHeader>
           <h4>Waypoints</h4>
           <s.AddButton
-            disabled={this.state.isEditing === false}
-            edit={this.state.isEditing}
-            onClick={() => {
-              this.addWaypoint()
-            }}
+            disabled={isEditing === false}
+            edit={isEditing}
+            onClick={() => this.addWaypoint()}
           >
             <AddIcon height="18px" width="18px" />
           </s.AddButton>
         </s.WaypointsHeader>
         <s.WaypointList>
-          {this.renderWaypointList(this.state.trip.waypoints)}
+          {trip.waypoints !== undefined &&
+            trip.waypoints.map(({ name }, i) => (
+              <Waypoint
+                key={name}
+                i={i}
+                name={name}
+                isEditing={isEditing}
+                handleDelete={this.handleDelete}
+                handleEdit={this.handleEdit}
+              />
+            ))}
         </s.WaypointList>
-        <s.StartButton
-          onClick={() => {
-            this.props.startTrip(this.state.trip)
-          }}
-        >
+        <s.StartButton onClick={() => this.props.startTrip(trip)}>
           Start Trip
         </s.StartButton>
       </s.Panel>
@@ -290,9 +290,7 @@ class TripPanel extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { trip: state.trips.activeTrip }
-}
+const mapStateToProps = ({ trips }) => ({ trip: trips.activeTrip })
 
 const mapDispatchToProps = { editTrip, startTrip }
 
