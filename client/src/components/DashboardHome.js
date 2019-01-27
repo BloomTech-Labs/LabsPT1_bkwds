@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import moment from "moment"
+import { toast } from "react-toastify"
 
 import * as s from "../styles/Dashboard.styles"
 import Modal from "./Modals/Modal"
@@ -62,17 +63,39 @@ class DashboardHome extends Component {
 
     if (formattedAddress) update.formattedAddress = formattedAddress
 
-    if (contactName && contactNumber) {
+    if (contactName) {
       //TODO add input validation for phone number
-      let contactInfo = {
-        name: contactName,
-        number: `+1${contactNumber}`
+      if (this.validateContactNumber(contactNumber)) {
+        let contactInfo = {
+          name: contactName,
+          number: `+1${contactNumber}`
+        }
+        update.contact = contactInfo
+        this.props.updateUserWithMsg(user.id, update, "User update successful!")
+        this.setState({ location, formattedAddress })
       }
-      update.contact = contactInfo
+    } else {
+      this.props.updateUserWithMsg(user.id, update, "User update successful!")
+      this.setState({ location, formattedAddress })
     }
+  }
 
-    this.props.updateUserWithMsg(user.id, update, "User update successful!")
-    this.setState({ location, formattedAddress })
+  validateContactNumber = number => {
+    if (number.length < 10) {
+      toast.error("Please enter a valid 10 digit phone number", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+      this.setState({ contactNumber: "" })
+      return false
+    }
+    if (isNaN(Number(number))) {
+      toast.error("Please enter number without spaces or hyphens", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+      this.setState({ contactNumber: "" })
+      return false
+    }
+    return true
   }
 
   render() {
