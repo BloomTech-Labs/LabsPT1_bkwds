@@ -26,25 +26,22 @@ export const sendSMSAlert = async (req, res) => {
     data.lat
   }, ${data.lon}`
 
-  // PROBLEMS WITH THIS:
-  //  TESTS WILL HANG WHILE WAITING FOR SLEEP
-  //  IF TWILIO CALL FAILS CLIENT WILL NOT KNOW
-  //  BECAUSE WE CANNOT RES AGAIN AFTER HEADERS HAVE BEEN SENT
   res.status(202).end("Safety alert timer started", async () => {
-    await sleep(data.timeLimit)
-    await Twilio.messages
-      .create({
+    await sleep(data.timeLimit) // sleep until time limit has expired
+    try {
+      const trip = await Trip.findOne({ _id: req.body.tripId })
+      if (trip.complete) {
+        return // Trip was succesfully completed, return without sending alert
+      }
+      const response = await Twilio.messages.create({
         body: message,
         from: twilioNumber,
         to: data.number
       })
-      .then(() => {
-        return
-        console.log("SMS alert successfully sent")
-      })
-      .catch(() => {
-        console.log("Error sending message")
-      })
+      console.log(`Twilio alert succesfully sent: ${response.sid}`)
+    } catch (error) {
+      console.log(error)
+    }
   })
 }
 
@@ -83,6 +80,7 @@ const findLastLocation = waypoints => {
 }
 
 const sleep = hours => {
-  let ms = hours * 3600000
+  // let ms = hours * 3600000
+  let ms = hours * 1000
   return new Promise(resolve => setTimeout(resolve, ms))
 }
