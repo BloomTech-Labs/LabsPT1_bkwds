@@ -220,6 +220,19 @@ export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
     .then(trip => {
       dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: trip })
       // TODO CONNECT TO SMS ENDPOINT
+      axios
+        .post(`${SERVER_URI}/send_sms`, {
+          userId: trip.userId,
+          tripId: trip.id
+        })
+        .then(() => {
+          console.log("Safety SMS Alert succesfully queued")
+        })
+        .catch(() => {
+          toast.error("Safety SMS Alert failed to queue", {
+            position: toast.POSITION.BOTTOM_RIGHT
+          })
+        })
     })
     .catch(err => {
       dispatch({ type: ADD_TRIP_TIME_LIMIT_ERROR, payload: err.toString() })
