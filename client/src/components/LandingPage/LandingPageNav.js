@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import logo from "../../assets/bkwdslogo.png"
 import { Link, NavLink } from "react-router-dom"
 
 const NavigationMenu = styled.div`
@@ -34,7 +33,7 @@ const Nav = () => {
   return (
     <NavigationMenu>
       <div>
-        <Img src={logo} />
+        <Img src="/images/bkwdslogo.png" />
       </div>
       <Menu>
         <NavLink to="/features">Features</NavLink>
