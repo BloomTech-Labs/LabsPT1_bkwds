@@ -4,7 +4,11 @@ let date2 = new Date("March 18, 2019 11:45:00 AM")
 export const userOne = {
   password: "testpass",
   email: "email@hotmail.com",
-  displayName: "User One"
+  displayName: "User One",
+  contact: {
+    name: "Bob",
+    number: "+15005550006"
+  }
 }
 export const userTwo = {
   password: "testpass2",
@@ -52,7 +56,8 @@ export const waypointOne = {
   lat: 30.508293960387878,
   lon: -97.77231216430664,
   start: Date.now(),
-  end: date
+  end: date,
+  complete: true
 }
 export const waypointTwo = {
   tripId: "",

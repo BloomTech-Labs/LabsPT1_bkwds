@@ -17,22 +17,52 @@ Get a list of all users saved in the database
 ```
 [
   {
-    "id": "5c1529fd5069560a28ffe082",
-    "username": "tester11",
-    "email": "tester11@gmail.com",
-    "subscribed": false
+    "coordinates": [
+        30.2602426,
+        -97.7387655
+    ],
+    "createdAt": "2019-01-24T04:32:45.319Z",
+    "displayName": "Bobby B",
+    "email": "bobbyB@blah.com",
+    "formattedAddress": "Westeros",
+    "id": "5c493fed143a401f908e2a7f",
+    "lastLogin": "2019-01-24T15:00:50.228Z",
+    "loginCount": 1,
+    "subscribed": false,
+    "trips": [
+        "5c49fd00ab25a85e7a63a192",
+        "5c4a00beab25a85e7a63a196",
+        "5c4a3de0ab25a85e7a63a19a"
+    ],
+    "type": "email",
+    "updatedAt": "2019-01-24T22:36:16.514Z",
+    "contact": {
+      "name": "Jane Doe",
+      "number": "+15005559876"
+    }
   },
   {
-    "id": "5c152aab31f556495097b93c",
-    "username": "tester13",
-    "email": "tester13@gmail.com",
-    "subscribed": false
-  },
-  {
-    "id": "5c153ac8ef78d128fa68dc4c",
-    "username": "MegaMans",
-    "email": "megazord28@gmail.com",
-    "subscribed": false
+    "coordinates": [
+        30.267153,
+        -97.74306079999997
+    ],
+    "createdAt": "2019-01-24T19:15:45.365Z",
+    "displayName": "Alex",
+    "email": "blahbalhblah@gmail.com",
+    "formattedAddress": "Austin, TX, USA",
+    "id": "5c4a0ee1a44af818a3014fae",
+    "lastLogin": "2019-01-24T19:33:40.341Z",
+    "loginCount": 1,
+    "subscribed": false,
+    "trips": [
+        "5c4a1055a44af818a3014faf"
+    ],
+    "type": "email",
+    "updatedAt": "2019-01-24T19:33:40.343Z",
+    "contact": {
+      "name": "John Doe",
+      "number": "+15005551234"
+    }
   }
 ]
 ```
@@ -55,24 +85,12 @@ Creates a new user in the database.
 
 **Required Data Params**:
 
-- **username** - `string`
 - **password** - `string`
 - **email** - `string`
 
 **Success Response**:
 
 - **Status Code**: `201 Created`
-
-**Example Content**
-
-```
-{
-  "id": "5c1529fd5069560a28ffe082",
-  "username": "tester11",
-  "email": "tester11@gmail.com",
-  "subscribed": false
-}
-```
 
 ---
 
@@ -98,10 +116,49 @@ Get a single user from the database
 
 ```
 {
-  "id": "5c1529fd5069560a28ffe082",
-  "username": "tester11",
-  "email": "tester11@gmail.com",
-  "subscribed": false
+  "coordinates": [
+      30.267153,
+      -97.74306079999997
+  ],
+  "createdAt": "2019-01-24T19:15:45.365Z",
+  "displayName": "Alex",
+  "email": "blablah@gmail.com",
+  "formattedAddress": "Austin, TX, USA",
+  "id": "5c4a0ee1a44af818a3014fae",
+  "lastLogin": "2019-01-24T19:33:40.341Z",
+  "loginCount": 1,
+  "subscribed": false,
+  "trips": [
+    {
+      "id": "5c4a1055a44af818a3014faf",
+      "userId": "5c4a0ee1a44af818a3014fae",
+      "name": "McKinney Hike",
+      "lat": 30.183882319891016,
+      "lon": -97.72374280468603,
+      "start": "2019-01-24T18:00:00.000Z",
+      "end": "2019-01-25T18:00:00.000Z",
+      "image": "https://maps.googleapis.com/maps/api/staticmap?center=30.183882319891016,-97.72374280468603&zoom=15&size=380x350&key=",
+      "isArchived": false,
+      "inProgress": false,
+      "waypoints": [
+        "5c4a1055a44af818a3014fb0",
+        "5c4a1055a44af818a3014fb1",
+        "5c4a1055a44af818a3014fb2",
+        "5c4a1055a44af818a3014fb3",
+        "5c4a1055a44af818a3014fb4",
+        "5c4a1055a44af818a3014fb5",
+        "5c4a1055a44af818a3014fb6",
+        "5c4a1055a44af818a3014fb7",
+        "5c4a1055a44af818a3014fb8"
+      ]
+    }
+  ],
+  "type": "email",
+  "updatedAt": "2019-01-24T19:33:40.343Z",
+  "contact": {
+      "name": "Jane Doe",
+      "number": "+15005559876"
+    }
 }
 ```
 
@@ -136,10 +193,49 @@ Note: Certain properties are not allowed to be modifed.
 
 ```
 {
-  "id": "5c1529fd5069560a28ffe082",
-  "username": "tester11",
-  "email": "tester11@gmail.com",
-  "subscribed": false
+  "coordinates": [
+      30.267153,
+      -97.74306079999997
+  ],
+  "createdAt": "2019-01-24T19:15:45.365Z",
+  "displayName": "Alex",
+  "email": "blablah@gmail.com",
+  "formattedAddress": "Austin, TX, USA",
+  "id": "5c4a0ee1a44af818a3014fae",
+  "lastLogin": "2019-01-24T19:33:40.341Z",
+  "loginCount": 1,
+  "subscribed": false,
+  "trips": [
+    {
+      "id": "5c4a1055a44af818a3014faf",
+      "userId": "5c4a0ee1a44af818a3014fae",
+      "name": "McKinney Hike",
+      "lat": 30.183882319891016,
+      "lon": -97.72374280468603,
+      "start": "2019-01-24T18:00:00.000Z",
+      "end": "2019-01-25T18:00:00.000Z",
+      "image": "https://maps.googleapis.com/maps/api/staticmap?center=30.183882319891016,-97.72374280468603&zoom=15&size=380x350&key=",
+      "isArchived": false,
+      "inProgress": false,
+      "waypoints": [
+        "5c4a1055a44af818a3014fb0",
+        "5c4a1055a44af818a3014fb1",
+        "5c4a1055a44af818a3014fb2",
+        "5c4a1055a44af818a3014fb3",
+        "5c4a1055a44af818a3014fb4",
+        "5c4a1055a44af818a3014fb5",
+        "5c4a1055a44af818a3014fb6",
+        "5c4a1055a44af818a3014fb7",
+        "5c4a1055a44af818a3014fb8"
+      ]
+    }
+  ],
+  "type": "email",
+  "updatedAt": "2019-01-24T19:33:40.343Z",
+  "contact": {
+      "name": "Jane Doe",
+      "number": "+15005559876"
+    }
 }
 ```
 
@@ -168,10 +264,27 @@ Returns the deleted user and a confirmation message
 ```
 {
   "user": {
-    "id": "5c26edfec0bca3dc01855221",
-    "username": "lkjsadfklj",
-    "email": "lkj",
-    "subscribed": false
+    "coordinates": [
+        30.267153,
+        -97.74306079999997
+    ],
+    "createdAt": "2019-01-24T19:15:45.365Z",
+    "displayName": "Alex",
+    "email": "blahblah@gmail.com",
+    "formattedAddress": "Austin, TX, USA",
+    "id": "5c4a0ee1a44af818a3014fae",
+    "lastLogin": "2019-01-24T19:33:40.341Z",
+    "loginCount": 1,
+    "subscribed": false,
+    "trips": [
+      "5c4a1055a44af818a3014faf"
+    ],
+    "type": "email",
+    "updatedAt": "2019-01-24T23:40:33.008Z",
+    "contact": {
+      "name": "Bobby B",
+      "number": "+15005551234"
+    }
   },
   "msg": "User was deleted"
 }

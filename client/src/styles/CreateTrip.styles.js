@@ -16,8 +16,8 @@ export const MapWrapper = Styled.div`
     ${media.tablet`
       visibility: visible;
       cursor: pointer;
-      right: 20px;
-      bottom: 20px;
+      right: 40px;
+      bottom: 40px;
       background: white;
       border-radius: 50%;
       position: absolute;

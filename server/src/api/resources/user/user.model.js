@@ -72,6 +72,11 @@ export const schema = {
     type: String,
     required: true,
     default: "email"
+  },
+  // Emergency contact info
+  contact: {
+    name: String,
+    number: String
   }
 }
 
@@ -118,7 +123,8 @@ userSchema.set("toJSON", {
       token: ret.token,
       trips: ret.trips,
       type: ret.type,
-      updatedAt: ret.updatedAt
+      updatedAt: ret.updatedAt,
+      contact: ret.contact
     }
     return retJson
   }
