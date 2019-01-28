@@ -21,7 +21,10 @@ import {
   TOGGLE_ARCHIVE_TRIP_ERROR,
   REPEAT_TRIP,
   REPEAT_TRIP_SUCCESS,
-  REPEAT_TRIP_ERROR
+  REPEAT_TRIP_ERROR,
+  UPLOADING_TRIP_PIC,
+  UPLOADING_TRIP_PIC_SUCCESS,
+  UPLOADING_TRIP_PIC_ERROR
 } from "./types"
 
 export const getTrips = userId => dispatch => {
@@ -159,4 +162,20 @@ export const repeatTrip = trip => async dispatch => {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }
+}
+
+export const uploadPics = image => dispatch => {
+  dispatch({ type: UPLOADING_TRIP_PIC })
+  axios
+    .post(`${SERVER_URI}/trips/upload`, image)
+    .then(res => {
+      console.log(res, "RES")
+      dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS })
+    })
+    .catch(err => {
+      dispatch({ type: UPLOADING_TRIP_PIC_ERROR, payload: err })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
 }

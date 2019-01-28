@@ -1,6 +1,13 @@
 import { Trip } from "./trip.model"
 import { User } from "../user/user.model"
 import { Waypoint } from "../waypoint/waypoint.model"
+import cloudinary from "cloudinary"
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY
+})
 
 export const getAllTrips = (req, res) => {
   Trip.find({})
@@ -135,4 +142,12 @@ export const repeatTrip = (req, res) => {
   }
   delete updatedRequest.body.id
   createTrip(updatedRequest, res)
+}
+
+export const uploadPics = (req, res) => {
+  console.log(req, "RES")
+  cloudinary.v2.uploader.upload(req.files[0], (error, res) =>
+    console.log(res, error)
+  )
+  res.status(200).json(res)
 }

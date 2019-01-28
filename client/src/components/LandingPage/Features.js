@@ -73,13 +73,13 @@ class Features extends Component {
   state = {
     image: iphone
   }
+
   handleMouseOver = e => {
     console.log(e.currentTarget.id, "LOG")
     let image = iphone
     switch (e.currentTarget.id) {
       case "plan":
         image = plan
-        break
       case "track":
         image = mapview
         break
@@ -105,12 +105,12 @@ class Features extends Component {
         </TitleContainer>
         <FeaturesContainer>
           <Img src={this.state.image} />
-
           <DescriptionContainer>
             <div
               id="plan"
               onMouseEnter={this.handleMouseOver}
               className="features-content"
+              src="/images/iphonelist.png"
             >
               <h4>
                 Travel the backroads<span className="accent">.</span>
