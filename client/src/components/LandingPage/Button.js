@@ -19,6 +19,16 @@ const Button = styled.div`
     0 0.0625rem 2px 0 rgba(0, 0, 0, 0.75),
     0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1);
 
+  button {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
   &:hover {
     background: #f9873b;
     transition: background 500ms;
@@ -38,9 +48,9 @@ const ButtonCTA = ({ history, text, to }) => {
 
   return (
     <Button>
-      <a onClick={navigate}>
+      <button onClick={navigate}>
         <h4>{text}</h4>
-      </a>
+      </button>
     </Button>
   )
 }

@@ -12,16 +12,25 @@ const FooterContainer = styled.div`
   align-content: center;
   background-color: #222222;
 
-  h5 {
-    margin-bottom: 2rem;
+  button {
+    display: block;
+    margin: 0 0 1rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
     font-size: 0.9rem;
-    font-weight: 600;
-    color: #646565;
+    letter-spacing: 1.25px;
   }
 
-  p {
+  h5 {
+    margin-bottom: 2rem;
+    color: #646565;
     font-size: 0.9rem;
-    color: white !important;
+    font-weight: 600;
+    letter-spacing: 1.25px;
   }
 
   .logo {
@@ -58,50 +67,26 @@ const Footer = () => (
     </div>
     <div className="menu">
       <h5>Menu</h5>
-      <p>
-        <a>Features</a>
-      </p>
-      <p>
-        <a>About</a>
-      </p>
-      <p>
-        <a>Community</a>
-      </p>
-      <p>
-        <a>Support</a>
-      </p>
+      <button>Features</button>
+      <button>About</button>
+      <button>Community</button>
+      <button>Support</button>
     </div>
     <div className="terms">
-      <p>
-        <a>Business</a>
-      </p>
-      <p>
-        <a>Terms</a>
-      </p>
-      <p>
-        <a>Policy</a>
-      </p>
+      <button>Business</button>
+      <button>Terms</button>
+      <button>Policy</button>
     </div>
     <div className="social">
       <h5>Follow</h5>
-      <p>
-        <a>Facebook</a>
-      </p>
-      <p>
-        <a>Twitter</a>
-      </p>
-      <p>
-        <a>Instagram</a>
-      </p>
+      <button>Facebook</button>
+      <button>Twitter</button>
+      <button>Instagram</button>
     </div>
     <div className="join">
       <h5>Get started</h5>
-      <p>
-        <a>Sign Up</a>
-      </p>
-      <p>
-        <a>Login</a>
-      </p>
+      <button>Sign Up</button>
+      <button>Login</button>
     </div>
   </FooterContainer>
 )

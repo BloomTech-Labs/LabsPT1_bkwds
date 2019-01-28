@@ -46,14 +46,23 @@ const Menu = styled.ul`
   transition: display, visibility ease-in-out 0.3s;
   z-index: 2;
 
-  a {
+  a,
+  button {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
     color: white !important;
     font-size: 17px;
     font-weight: 500;
     letter-spacing: 1.5px;
   }
 
-  a:hover {
+  a:hover,
+  button:hover {
     color: #f9f9f9;
     font-weight: 600;
     text-decoration: none;
@@ -67,9 +76,8 @@ const Menu = styled.ul`
       /* opacity: 1; */
       /* transition: opacity ease-in-out 0.3s; */
       width: 100%;
-
       height: 54px;
-      a {
+      button {
         color: black !important;
         font-size: 1.35rem;
       }
@@ -136,7 +144,7 @@ class Header extends PureComponent {
           </MobileMenu>
           <Menu>
             <li className="links">
-              <a onClick={() => scrollTo("features")}>Features</a>
+              <button onClick={() => scrollTo("features")}>Features</button>
             </li>
             <li className="links">
               <Link to="/login">Log in</Link>
