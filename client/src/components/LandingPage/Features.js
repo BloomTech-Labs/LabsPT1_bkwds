@@ -98,7 +98,7 @@ class Features extends Component {
 
   render() {
     return (
-      <div>
+      <div id="features">
         <TitleContainer>
           <h1>Join our global community</h1>
           <h4>The incredible experience of out app</h4>
