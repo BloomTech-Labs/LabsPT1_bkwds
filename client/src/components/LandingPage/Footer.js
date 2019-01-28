@@ -47,7 +47,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <div className="logo">
-        <Img src="/images/bckwdslogo.png" />
+        <Img src="/images/bkwdslogo.png" />
       </div>
       <div className="menu">
         <h5>Menu</h5>
