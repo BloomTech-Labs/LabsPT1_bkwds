@@ -102,15 +102,16 @@ const MobileMenu = styled.div`
   `}
 `
 
-const Overlay = styled.div`
-  top: 0;
-  left: 0;
-  position: absolute;
-  height: 100vh;
-  min-width: 100vw;
-  background: rgba(255, 255, 255, 0.5);
-  z-index: 1;
-`
+// 🚧 WIP — for mobile menu
+// const Overlay = styled.div`
+//   top: 0;
+//   left: 0;
+//   position: absolute;
+//   height: 100vh;
+//   min-width: 100vw;
+//   background: rgba(255, 255, 255, 0.5);
+//   z-index: 1;
+// `
 
 class Header extends PureComponent {
   state = {
