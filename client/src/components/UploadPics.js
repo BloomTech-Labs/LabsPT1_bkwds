@@ -1,12 +1,14 @@
 import React, { Component } from "react"
 import { uploadPics } from "../redux/actions/trips"
+import { connect } from "react-redux"
+import { TripPropTypes } from "./propTypes"
 
 class UploadPics extends Component {
   state = {
-    image: ""
+    tripPics: ""
   }
 
-  upload(e) {
+  upload = e => {
     e.preventDefault()
     const image = e.target.files[0]
     console.log(e.target.files[0], "PICTURE")
@@ -17,9 +19,10 @@ class UploadPics extends Component {
     //         };
     //         reader.readAsDataURL(e.target.files[0])
     console.log(image, "IMAGE")
+    console.log(this.props, "PROPS")
 
     // }
-    this.uploadPics(image)
+    this.props.uploadPics(image)
   }
 
   render() {
@@ -41,4 +44,18 @@ class UploadPics extends Component {
   }
 }
 
-export default UploadPics
+UploadPics.propTypes = {
+  trip: TripPropTypes
+}
+
+const mapStateToProps = state => ({
+  tripPics: state.trips.id,
+  trip: state.trips.id
+})
+
+const mapDispatchToProps = { uploadPics }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UploadPics)
