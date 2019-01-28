@@ -1,30 +1,52 @@
-import React from "react"
+import React, { PureComponent } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { HamburgerSpring } from "react-animated-burgers"
 
 import { scrollTo } from "../../utils"
+import { media } from "../../styles/theme/mixins"
 
-const NavigationMenu = styled.div`
+const HeaderContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-template-areas:
+    "logo 🍔"
+    "menu menu";
   margin-top: 30px;
   padding: 0 100px;
   height: 30px;
   width: 100%;
+
+  ${media.tablet`
+    padding: 0 50px;
+  `}
+
+  ${media.phone`
+    padding: 0 25px;
+  `}
 `
 
-const Img = styled.img`
+const Logo = styled.img`
+  grid-area: logo;
+  align-self: center;
   width: 128px;
 `
 
-const Menu = styled.div`
+const Menu = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 110px);
+  grid-area: menu;
+  margin: 0;
+  padding: 0;
   text-align: center;
+  align-items: center;
   justify-content: flex-end;
+  list-style-type: none;
+  transition: display, visibility ease-in-out 0.3s;
+  z-index: 2;
 
   a {
-    align-self: center;
     color: white !important;
     font-size: 17px;
     font-weight: 500;
@@ -36,17 +58,97 @@ const Menu = styled.div`
     font-weight: 600;
     text-decoration: none;
   }
+
+  ${media.phone`
+    display: block;
+    visibility: visible;
+
+    .links {
+      /* opacity: 1; */
+      /* transition: opacity ease-in-out 0.3s; */
+      width: 100%;
+
+      height: 54px;
+      a {
+        color: black !important;
+        font-size: 1.35rem;
+      }
+    }
+  `}
 `
 
-const Nav = () => (
-  <NavigationMenu>
-    <Img src="/images/bkwdslogo.png" />
-    <Menu>
-      <a onClick={() => scrollTo("features")}>Features</a>
-      <Link to="/login">Log in</Link>
-      <Link to="/register">Sign up</Link>
-    </Menu>
-  </NavigationMenu>
-)
+const MobileMenu = styled.div`
+  display: none;
+  grid-area: 🍔;
+  visibility: hidden;
+  align-self: center;
+  justify-self: flex-end;
+  z-index: 2;
 
-export default Nav
+  .🍔 {
+    outline: none;
+
+    span,
+    span::before,
+    span::after {
+      border-radius: 0;
+      height: 2px;
+    }
+  }
+
+  ${media.phone`
+    display: block;
+    visibility: visible;
+  `}
+`
+
+const Overlay = styled.div`
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 100vh;
+  min-width: 100vw;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+`
+
+class Header extends PureComponent {
+  state = {
+    isActive: false
+  }
+
+  toggleBurger = () => this.setState(prev => ({ isActive: !prev.isActive }))
+
+  render() {
+    return (
+      <>
+        <HeaderContainer>
+          <Logo src="/images/bkwdslogo.png" />
+          <MobileMenu>
+            <HamburgerSpring
+              isActive={this.state.isActive}
+              toggleButton={this.toggleBurger}
+              className="🍔"
+              barColor="white"
+              buttonWidth={30}
+            />
+          </MobileMenu>
+          <Menu>
+            <li className="links">
+              <a onClick={() => scrollTo("features")}>Features</a>
+            </li>
+            <li className="links">
+              <Link to="/login">Log in</Link>
+            </li>
+            <li className="links">
+              <Link to="/register">Sign up</Link>
+            </li>
+          </Menu>
+        </HeaderContainer>
+        {/* <Overlay /> */}
+      </>
+    )
+  }
+}
+
+export default Header

@@ -18,12 +18,11 @@ const BrandedContent = styled.div`
   flex-direction: column;
   align-self: center;
   justify-content: center;
-  margin-top: 53px;
-  margin-right: 2rem;
   align-items: center;
 
   h3 {
     color: white !important;
+    text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.75);
   }
 
   a {
@@ -33,14 +32,6 @@ const BrandedContent = styled.div`
   .accent {
     color: #f26a21 !important;
     font-weight: bold;
-  }
-
-
-  .googleSignIn {
-      height: 55px;
-      width: 200px;
-      margin: 3rem
-      border-radius: 12px;
   }
 `
 

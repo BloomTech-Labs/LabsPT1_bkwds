@@ -9,8 +9,7 @@ import Footer from "./Footer"
 import { fontDeclarations } from "../../styles/theme/mixins"
 
 const LandingPageContainer = styled.div`
-  display: block;
-  overflow: auto !important;
+  overflow: auto;
   height: 100%;
   ${fontDeclarations}
   font-family: "Wals";

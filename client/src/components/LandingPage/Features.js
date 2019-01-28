@@ -1,58 +1,47 @@
-import React, { Component } from "react"
+import React, { PureComponent } from "react"
 import styled from "styled-components"
-import iphone from "../../assets/iphone.png"
-import mapview from "../../assets/mapview.png"
-import plan from "../../assets/iphoneplan.png"
-import list from "../../assets/iphonelist.png"
 
-//WIP --VIC
+const FeaturesContainer = styled.div`
+  height: 100vh;
+  padding: 3% 2% 2% 2%;
+`
 
 const TitleContainer = styled.div`
-  height: 100%;
-  width: 70%;
-  margin-left: 30%;
-  margin-top: 5%;
   display: flex;
   flex-direction: column;
+  margin: 0 0 5% 0;
 
   h1 {
-    flex-direction: column;
     align-self: center;
-
-    justify-content: center;
-  }
-  h4 {
-    flex-direction: column;
-    align-self: center;
-
-    justify-content: center;
   }
 
   div {
     margin-top: 1rem;
   }
 `
-const FeaturesContainer = styled.div`
+
+const Content = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 100%;
+  height: 500px;
+  width: 80%;
+  margin: 0 10%;
 `
+
 const Img = styled.img`
   display: flex;
   flex-direction: column;
   justify-self: center;
-
-  width: 55%;
-  margin: 3rem;
+  height: 100%;
 `
 
-const DescriptionContainer = styled.div`
-  height: 100%;
-  grid-template-columns: 1fr 1fr;
+const Description = styled.div`
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: 200px;
   grid-gap: 5%;
   padding: 5%;
-  grid-auto-columns: 200px;
+  height: 100%;
 
   div {
     margin-top: 1rem;
@@ -60,67 +49,45 @@ const DescriptionContainer = styled.div`
   }
 
   .accent {
-    color: #f26a21 !important;
-    font-size: 35px !important;
+    color: #f26a21;
+    font-size: 35px;
   }
 
   .features-content {
-    align-self: center;
+    align-self: flex-start;
+    margin-top: 0;
   }
 `
 
-class Features extends Component {
+class Features extends PureComponent {
   state = {
-    image: iphone
+    image: "/images/features-plan.png"
   }
-  handleMouseOver = e => {
-    console.log(e.currentTarget.id, "LOG")
-    let image = iphone
-    switch (e.currentTarget.id) {
-      case "plan":
-        image = plan
-        break
-      case "track":
-        image = mapview
-        break
-      case "share":
-        image = iphone
-        break
-      case "list":
-        image = list
-        break
-      default:
-        image = iphone
-        break
-    }
-    this.setState({ image })
+
+  handleMouseOver = ({ currentTarget: { id } }) => {
+    this.setState({ image: `/images/features-${id}.png` })
   }
 
   render() {
     return (
-      <div id="features">
+      <FeaturesContainer id="features">
         <TitleContainer>
           <h1>Join our global community</h1>
-          <h4>The incredible experience of out app</h4>
         </TitleContainer>
-        <FeaturesContainer>
+        <Content>
           <Img src={this.state.image} />
-
-          <DescriptionContainer>
+          <Description>
             <div
               id="plan"
               onMouseEnter={this.handleMouseOver}
               className="features-content"
             >
               <h4>
-                Travel the backroads<span className="accent">.</span>
+                Plan your trip<span className="accent">.</span>
               </h4>
               <p>
-                Discover new trails and trek through the unknown with our state
-                of the art GPS tracker and trail setter planning. Explore new
-                peaks. Discover new trails and trek through the unknown with our
-                state of the art GPS tracker and trail setter planning. Explore
-                new peaks.
+                Discover new trails and trek through the wilds with our trip
+                planner.
               </p>
             </div>
             <div
@@ -133,9 +100,7 @@ class Features extends Component {
               </h4>
               <p>
                 Create hiking goals and track your progress over time. Share and
-                compete with other hikers or mountain climbers. Discover new
-                trails and trek through the unknown with our state of the art
-                GPS tracker and trail setter planning. Explore new peaks.
+                compete with other hikers or mountain climbers.
               </p>
             </div>
             <div
@@ -147,9 +112,9 @@ class Features extends Component {
                 Share and connect<span className="accent">.</span>
               </h4>
               <p>
-                Connect with our growing community of climbers and hikers, join
-                a quest with members of ur community or plan a trip with your
-                friends
+                Connect with our growing community of climbers and hikers. Join
+                a quest with members of your community or plan a trip with your
+                friends.
               </p>
             </div>
             <div
@@ -162,16 +127,12 @@ class Features extends Component {
               </h4>
               <p>
                 Create waypoints, broadcast your location and alert others of
-                your whereabouts — wander into the wild with a peace of mind.
-              </p>
-              <p>
-                Create waypoints, broadcast your location and alert others of
-                your whereabouts — wander into the wild with a peace of mind.
+                your whereabouts — wander into the unknown with a peace of mind.
               </p>
             </div>
-          </DescriptionContainer>
-        </FeaturesContainer>
-      </div>
+          </Description>
+        </Content>
+      </FeaturesContainer>
     )
   }
 }

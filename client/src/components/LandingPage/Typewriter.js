@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { PureComponent } from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 
@@ -14,7 +14,7 @@ const Span = styled.span`
   animation: blink 0.5s infinite;
 `
 
-class Typewriter extends Component {
+class Typewriter extends PureComponent {
   static defaultProps = {
     delay: 550,
     erasingSpeed: 50,
@@ -93,12 +93,10 @@ class Typewriter extends Component {
 
   render() {
     return (
-      <>
-        <h1>
-          {this.state.displayText}
-          <Span>|</Span>
-        </h1>
-      </>
+      <h1>
+        {this.state.displayText}
+        <Span>|</Span>
+      </h1>
     )
   }
 }
