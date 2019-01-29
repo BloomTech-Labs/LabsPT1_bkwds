@@ -21,7 +21,8 @@ import {
   EDIT_TRIP_ERROR,
   START_TRIP_SUCCESS,
   START_TRIP,
-  START_TRIP_ERROR
+  START_TRIP_ERROR,
+  REMOVE_ACTIVE_TRIP
 } from "../actions/types"
 
 import {
@@ -104,6 +105,9 @@ export const tripReducer = (state = defaultState, action) => {
       return { ...state, pending: false, activeTrip: action.payload }
     case START_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
+
+    case REMOVE_ACTIVE_TRIP:
+      return { ...state, activeTrip: null }
 
     case REPEAT_TRIP:
       return {
