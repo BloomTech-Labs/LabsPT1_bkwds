@@ -47,7 +47,7 @@ export const login = (req, res) => {
       if (!oldUser) return res.status(404).send("User does not exist")
       oldUser.comparePassword(password, (err, isMatch) => {
         if (err) {
-          return res.status(401).send("Unauthorized")
+          return res.status(500).send("Error checking use password")
         }
         if (isMatch) {
           // let token = generateToken(user)

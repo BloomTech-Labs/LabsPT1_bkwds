@@ -125,15 +125,21 @@ class CreateTripMap extends React.Component {
   saveValidate = () => {
     const { startDate, endDate, title, markers } = this.state
     if (!startDate || !endDate) {
-      toast("Date not provided")
+      toast.error("Date not provided", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
       return false
     }
     if (title === "") {
-      toast("Title not provided")
+      toast.error("Title not provided", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
       return false
     }
     if (!markers.length) {
-      toast("Set at least 1 checkpoint")
+      toast.error("Set at least 1 checkpoint", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
       return false
     }
     return true

@@ -24,7 +24,10 @@ import {
   START_TRIP_ERROR,
   ADD_TRIP_TIME_LIMIT,
   ADD_TRIP_TIME_LIMIT_SUCCESS,
-  ADD_TRIP_TIME_LIMIT_ERROR
+  ADD_TRIP_TIME_LIMIT_ERROR,
+  TOGGLE_WAYPOINT_SUCCESS,
+  TOGGLE_WAYPOINT_ERROR,
+  REMOVE_ACTIVE_TRIP
 } from "../actions/types"
 
 import {
@@ -108,6 +111,9 @@ export const tripReducer = (state = defaultState, action) => {
     case START_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
 
+    case REMOVE_ACTIVE_TRIP:
+      return { ...state, activeTrip: null }
+
     case REPEAT_TRIP:
       return {
         ...state,
@@ -139,6 +145,28 @@ export const tripReducer = (state = defaultState, action) => {
         trips: { ...state.trips, [action.payload.id]: action.payload }
       }
     case ADD_TRIP_TIME_LIMIT_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.payload
+      }
+    case TOGGLE_WAYPOINT_SUCCESS:
+      const waypointIndex = state.activeTrip.waypoints.findIndex(
+        waypoint => waypoint.id === action.payload.id
+      )
+      return {
+        ...state,
+        pending: false,
+        activeTrip: {
+          ...state.activeTrip,
+          waypoints: [
+            ...state.activeTrip.waypoints.slice(0, waypointIndex),
+            action.payload,
+            ...state.activeTrip.waypoints.slice(waypointIndex + 1)
+          ]
+        }
+      }
+    case TOGGLE_WAYPOINT_ERROR:
       return {
         ...state,
         pending: false,
