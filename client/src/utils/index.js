@@ -31,3 +31,8 @@ export const convertMarkerToWaypoint = marker => ({
   start: Date.now(),
   end: Date.now()
 })
+
+export const scrollTo = target =>
+  document
+    .getElementById(target)
+    .scrollIntoView({ block: "start", behavior: "smooth" })
