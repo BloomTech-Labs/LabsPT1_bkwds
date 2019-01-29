@@ -81,6 +81,7 @@ class TripPanel extends React.Component {
   }
 
   renderWaypoints = () => {
+    console.log("rw called")
     const { maps } = window.google
     const { waypoints } = this.state.trip
     const markers = []
@@ -226,14 +227,8 @@ class TripPanel extends React.Component {
   }
 
   render() {
-    const {
-      elevation,
-      isEditing,
-      saveToggle,
-      trip,
-      tripDistance,
-      waypoints
-    } = this.state
+    const { elevation, isEditing, saveToggle, trip, tripDistance } = this.state
+
     return (
       <s.Panel>
         <s.PanelHeader>
@@ -275,8 +270,8 @@ class TripPanel extends React.Component {
           </s.AddButton>
         </s.WaypointsHeader>
         <s.WaypointList>
-          {waypoints &&
-            waypoints.map(({ name }, i) => (
+          {trip.waypoints !== undefined &&
+            trip.waypoints.map(({ name }, i) => (
               <Waypoint
                 key={name}
                 i={i}

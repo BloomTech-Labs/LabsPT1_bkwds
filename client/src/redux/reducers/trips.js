@@ -23,7 +23,8 @@ import {
   START_TRIP,
   START_TRIP_ERROR,
   TOGGLE_WAYPOINT_SUCCESS,
-  TOGGLE_WAYPOINT_ERROR
+  TOGGLE_WAYPOINT_ERROR,
+  REMOVE_ACTIVE_TRIP
 } from "../actions/types"
 
 import {
@@ -106,6 +107,9 @@ export const tripReducer = (state = defaultState, action) => {
       return { ...state, pending: false, activeTrip: action.payload }
     case START_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
+
+    case REMOVE_ACTIVE_TRIP:
+      return { ...state, activeTrip: null }
 
     case REPEAT_TRIP:
       return {

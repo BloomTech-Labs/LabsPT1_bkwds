@@ -29,7 +29,8 @@ import {
   START_TRIP_SUCCESS,
   START_TRIP_ERROR,
   TOGGLE_WAYPOINT_SUCCESS,
-  TOGGLE_WAYPOINT_ERROR
+  TOGGLE_WAYPOINT_ERROR,
+  REMOVE_ACTIVE_TRIP
 } from "./types"
 
 export const getTrips = userId => dispatch => {
@@ -52,7 +53,9 @@ export const getTrips = userId => dispatch => {
       })
     })
 }
-
+export const removeActiveTrip = () => {
+  return { type: REMOVE_ACTIVE_TRIP }
+}
 export const getSingleTrip = tripId => dispatch => {
   axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
     dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
@@ -61,34 +64,42 @@ export const getSingleTrip = tripId => dispatch => {
 
 export const editTrip = trip => dispatch => {
   dispatch({ type: EDIT_TRIP })
-  axios.put(`${SERVER_URI}/trips/${trip.id}`, { name: trip.name }).then(() => {
-    let newWaypoints = trip.waypoints.filter(waypoint => {
-      return waypoint.id === undefined
-    })
-    console.log(newWaypoints)
-    axios
-      .post(`${SERVER_URI}/waypoints/batch`, newWaypoints)
-      .then(() => {
-        let updatedWaypoints = trip.waypoints.filter(waypoint => {
-          return waypoint.id !== undefined
-        })
-
-        let updates = updatedWaypoints.map(waypoint => {
-          return axios.put(`${SERVER_URI}/waypoints/${waypoint.id}`, {
-            lat: waypoint.lat,
-            lon: waypoint.lon,
-            name: waypoint.name,
-            order: waypoint.order
-          })
-        })
-        axios.all(updates).then(() => {
-          dispatch({ type: EDIT_TRIP_SUCCESS })
-        })
-      })
-      .catch(err =>
-        dispatch({ type: EDIT_TRIP_ERROR, payload: normalizeErrorMsg(err) })
-      )
+  let calls = []
+  let newWaypoints = trip.waypoints.filter(waypoint => {
+    return waypoint.id === undefined
   })
+
+  let updatedWaypoints = trip.waypoints.filter(waypoint => {
+    return waypoint.id !== undefined
+  })
+
+  if (newWaypoints.length > 0) {
+    calls.push(axios.post(`${SERVER_URI}/waypoints/batch`, newWaypoints))
+  }
+  if (updatedWaypoints.length > 0) {
+    updatedWaypoints.forEach(waypoint => {
+      calls.push(
+        axios.put(`${SERVER_URI}/waypoints/${waypoint.id}`, {
+          lat: waypoint.lat,
+          lon: waypoint.lon,
+          name: waypoint.name,
+          order: waypoint.order
+        })
+      )
+    })
+  }
+  axios
+    .all(calls)
+    .then(() => {
+      axios
+        .put(`${SERVER_URI}/trips/${trip.id}`, { name: trip.name })
+        .then(res => {
+          dispatch({ type: EDIT_TRIP_SUCCESS, payload: res.data })
+        })
+    })
+    .catch(err => {
+      dispatch({ type: EDIT_TRIP_ERROR, payload: normalizeErrorMsg(err) })
+    })
 }
 
 export const startTrip = trip => dispatch => {
