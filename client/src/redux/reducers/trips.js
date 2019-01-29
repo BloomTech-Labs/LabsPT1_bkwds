@@ -18,7 +18,13 @@ import {
   REPEAT_TRIP_ERROR,
   UPLOADING_TRIP_PIC,
   UPLOADING_TRIP_PIC_SUCCESS,
-  UPLOADING_TRIP_PIC_ERROR
+  UPLOADING_TRIP_PIC_ERROR,
+  EDIT_TRIP,
+  EDIT_TRIP_SUCCESS,
+  EDIT_TRIP_ERROR,
+  START_TRIP_SUCCESS,
+  START_TRIP,
+  START_TRIP_ERROR
 } from "../actions/types"
 
 import {
@@ -88,6 +94,20 @@ export const tripReducer = (state = defaultState, action) => {
     case TOGGLE_ARCHIVE_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
 
+    case EDIT_TRIP:
+      return { ...state, pending: true }
+    case EDIT_TRIP_SUCCESS:
+      return { ...state, pending: false }
+    case EDIT_TRIP_ERROR:
+      return { ...state, pending: false, error: action.payload }
+
+    case START_TRIP:
+      return { ...state, pending: true }
+    case START_TRIP_SUCCESS:
+      return { ...state, pending: false, activeTrip: action.payload }
+    case START_TRIP_ERROR:
+      return { ...state, pending: false, error: action.payload }
+
     case REPEAT_TRIP:
       return {
         ...state,
@@ -110,7 +130,7 @@ export const tripReducer = (state = defaultState, action) => {
     case UPLOADING_TRIP_PIC:
       return { ...state, pending: true }
     case UPLOADING_TRIP_PIC_SUCCESS:
-      return { ...state, pending: false, [action.payload.id]: action.payload }
+      return { ...state, pending: false, activeTrip: action.payload }
     case UPLOADING_TRIP_PIC_ERROR:
       return { ...state, pending: false, error: action.payload }
   }

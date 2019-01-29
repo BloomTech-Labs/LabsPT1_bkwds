@@ -11,7 +11,6 @@ import { toggleArchive, repeatTrip } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
-import UploadPics from "./UploadPics"
 
 const TripCard = ({
   trip,
@@ -67,7 +66,6 @@ const TripCard = ({
                 />
               </CardButton>
             </Link>
-            <UploadPics />
           </div>
         </div>
         <br />

@@ -13,7 +13,7 @@ export const DashboardStyles = styled.div`
     padding: 2rem;
   }
   .flow-header {
-    padding: 30px 30px 0 30px;
+    padding: 0px 30px 0 30px;
     margin-bottom: 24px;
     h4 {
       font-size: 2rem;

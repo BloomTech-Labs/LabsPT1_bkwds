@@ -24,7 +24,13 @@ import {
   REPEAT_TRIP_ERROR,
   UPLOADING_TRIP_PIC,
   UPLOADING_TRIP_PIC_SUCCESS,
-  UPLOADING_TRIP_PIC_ERROR
+  UPLOADING_TRIP_PIC_ERROR,
+  EDIT_TRIP,
+  EDIT_TRIP_ERROR,
+  EDIT_TRIP_SUCCESS,
+  START_TRIP,
+  START_TRIP_SUCCESS,
+  START_TRIP_ERROR
 } from "./types"
 
 export const getTrips = userId => dispatch => {
@@ -52,6 +58,48 @@ export const getSingleTrip = tripId => dispatch => {
   axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
     dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
   })
+}
+
+export const editTrip = trip => dispatch => {
+  dispatch({ type: EDIT_TRIP })
+  axios.put(`${SERVER_URI}/trips/${trip.id}`, { name: trip.name }).then(() => {
+    let newWaypoints = trip.waypoints.filter(waypoint => {
+      return waypoint.id === undefined
+    })
+    console.log(newWaypoints)
+    axios
+      .post(`${SERVER_URI}/waypoints/batch`, newWaypoints)
+      .then(() => {
+        let updatedWaypoints = trip.waypoints.filter(waypoint => {
+          return waypoint.id !== undefined
+        })
+
+        let updates = updatedWaypoints.map(waypoint => {
+          return axios.put(`${SERVER_URI}/waypoints/${waypoint.id}`, {
+            lat: waypoint.lat,
+            lon: waypoint.lon,
+            name: waypoint.name,
+            order: waypoint.order
+          })
+        })
+        axios.all(updates).then(() => {
+          dispatch({ type: EDIT_TRIP_SUCCESS })
+        })
+      })
+      .catch(err => dispatch({ type: EDIT_TRIP_ERROR, payload: err }))
+  })
+}
+
+export const startTrip = trip => dispatch => {
+  dispatch({ type: START_TRIP })
+  axios
+    .put(`${SERVER_URI}/trips/${trip.id}`, { inProgress: true })
+    .then(res => {
+      dispatch({ type: START_TRIP_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: START_TRIP_ERROR, payload: err })
+    })
 }
 
 // export const editTrip = tripId => dispatch => {
@@ -165,12 +213,13 @@ export const repeatTrip = trip => async dispatch => {
 }
 
 export const uploadPics = image => dispatch => {
+  console.log(image, "RES Action")
   dispatch({ type: UPLOADING_TRIP_PIC })
   axios
     .post(`${SERVER_URI}/trips/upload`, image)
     .then(res => {
-      console.log(res, "RES")
-      dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS })
+      console.log(res, "RESTWO")
+      dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS, payload: res.data })
     })
     .catch(err => {
       dispatch({ type: UPLOADING_TRIP_PIC_ERROR, payload: err })
