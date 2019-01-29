@@ -6,9 +6,9 @@ import PropTypes from "prop-types"
 
 import "react-toastify/dist/ReactToastify.css"
 
+import { GlobalStyles } from "../styles/theme/GlobalStyles"
 import AppNav from "./AppNav"
 import Sidebar from "./Sidebar"
-import { GlobalStyles } from "../styles/theme/GlobalStyles"
 import { media } from "../styles/theme/mixins"
 import { isProtectedPath } from "../utils"
 

@@ -5,8 +5,8 @@ import { toast } from "react-toastify"
 
 import CreateTripPanel from "./createTripPanel"
 import { MapWrapper } from "../../../styles/CreateTrip.styles"
-import CustomMarker from "../../../assets/add_icon-min.png"
-import CustomWaypoint from "../../../assets/add_marker_icon-min.png"
+import AddButton from "../../icons/AddButton.js"
+import mapMarker from "../../icons/orange-marker.svg"
 import { createTrip } from "../../../redux/actions/trips"
 
 class CreateTripMap extends React.Component {
@@ -33,20 +33,31 @@ class CreateTripMap extends React.Component {
   }
 
   addWaypoint = () => {
-    const index = this.state.markers.length
-    let marker = new window.google.maps.Marker({
+    const { markers } = this.state
+    const index = markers.length
+    const { maps } = window.google
+    const icon = {
+      url: mapMarker,
+      anchor: new maps.Point(15, 30),
+      scaledSize: new maps.Size(30, 30),
+      labelOrigin: new maps.Point(15, 13)
+    }
+    const label = {
+      text: (index + 1).toString(),
+      color: "white",
+      fontFamily: "Wals",
+      fontWeight: "bold"
+    }
+    const marker = new window.google.maps.Marker({
       position: window.map.getCenter(),
       map: window.map,
       draggable: true,
-      title: (index + 1).toString(),
-      label: (index + 1).toString(),
-      index: index,
-      icon: CustomWaypoint
+      label,
+      index,
+      icon
     })
 
-    let markers = this.state.markers
-    markers.push(marker)
-    this.setState({ markers })
+    this.setState({ markers: [...markers, marker] })
     this.deleteListener(marker)
   }
 
@@ -149,12 +160,7 @@ class CreateTripMap extends React.Component {
           id="createTripMap"
           style={{ width: "100%", height: "100%", position: "absolute" }}
         />
-        <img
-          id="plus-icon"
-          src={CustomMarker}
-          onClick={this.addWaypoint}
-          alt="Custom Add Icon"
-        />
+        <AddButton addWaypoint={this.addWaypoint} />
       </MapWrapper>
     )
   }

@@ -7,7 +7,7 @@ import ActiveTripPanel from "./activePanel"
 import styled from "styled-components"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
-import { getSingleTrip } from "../../../redux/actions/trips"
+import { getSingleTrip, removeActiveTrip } from "../../../redux/actions/trips"
 import { media } from "../../../styles/theme/mixins"
 
 const SingleTripMapStyles = styled.div`
@@ -29,13 +29,9 @@ const dashSymbol = {
 class SingleTripMap extends React.Component {
   static defaultProps = {
     getSingleTrip: () => {},
+    removeActiveTrip: () => {},
     trip: getDefaultTripProps(),
     tripId: ""
-  }
-
-  constructor(props) {
-    super(props)
-    this.mapRef = React.createRef()
   }
 
   componentDidMount() {
@@ -43,13 +39,10 @@ class SingleTripMap extends React.Component {
     window.elevation = new window.google.maps.ElevationService()
   }
 
-  componentDidUpdate() {
-    const { trip } = this.props
-    const lat = trip.lat
-    const lng = trip.lon
-    const center = { lat, lng }
-    if (trip && trip.waypoints) this.renderMap(center)
-    // this.drawPolyline()
+  componentDidUpdate(nextProps) {
+    if (nextProps.trip !== this.props.trip) {
+      this.renderMap({ lat: this.props.trip.lat, lng: this.props.trip.lon })
+    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -57,6 +50,11 @@ class SingleTripMap extends React.Component {
     return true
   }
 
+  //At page change remove active trip/ set null so successive page changes don't have
+  // stale activeTrip data
+  componentWillUnmount() {
+    this.props.removeActiveTrip()
+  }
   //Attaches Map to div
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = center => {
@@ -95,7 +93,6 @@ class SingleTripMap extends React.Component {
     polyline.setMap(window.map)
   }
 
-  // Add conditional rendering for active Trip
   render() {
     if (this.props.trip !== null) {
       return (
@@ -121,6 +118,7 @@ class SingleTripMap extends React.Component {
 
 SingleTripMap.propTypes = {
   getSingleTrip: PropTypes.func.isRequired,
+  removeActiveTrip: PropTypes.func.isRequired,
   isSidebarOpen: PropTypes.bool.isRequired,
   trip: TripPropTypes,
   tripId: PropTypes.string.isRequired
@@ -133,5 +131,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getSingleTrip }
+  { getSingleTrip, removeActiveTrip }
 )(SingleTripMap)
