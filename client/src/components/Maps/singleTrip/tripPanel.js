@@ -243,17 +243,17 @@ class TripPanel extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  startingTrip = trip => e => {
+  startingTrip = trip => async e => {
     e.preventDefault()
     if (this.state.disableSafety) {
-      this.props.closeModal()
-      this.props.startTrip(trip.trip)
+      await this.props.closeModal()
+      await this.props.startTrip(trip.trip)
     }
 
     if (this.validateSafetyModalInput()) {
       const { hours } = this.state
-      this.props.addTripSafetyTimeLimit(trip.trip, hours)
-      this.props.startTrip(trip.trip)
+      await this.props.addTripSafetyTimeLimit(trip.trip, hours)
+      await this.props.startTrip(trip.trip)
     }
   }
 

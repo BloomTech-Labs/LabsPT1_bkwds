@@ -235,8 +235,8 @@ export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
 
   axios
     .put(`${SERVER_URI}/trips/${trip.id}`, { timeLimit: hours })
-    .then(trip => {
-      dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: trip })
+    .then(response => {
+      dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: response.data })
       // TODO CONNECT TO SMS ENDPOINT
       axios
         .post(`${SERVER_URI}/send_sms`, {
