@@ -22,7 +22,6 @@ const LoginForm = ({
   email = "",
   password = "",
   login,
-  loginError,
   loginWithOauth,
   pending
 }) => (
@@ -69,7 +68,6 @@ const LoginForm = ({
               {!pending && (
                 <CustomButtonWithError
                   text="Log in"
-                  submitError={loginError}
                   isSubmitting={isSubmitting}
                 />
               )}

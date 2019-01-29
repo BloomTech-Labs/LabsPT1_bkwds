@@ -28,6 +28,8 @@ import {
   START_TRIP,
   START_TRIP_SUCCESS,
   START_TRIP_ERROR,
+  TOGGLE_WAYPOINT_SUCCESS,
+  TOGGLE_WAYPOINT_ERROR,
   REMOVE_ACTIVE_TRIP
 } from "./types"
 
@@ -45,7 +47,7 @@ export const getTrips = userId => dispatch => {
       dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
     })
     .catch(err => {
-      dispatch({ type: LOADING_TRIPS_ERROR, payload: err })
+      dispatch({ type: LOADING_TRIPS_ERROR, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -96,7 +98,7 @@ export const editTrip = trip => dispatch => {
         })
     })
     .catch(err => {
-      dispatch({ type: EDIT_TRIP_ERROR, payload: err })
+      dispatch({ type: EDIT_TRIP_ERROR, payload: normalizeErrorMsg(err) })
     })
 }
 
@@ -108,7 +110,7 @@ export const startTrip = trip => dispatch => {
       dispatch({ type: START_TRIP_SUCCESS, payload: res.data })
     })
     .catch(err => {
-      dispatch({ type: START_TRIP_ERROR, payload: err })
+      dispatch({ type: START_TRIP_ERROR, payload: normalizeErrorMsg(err) })
     })
 }
 
@@ -139,7 +141,7 @@ export const createTrip = (trip, markers) => dispatch => {
         })
     })
     .catch(err => {
-      dispatch({ type: CREATING_TRIP_ERROR, payload: err })
+      dispatch({ type: CREATING_TRIP_ERROR, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -154,7 +156,7 @@ export const deleteTrip = tripId => dispatch => {
       dispatch({ type: DELETING_TRIP_SUCCESS, payload: res.data.id })
     })
     .catch(err => {
-      dispatch({ type: DELETING_TRIP_ERROR, payload: err })
+      dispatch({ type: DELETING_TRIP_ERROR, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -172,7 +174,10 @@ export const toggleArchive = (tripId, archived, user) => dispatch => {
       dispatch(getTrips(user))
     })
     .catch(err => {
-      dispatch({ type: TOGGLE_ARCHIVE_TRIP_ERROR, payload: err })
+      dispatch({
+        type: TOGGLE_ARCHIVE_TRIP_ERROR,
+        payload: normalizeErrorMsg(err)
+      })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -215,9 +220,23 @@ export const repeatTrip = trip => async dispatch => {
     dispatch({ type: REPEAT_TRIP_SUCCESS, payload: repeatedTrip })
     dispatch(push(`/app/trip/${repeatedTrip.id}`))
   } catch (err) {
-    dispatch({ type: REPEAT_TRIP_ERROR, payload: err.toString() })
+    dispatch({ type: REPEAT_TRIP_ERROR, payload: normalizeErrorMsg(err) })
     toast.error(normalizeErrorMsg(err), {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }
+}
+
+export const toggleWaypoint = (waypointId, isCompleted) => dispatch => {
+  return axios
+    .put(`${SERVER_URI}/waypoints/${waypointId}`, { complete: !isCompleted })
+    .then(res => {
+      dispatch({ type: TOGGLE_WAYPOINT_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: TOGGLE_WAYPOINT_ERROR, payload: err })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
 }

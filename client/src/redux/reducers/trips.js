@@ -22,6 +22,8 @@ import {
   START_TRIP_SUCCESS,
   START_TRIP,
   START_TRIP_ERROR,
+  TOGGLE_WAYPOINT_SUCCESS,
+  TOGGLE_WAYPOINT_ERROR,
   REMOVE_ACTIVE_TRIP
 } from "../actions/types"
 
@@ -127,5 +129,28 @@ export const tripReducer = (state = defaultState, action) => {
     // IMPLEMENT!
     case CREATING_WAYPOINT:
       return { ...state, pending: true }
+
+    case TOGGLE_WAYPOINT_SUCCESS:
+      const waypointIndex = state.activeTrip.waypoints.findIndex(
+        waypoint => waypoint.id === action.payload.id
+      )
+      return {
+        ...state,
+        pending: false,
+        activeTrip: {
+          ...state.activeTrip,
+          waypoints: [
+            ...state.activeTrip.waypoints.slice(0, waypointIndex),
+            action.payload,
+            ...state.activeTrip.waypoints.slice(waypointIndex + 1)
+          ]
+        }
+      }
+    case TOGGLE_WAYPOINT_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.payload
+      }
   }
 }

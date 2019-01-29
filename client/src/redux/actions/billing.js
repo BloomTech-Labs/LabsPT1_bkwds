@@ -1,5 +1,6 @@
 import axios from "axios"
 import Scriptly from "scriptly"
+import { push } from "connected-react-router"
 
 import { SERVER_URI } from "../../config"
 import {
@@ -54,8 +55,12 @@ export const cancelSubscription = ({ id, subscribeId }) => async dispatch => {
     })
     dispatch({ type: CANCEL_SUBSCRIPTION_SUCCESS, payload: result.data })
     dispatch({ type: QUERYING_USER_BY_TOKEN_SUCCESS, payload: result.data })
+    dispatch(push("/app/upgrade"))
   } catch (error) {
-    dispatch({ type: CANCEL_SUBSCRIPTION_FAIL, payload: error })
+    dispatch({
+      type: CANCEL_SUBSCRIPTION_FAIL,
+      payload: normalizeErrorMsg(error)
+    })
     toast.error(normalizeErrorMsg(error), {
       position: toast.POSITION.BOTTOM_RIGHT
     })
@@ -83,8 +88,8 @@ export const subscribe = ({ id, owner, stripe }) => async dispatch => {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   } catch (error) {
-    dispatch({ type: SUBSCRIBE_FAIL, payload: error })
-    toast.error(error.toString(), {
+    dispatch({ type: SUBSCRIBE_FAIL, payload: normalizeErrorMsg(error) })
+    toast.error(normalizeErrorMsg(error), {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }
@@ -103,8 +108,8 @@ export const retrieveInvoices = (customerId, subscribeId) => async dispatch => {
 
     dispatch({ type: INVOICES_SUCCESS, payload: result.data })
   } catch (error) {
-    dispatch({ type: INVOICES_FAIL, payload: error })
-    toast.error("Cannot retrieve your invoices. Please reload the page.", {
+    dispatch({ type: INVOICES_FAIL, payload: normalizeErrorMsg(error) })
+    toast.error(normalizeErrorMsg(error), {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }

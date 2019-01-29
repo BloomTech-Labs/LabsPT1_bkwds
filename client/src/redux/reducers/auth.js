@@ -12,7 +12,7 @@ import {
   UPDATE_USER_IN_STORE
 } from "../actions/types"
 
-import { normalizeUser, normalizeErrorMsg } from "../../utils/selectors"
+import { normalizeUser } from "../../utils/selectors"
 
 const defaultUser = {
   id: null,
@@ -50,13 +50,13 @@ export const authReducer = (state = defaultState, action) => {
         ...state,
         pending: false,
         isLoggedIn: false,
-        error: normalizeErrorMsg(action.payload)
+        error: action.payload
       }
 
     case LOGOUT_SUCCESS:
       return {
         ...state,
-        user: {},
+        user: { ...defaultUser },
         error: null,
         isLoggedIn: false,
         pending: false
@@ -73,7 +73,7 @@ export const authReducer = (state = defaultState, action) => {
       return {
         ...state,
         pending: false,
-        error: normalizeErrorMsg(action.payload)
+        error: action.payload
       }
 
     case ADD_TOKEN_TO_STATE:
