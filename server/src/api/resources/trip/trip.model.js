@@ -40,7 +40,7 @@ export const schema = {
     default: false
   },
   waypoints: [{ type: ObjectId, ref: "Waypoint" }],
-  tripPics: [{ type: String, ref: "TripPic" }]
+  tripPics: [{ type: String }]
 }
 
 const tripSchema = new mongoose.Schema(schema, { timestamps: true })

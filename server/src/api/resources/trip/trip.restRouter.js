@@ -20,4 +20,4 @@ tripRouter
 
 tripRouter.route("/:id/waypoints").get(tripController.populateWaypoints)
 
-tripRouter.route("/upload").post(tripController.uploadPics)
+tripRouter.route("/upload/:id").put(tripController.uploadPics)

@@ -38,7 +38,6 @@ export const CustomInputWithError = ({
 
 export const CustomButtonWithError = ({
   text,
-  submitError,
   isSubmitting = false,
   classNames = [] // allows you to override styling
 }) => (
@@ -50,9 +49,6 @@ export const CustomButtonWithError = ({
     >
       {text}
     </Button>
-    {submitError && (
-      <div className="error server-error">{submitError.toString()}</div>
-    )}
   </div>
 )
 

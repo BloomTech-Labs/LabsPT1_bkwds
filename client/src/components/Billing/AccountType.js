@@ -86,7 +86,7 @@ const AccountType = ({
 AccountType.propTypes = {
   isSubscribed: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
-  subscribeId: PropTypes.string.isRequired,
+  subscribeId: PropTypes.string,
   cancelSubscription: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired

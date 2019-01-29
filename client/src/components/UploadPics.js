@@ -9,20 +9,16 @@ class UploadPics extends Component {
   }
 
   upload = e => {
-    e.preventDefault()
-    const image = e.target.files[0]
-    console.log(e.target.files[0], "PICTURE")
-    // if (e.target.files && e.target.files[0]) {
-    //     let reader = new FileReader();
-    //     reader.onload = (e) => {
-    //         this.setState({ image: e.target.result });
-    //         };
-    //         reader.readAsDataURL(e.target.files[0])
-    console.log(image, "IMAGE")
-    console.log(this.props, "PROPS")
+    const { id } = this.props
 
-    // }
-    this.props.uploadPics(image)
+    e.preventDefault()
+    if (e.target.files && e.target.files[0]) {
+      let reader = new FileReader()
+      reader.onloadend = () => {
+        this.props.uploadPics(id, reader.result)
+      }
+      reader.readAsDataURL(e.target.files[0])
+    }
   }
 
   render() {
@@ -50,7 +46,7 @@ UploadPics.propTypes = {
 
 const mapStateToProps = state => ({
   tripPics: state.trips.id,
-  trip: state.trips.id
+  id: state.trips.activeTrip.id
 })
 
 const mapDispatchToProps = { uploadPics }
