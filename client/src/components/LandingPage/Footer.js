@@ -5,99 +5,90 @@ const FooterContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 100px 100px;
-  grid-template-areas: "a a b c d e";
+  grid-template-areas: "logo logo menu terms social join";
+  height: 100%;
+  width: 100%;
+  padding: 5% 0;
+  align-content: center;
   background-color: #222222;
-  height: 40vh;
-  width: 100vw;
-  padding-top: 5%;
-  alight-content: center;
-  h5 {
-    color: #646565 !important;
-    margin-bottom: 2.5rem;
+
+  button {
+    display: block;
+    margin: 0 0 1rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    letter-spacing: 1.25px;
   }
-  p {
-    color: white !important;
+
+  h5 {
     margin-bottom: 2rem;
+    color: #646565;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1.25px;
   }
 
   .logo {
-    grid-area: a;
+    grid-area: logo;
   }
+
   .menu {
-    grid-area: b;
+    grid-area: menu;
   }
+
   .terms {
-    grid-area: c;
-    margin-top: 50px;
+    grid-area: terms;
+    margin-top: 55px;
   }
-  .follow {
-    grid-area: d;
+
+  .social {
+    grid-area: social;
   }
-  .Join {
-    grid-area: e;
+
+  .join {
+    grid-area: join;
   }
 `
 
 const Img = styled.img`
-  width: 228px;
+  width: 114px;
   margin-left: 90px;
 `
 
-const Footer = () => {
-  return (
-    <FooterContainer>
-      <div className="logo">
-        <Img src="/images/bkwdslogo.png" />
-      </div>
-      <div className="menu">
-        <h5>Menu</h5>
-        <p>
-          <a>Features</a>
-        </p>
-        <p>
-          <a>About</a>
-        </p>
-        <p>
-          <a>Community</a>
-        </p>
-        <p>
-          <a>Support</a>
-        </p>
-      </div>
-      <div className="terms">
-        <p>
-          <a>Business</a>
-        </p>
-        <p>
-          <a>Terms</a>
-        </p>
-        <p>
-          <a>Policy</a>
-        </p>
-      </div>
-      <div>
-        <h5>Follow</h5>
-        <p>
-          <a>Facebook</a>
-        </p>
-        <p>
-          <a>Twitter</a>
-        </p>
-        <p>
-          <a>Instagram</a>
-        </p>
-      </div>
-      <div>
-        <h5>Join</h5>
-        <p>
-          <a>Sign Up</a>
-        </p>
-        <p>
-          <a>Login</a>
-        </p>
-      </div>
-    </FooterContainer>
-  )
-}
+const Footer = () => (
+  <FooterContainer>
+    <div className="logo">
+      <Img src="/images/bkwdslogo.png" />
+    </div>
+    <div className="menu">
+      <h5>Menu</h5>
+      <button>Features</button>
+      <button>About</button>
+      <button>Community</button>
+      <button>Support</button>
+    </div>
+    <div className="terms">
+      <button>Business</button>
+      <button>Terms</button>
+      <button>Policy</button>
+    </div>
+    <div className="social">
+      <h5>Follow</h5>
+      <button>Facebook</button>
+      <button>Twitter</button>
+      <button>Instagram</button>
+    </div>
+    <div className="join">
+      <h5>Get started</h5>
+      <button>Sign Up</button>
+      <button>Login</button>
+    </div>
+  </FooterContainer>
+)
 
 export default Footer

@@ -16,7 +16,7 @@ const BrandedContent = styled.div`
   align-self: flex-end;
   justify-content: center;
   margin-top: 53px;
-  margin-right: 2rem;
+  margin-right: 10rem;
 
   h1 {
     color: white !important;
