@@ -44,10 +44,12 @@ class UploadPics extends Component {
   }
 }
 
+//I have no clue what this does -VM//
 UploadPics.propTypes = {
   trip: TripPropTypes,
   id: TripPropTypes,
-  tripPics: TripPropTypes
+  tripPics: TripPropTypes,
+  uploadPics: TripPropTypes
 }
 
 const mapStateToProps = state => ({
