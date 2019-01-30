@@ -30,8 +30,12 @@ export const sendSMSAlert = async (req, res) => {
   res.status(202).end("Safety alert timer started", async () => {
     await sleep(data.timeLimit) // sleep until time limit has expired
     try {
-      const trip = await Trip.findOne({ _id: req.body.tripId })
-      if (trip.complete) {
+      const trip = await Trip.findOne({ _id: req.body.tripId }).populate(
+        "waypoints"
+      )
+      const isComplete = areWaypointsComplete(trip.waypoints)
+      if (isComplete) {
+        console.log("Trip is complete")
         return // Trip was succesfully completed, return without sending alert
       }
       const response = await Twilio.messages.create({
@@ -48,10 +52,9 @@ export const sendSMSAlert = async (req, res) => {
 
 const gatherResources = async params => {
   const user = await User.findOne({ _id: params.userId })
-  const trip = await Trip.findOne({ _id: params.tripId }).populate({
-    path: "waypoints",
-    model: "Waypoint"
-  })
+  const trip = await Trip.findOne({ _id: params.tripId })
+    .populate("waypoints")
+    .exec()
   let location = findLastLocation(trip.waypoints)
 
   if (!location) {
@@ -83,4 +86,12 @@ const findLastLocation = waypoints => {
 const sleep = hours => {
   let ms = hours * 3600000
   return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+const areWaypointsComplete = waypoints => {
+  let isComplete = true
+  waypoints.forEach(waypoint => {
+    if (waypoint.complete == false) isComplete = false
+  })
+  return isComplete
 }
