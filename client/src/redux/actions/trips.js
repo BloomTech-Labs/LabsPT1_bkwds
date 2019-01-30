@@ -28,6 +28,9 @@ import {
   START_TRIP,
   START_TRIP_SUCCESS,
   START_TRIP_ERROR,
+  ADD_TRIP_TIME_LIMIT,
+  ADD_TRIP_TIME_LIMIT_SUCCESS,
+  ADD_TRIP_TIME_LIMIT_ERROR,
   TOGGLE_WAYPOINT_SUCCESS,
   TOGGLE_WAYPOINT_ERROR,
   REMOVE_ACTIVE_TRIP
@@ -225,6 +228,33 @@ export const repeatTrip = trip => async dispatch => {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }
+}
+
+export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
+  dispatch({ type: ADD_TRIP_TIME_LIMIT })
+
+  axios
+    .put(`${SERVER_URI}/trips/${trip.id}`, { timeLimit: hours })
+    .then(response => {
+      dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: response.data })
+      // TODO CONNECT TO SMS ENDPOINT
+      axios
+        .post(`${SERVER_URI}/send_sms`, {
+          userId: trip.userId,
+          tripId: trip.id
+        })
+        .then(() => {
+          console.log("Safety SMS Alert succesfully queued")
+        })
+        .catch(() => {
+          toast.error("Safety SMS Alert failed to queue", {
+            position: toast.POSITION.BOTTOM_RIGHT
+          })
+        })
+    })
+    .catch(err => {
+      dispatch({ type: ADD_TRIP_TIME_LIMIT_ERROR, payload: err.toString() })
+    })
 }
 
 export const toggleWaypoint = (waypointId, isCompleted) => dispatch => {
