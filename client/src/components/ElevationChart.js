@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import * as d3 from "d3"
+import { media } from "../styles/theme/mixins"
 
 const margin = { top: 0, right: 0, bottom: 15, left: 50 }
 const width = 750 - margin.left - margin.right
@@ -14,14 +15,14 @@ export const metersToMiles = m => m * 0.000621371
 export const metersToFeet = m => m * 3.28084
 
 function fromLatLngToPoint(latLng, map) {
-  var topRight = map
+  const topRight = map
     .getProjection()
     .fromLatLngToPoint(map.getBounds().getNorthEast())
-  var bottomLeft = map
+  const bottomLeft = map
     .getProjection()
     .fromLatLngToPoint(map.getBounds().getSouthWest())
-  var scale = Math.pow(2, map.getZoom())
-  var worldPoint = map.getProjection().fromLatLngToPoint(latLng)
+  const scale = Math.pow(2, map.getZoom())
+  const worldPoint = map.getProjection().fromLatLngToPoint(latLng)
   const point = new window.google.maps.Point(
     (worldPoint.x - bottomLeft.x) * scale,
     (worldPoint.y - topRight.y) * scale
@@ -38,7 +39,6 @@ class ElevationChart extends Component {
     this.state = {
       data: []
     }
-    this.marker = null
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -88,7 +88,6 @@ class ElevationChart extends Component {
       .append("svg")
       .attr("width", 750)
       .attr("height", 155)
-      // MOVE 2 ATTRS INTO RESPONSIFY FUNCTION!
       .attr("viewBox", "0 0 " + width + " " + 160)
       .attr("preserveAspectRatio", "xMinYMid")
       .append("g")
@@ -96,7 +95,6 @@ class ElevationChart extends Component {
 
     const xScale = d3
       .scaleLinear()
-      // .domain([d3.min(data, co => co.x), d3.max(data, co => co.x)])
       .domain(d3.extent(data, d => d.x))
       .range([0, width])
 
@@ -282,7 +280,7 @@ class ElevationChart extends Component {
     return (
       <ElevationChartStyles>
         <div className="elevation-chart-wrapper">
-          <div>{data.length > 0 && <div id="elevationChart" />}</div>
+          {data.length > 0 && <div id="elevationChart" />}
         </div>
       </ElevationChartStyles>
     )
