@@ -1,4 +1,5 @@
 import Styled from "styled-components"
+import { media } from "../../../../styles/theme/mixins"
 
 export const Panel = Styled.div`
     max-width:360px;
@@ -38,6 +39,16 @@ export const PanelSubheader = Styled.div`
     padding:.75rem 1.25rem 1.25rem 1.25rem;
     display:flex;
 `
+
+export const DateLabel = Styled.label`
+  margin: 0.25rem 1.25rem;
+  color: #808080;
+
+  ${media.tablet`
+    overflow-x: hidden;
+  `}
+`
+
 export const Waypoint = Styled.div`
   align-items:center;
   width: 90%;
@@ -115,4 +126,19 @@ export const StartButton = Styled.button`
     color:white;
     width:100px;
     border-radius:5px;
+`
+
+export const WaypointTracker = Styled.ul`
+    padding: 8px;
+`
+
+export const WaypointStepper = Styled.li`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    & button: {
+        border: none;
+        border-radius: 50%;
+    }
 `

@@ -27,7 +27,13 @@ import {
   EDIT_TRIP_SUCCESS,
   START_TRIP,
   START_TRIP_SUCCESS,
-  START_TRIP_ERROR
+  START_TRIP_ERROR,
+  ADD_TRIP_TIME_LIMIT,
+  ADD_TRIP_TIME_LIMIT_SUCCESS,
+  ADD_TRIP_TIME_LIMIT_ERROR,
+  TOGGLE_WAYPOINT_SUCCESS,
+  TOGGLE_WAYPOINT_ERROR,
+  REMOVE_ACTIVE_TRIP
 } from "./types"
 
 export const getTrips = userId => dispatch => {
@@ -44,13 +50,15 @@ export const getTrips = userId => dispatch => {
       dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
     })
     .catch(err => {
-      dispatch({ type: LOADING_TRIPS_ERROR, payload: err })
+      dispatch({ type: LOADING_TRIPS_ERROR, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
 }
-
+export const removeActiveTrip = () => {
+  return { type: REMOVE_ACTIVE_TRIP }
+}
 export const getSingleTrip = tripId => dispatch => {
   axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
     dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
@@ -59,32 +67,42 @@ export const getSingleTrip = tripId => dispatch => {
 
 export const editTrip = trip => dispatch => {
   dispatch({ type: EDIT_TRIP })
-  axios.put(`${SERVER_URI}/trips/${trip.id}`, { name: trip.name }).then(() => {
-    let newWaypoints = trip.waypoints.filter(waypoint => {
-      return waypoint.id === undefined
-    })
-    console.log(newWaypoints)
-    axios
-      .post(`${SERVER_URI}/waypoints/batch`, newWaypoints)
-      .then(() => {
-        let updatedWaypoints = trip.waypoints.filter(waypoint => {
-          return waypoint.id !== undefined
-        })
-
-        let updates = updatedWaypoints.map(waypoint => {
-          return axios.put(`${SERVER_URI}/waypoints/${waypoint.id}`, {
-            lat: waypoint.lat,
-            lon: waypoint.lon,
-            name: waypoint.name,
-            order: waypoint.order
-          })
-        })
-        axios.all(updates).then(() => {
-          dispatch({ type: EDIT_TRIP_SUCCESS })
-        })
-      })
-      .catch(err => dispatch({ type: EDIT_TRIP_ERROR, payload: err }))
+  let calls = []
+  let newWaypoints = trip.waypoints.filter(waypoint => {
+    return waypoint.id === undefined
   })
+
+  let updatedWaypoints = trip.waypoints.filter(waypoint => {
+    return waypoint.id !== undefined
+  })
+
+  if (newWaypoints.length > 0) {
+    calls.push(axios.post(`${SERVER_URI}/waypoints/batch`, newWaypoints))
+  }
+  if (updatedWaypoints.length > 0) {
+    updatedWaypoints.forEach(waypoint => {
+      calls.push(
+        axios.put(`${SERVER_URI}/waypoints/${waypoint.id}`, {
+          lat: waypoint.lat,
+          lon: waypoint.lon,
+          name: waypoint.name,
+          order: waypoint.order
+        })
+      )
+    })
+  }
+  axios
+    .all(calls)
+    .then(() => {
+      axios
+        .put(`${SERVER_URI}/trips/${trip.id}`, { name: trip.name })
+        .then(res => {
+          dispatch({ type: EDIT_TRIP_SUCCESS, payload: res.data })
+        })
+    })
+    .catch(err => {
+      dispatch({ type: EDIT_TRIP_ERROR, payload: normalizeErrorMsg(err) })
+    })
 }
 
 export const startTrip = trip => dispatch => {
@@ -95,7 +113,7 @@ export const startTrip = trip => dispatch => {
       dispatch({ type: START_TRIP_SUCCESS, payload: res.data })
     })
     .catch(err => {
-      dispatch({ type: START_TRIP_ERROR, payload: err })
+      dispatch({ type: START_TRIP_ERROR, payload: normalizeErrorMsg(err) })
     })
 }
 
@@ -126,7 +144,7 @@ export const createTrip = (trip, markers) => dispatch => {
         })
     })
     .catch(err => {
-      dispatch({ type: CREATING_TRIP_ERROR, payload: err })
+      dispatch({ type: CREATING_TRIP_ERROR, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -141,7 +159,7 @@ export const deleteTrip = tripId => dispatch => {
       dispatch({ type: DELETING_TRIP_SUCCESS, payload: res.data.id })
     })
     .catch(err => {
-      dispatch({ type: DELETING_TRIP_ERROR, payload: err })
+      dispatch({ type: DELETING_TRIP_ERROR, payload: normalizeErrorMsg(err) })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -159,7 +177,10 @@ export const toggleArchive = (tripId, archived, user) => dispatch => {
       dispatch(getTrips(user))
     })
     .catch(err => {
-      dispatch({ type: TOGGLE_ARCHIVE_TRIP_ERROR, payload: err })
+      dispatch({
+        type: TOGGLE_ARCHIVE_TRIP_ERROR,
+        payload: normalizeErrorMsg(err)
+      })
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -202,9 +223,50 @@ export const repeatTrip = trip => async dispatch => {
     dispatch({ type: REPEAT_TRIP_SUCCESS, payload: repeatedTrip })
     dispatch(push(`/app/trip/${repeatedTrip.id}`))
   } catch (err) {
-    dispatch({ type: REPEAT_TRIP_ERROR, payload: err.toString() })
+    dispatch({ type: REPEAT_TRIP_ERROR, payload: normalizeErrorMsg(err) })
     toast.error(normalizeErrorMsg(err), {
       position: toast.POSITION.BOTTOM_RIGHT
     })
   }
+}
+
+export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
+  dispatch({ type: ADD_TRIP_TIME_LIMIT })
+
+  axios
+    .put(`${SERVER_URI}/trips/${trip.id}`, { timeLimit: hours })
+    .then(response => {
+      dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: response.data })
+      // TODO CONNECT TO SMS ENDPOINT
+      axios
+        .post(`${SERVER_URI}/send_sms`, {
+          userId: trip.userId,
+          tripId: trip.id
+        })
+        .then(() => {
+          console.log("Safety SMS Alert succesfully queued")
+        })
+        .catch(() => {
+          toast.error("Safety SMS Alert failed to queue", {
+            position: toast.POSITION.BOTTOM_RIGHT
+          })
+        })
+    })
+    .catch(err => {
+      dispatch({ type: ADD_TRIP_TIME_LIMIT_ERROR, payload: err.toString() })
+    })
+}
+
+export const toggleWaypoint = (waypointId, isCompleted) => dispatch => {
+  return axios
+    .put(`${SERVER_URI}/waypoints/${waypointId}`, { complete: !isCompleted })
+    .then(res => {
+      dispatch({ type: TOGGLE_WAYPOINT_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: TOGGLE_WAYPOINT_ERROR, payload: err })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
 }

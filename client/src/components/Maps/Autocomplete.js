@@ -12,7 +12,7 @@ class Autocomplete extends Component {
   }
 
   componentDidMount() {
-    const { google, inputRef } = this.props
+    const { google, inputRef, getFormattedAddress } = this.props
     this.autocomplete = new google.maps.places.Autocomplete(inputRef.current)
     this.autocomplete.setFields(["geometry", "formatted_address"])
     this.listener = this.autocomplete.addListener("place_changed", () => {
@@ -21,8 +21,7 @@ class Autocomplete extends Component {
       if (!place.geometry.location) return
       const { lat, lng } = place.geometry.location
 
-      console.log("LAT, LNG:", lat(), lng())
-      console.log("VIEWPORT:", place.geometry.viewport)
+      getFormattedAddress(place.formatted_address)
 
       if (window.map && lat && lng) {
         window.map.setCenter({
@@ -54,7 +53,8 @@ Autocomplete.propTypes = {
     current: PropTypes.instanceOf(HTMLInputElement)
   }).isRequired,
   map: PropTypes.object,
-  children: PropTypes.func.isRequired
+  children: PropTypes.func.isRequired,
+  getFormattedAddress: PropTypes.func
 }
 
 export default Autocomplete
