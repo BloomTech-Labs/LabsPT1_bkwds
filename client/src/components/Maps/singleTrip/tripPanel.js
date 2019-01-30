@@ -36,6 +36,7 @@ import endMarker from "../../icons/black-marker.svg"
 class TripPanel extends React.Component {
   state = {
     disableSafety: false,
+    distances: [],
     elevations: [],
     hours: "",
     isEditing: false,
@@ -75,14 +76,26 @@ class TripPanel extends React.Component {
         lng: marker.getPosition().lng()
       }))
 
+      const distances = latLngs
+        .map((latLng, i, arr) => {
+          if (i === arr.length - 1) return
+          return util.calcDistance(
+            latLng.lat,
+            latLng.lng,
+            arr[i + 1].lat,
+            arr[i + 1].lng
+          )
+        })
+        // TODO: turn into REDUCE so you don't have to pop
+        .slice(0, latLngs.length - 1)
+
+      console.log("DISTANCES:", distances)
+
       elevator.getElevationForLocations(
         { locations: latLngs },
         (results, status) => {
-          // DELETE UNUSED STATUS VARIABLE
-          console.log("STATUS:", status)
-          console.log("RESULTS:", results)
-
           this.setState({
+            distances,
             elevations: this.state.elevations.concat(
               results.map(result => result)
             )
@@ -271,6 +284,8 @@ class TripPanel extends React.Component {
     }
   }
 
+  getAllDistances = () => {}
+
   handleHoursInput = e => {
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -312,7 +327,14 @@ class TripPanel extends React.Component {
     const { elevations, isEditing, saveToggle, trip, tripDistance } = this.state
 
     return (
-      <s.Panel>
+      <div
+        style={{
+          position: "relative",
+          background: "white",
+          height: "500px"
+        }}
+      >
+        {/* <s.Panel>
         <s.PanelHeader>
           <s.TripTitleInput
             type="text"
@@ -347,8 +369,6 @@ class TripPanel extends React.Component {
           </s.TripDetail>
         </s.PanelSubheader>
 
-        <ElevationChart elevations={elevations} />
-
         <s.WaypointsHeader>
           <h4>Waypoints</h4>
           <s.AddButton
@@ -372,9 +392,9 @@ class TripPanel extends React.Component {
               />
             ))}
         </s.WaypointList>
+
         <s.StartButton onClick={this.props.openModal}>Start Trip</s.StartButton>
 
-        {/* Safety Modal - Appears when StartButton is clicked */}
         <Modal isOpen={this.props.modalIsOpen}>
           {() => (
             <div className="startTrip-flow">
@@ -411,7 +431,13 @@ class TripPanel extends React.Component {
             </div>
           )}
         </Modal>
-      </s.Panel>
+
+      </s.Panel> */}
+        <ElevationChart
+          distances={this.state.distances}
+          elevations={elevations}
+        />
+      </div>
     )
   }
 }
