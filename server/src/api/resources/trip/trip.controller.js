@@ -166,3 +166,14 @@ export const uploadPics = (req, res) => {
     })
   })
 }
+
+export const renderPics = (req, res) => {
+  console.log(req, "RENDERPICS")
+  Trip.find({})
+    .then(pictures => {
+      res.status(200).json(pictures)
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+}
