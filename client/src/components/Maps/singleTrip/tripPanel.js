@@ -28,7 +28,8 @@ class TripPanel extends React.Component {
       trip: {},
       markers: [],
       elevation: null,
-      tripDistance: null
+      tripDistance: null,
+      path: null
     }
   }
 
@@ -36,6 +37,7 @@ class TripPanel extends React.Component {
     this.setState({ trip: this.props.trip })
     setTimeout(() => {
       this.renderWaypoints()
+      this.props.drawPolyline(this.state.markers)
     }, 500)
   }
 
@@ -67,7 +69,7 @@ class TripPanel extends React.Component {
       this.getPathDistance()
     })
     const waypoint = {
-      name: `Checkpoint ${index}`,
+      name: `Checkpoint ${index + 1}`,
       tripId: this.props.trip.id,
       order: index + 1,
       lat: marker.getPosition().lat(),
@@ -81,7 +83,6 @@ class TripPanel extends React.Component {
   }
 
   renderWaypoints = () => {
-    console.log("rw called")
     const { maps } = window.google
     const { waypoints } = this.state.trip
     const markers = []
@@ -129,10 +130,14 @@ class TripPanel extends React.Component {
         title: waypoint.name,
         label
       })
-      marker.setMap(window.map)
-      marker.addListener("dragend", ({ latLng }) => {
+      // marker.setMap(window.map)
+      marker.addListener("dragend", ev => {
+        console.log("dragend Called on marker", i)
+        console.log(waypoints)
         const updatedWaypoints = waypoints.map((item, index) =>
-          index === i ? { ...item, lat: latLng.lat(), lon: latLng.lng() } : item
+          index === i
+            ? { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+            : item
         )
         this.setState({
           trip: { ...this.state.trip, waypoints: updatedWaypoints }
@@ -141,13 +146,13 @@ class TripPanel extends React.Component {
       })
       markers.push(marker)
     })
-
     this.setState({ markers })
   }
 
   handleEditToggle = () => {
     this.setState({ isEditing: true, saveToggle: true }, () => {
       this.toggleDraggable()
+      window.polyline.setMap(null)
     })
   }
 
@@ -186,6 +191,7 @@ class TripPanel extends React.Component {
   }
 
   handleEdit = (e, i) => {
+    console.log(i)
     const mapped = this.state.trip.waypoints.map((item, index) => {
       if (index === i) {
         return { ...item, name: e.target.value }
@@ -211,6 +217,7 @@ class TripPanel extends React.Component {
     this.setState({ saveToggle: false, isEditing: false }, () => {
       this.toggleDraggable()
       this.props.editTrip(this.state.trip)
+      this.props.drawPolyline(this.state.markers)
     })
   }
 
@@ -273,7 +280,7 @@ class TripPanel extends React.Component {
           {trip.waypoints !== undefined &&
             trip.waypoints.map(({ name }, i) => (
               <Waypoint
-                key={name}
+                key={i}
                 i={i}
                 name={name}
                 isEditing={isEditing}

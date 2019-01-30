@@ -6,30 +6,39 @@ import PropTypes from "prop-types"
 import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
+import marker from "../../icons/orange-marker.svg"
+import startMarker from "../../icons/green-marker.svg"
+import endMarker from "../../icons/black-marker.svg"
 
 class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      startPosition: {},
-      currentPosition: {},
-      endPosition: {}
-    }
+    this.state = {}
   }
 
   componentDidMount() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.setState({
-          startPosition: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }
-        })
-      })
-    } else {
-      console.log("Geolocation Not available")
+    setTimeout(() => {
+      this.renderWaypoints()
+      // this.props.drawPolyline(this.state.trip.waypoints)
+    }, 500)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.trip !== this.props.trip) {
+      this.renderWaypoints()
     }
+  }
+
+  renderWaypoints = () => {
+    this.props.waypoints.map(item => {
+      let center = { lat: item.lat, lng: item.lon }
+      const marker = new window.google.maps.Marker({
+        position: center,
+        map: window.map,
+        title: item.name,
+        lavel: item.order
+      })
+    })
   }
 
   render() {

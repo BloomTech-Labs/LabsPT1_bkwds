@@ -68,10 +68,10 @@ class SingleTripMap extends React.Component {
     )
   }
 
-  drawPolyline = waypoints => {
-    const path = waypoints.map(w => ({
-      lat: w.lat,
-      lng: w.lon
+  drawPolyline = markers => {
+    const path = markers.map(marker => ({
+      lat: marker.getPosition().lat(),
+      lng: marker.getPosition().lng()
     }))
 
     const polyline = new window.google.maps.Polyline({
