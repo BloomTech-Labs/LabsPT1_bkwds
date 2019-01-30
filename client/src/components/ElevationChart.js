@@ -260,14 +260,13 @@ class ElevationChart extends Component {
       const i = bisect(data, x0, 1)
       const d0 = data[i - 1]
       const d1 = data[i]
-      const d = x0 - d0.x > d1.x - x0 ? d1 : d0
+      const d = !d1 ? d0 : x0 - d0.x > d1.x - x0 ? d1 : d0
       crossBar.attr("transform", `translate(${xScale(d.x)}, 0)`)
       crossBar.select("text").text(metersToMiles(d.x) + " mi")
       infoBox.attr("transform", `translate(${xScale(d.x) + 10}, 12.5)`)
       infoBox.select(".infoBoxElevationValue").text(metersToFeet(d.y) + " ft")
       infoBox.select(".infoBoxGradeValue").text(d.grade + "%")
-
-      const { x: px, y: py } = fromLatLngToPoint(d1.location, window.map)
+      const { x: px, y: py } = fromLatLngToPoint(d.location, window.map)
       blip.style("transform", `translate3d(${px}px, ${py}px, 0px)`)
     }
   }
