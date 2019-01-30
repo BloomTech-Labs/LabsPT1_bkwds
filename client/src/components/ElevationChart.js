@@ -112,9 +112,10 @@ class ElevationChart extends Component {
       .append("path")
       .attr("class", "elevationChartLine")
       .attr("d", area(data))
-      .style("stroke", "#b0b0b0")
+      .style("stroke", "#787979")
+      .style("stroke-opacity", 0.05)
       .style("stroke-width", 1)
-      .style("fill", "#000")
+      .style("fill", "#787979")
       .style("fill-opacity", 0.05)
   }
 
