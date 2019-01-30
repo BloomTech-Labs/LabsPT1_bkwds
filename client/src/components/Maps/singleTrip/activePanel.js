@@ -13,7 +13,9 @@ import endMarker from "../../icons/black-marker.svg"
 class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      polylines: {}
+    }
   }
 
   componentDidMount() {
@@ -24,19 +26,55 @@ class ActiveTripPanel extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.trip !== this.props.trip) {
+    if (prevProps.waypoints !== this.props.waypoints) {
+      console.log("CDU")
       this.renderWaypoints()
     }
   }
 
+  drawPolylines = () => {}
+
   renderWaypoints = () => {
-    this.props.waypoints.map(item => {
+    const baseIcon = {
+      anchor: new window.google.maps.Point(15, 30),
+      scaledSize: new window.google.maps.Size(30, 30),
+      labelOrigin: new window.google.maps.Point(15, 13)
+    }
+    const icons = {
+      start: {
+        url: startMarker,
+        ...baseIcon
+      },
+      end: {
+        url: endMarker,
+        ...baseIcon
+      },
+      marker: {
+        url: marker,
+        ...baseIcon
+      }
+    }
+    this.props.waypoints.map((item, i) => {
+      console.log(item)
+      const icon =
+        i === 0
+          ? icons.start
+          : i === this.props.waypoints.length - 1
+          ? icons.end
+          : icons.marker
+
       let center = { lat: item.lat, lng: item.lon }
       const marker = new window.google.maps.Marker({
         position: center,
         map: window.map,
+        icon,
         title: item.name,
-        lavel: item.order
+        label: {
+          text: `${i + 1}`,
+          color: "white",
+          fontFamily: "Wals",
+          fontWeight: "bold"
+        }
       })
     })
   }

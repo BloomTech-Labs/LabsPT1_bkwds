@@ -39,8 +39,8 @@ class SingleTripMap extends React.Component {
     window.elevation = new window.google.maps.ElevationService()
   }
 
-  componentDidUpdate(nextProps) {
-    if (nextProps.trip !== this.props.trip) {
+  componentDidUpdate(prevProps) {
+    if (this.props.trip !== prevProps.trip && prevProps.trip == null) {
       this.renderMap({ lat: this.props.trip.lat, lng: this.props.trip.lon })
     }
   }
