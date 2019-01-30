@@ -3,9 +3,6 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import * as d3 from "d3"
 
-const metersToMiles = m => (m * 0.000621371).toFixed(1)
-const metersToFeet = m => (m * 3.28084).toFixed(0)
-
 const margin = { top: 0, right: 0, bottom: 15, left: 50 }
 const width = 750 - margin.left - margin.right
 const height = 155 - margin.top - margin.bottom
@@ -29,103 +26,11 @@ function fromLatLngToPoint(latLng, map) {
   return point
 }
 
-function makeXGridlines(xScale) {
-  return d3.axisBottom(xScale).ticks(xAxisTicks)
-}
+const metersToMiles = m => (m * 0.000621371).toFixed(1)
+const metersToFeet = m => (m * 3.28084).toFixed(0)
 
-function makeYGridlines(yScale) {
-  return d3.axisLeft(yScale).ticks(yAxisTicks)
-}
-
-const ElevationChartStyles = styled.div`
-  /* DELETE */
-  .crossBar,
-  .infoBox {
-    display: inherit !important;
-  }
-
-  .elevation-chart-wrapper {
-    border-radius: 0.5rem 0.5rem;
-    padding: 24px 0 8px 12px;
-    background: white;
-    position: absolute;
-    right: 1.5rem;
-    top: unset;
-    bottom: 0;
-    margin-bottom: 50px;
-    z-index: 5;
-  }
-
-  text {
-    font-size: 11px;
-    stroke: none;
-    fill: #999;
-  }
-
-  text.crossBarText {
-    fill: #666;
-    width: 200px;
-  }
-
-  path.domain {
-    fill: none;
-    stroke: #aaa;
-  }
-
-  g.tick {
-    line {
-      color: #999;
-    }
-  }
-
-  .crossBar line {
-    stroke: #333;
-    stroke-width: 1px;
-    pointer-events: none;
-    /* shape-rendering: crispEdges; */
-  }
-
-  .chartOverlay {
-    fill: none;
-    pointer-events: all;
-  }
-
-  .infoBox rect {
-    stroke: #ccccd1;
-    pointer-events: none;
-    stroke-width: 1px;
-    shape-rendering: crispEdges;
-    font-size: 11px;
-    fill: #fff;
-    fill-opacity: 0.9;
-  }
-
-  tspan,
-  text.crossBarText {
-    font-size: 13px;
-  }
-
-  tspan {
-    fill: #2d2d32;
-  }
-
-  .infoBoxElevationValue,
-  .infoBoxGradeValue {
-    font-weight: 600;
-  }
-
-  .elevationChartGrid line {
-    stroke: lightgrey;
-    stroke-opacity: 0.7;
-    shape-rendering: crispEdges;
-  }
-
-  .elevationChartGrid path {
-    stroke-width: 0;
-  }
-`
-
-const CustomMarkerStyles = styled.div``
+const makeXGridlines = xScale => d3.axisBottom(xScale).ticks(xAxisTicks)
+const makeYGridlines = yScale => d3.axisLeft(yScale).ticks(yAxisTicks)
 
 class ElevationChart extends Component {
   constructor(props) {
@@ -219,7 +124,6 @@ class ElevationChart extends Component {
           .tickSize(-height)
           .tickFormat("")
       )
-
     // make Y grid:
     svg
       .append("g")
@@ -282,7 +186,6 @@ class ElevationChart extends Component {
       .attr("x", 8)
       .attr("y", 30)
       .attr("class", "infoBoxElevation")
-    // .attr("class", "crossBarText")
 
     infoBoxElevation
       .append("tspan")
@@ -304,8 +207,10 @@ class ElevationChart extends Component {
 
     infoBoxGrade.append("tspan").attr("class", "infoBoxGradeValue")
 
+    const mapId = this.props.mapRef.current.id
+
     const blip = d3
-      .select("#Tripmap")
+      .select(`#${mapId}`)
       .append("div")
       .attr("class", "customBlip")
       .style("margin-left", "-12.5px")
@@ -375,5 +280,87 @@ ElevationChart.propTypes = {
   elevations: PropTypes.array.isRequired,
   distances: PropTypes.array.isRequired
 }
+
+const ElevationChartStyles = styled.div`
+  .elevation-chart-wrapper {
+    border-radius: 0.5rem 0.5rem;
+    padding: 24px 0 8px 12px;
+    background: white;
+    position: absolute;
+    right: 1.5rem;
+    top: unset;
+    bottom: 0;
+    margin-bottom: 50px;
+    z-index: 5;
+  }
+
+  text {
+    font-size: 11px;
+    stroke: none;
+    fill: #999;
+  }
+
+  text.crossBarText {
+    fill: #666;
+    width: 200px;
+  }
+
+  path.domain {
+    fill: none;
+    stroke: #aaa;
+  }
+
+  g.tick {
+    line {
+      color: #999;
+    }
+  }
+
+  .crossBar line {
+    stroke: #333;
+    stroke-width: 1px;
+    pointer-events: none;
+    shape-rendering: crispEdges;
+  }
+
+  .chartOverlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .infoBox rect {
+    stroke: #ccccd1;
+    pointer-events: none;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+    font-size: 11px;
+    fill: #fff;
+    fill-opacity: 0.9;
+  }
+
+  tspan,
+  text.crossBarText {
+    font-size: 13px;
+  }
+
+  tspan {
+    fill: #2d2d32;
+  }
+
+  .infoBoxElevationValue,
+  .infoBoxGradeValue {
+    font-weight: 600;
+  }
+
+  .elevationChartGrid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+  }
+
+  .elevationChartGrid path {
+    stroke-width: 0;
+  }
+`
 
 export default ElevationChart

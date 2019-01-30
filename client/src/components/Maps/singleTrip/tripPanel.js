@@ -436,6 +436,7 @@ class TripPanel extends React.Component {
         <ElevationChart
           distances={this.state.distances}
           elevations={elevations}
+          mapRef={this.props.mapRef}
         />
       </div>
     )
