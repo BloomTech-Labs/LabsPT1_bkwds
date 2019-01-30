@@ -10,7 +10,7 @@ import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
 import { media } from "../../../styles/theme/mixins"
 
-const SingleTripMapStyles = styled.div`
+const PublicTripStyles = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -26,7 +26,7 @@ const dashSymbol = {
   scale: 3
 }
 
-class SingleTripMap extends React.Component {
+class PublicTrip extends React.Component {
   static defaultProps = {
     getSingleTrip: () => {},
     trip: getDefaultTripProps(),
@@ -92,7 +92,7 @@ class SingleTripMap extends React.Component {
   render() {
     if (this.props.trip !== null) {
       return (
-        <SingleTripMapStyles>
+        <PublicTripStyles>
           <MapWrapper>
             {!this.props.trip.inProgress ? (
               <TripPanel drawPolyline={this.drawPolyline} />
@@ -104,7 +104,7 @@ class SingleTripMap extends React.Component {
               id="Tripmap"
             />
           </MapWrapper>
-        </SingleTripMapStyles>
+        </PublicTripStyles>
       )
     } else {
       return null
@@ -112,7 +112,7 @@ class SingleTripMap extends React.Component {
   }
 }
 
-SingleTripMap.propTypes = {
+PublicTrip.propTypes = {
   getSingleTrip: PropTypes.func.isRequired,
   isSidebarOpen: PropTypes.bool.isRequired,
   trip: TripPropTypes,
@@ -127,4 +127,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getSingleTrip }
-)(SingleTripMap)
+)(PublicTrip)
