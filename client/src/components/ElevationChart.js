@@ -56,10 +56,7 @@ class ElevationChart extends Component {
       }
       return acc.concat({
         ...curr,
-        grade: (
-          ((arr[i + 1].elevation - curr.elevation) / curr.elevation) *
-          200
-        ).toFixed(2)
+        grade: (arr[i + 1].elevation - curr.elevation) / curr.elevation
       })
     }, [])
 
@@ -95,7 +92,7 @@ class ElevationChart extends Component {
       .attr("viewBox", "0 0 " + width + " " + 160)
       .attr("preserveAspectRatio", "xMinYMid")
       .append("g")
-      .attr("transform", `translate(${margin.left}, 0)`)
+      .attr("transform", `translate(${margin.left}, 2.5)`)
 
     const xScale = d3
       .scaleLinear()
@@ -263,10 +260,13 @@ class ElevationChart extends Component {
       const d1 = data[i]
       const d = !d1 ? d0 : x0 - d0.x > d1.x - x0 ? d1 : d0
       crossBar.attr("transform", `translate(${xScale(d.x)}, 0)`)
-      crossBar.select("text").text(metersToMiles(d.x) + " mi")
+      crossBar.select("text").text(d3.format(".1f")(metersToMiles(d.x)) + " mi")
       infoBox.attr("transform", `translate(${xScale(d.x) + 10}, 12.5)`)
-      infoBox.select(".infoBoxElevationValue").text(metersToFeet(d.y) + " ft")
-      infoBox.select(".infoBoxGradeValue").text(d.grade + "%")
+      // infoBox.select(".infoBoxElevationValue").text(metersToFeet(d.y) + " ft")
+      infoBox
+        .select(".infoBoxElevationValue")
+        .text(d3.format(",.0f")(metersToFeet(d.y)) + " ft")
+      infoBox.select(".infoBoxGradeValue").text(d3.format(".1%")(d.grade))
       const { x: px, y: py } = fromLatLngToPoint(d.location, window.map)
       blip.style("transform", `translate3d(${px}px, ${py}px, 0px)`)
     }
@@ -284,11 +284,10 @@ class ElevationChart extends Component {
   }
 }
 
-// ElevationChart.defaultProps = {}
-
 ElevationChart.propTypes = {
   elevations: PropTypes.array.isRequired,
-  distances: PropTypes.array.isRequired
+  distances: PropTypes.array.isRequired,
+  mapRef: PropTypes.object.isRequired
 }
 
 const ElevationChartStyles = styled.div`
@@ -299,13 +298,12 @@ const ElevationChartStyles = styled.div`
     position: absolute;
     right: 1.5rem;
     top: unset;
-    bottom: 0;
-    margin-bottom: 50px;
+    bottom: 50px;
     z-index: 5;
   }
 
   text {
-    font-size: 11px;
+    font-size: 12px;
     stroke: none;
     fill: #999;
   }
@@ -350,7 +348,7 @@ const ElevationChartStyles = styled.div`
 
   tspan,
   text.crossBarText {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   tspan {
