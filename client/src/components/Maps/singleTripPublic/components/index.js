@@ -21,10 +21,10 @@ margin: 0 1rem;
 `
 
 export const PanelHeader = Styled.div`
-  padding:1.25rem;
-  align-items:center;
-  justify-content:space-between;
-  display:flex;
+    padding:1.25rem;
+    align-items:center;
+    justify-content:space-between;
+    display:flex;
 `
 
 export const TripDetail = Styled.div`
@@ -41,44 +41,44 @@ export const PanelSubheader = Styled.div`
 `
 
 export const DateLabel = Styled.label`
-  margin: 0.25rem 1.25rem;
-  color: #808080;
+    margin: 0.25rem 1.25rem;
+    color: #808080;
 
-  ${media.tablet`
+    ${media.tablet`
     overflow-x: hidden;
-  `}
+    `}
 `
 
 export const Waypoint = Styled.div`
-  align-items:center;
-  width: 90%;
-  display:flex;
-  margin: .5rem auto;
+    align-items:center;
+    width: 90%;
+    display:flex;
+    margin: .5rem auto;
 `
 export const WaypointInput = Styled.input`
-  box-sizing:border-box;
-  border:0;
-  outline:0;
-  background:transparent;
-  border-bottom: ${props =>
-    props.edit ? ".15rem solid black" : ".15rem solid transparent"};
+    box-sizing:border-box;
+    border:0;
+    outline:0;
+    background:transparent;
+    border-bottom: ${props =>
+      props.edit ? ".15rem solid black" : ".15rem solid transparent"};
 `
 export const TripTitleInput = Styled.input`
-  box-sizing:border-box;
-  font-size: 1.5rem;
-  width:80%;
-  border:0;
-  outline:0;
-  background:transparent;
-  border-bottom: .15rem solid black;
-  border-bottom: ${props =>
-    props.edit ? ".15rem solid black" : ".15rem solid transparent"};
+    box-sizing:border-box;
+    font-size: 1.5rem;
+    width:80%;
+    border:0;
+    outline:0;
+    background:transparent;
+    border-bottom: .15rem solid black;
+    border-bottom: ${props =>
+      props.edit ? ".15rem solid black" : ".15rem solid transparent"};
 `
 export const EditButton = Styled.button`
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
 `
 export const DeleteButton = Styled.button`
     visibility: ${props => (!props.edit ? "hidden" : "visible")};
@@ -87,7 +87,7 @@ export const DeleteButton = Styled.button`
     border: none;
 `
 export const WaypointList = Styled.div`
-  overflow:scroll;
+    overflow:scroll;
 `
 
 export const WaypointsHeader = Styled.div`
