@@ -226,7 +226,8 @@ class ElevationChart extends Component {
       .style("margin-left", "-12.5px")
       .style("margin-top", "-12.5px")
       .style("position", "absolute")
-      .style("z-index", 3000)
+      // z-index of 4 so it hides behind the trip panel
+      .style("z-index", 4)
       .style("width", "20px")
       .style("height", "20px")
       .style("background", "#2da5ca")
