@@ -293,7 +293,7 @@ ElevationChart.propTypes = {
 
 const ElevationChartStyles = styled.div`
   .elevation-chart-wrapper {
-    border-radius: 0.5rem 0.5rem;
+    border-radius: 2px 2px 0 0;
     padding: 24px 0 8px 12px;
     background: white;
     position: absolute;

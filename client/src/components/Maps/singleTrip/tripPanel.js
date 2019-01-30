@@ -56,13 +56,12 @@ class TripPanel extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.group("TRIP PANEL UPDATE")
-    console.log("TRIP PANEL PREV PROPS:", prevProps)
-    console.log("TRIP PANEL CURRENT PROPS:", this.props)
-    console.log("TRIP PANEL PREV STATE:", prevState)
-    console.log("TRIP PANEL CURRENT STATE", this.state)
-    console.groupEnd("TRIP PANEL UPDATE")
-
+    // console.group("TRIP PANEL UPDATE")
+    // console.log("TRIP PANEL PREV PROPS:", prevProps)
+    // console.log("TRIP PANEL CURRENT PROPS:", this.props)
+    // console.log("TRIP PANEL PREV STATE:", prevState)
+    // console.log("TRIP PANEL CURRENT STATE", this.state)
+    // console.groupEnd("TRIP PANEL UPDATE")
     if (prevState.markers !== this.state.markers) {
       this.getPathDistance()
       this.getElevationsAlongPath()
@@ -87,18 +86,15 @@ class TripPanel extends React.Component {
             arr[i + 1].lng
           )
         })
-        // TODO: turn into REDUCE so you don't have to pop
+        // TODO: turn into REDUCE so you don't have to slice here
         .slice(0, latLngs.length - 1)
-
-      console.log("DISTANCES:", distances)
 
       elevator.getElevationAlongPath(
         {
           path: latLngs,
           samples: numOfSamples
         },
-        (results, status) => {
-          console.log("RESULTS:", results)
+        results => {
           this.setState({
             distances,
             elevations: this.state.elevations.concat(
@@ -144,7 +140,6 @@ class TripPanel extends React.Component {
   }
 
   renderWaypoints = () => {
-    console.log("rw called")
     const { maps } = window.google
     const { waypoints } = this.state.trip
     const markers = []

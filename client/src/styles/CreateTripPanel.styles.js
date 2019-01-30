@@ -118,7 +118,7 @@ export const CreateTripPanelStyles = styled.div`
 export const Panel = styled.div`
   max-width: 360px;
   min-width: 320px;
-  border-radius: 0.5rem;
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   background: white;

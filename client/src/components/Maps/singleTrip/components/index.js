@@ -4,7 +4,7 @@ import { media } from "../../../../styles/theme/mixins"
 export const Panel = Styled.div`
     max-width:360px;
     min-width:320px;
-    border-radius: .5rem;
+    border-radius: 2px;
     display:flex;
     flex-direction:column;
     background:white;
@@ -125,7 +125,7 @@ export const StartButton = Styled.button`
     right:1.5rem;
     color:white;
     width:100px;
-    border-radius:5px;
+    border-radius: 5px;
 `
 
 export const WaypointTracker = Styled.ul`
