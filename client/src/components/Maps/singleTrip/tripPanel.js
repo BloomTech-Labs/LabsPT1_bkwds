@@ -11,6 +11,7 @@ import {
   startTrip,
   addTripSafetyTimeLimit
 } from "../../../redux/actions/trips"
+// import ElevationChart from "../../ElevationChart"
 
 import {
   Form,
@@ -34,14 +35,14 @@ import endMarker from "../../icons/black-marker.svg"
 
 class TripPanel extends React.Component {
   state = {
+    disableSafety: false,
+    elevations: [],
+    hours: "",
     isEditing: false,
+    markers: [],
     saveToggle: false,
     trip: {},
-    markers: [],
-    elevation: null,
-    tripDistance: null,
-    disableSafety: false,
-    hours: ""
+    tripDistance: null
   }
 
   componentDidMount() {
@@ -52,11 +53,42 @@ class TripPanel extends React.Component {
     }, 500)
   }
 
-  //Use Andrews Elevation Implementation
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
+    console.group("TRIP PANEL UPDATE")
+    console.log("TRIP PANEL PREV PROPS:", prevProps)
+    console.log("TRIP PANEL CURRENT PROPS:", this.props)
+    console.log("TRIP PANEL PREV STATE:", prevState)
+    console.log("TRIP PANEL CURRENT STATE", this.state)
+    console.groupEnd("TRIP PANEL UPDATE")
+
     if (prevState.markers !== this.state.markers) {
-      // this.getPathElevation()
       this.getPathDistance()
+      this.getElevations()
+    }
+  }
+
+  getElevations = () => {
+    if (this.state.markers.length > 1) {
+      const elevator = new window.google.maps.ElevationService()
+      let latLngs = this.state.markers.map(marker => ({
+        lat: marker.getPosition().lat(),
+        lng: marker.getPosition().lng()
+      }))
+
+      elevator.getElevationForLocations(
+        { locations: latLngs },
+        (results, status) => {
+          // DELETE UNUSED STATUS VARIABLE
+          console.log("STATUS:", status)
+          console.log("RESULTS:", results)
+
+          this.setState({
+            elevations: this.state.elevations.concat(
+              results.map(result => result.elevation)
+            )
+          })
+        }
+      )
     }
   }
 
@@ -277,7 +309,7 @@ class TripPanel extends React.Component {
   }
 
   render() {
-    const { elevation, isEditing, saveToggle, trip, tripDistance } = this.state
+    const { elevations, isEditing, saveToggle, trip, tripDistance } = this.state
 
     return (
       <s.Panel>
@@ -306,9 +338,14 @@ class TripPanel extends React.Component {
           </s.TripDetail>
           <s.TripDetail>
             <ElevationIcon width="25px" height="25px" />
-            {elevation}m
+            {elevations.length &&
+              (elevations[0] - elevations[elevations.length - 1]).toFixed(2)}
+            m
           </s.TripDetail>
         </s.PanelSubheader>
+
+        {/* <ElevationChart elevations={elevations} /> */}
+
         <s.WaypointsHeader>
           <h4>Waypoints</h4>
           <s.AddButton
