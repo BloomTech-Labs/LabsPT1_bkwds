@@ -74,7 +74,8 @@ const ElevationChartStyles = styled.div`
     fill: #2d2d32;
   }
 
-  .infoBoxTextValue {
+  .infoBoxElevationValue,
+  .infoBoxGradeValue {
     font-weight: 600;
   }
 `
@@ -95,14 +96,30 @@ class ElevationChart extends Component {
       (acc, curr) => acc + curr,
       startDistance
     )
+
+    const elevationsWithGrades = elevations.reduce((acc, curr, i, arr) => {
+      if (i === arr.length - 1) {
+        return acc.concat({ ...curr, grade: 0 })
+      }
+      return acc.concat({
+        ...curr,
+        grade: (
+          ((arr[i + 1].elevation - curr.elevation) / curr.elevation) *
+          100
+        ).toFixed(2)
+      })
+    }, [])
+
+    console.log("GRADES!", elevationsWithGrades)
+
     // endDistance divided by the number of elevation samples
     const sampleUnit = endDistance / 100
     console.log("END DISTNACE:", endDistance)
 
     if (distances.length && !prevProps.distances.length) {
-      const newData = elevations.reduce((acc, curr, i) => {
+      const newData = elevationsWithGrades.reduce((acc, curr, i) => {
         const dist = sampleUnit * (i + 1)
-        return acc.concat({ x: dist, y: curr.elevation })
+        return acc.concat({ x: dist, y: curr.elevation, ...curr })
       }, [])
       this.setState({ data: newData })
     }
@@ -180,7 +197,7 @@ class ElevationChart extends Component {
     crossBar
       .append("text")
       .attr("x", 10)
-      .attr("y", 15)
+      .attr("y", 17.5)
       .attr("class", "crossBarText")
 
     const infoBox = svg
@@ -192,22 +209,35 @@ class ElevationChart extends Component {
       .append("rect")
       .attr("x", 0)
       .attr("y", 10)
-      .style("height", 47)
+      .style("height", 45)
       .style("width", 125)
 
-    const infoBoxText = infoBox
+    const infoBoxElevation = infoBox
       .append("text")
       .attr("x", 8)
       .attr("y", 30)
       .attr("class", "infoBoxElevation")
-      .attr("class", "crossBarText")
+    // .attr("class", "crossBarText")
 
-    infoBoxText
+    infoBoxElevation
       .append("tspan")
-      .attr("class", "infoBoxTextTitle")
+      .attr("class", "infoBoxElevationTitle")
       .text("Elev: ")
 
-    infoBoxText.append("tspan").attr("class", "infoBoxTextValue")
+    infoBoxElevation.append("tspan").attr("class", "infoBoxElevationValue")
+
+    const infoBoxGrade = infoBox
+      .append("text")
+      .attr("x", 8)
+      .attr("y", 44)
+      .attr("class", "infoBoxGrade")
+
+    infoBoxGrade
+      .append("tspan")
+      .attr("class", "infoBoxGradeTitle")
+      .text("Grade: ")
+
+    infoBoxGrade.append("tspan").attr("class", "infoBoxGradeValue")
 
     // MOUSE IN / OUT EVENTS
     svg
@@ -235,7 +265,8 @@ class ElevationChart extends Component {
       crossBar.attr("transform", `translate(${xScale(d.x)}, 0)`)
       crossBar.select("text").text(metersToMiles(d.x) + " mi")
       infoBox.attr("transform", `translate(${xScale(d.x) + 10}, 12.5)`)
-      infoBox.select(".infoBoxTextValue").text(metersToFeet(d.y) + " ft")
+      infoBox.select(".infoBoxElevationValue").text(metersToFeet(d.y) + " ft")
+      infoBox.select(".infoBoxGradeValue").text(d.grade + "%")
     }
   }
 
