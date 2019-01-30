@@ -1,10 +1,7 @@
 import styled from "styled-components"
 
 export const AddTripButtonStyles = styled.div`
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 0 10px 20px;
 
   .add-trip-card-wrapper {
     background: ${props => props.theme.white};
