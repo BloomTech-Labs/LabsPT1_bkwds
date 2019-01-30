@@ -9,6 +9,8 @@ const metersToFeet = m => (m * 3.28084).toFixed(0)
 const margin = { top: 0, right: 0, bottom: 15, left: 50 }
 const width = 750 - margin.left - margin.right
 const height = 155 - margin.top - margin.bottom
+const xAxisTicks = 7
+const yAxisTicks = 6
 
 function fromLatLngToPoint(latLng, map) {
   var topRight = map
@@ -27,11 +29,11 @@ function fromLatLngToPoint(latLng, map) {
 }
 
 function makeXGridlines(xScale) {
-  return d3.axisBottom(xScale).ticks(6)
+  return d3.axisBottom(xScale).ticks(xAxisTicks)
 }
 
 function makeYGridlines(yScale) {
-  return d3.axisLeft(yScale).ticks(7)
+  return d3.axisLeft(yScale).ticks(yAxisTicks)
 }
 
 const ElevationChartStyles = styled.div`
@@ -199,14 +201,14 @@ class ElevationChart extends Component {
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale).ticks(6))
+      .call(d3.axisBottom(xScale).ticks(xAxisTicks))
 
     const yScale = d3
       .scaleLinear()
       .domain([d3.min(data, co => co.y), d3.max(data, co => co.y)])
       .range([height, 0])
 
-    svg.append("g").call(d3.axisLeft(yScale).ticks(7))
+    svg.append("g").call(d3.axisLeft(yScale).ticks(yAxisTicks))
 
     // make X grid:
     svg
