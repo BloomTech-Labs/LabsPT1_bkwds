@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import * as d3 from "d3"
-import { media } from "../styles/theme/mixins"
 
 const margin = { top: 0, right: 0, bottom: 15, left: 50 }
 const width = 750 - margin.left - margin.right

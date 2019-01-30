@@ -77,18 +77,12 @@ class TripPanel extends React.Component {
         lng: marker.getPosition().lng()
       }))
 
-      const distances = latLngs
-        .map((latLng, i, arr) => {
-          if (i === arr.length - 1) return
-          return util.calcDistance(
-            latLng.lat,
-            latLng.lng,
-            arr[i + 1].lat,
-            arr[i + 1].lng
-          )
-        })
-        // TODO: turn into REDUCE so you don't have to slice here
-        .slice(0, latLngs.length - 1)
+      const distances = latLngs.reduce((acc, curr, i, arr) => {
+        if (i === arr.length - 1) return acc
+        return acc.concat(
+          util.calcDistance(curr.lat, curr.lng, arr[i + 1].lat, arr[i + 1].lng)
+        )
+      }, [])
 
       elevator.getElevationAlongPath(
         {
