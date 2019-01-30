@@ -10,6 +10,22 @@ const margin = { top: 0, right: 0, bottom: 15, left: 50 }
 const width = 750 - margin.left - margin.right
 const height = 155 - margin.top - margin.bottom
 
+function fromLatLngToPoint(latLng, map) {
+  var topRight = map
+    .getProjection()
+    .fromLatLngToPoint(map.getBounds().getNorthEast())
+  var bottomLeft = map
+    .getProjection()
+    .fromLatLngToPoint(map.getBounds().getSouthWest())
+  var scale = Math.pow(2, map.getZoom())
+  var worldPoint = map.getProjection().fromLatLngToPoint(latLng)
+  const point = new window.google.maps.Point(
+    (worldPoint.x - bottomLeft.x) * scale,
+    (worldPoint.y - topRight.y) * scale
+  )
+  return point
+}
+
 const ElevationChartStyles = styled.div`
   /* DELETE */
   .crossBar,
@@ -88,12 +104,15 @@ const ElevationChartStyles = styled.div`
   }
 `
 
+const CustomMarkerStyles = styled.div``
+
 class ElevationChart extends Component {
   constructor(props) {
     super(props)
     this.state = {
       data: []
     }
+    this.marker = null
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -113,12 +132,10 @@ class ElevationChart extends Component {
         ...curr,
         grade: (
           ((arr[i + 1].elevation - curr.elevation) / curr.elevation) *
-          100
+          200
         ).toFixed(2)
       })
     }, [])
-
-    console.log("GRADES!", elevationsWithGrades)
 
     // endDistance divided by the number of elevation samples
     const sampleUnit = endDistance / 100
@@ -247,6 +264,23 @@ class ElevationChart extends Component {
 
     infoBoxGrade.append("tspan").attr("class", "infoBoxGradeValue")
 
+    const blip = d3
+      .select("#Tripmap")
+      .append("div")
+      .attr("class", "customBlip")
+      .style("margin-left", "-13px")
+      .style("margin-top", "-31px")
+      .style("position", "absolute")
+      .style("z-index", 3000)
+      .style("width", "20px")
+      .style("height", "20px")
+      .style("background", "#2da5ca")
+      .style("border", "2px solid white")
+      .style("border-radius", "50%")
+      .style("color", "black")
+      .style("color", "black")
+      .style("display", "none")
+
     // MOUSE IN / OUT EVENTS
     svg
       .append("rect")
@@ -256,15 +290,21 @@ class ElevationChart extends Component {
       .on("mouseover", function() {
         crossBar.style("display", null)
         infoBox.style("display", null)
+        blip.style("display", null)
       })
       .on("mouseout", function() {
         crossBar.style("display", "none")
         infoBox.style("display", "none")
+        blip.style("display", "none")
       })
       .on("mousemove", mousemove)
 
+    console.log("BLIP", blip)
+
     // NEEDS TO BE A FUNCTION FOR ACCESS TO THIS!
     function mousemove() {
+      console.log("D3 EVENT:", d3.event)
+
       const x0 = xScale.invert(d3.mouse(this)[0])
       const i = bisect(data, x0, 1)
       const d0 = data[i - 1]
@@ -275,6 +315,10 @@ class ElevationChart extends Component {
       infoBox.attr("transform", `translate(${xScale(d.x) + 10}, 12.5)`)
       infoBox.select(".infoBoxElevationValue").text(metersToFeet(d.y) + " ft")
       infoBox.select(".infoBoxGradeValue").text(d.grade + "%")
+
+      const point = fromLatLngToPoint(d1.location, window.map)
+      console.log(point)
+      blip.style("transform", `translate3d(${point.x}px, ${point.y}px, 0px)`)
     }
   }
 

@@ -62,7 +62,7 @@ class SingleTripMap extends React.Component {
       document.getElementById("Tripmap"),
       {
         center: center,
-        zoom: 18,
+        zoom: 12,
         disableDefaultUI: true
       }
     )
