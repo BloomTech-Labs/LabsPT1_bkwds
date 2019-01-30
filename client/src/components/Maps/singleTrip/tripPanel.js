@@ -4,6 +4,20 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import { toast } from "react-toastify"
 
+import Modal from "../../Modals/Modal"
+import { openModal, closeModal } from "../../../redux/actions/modal"
+import {
+  editTrip,
+  startTrip,
+  addTripSafetyTimeLimit
+} from "../../../redux/actions/trips"
+
+import {
+  Form,
+  GhostInput,
+  Button
+} from "../../../styles/theme/styledComponents"
+
 import EditIcon from "../../icons/EditSvg"
 import { TripPropTypes } from "../../propTypes"
 import DistanceIcon from "../../icons/DistanceSvg"
@@ -12,7 +26,6 @@ import SaveIcon from "../../icons/SaveSvg"
 import AddIcon from "../../icons/AddSvg"
 import * as util from "./mapUtil"
 import * as s from "./components"
-import { editTrip, startTrip } from "../../../redux/actions/trips"
 import { SERVER_URI } from "../../../config"
 import Waypoint from "./Waypoint"
 import marker from "../../icons/orange-marker.svg"
@@ -20,21 +33,20 @@ import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
 
 class TripPanel extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isEditing: false,
-      saveToggle: false,
-      trip: {},
-      markers: [],
-      elevation: null,
-      tripDistance: null,
-      path: null
-    }
+  state = {
+    isEditing: false,
+    saveToggle: false,
+    trip: {},
+    markers: [],
+    elevation: null,
+    tripDistance: null,
+    disableSafety: false,
+    hours: ""
   }
 
   componentDidMount() {
     this.setState({ trip: this.props.trip })
+    this.props.closeModal()
     setTimeout(() => {
       this.renderWaypoints()
       this.props.drawPolyline(this.state.markers)
@@ -233,6 +245,43 @@ class TripPanel extends React.Component {
     }
   }
 
+  handleHoursInput = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
+  startingTrip = trip => async e => {
+    e.preventDefault()
+    if (this.state.disableSafety) {
+      await this.props.closeModal()
+      await this.props.startTrip(trip.trip)
+    }
+
+    if (this.validateSafetyModalInput()) {
+      const { hours } = this.state
+      await this.props.addTripSafetyTimeLimit(trip.trip, hours)
+      await this.props.startTrip(trip.trip)
+    }
+  }
+
+  validateSafetyModalInput = () => {
+    let { hours } = this.state
+
+    if (hours === "") {
+      toast("Please enter a number")
+      return false
+    } else {
+      hours = Number(hours)
+    }
+
+    if (isNaN(hours)) {
+      toast("Please enter a number")
+      this.setState({ hours: "" })
+      return false
+    }
+    this.setState({ hours })
+    return true
+  }
+
   render() {
     const { elevation, isEditing, saveToggle, trip, tripDistance } = this.state
 
@@ -289,22 +338,71 @@ class TripPanel extends React.Component {
               />
             ))}
         </s.WaypointList>
-        <s.StartButton onClick={() => this.props.startTrip(trip)}>
-          Start Trip
-        </s.StartButton>
+        <s.StartButton onClick={this.props.openModal}>Start Trip</s.StartButton>
+
+        {/* Safety Modal - Appears when StartButton is clicked */}
+        <Modal isOpen={this.props.modalIsOpen}>
+          {() => (
+            <div className="startTrip-flow">
+              <div className="flow-header">
+                <h4>Activate Safety Feature</h4>
+                <div>
+                  Your emergency contact will receive a SMS alert containing
+                  your last known location
+                </div>
+                <br />
+                <div>
+                  The alert will not be sent if you mark your trip as completed
+                  by the specified time limit
+                </div>
+              </div>
+              <Form onSubmit={this.startingTrip({ trip })}>
+                <label>Time Limit</label>
+                <GhostInput
+                  placeholder="How many hours should we wait?"
+                  value={this.state.hours}
+                  name="hours"
+                  onChange={this.handleHoursInput}
+                />
+                <div className="dual-buttons">
+                  <Button className="btn-primary">Activate</Button>
+                  <Button
+                    className="btn-secondary"
+                    onClick={() => this.setState({ disableSafety: true })}
+                  >
+                    No Thanks
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          )}
+        </Modal>
       </s.Panel>
     )
   }
 }
 
-const mapStateToProps = ({ trips }) => ({ trip: trips.activeTrip })
+const mapStateToProps = state => ({
+  trip: state.trips.activeTrip,
+  modalIsOpen: state.modal.isOpen
+})
 
-const mapDispatchToProps = { editTrip, startTrip }
+const mapDispatchToProps = {
+  editTrip,
+  startTrip,
+  openModal,
+  closeModal,
+  addTripSafetyTimeLimit
+}
 
 TripPanel.propTypes = {
   editTrip: PropTypes.func.isRequired,
   startTrip: PropTypes.func.isRequired,
-  trip: TripPropTypes
+  trip: TripPropTypes,
+  modalIsOpen: PropTypes.bool.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  addTripSafetyTimeLimit: PropTypes.func.isRequired
 }
 
 export default connect(

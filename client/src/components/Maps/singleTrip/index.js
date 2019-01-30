@@ -62,7 +62,7 @@ class SingleTripMap extends React.Component {
       document.getElementById("Tripmap"),
       {
         center: center,
-        zoom: 9,
+        zoom: 18,
         disableDefaultUI: true
       }
     )
@@ -83,7 +83,7 @@ class SingleTripMap extends React.Component {
         {
           icon: dashSymbol,
           offset: 0,
-          repeat: "20px"
+          repeat: "15px"
         }
       ]
     })

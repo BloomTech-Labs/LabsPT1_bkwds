@@ -11,42 +11,67 @@ export const sendSMSAlert = async (req, res) => {
   // data params:
   //  - user id
   //  - trip id
-  //  - time specified by user
   const Twilio = twilio(sid, token)
   const data = await gatherResources(req.body)
+  if (!data.timeLimit) {
+    return res
+      .status(500)
+      .json("No time limit found. SMS alert will not be sent")
+  }
   const message = `Alert!\n${
     data.user
-  } has listed you as their emergency contact.\nIt's been 5 hours since ${
-    data.user
-  } last checked in.\nLast known coordinates: {${data.lat}, ${data.lon}}`
+  } has not completed their trip within their ${
+    data.timeLimit
+  } hour time limit.\nPlease attempt to contact contact them.\nLast known coordinates: ${
+    data.lat
+  }, ${data.lon}`
 
-  await Twilio.messages
-    .create({
-      body: message,
-      from: twilioNumber,
-      to: data.number
-    })
-    .then(() => {
-      res.status(200).json("SMS alert successfully sent")
-    })
-    .catch(() => {
-      res.status(500).json("Error sending message")
-    })
+  // Return 202 response and start background task
+  res.status(202).end("Safety alert timer started", async () => {
+    await sleep(data.timeLimit) // sleep until time limit has expired
+    try {
+      const trip = await Trip.findOne({ _id: req.body.tripId }).populate(
+        "waypoints"
+      )
+      const isComplete = areWaypointsComplete(trip.waypoints)
+      if (isComplete) {
+        console.log("Trip is complete")
+        return // Trip was succesfully completed, return without sending alert
+      }
+      const response = await Twilio.messages.create({
+        body: message,
+        from: twilioNumber,
+        to: data.number
+      })
+      console.log(`Twilio alert succesfully sent: ${response.sid}`)
+    } catch (error) {
+      console.log(error)
+    }
+  })
 }
 
 const gatherResources = async params => {
   const user = await User.findOne({ _id: params.userId })
-  const trip = await Trip.findOne({ _id: params.tripId }).populate({
-    path: "waypoints",
-    model: "Waypoint"
-  })
-  const location = findLastLocation(trip.waypoints)
+  const trip = await Trip.findOne({ _id: params.tripId })
+    .populate("waypoints")
+    .exec()
+  let location = findLastLocation(trip.waypoints)
+
+  if (!location) {
+    // If no waypoints are complete, then set location to be starting waypoint
+    let waypoint = trip.waypoints[0]
+    location = {
+      lat: waypoint.lat,
+      lon: waypoint.lon
+    }
+  }
   return {
     number: user.contact.number,
     name: user.contact.name,
     lat: location.lat,
     lon: location.lon,
-    user: user.displayName
+    user: user.displayName,
+    timeLimit: trip.timeLimit
   }
 }
 
@@ -56,4 +81,17 @@ const findLastLocation = waypoints => {
   })
   let lastLocation = filtered.length - 1
   return filtered[lastLocation]
+}
+
+const sleep = hours => {
+  let ms = hours * 3600000
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+const areWaypointsComplete = waypoints => {
+  let isComplete = true
+  waypoints.forEach(waypoint => {
+    if (waypoint.complete == false) isComplete = false
+  })
+  return isComplete
 }
