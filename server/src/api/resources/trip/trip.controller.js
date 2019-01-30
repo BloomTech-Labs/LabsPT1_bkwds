@@ -75,6 +75,7 @@ export const updateTrip = (req, res) => {
   Trip.findOneAndUpdate({ _id: id }, update)
     .then(oldTrip => {
       Trip.findOne({ _id: oldTrip.id })
+        .populate("waypoints")
         .then(newTrip => {
           res.status(200).json(newTrip)
         })

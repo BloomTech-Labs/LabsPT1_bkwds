@@ -25,7 +25,7 @@ class CreateTripMap extends React.Component {
       document.getElementById("createTripMap"),
       {
         center: userCenter ? userCenter : { lat: 39.0997, lng: -94.5786 },
-        zoom: 9,
+        zoom: 11,
         disableDefaultUI: true
       }
     )
