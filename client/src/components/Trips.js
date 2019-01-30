@@ -1,65 +1,73 @@
-import React, { Component, Suspense } from "react"
+import React, { Component } from "react"
 import { connect } from "react-redux"
-import { getTrips } from "../redux/actions/trips"
 import PropTypes from "prop-types"
-import { TripPropTypes } from "./propTypes"
 
-import TripCard from "./TripCard"
-import * as s from "../styles/TripCard.styles"
-import AddTripButton from "./AddTripButton"
 import { getTripsArray } from "../utils/selectors"
-import TripCardLoader from "./TripCardLoader"
+import { getTrips } from "../redux/actions/trips"
+import { TripPropTypes } from "./propTypes"
+import TripCard from "./TripCard"
+import AddTripButton from "./AddTripButton"
+import * as s from "../styles/TripCard.styles"
 
 class Trips extends Component {
+  static propTypes = {
+    getTrips: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    trips: PropTypes.arrayOf(TripPropTypes),
+    userId: PropTypes.string
+  }
+
   componentDidMount() {
-    this.props.getTrips(this.props.userId)
+    const { getTrips, userId } = this.props
+    getTrips(userId)
+  }
+
+  renderPlaceholders = () =>
+    [...Array(5)].map((_, i) => (
+      <TripCard archived={false} key={i} loading={true} />
+    ))
+
+  renderTrips = () => {
+    const { loading, trips } = this.props
+
+    return trips.map(trip =>
+      trip.isArchived ? null : (
+        <TripCard
+          archived={false}
+          key={trip.id}
+          loading={loading}
+          trip={trip}
+        />
+      )
+    )
   }
 
   render() {
-    const { trips } = this.props
+    const { loading, trips } = this.props
+
     return (
-      <Suspense
-        fallback={
-          <div>
-            <TripCardLoader />
+      <div>
+        <s.TripCardStyles>
+          <div className="container">
+            <AddTripButton
+              className="AddTripButton"
+              text={trips.length ? "Add New Trip" : "Add Your First Trip"}
+            />
+            {loading ? this.renderPlaceholders() : this.renderTrips()}
           </div>
-        }
-      >
-        <div>
-          <s.TripCardStyles>
-            <div className="container">
-              <AddTripButton
-                className="AddTripButton"
-                text={trips.length ? "Add New Trip" : "Add Your First Trip"}
-              />
-              {trips.map(trip => {
-                if (!trip.isArchived) {
-                  return <TripCard key={trip.id} trip={trip} archived={false} />
-                } else return null
-              })}
-            </div>
-          </s.TripCardStyles>
-        </div>
-      </Suspense>
+        </s.TripCardStyles>
+      </div>
     )
   }
-}
-
-Trips.propTypes = {
-  getTrips: PropTypes.func.isRequired,
-  trips: PropTypes.arrayOf(TripPropTypes),
-  userId: PropTypes.string
 }
 
 const mapStateToProps = state => ({
   userId: state.auth.user.id,
   trips: getTripsArray(state),
-  loading: state.trips.loading
+  loading: state.trips.pending
 })
-
-const mapDispatchToProps = { getTrips }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getTrips }
 )(Trips)
