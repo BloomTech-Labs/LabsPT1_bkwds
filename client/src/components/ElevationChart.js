@@ -8,6 +8,12 @@ const width = 749 - margin.left - margin.right
 const height = 250 - margin.top - margin.bottom
 
 const ElevationChartStyles = styled.div`
+  /* DELETE */
+  .crossBar,
+  .infoBox {
+    display: inherit !important;
+  }
+
   position: absolute;
   right: ${margin.right}px;
   z-index: 1000;
@@ -45,6 +51,29 @@ const ElevationChartStyles = styled.div`
     fill: none;
     pointer-events: all;
   }
+
+  .infoBox rect {
+    stroke: #ccccd1;
+    pointer-events: none;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+    font-size: 11px;
+    fill: #fff;
+    fill-opacity: 0.9;
+  }
+
+  tspan,
+  text.crossBarText {
+    font-size: 13px;
+  }
+
+  tspan {
+    fill: #2d2d32;
+  }
+
+  .infoBoxTextValue {
+    font-weight: 600;
+  }
 `
 
 class ElevationChart extends Component {
@@ -58,13 +87,11 @@ class ElevationChart extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.state
     const { distances, elevations } = this.props
-    // const cumulativeDistances = distances.reduce(
-    //   (acc, curr) => acc.concat(acc[acc.length - 1] + curr),
-    //   [0]
-    // )
-
     const startDistance = 0
-    const endDistance = distances.reduce((acc, curr) => acc + curr, 0)
+    const endDistance = distances.reduce(
+      (acc, curr) => acc + curr,
+      startDistance
+    )
     // endDistance divided by the number of elevation samples
     const sampleUnit = endDistance / 100
     console.log("END DISTNACE:", endDistance)
@@ -135,7 +162,7 @@ class ElevationChart extends Component {
       .style("fill", "#787979")
       .style("fill-opacity", 0.2)
 
-    var crossBar = svg
+    const crossBar = svg
       .append("g")
       .attr("class", "crossBar")
       .style("display", "none")
@@ -146,14 +173,6 @@ class ElevationChart extends Component {
       .attr("x2", 0)
       .attr("y1", height)
       .attr("y2", 0)
-    // .style("")
-
-    // crossBar
-    //   .append("rect")
-    //   .attr("x", 0)
-    //   .attr("y", 20)
-    //   .height("height", 47)
-    //   .style("left", (d3.event.pageX) + "px")
 
     crossBar
       .append("text")
@@ -161,6 +180,33 @@ class ElevationChart extends Component {
       .attr("y", 15)
       .attr("class", "crossBarText")
 
+    const infoBox = svg
+      .append("g")
+      .attr("class", "infoBox")
+      .style("display", "none")
+
+    infoBox
+      .append("rect")
+      .attr("x", 0)
+      .attr("y", 10)
+      .style("height", 47)
+      .style("width", 125)
+
+    const infoBoxText = infoBox
+      .append("text")
+      .attr("x", 8)
+      .attr("y", 30)
+      .attr("class", "infoBoxElevation")
+      .attr("class", "crossBarText")
+
+    infoBoxText
+      .append("tspan")
+      .attr("class", "infoBoxTextTitle")
+      .text("Elev: ")
+
+    infoBoxText.append("tspan").attr("class", "infoBoxTextValue")
+
+    // MOUSE IN / OUT EVENTS
     svg
       .append("rect")
       .attr("class", "chartOverlay")
@@ -168,24 +214,25 @@ class ElevationChart extends Component {
       .attr("height", height)
       .on("mouseover", function() {
         crossBar.style("display", null)
+        infoBox.style("display", null)
       })
       .on("mouseout", function() {
         crossBar.style("display", "none")
+        infoBox.style("display", "none")
       })
       .on("mousemove", mousemove)
 
+    // NEEDS TO BE A FUNCTION FOR ACCESS TO THIS!
     function mousemove() {
-      var x0 = xScale.invert(d3.mouse(this)[0]),
-        i = bisect(data, x0, 1),
-        d0 = data[i - 1],
-        d1 = data[i],
-        d = x0 - d0.x > d1.x - x0 ? d1 : d0
-      crossBar.attr(
-        "transform",
-        // "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"
-        `translate(${xScale(d.x)}, 0)`
-      )
+      const x0 = xScale.invert(d3.mouse(this)[0])
+      const i = bisect(data, x0, 1)
+      const d0 = data[i - 1]
+      const d1 = data[i]
+      const d = x0 - d0.x > d1.x - x0 ? d1 : d0
+      crossBar.attr("transform", `translate(${xScale(d.x)}, 0)`)
       crossBar.select("text").text(d.x.toFixed(1) + " m")
+      infoBox.attr("transform", `translate(${xScale(d.x) + 10}, 12.5)`)
+      infoBox.select(".infoBoxTextValue").text(d.y.toFixed(0) + " m")
     }
   }
 
