@@ -14,27 +14,94 @@ class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      polylines: {}
+      polylines: null,
+      markers: []
     }
   }
 
   componentDidMount() {
     setTimeout(() => {
       this.renderWaypoints()
-      // this.props.drawPolyline(this.state.trip.waypoints)
+      this.drawPolylines()
     }, 500)
   }
 
+  componentWillUnmount() {}
+
   componentDidUpdate(prevProps) {
     if (prevProps.waypoints !== this.props.waypoints) {
-      console.log("CDU")
       this.renderWaypoints()
+      this.drawPolylines()
     }
   }
 
-  drawPolylines = () => {}
+  drawPolylines = () => {
+    if (this.state.polylines !== null) {
+      this.state.polylines.active.setMap(null)
+      this.state.polylines.complete.setMap(null)
+    }
+
+    let completeIndex = 0
+    for (let i = 0; i < this.props.waypoints.length; i++) {
+      if (!this.props.waypoints[i].complete) {
+        completeIndex = i
+        break
+      }
+    }
+
+    const completed = this.props.waypoints.slice(0, completeIndex)
+    const active = this.props.waypoints.slice(
+      completeIndex - 1,
+      this.props.waypoints.length
+    )
+    const current = this.props.waypoints.slice(completeIndex, completeIndex + 1)
+    console.log(completeIndex)
+    console.log("completed ", completed)
+    console.log("active", active)
+    console.log("current", current)
+    const completePath = completed.map(waypoint => {
+      return { lat: waypoint.lat, lng: waypoint.lon }
+    })
+
+    const activePath = active.map(waypoint => {
+      return { lat: waypoint.lat, lng: waypoint.lon }
+    })
+    const completePolyline = new window.google.maps.Polyline({
+      path: completePath,
+      strokeColor: "#FF0000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    })
+
+    const currentPolyline = new window.google.maps.Polyline({
+      path: currentPolyline,
+      strokeColor: "#008000",
+      stokeOpacity: 1.0,
+      stokeWeight: 2
+    })
+    const activePolyline = new window.google.maps.Polyline({
+      path: activePath,
+      strokeColor: "#000000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    })
+
+    // const currentPolyLine = new window.google.maps.Polyline({
+    //   path:
+    // })
+
+    completePolyline.setMap(window.map)
+    activePolyline.setMap(window.map)
+    this.setState({
+      polylines: {
+        active: activePolyline,
+        complete: completePolyline
+      }
+    })
+  }
 
   renderWaypoints = () => {
+    let markers = []
     const baseIcon = {
       anchor: new window.google.maps.Point(15, 30),
       scaledSize: new window.google.maps.Size(30, 30),
@@ -55,7 +122,6 @@ class ActiveTripPanel extends React.Component {
       }
     }
     this.props.waypoints.map((item, i) => {
-      console.log(item)
       const icon =
         i === 0
           ? icons.start
@@ -76,6 +142,7 @@ class ActiveTripPanel extends React.Component {
           fontWeight: "bold"
         }
       })
+      markers.push(marker)
     })
   }
 

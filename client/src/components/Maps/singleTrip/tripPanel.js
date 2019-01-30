@@ -145,7 +145,6 @@ class TripPanel extends React.Component {
       // marker.setMap(window.map)
       marker.addListener("dragend", ev => {
         console.log("dragend Called on marker", i)
-        console.log(waypoints)
         const updatedWaypoints = waypoints.map((item, index) =>
           index === i
             ? { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
