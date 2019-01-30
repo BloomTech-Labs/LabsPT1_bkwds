@@ -96,7 +96,8 @@ class ElevationChart extends Component {
 
     const xScale = d3
       .scaleLinear()
-      .domain([d3.min(data, co => co.x), d3.max(data, co => co.x)])
+      // .domain([d3.min(data, co => co.x), d3.max(data, co => co.x)])
+      .domain(d3.extent(data, d => d.x))
       .range([0, width])
 
     svg
@@ -107,6 +108,8 @@ class ElevationChart extends Component {
           .axisBottom(xScale)
           .ticks(xAxisTicks)
           .tickFormat(d => d3.format(".1f")(metersToMiles(d)) + " mi")
+          .tickSize(0)
+          .tickPadding(9)
       )
 
     const yScale = d3
@@ -119,9 +122,11 @@ class ElevationChart extends Component {
         .axisLeft(yScale)
         .ticks(yAxisTicks)
         .tickFormat(d => d3.format(",.0f")(metersToFeet(d)) + " ft")
+        .tickSize(0)
+        .tickPadding(8)
     )
 
-    // make X grid:
+    // Make X grid:
     svg
       .append("g")
       .attr("class", "elevationChartGrid")
@@ -131,7 +136,8 @@ class ElevationChart extends Component {
           .tickSize(-height)
           .tickFormat("")
       )
-    // make Y grid:
+
+    // Make Y grid:
     svg
       .append("g")
       .attr("class", "elevationChartGrid")
@@ -223,7 +229,7 @@ class ElevationChart extends Component {
       .style("margin-left", "-12.5px")
       .style("margin-top", "-12.5px")
       .style("position", "absolute")
-      // z-index of 4 so it hides behind the trip panel
+      // z-index of 4 so the blip hides behind the trip panel
       .style("z-index", 4)
       .style("width", "20px")
       .style("height", "20px")
@@ -262,7 +268,6 @@ class ElevationChart extends Component {
       crossBar.attr("transform", `translate(${xScale(d.x)}, 0)`)
       crossBar.select("text").text(d3.format(".1f")(metersToMiles(d.x)) + " mi")
       infoBox.attr("transform", `translate(${xScale(d.x) + 10}, 12.5)`)
-      // infoBox.select(".infoBoxElevationValue").text(metersToFeet(d.y) + " ft")
       infoBox
         .select(".infoBoxElevationValue")
         .text(d3.format(",.0f")(metersToFeet(d.y)) + " ft")
@@ -320,7 +325,9 @@ const ElevationChartStyles = styled.div`
 
   g.tick {
     line {
-      color: #999;
+      color: transparent;
+      stroke: #eee;
+      stroke-opacity: 1;
     }
   }
 
