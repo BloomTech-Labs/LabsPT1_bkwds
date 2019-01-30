@@ -26,6 +26,14 @@ function fromLatLngToPoint(latLng, map) {
   return point
 }
 
+function makeXGridlines(xScale) {
+  return d3.axisBottom(xScale).ticks(6)
+}
+
+function makeYGridlines(yScale) {
+  return d3.axisLeft(yScale).ticks(7)
+}
+
 const ElevationChartStyles = styled.div`
   /* DELETE */
   .crossBar,
@@ -101,6 +109,16 @@ const ElevationChartStyles = styled.div`
   .infoBoxElevationValue,
   .infoBoxGradeValue {
     font-weight: 600;
+  }
+
+  .elevationChartGrid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+  }
+
+  .elevationChartGrid path {
+    stroke-width: 0;
   }
 `
 
@@ -189,6 +207,27 @@ class ElevationChart extends Component {
       .range([height, 0])
 
     svg.append("g").call(d3.axisLeft(yScale).ticks(7))
+
+    // make X grid:
+    svg
+      .append("g")
+      .attr("class", "elevationChartGrid")
+      .attr("transform", `translate(0, ${height})`)
+      .call(
+        makeXGridlines(xScale)
+          .tickSize(-height)
+          .tickFormat("")
+      )
+
+    // make Y grid:
+    svg
+      .append("g")
+      .attr("class", "elevationChartGrid")
+      .call(
+        makeYGridlines(yScale)
+          .tickSize(-width)
+          .tickFormat("")
+      )
 
     const area = d3
       .area()
