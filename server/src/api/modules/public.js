@@ -1,5 +1,5 @@
 import express from "express"
-import { Trip } from "./trip.model"
+import { Trip } from "../resources/trip/trip.model"
 
 const getAllPublicTrips = (req, res) => {
   Trip.find({ isPublic: true })

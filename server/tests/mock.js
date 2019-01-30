@@ -48,6 +48,26 @@ export const tripThree = {
   lon: 45.234,
   waypoints: []
 }
+export const publicTrip1 = {
+  userId: "",
+  name: "pub1",
+  start: Date.now(),
+  end: Date.now(),
+  lat: 12.21,
+  lon: 45.234,
+  isPublic: true,
+  waypoints: []
+}
+export const publicTrip2 = {
+  userId: "",
+  name: "pub2",
+  start: Date.now(),
+  end: Date.now(),
+  lat: 12.21,
+  lon: 45.234,
+  isPublic: true,
+  waypoints: []
+}
 
 export const waypointOne = {
   tripId: "",
