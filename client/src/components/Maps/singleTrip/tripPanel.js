@@ -11,7 +11,7 @@ import {
   startTrip,
   addTripSafetyTimeLimit
 } from "../../../redux/actions/trips"
-// import ElevationChart from "../../ElevationChart"
+import ElevationChart from "../../ElevationChart"
 
 import {
   Form,
@@ -84,7 +84,7 @@ class TripPanel extends React.Component {
 
           this.setState({
             elevations: this.state.elevations.concat(
-              results.map(result => result.elevation)
+              results.map(result => result)
             )
           })
         }
@@ -339,12 +339,15 @@ class TripPanel extends React.Component {
           <s.TripDetail>
             <ElevationIcon width="25px" height="25px" />
             {elevations.length &&
-              (elevations[0] - elevations[elevations.length - 1]).toFixed(2)}
+              (
+                elevations[0].elevation -
+                elevations[elevations.length - 1].elevation
+              ).toFixed(2)}
             m
           </s.TripDetail>
         </s.PanelSubheader>
 
-        {/* <ElevationChart elevations={elevations} /> */}
+        <ElevationChart elevations={elevations} />
 
         <s.WaypointsHeader>
           <h4>Waypoints</h4>
