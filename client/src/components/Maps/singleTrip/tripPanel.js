@@ -32,6 +32,7 @@ import Waypoint from "./Waypoint"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
+import { numOfSamples } from "../../ElevationChart"
 
 class TripPanel extends React.Component {
   state = {
@@ -94,7 +95,7 @@ class TripPanel extends React.Component {
       elevator.getElevationAlongPath(
         {
           path: latLngs,
-          samples: 100
+          samples: numOfSamples
         },
         (results, status) => {
           console.log("RESULTS:", results)

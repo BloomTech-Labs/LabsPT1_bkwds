@@ -11,6 +11,7 @@ const width = 750 - margin.left - margin.right
 const height = 155 - margin.top - margin.bottom
 const xAxisTicks = 7
 const yAxisTicks = 6
+export const numOfSamples = 100
 
 function fromLatLngToPoint(latLng, map) {
   var topRight = map
@@ -158,8 +159,7 @@ class ElevationChart extends Component {
     }, [])
 
     // endDistance divided by the number of elevation samples
-    const sampleUnit = endDistance / 100
-    console.log("END DISTNACE:", endDistance)
+    const sampleUnit = endDistance / numOfSamples
 
     if (distances.length && !prevProps.distances.length) {
       const newData = elevationsWithGrades.reduce((acc, curr, i) => {
@@ -176,7 +176,6 @@ class ElevationChart extends Component {
 
   drawChart = () => {
     const { data } = this.state
-    console.log("DRAWING CHART, DATA:", data)
 
     const bisect = d3.bisector(function(d) {
       return d.x
@@ -309,8 +308,8 @@ class ElevationChart extends Component {
       .select("#Tripmap")
       .append("div")
       .attr("class", "customBlip")
-      .style("margin-left", "-13px")
-      .style("margin-top", "-31px")
+      .style("margin-left", "-12.5px")
+      .style("margin-top", "-12.5px")
       .style("position", "absolute")
       .style("z-index", 3000)
       .style("width", "20px")
@@ -340,12 +339,8 @@ class ElevationChart extends Component {
       })
       .on("mousemove", mousemove)
 
-    console.log("BLIP", blip)
-
     // NEEDS TO BE A FUNCTION FOR ACCESS TO THIS!
     function mousemove() {
-      console.log("D3 EVENT:", d3.event)
-
       const x0 = xScale.invert(d3.mouse(this)[0])
       const i = bisect(data, x0, 1)
       const d0 = data[i - 1]
@@ -357,16 +352,13 @@ class ElevationChart extends Component {
       infoBox.select(".infoBoxElevationValue").text(metersToFeet(d.y) + " ft")
       infoBox.select(".infoBoxGradeValue").text(d.grade + "%")
 
-      const point = fromLatLngToPoint(d1.location, window.map)
-      console.log(point)
-      blip.style("transform", `translate3d(${point.x}px, ${point.y}px, 0px)`)
+      const { x: px, y: py } = fromLatLngToPoint(d1.location, window.map)
+      blip.style("transform", `translate3d(${px}px, ${py}px, 0px)`)
     }
   }
 
   render() {
     const { data } = this.state
-    console.log("DATA!", data)
-
     return (
       <ElevationChartStyles>
         <div className="elevation-chart-wrapper">
