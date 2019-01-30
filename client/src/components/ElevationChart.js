@@ -29,9 +29,11 @@ const ElevationChartStyles = styled.div`
     }
   }
 
-  .focusChart circle {
-    fill: none;
-    stroke: steelblue;
+  .crossBar line {
+    stroke: #333;
+    stroke-width: 1px;
+    pointer-events: none;
+    /* shape-rendering: crispEdges; */
   }
 
   .chartOverlay {
@@ -51,14 +53,21 @@ class ElevationChart extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.state
     const { distances, elevations } = this.props
-    const cumulativeDistances = distances.reduce(
-      (acc, curr) => acc.concat(acc[acc.length - 1] + curr),
-      [0]
-    )
+    // const cumulativeDistances = distances.reduce(
+    //   (acc, curr) => acc.concat(acc[acc.length - 1] + curr),
+    //   [0]
+    // )
+
+    const startDistance = 0
+    const endDistance = distances.reduce((acc, curr) => acc + curr, 0)
+    // endDistance divided by the number of elevation samples
+    const sampleUnit = endDistance / 100
+    console.log("END DISTNACE:", endDistance)
 
     if (distances.length && !prevProps.distances.length) {
       const newData = elevations.reduce((acc, curr, i) => {
-        return acc.concat({ x: cumulativeDistances[i], y: curr.elevation })
+        const dist = sampleUnit * (i + 1)
+        return acc.concat({ x: dist, y: curr.elevation })
       }, [])
       this.setState({ data: newData })
     }
@@ -84,9 +93,7 @@ class ElevationChart extends Component {
       // MOVE 2 ATTRS INTO RESPONSIFY FUNCTION!
       .attr("viewBox", "0 0 " + width + " " + height)
       .attr("preserveAspectRatio", "xMinYMid")
-      // .style("")
       .append("g")
-      // .attr("transform", `translate(${margin.left}, ${margin.top})`)
       .attr("transform", `translate(${margin.left}, 0)`)
 
     const xScale = d3
@@ -97,14 +104,14 @@ class ElevationChart extends Component {
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale).ticks(data.length))
+      .call(d3.axisBottom(xScale).ticks(6))
 
     const yScale = d3
       .scaleLinear()
       .domain([d3.min(data, co => co.y), d3.max(data, co => co.y)])
       .range([height, 0])
 
-    svg.append("g").call(d3.axisLeft(yScale).ticks(data.length - 1))
+    svg.append("g").call(d3.axisLeft(yScale).ticks(7))
 
     const area = d3
       .area()
@@ -113,27 +120,64 @@ class ElevationChart extends Component {
       .y1(d => yScale(d.y))
       .curve(d3.curveCatmullRom.alpha(0.005))
 
+    // const line = d3
+    //   .line()
+    //   .x(d => xScale(d.x))
+    //   .y(d => yScale(d.y))
+
     svg
-      .selectAll(".elevationChartLine")
-      .data(data)
-      .enter()
       .append("path")
-      .attr("class", "elevationChartLine")
       .attr("d", area(data))
       .style("stroke", "#787979")
-      .style("stroke-opacity", 0.05)
+      .style("stroke-opacity", 0.2)
       .style("stroke-width", 1)
       .style("fill", "#787979")
-      .style("fill-opacity", 0.05)
+      .style("fill-opacity", 0.15)
 
-    var focus = svg
+    // .selectAll(".line")
+    // .data(data)
+    // .enter()
+    // .append("path")
+    // .attr("class", "line")
+    // .attr("d", line(data))
+    // .style("stroke", "#FF9900")
+    // .style("stroke-width", 2)
+    // .style("fill", "none")
+
+    // svg
+    //   .selectAll(".elevationChartLine")
+    //   .data(data)
+    //   .enter()
+    //   .append("path")
+    //   .attr("class", "elevationChartLine")
+    //   .attr("d", area(data))
+    //   .style("stroke", "#787979")
+    //   .style("stroke-opacity", 0.05)
+    //   .style("stroke-width", 1)
+    // .style("fill", "#787979")
+    // .style("fill-opacity", 0.05)
+
+    var crossBar = svg
       .append("g")
-      .attr("class", "focusChart")
+      .attr("class", "crossBar")
       .style("display", "none")
 
-    focus.append("circle").attr("r", 4.5)
+    crossBar
+      .append("line")
+      .attr("x1", 0)
+      .attr("x2", 0)
+      .attr("y1", height)
+      .attr("y2", 27.5)
+    // .style("")
 
-    focus
+    // crossBar
+    //   .append("rect")
+    //   .attr("x", 0)
+    //   .attr("y", 20)
+    //   .height("height", 47)
+    //   .style("left", (d3.event.pageX) + "px")
+
+    crossBar
       .append("text")
       .attr("x", 9)
       .attr("dy", ".35em")
@@ -144,10 +188,10 @@ class ElevationChart extends Component {
       .attr("width", width)
       .attr("height", height)
       .on("mouseover", function() {
-        focus.style("display", null)
+        crossBar.style("display", null)
       })
       .on("mouseout", function() {
-        focus.style("display", "none")
+        crossBar.style("display", "none")
       })
       .on("mousemove", mousemove)
 
@@ -157,11 +201,12 @@ class ElevationChart extends Component {
         d0 = data[i - 1],
         d1 = data[i],
         d = x0 - d0.x > d1.x - x0 ? d1 : d0
-      focus.attr(
+      crossBar.attr(
         "transform",
-        "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"
+        // "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"
+        `translate(${xScale(d.x)}, 0)`
       )
-      focus.select("text").text(d.y)
+      crossBar.select("text").text(d.y)
     }
   }
 

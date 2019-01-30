@@ -64,7 +64,49 @@ class TripPanel extends React.Component {
 
     if (prevState.markers !== this.state.markers) {
       this.getPathDistance()
-      this.getElevations()
+      this.getElevationsAlongPath()
+      // this.getElevations()
+    }
+  }
+
+  getElevationsAlongPath = () => {
+    if (this.state.markers.length > 1) {
+      const elevator = new window.google.maps.ElevationService()
+      let latLngs = this.state.markers.map(marker => ({
+        lat: marker.getPosition().lat(),
+        lng: marker.getPosition().lng()
+      }))
+
+      const distances = latLngs
+        .map((latLng, i, arr) => {
+          if (i === arr.length - 1) return
+          return util.calcDistance(
+            latLng.lat,
+            latLng.lng,
+            arr[i + 1].lat,
+            arr[i + 1].lng
+          )
+        })
+        // TODO: turn into REDUCE so you don't have to pop
+        .slice(0, latLngs.length - 1)
+
+      console.log("DISTANCES:", distances)
+
+      elevator.getElevationAlongPath(
+        {
+          path: latLngs,
+          samples: 100
+        },
+        (results, status) => {
+          console.log("RESULTS:", results)
+          this.setState({
+            distances,
+            elevations: this.state.elevations.concat(
+              results.map(result => result)
+            )
+          })
+        }
+      )
     }
   }
 
