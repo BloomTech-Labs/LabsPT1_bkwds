@@ -356,8 +356,8 @@ class TripPanel extends React.Component {
               <ElevationIcon width="25px" height="25px" />
               {elevations.length &&
                 metersToFeet(
-                  elevations[0].elevation -
-                    elevations[elevations.length - 1].elevation
+                  elevations[elevations.length - 1].elevation -
+                    elevations[0].elevation
                 ).toFixed(2)}
               ft
             </s.TripDetail>
