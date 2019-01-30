@@ -3,6 +3,9 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import * as d3 from "d3"
 
+const metersToMiles = m => (m * 0.000621371).toFixed(1)
+const metersToFeet = m => (m * 3.28084).toFixed(0)
+
 const margin = { top: 50, right: 50, bottom: 50, left: 50 }
 const width = 749 - margin.left - margin.right
 const height = 250 - margin.top - margin.bottom
@@ -230,9 +233,9 @@ class ElevationChart extends Component {
       const d1 = data[i]
       const d = x0 - d0.x > d1.x - x0 ? d1 : d0
       crossBar.attr("transform", `translate(${xScale(d.x)}, 0)`)
-      crossBar.select("text").text(d.x.toFixed(1) + " m")
+      crossBar.select("text").text(metersToMiles(d.x) + " mi")
       infoBox.attr("transform", `translate(${xScale(d.x) + 10}, 12.5)`)
-      infoBox.select(".infoBoxTextValue").text(d.y.toFixed(0) + " m")
+      infoBox.select(".infoBoxTextValue").text(metersToFeet(d.y) + " ft")
     }
   }
 
