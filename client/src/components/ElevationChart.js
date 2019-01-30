@@ -98,10 +98,11 @@ class ElevationChart extends Component {
 
     svg.append("g").call(d3.axisLeft(yScale).ticks(data.length - 1))
 
-    const line = d3
-      .line()
+    const area = d3
+      .area()
       .x(d => xScale(d.x))
-      .y(d => yScale(d.y))
+      .y0(yScale(yScale.domain()[0]))
+      .y1(d => yScale(d.y))
     // .curve(d3.curveCatmullRom.alpha(0.25))
 
     svg
@@ -110,12 +111,11 @@ class ElevationChart extends Component {
       .enter()
       .append("path")
       .attr("class", "elevationChartLine")
-      .attr("d", line(data))
-      .style("stroke", "#FF9900")
-      .style("stroke-width", 2)
-      .style("fill", "none")
-    // .style("fill", "#000")
-    // .style("fill-opacity", 0.15)
+      .attr("d", area(data))
+      .style("stroke", "#b0b0b0")
+      .style("stroke-width", 1)
+      .style("fill", "#000")
+      .style("fill-opacity", 0.05)
   }
 
   render() {
