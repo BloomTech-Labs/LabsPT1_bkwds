@@ -22,6 +22,9 @@ import {
   REPEAT_TRIP,
   REPEAT_TRIP_SUCCESS,
   REPEAT_TRIP_ERROR,
+  LOADING_TRIP_PICTURES,
+  LOADING_TRIP_PICTURES_SUCCESS,
+  LOADING_TRIP_PICTURES_ERROR,
   UPLOADING_TRIP_PIC,
   UPLOADING_TRIP_PIC_SUCCESS,
   UPLOADING_TRIP_PIC_ERROR,
@@ -255,5 +258,19 @@ export const uploadPics = (tripId, image) => dispatch => {
     })
     .catch(err => {
       dispatch({ type: UPLOADING_TRIP_PIC_ERROR, payload: err })
+    })
+}
+
+export const renderPics = (tripId, image) => dispatch => {
+  console.log(image, "RES Action")
+  dispatch({ type: LOADING_TRIP_PICTURES })
+  axios
+    .put(`${SERVER_URI}/trips/upload/${tripId}`, { image })
+    .then(res => {
+      console.log(res, "RESTWO")
+      // dispatch({ type: LOADING_TRIP_PICTURES_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: LOADING_TRIP_PICTURES_ERROR, payload: err })
     })
 }

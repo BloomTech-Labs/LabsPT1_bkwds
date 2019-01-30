@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { uploadPics } from "../redux/actions/trips"
+import { uploadPics, renderPics } from "../redux/actions/trips"
 import { connect } from "react-redux"
 import { TripPropTypes } from "./propTypes"
 
@@ -7,6 +7,21 @@ class UploadPics extends Component {
   state = {
     tripPics: ""
   }
+
+  componentDidMount() {
+    console.log(this.props, "STETEAAAAA")
+    console.log(this.props.tripPics, "STETE")
+    this.renderPics(this.props.id)
+  }
+
+  // componentDidUpdate(_, prevState) {
+  //   if (prevState.markers !== this.state.markers) {
+  //     // this.getPathElevation()
+  //     this.props.getTrips(this.props.userId)
+
+  //     this.pics()
+  //   }
+  // }
 
   upload = e => {
     const { id } = this.props
@@ -22,8 +37,13 @@ class UploadPics extends Component {
   }
 
   render() {
+    const { pictures } = this.props
+    console.log(pictures, "PICTURES")
     return (
       <div>
+        {pictures.map(picture => {
+          return <img key={picture} />
+        })}
         <h4>
           Upload Your Pics:
           {/* <form >     */}
@@ -45,11 +65,11 @@ UploadPics.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  tripPics: state.trips.id,
+  tripPics: state.trips.activeTrip.tripPics,
   id: state.trips.activeTrip.id
 })
 
-const mapDispatchToProps = { uploadPics }
+const mapDispatchToProps = { uploadPics, renderPics }
 
 export default connect(
   mapStateToProps,
