@@ -56,15 +56,12 @@ class TripPanel extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.group("TRIP PANEL UPDATE")
-    console.log("TRIP PANEL PREV PROPS:", prevProps)
-    console.log("TRIP PANEL CURRENT PROPS:", this.props)
-    console.log("TRIP PANEL PREV STATE:", prevState)
-    console.log("TRIP PANEL CURRENT STATE", this.state)
-    console.log("PREVSTATE.MARKERS:", prevState.markers)
-    console.log("STATE.MARKERS:", this.state.markers)
-    console.log("MARKERS MATCH?", this.state.markers == prevState.markers)
-    console.groupEnd("TRIP PANEL UPDATE")
+    // console.group("TRIP PANEL UPDATE")
+    // console.log("TRIP PANEL PREV PROPS:", prevProps)
+    // console.log("TRIP PANEL CURRENT PROPS:", this.props)
+    // console.log("TRIP PANEL PREV STATE:", prevState)
+    // console.log("TRIP PANEL CURRENT STATE", this.state)
+    // console.groupEnd("TRIP PANEL UPDATE")
 
     if (prevState.markers !== this.state.markers) {
       this.getPathDistance()

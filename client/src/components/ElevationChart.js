@@ -30,6 +30,14 @@ function fromLatLngToPoint(latLng, map) {
   return point
 }
 
+const arraysEqual = (arr1, arr2) => {
+  if (arr1.length !== arr2.length) return false
+  for (var i = arr1.length; i--; ) {
+    if (arr1[i] !== arr2[i]) return false
+  }
+  return true
+}
+
 const makeXGridlines = xScale => d3.axisBottom(xScale).ticks(xAxisTicks)
 const makeYGridlines = yScale => d3.axisLeft(yScale).ticks(yAxisTicks)
 
@@ -42,6 +50,13 @@ class ElevationChart extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.group("ELEVATION CHART UPDATE")
+    // console.log("ELEVATION CHART PREV PROPS:", prevProps)
+    // console.log("ELEVATION CHART CURRENT PROPS:", this.props)
+    // console.log("ELEVATION CHART PREV STATE:", prevState)
+    // console.log("ELEVATION CHART CURRENT STATE", this.state)
+    // console.groupEnd("ELEVATION CHART UPDATE")
+
     const { data } = this.state
     const { distances, elevations } = this.props
     const startDistance = 0
@@ -49,6 +64,12 @@ class ElevationChart extends Component {
       (acc, curr) => acc + curr,
       startDistance
     )
+
+    const makeFreshData = data =>
+      data.reduce((acc, curr, i) => {
+        const dist = sampleUnit * (i + 1)
+        return acc.concat({ x: dist, y: curr.elevation, ...curr })
+      }, [])
 
     const elevationsWithGrades = elevations.reduce((acc, curr, i, arr) => {
       if (i === arr.length - 1) {
@@ -64,19 +85,29 @@ class ElevationChart extends Component {
     const sampleUnit = endDistance / numOfSamples
 
     if (distances.length && !prevProps.distances.length) {
-      const newData = elevationsWithGrades.reduce((acc, curr, i) => {
-        const dist = sampleUnit * (i + 1)
-        return acc.concat({ x: dist, y: curr.elevation, ...curr })
-      }, [])
+      const newData = makeFreshData(elevationsWithGrades)
       this.setState({ data: newData })
     }
 
-    if (data.length && !prevState.data.length) {
-      this.drawChart()
+    // HANDLE DRAWING OR DESTROYING OF CHART:
+    if (!arraysEqual(distances, prevProps.distances)) {
+      if (data.length && !prevState.data.length) {
+        return this.drawChart()
+      }
+
+      this.destroyChart()
+      const newData = makeFreshData(elevationsWithGrades)
+      this.setState({ data: newData }, () => this.drawChart())
     }
   }
 
+  destroyChart = () => {
+    d3.selectAll("#elevationChart > *").remove()
+  }
+
   drawChart = () => {
+    console.log("DRAWING CHART LOLOL\n\n")
+
     const { data } = this.state
 
     const bisect = d3.bisector(function(d) {
