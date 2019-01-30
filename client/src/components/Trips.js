@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Suspense } from "react"
 import { connect } from "react-redux"
 import { getTrips } from "../redux/actions/trips"
 import PropTypes from "prop-types"
@@ -8,6 +8,7 @@ import TripCard from "./TripCard"
 import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
 import { getTripsArray } from "../utils/selectors"
+import TripCardLoader from "./TripCardLoader"
 
 class Trips extends Component {
   componentDidMount() {
@@ -17,21 +18,29 @@ class Trips extends Component {
   render() {
     const { trips } = this.props
     return (
-      <div>
-        <s.TripCardStyles>
-          <div className="container">
-            <AddTripButton
-              className="AddTripButton"
-              text={trips.length ? "Add New Trip" : "Add Your First Trip"}
-            />
-            {trips.map(trip => {
-              if (!trip.isArchived) {
-                return <TripCard key={trip.id} trip={trip} archived={false} />
-              } else return null
-            })}
+      <Suspense
+        fallback={
+          <div>
+            <TripCardLoader />
           </div>
-        </s.TripCardStyles>
-      </div>
+        }
+      >
+        <div>
+          <s.TripCardStyles>
+            <div className="container">
+              <AddTripButton
+                className="AddTripButton"
+                text={trips.length ? "Add New Trip" : "Add Your First Trip"}
+              />
+              {trips.map(trip => {
+                if (!trip.isArchived) {
+                  return <TripCard key={trip.id} trip={trip} archived={false} />
+                } else return null
+              })}
+            </div>
+          </s.TripCardStyles>
+        </div>
+      </Suspense>
     )
   }
 }
