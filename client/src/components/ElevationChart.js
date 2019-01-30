@@ -18,6 +18,11 @@ const ElevationChartStyles = styled.div`
     fill: #999;
   }
 
+  text.crossBarText {
+    fill: #666;
+    width: 200px;
+  }
+
   path.domain {
     fill: none;
     stroke: #aaa;
@@ -120,42 +125,15 @@ class ElevationChart extends Component {
       .y1(d => yScale(d.y))
       .curve(d3.curveCatmullRom.alpha(0.005))
 
-    // const line = d3
-    //   .line()
-    //   .x(d => xScale(d.x))
-    //   .y(d => yScale(d.y))
-
     svg
       .append("path")
       .attr("d", area(data))
+      .attr("class", "elevationChartLine")
       .style("stroke", "#787979")
       .style("stroke-opacity", 0.2)
       .style("stroke-width", 1)
       .style("fill", "#787979")
-      .style("fill-opacity", 0.15)
-
-    // .selectAll(".line")
-    // .data(data)
-    // .enter()
-    // .append("path")
-    // .attr("class", "line")
-    // .attr("d", line(data))
-    // .style("stroke", "#FF9900")
-    // .style("stroke-width", 2)
-    // .style("fill", "none")
-
-    // svg
-    //   .selectAll(".elevationChartLine")
-    //   .data(data)
-    //   .enter()
-    //   .append("path")
-    //   .attr("class", "elevationChartLine")
-    //   .attr("d", area(data))
-    //   .style("stroke", "#787979")
-    //   .style("stroke-opacity", 0.05)
-    //   .style("stroke-width", 1)
-    // .style("fill", "#787979")
-    // .style("fill-opacity", 0.05)
+      .style("fill-opacity", 0.2)
 
     var crossBar = svg
       .append("g")
@@ -167,7 +145,7 @@ class ElevationChart extends Component {
       .attr("x1", 0)
       .attr("x2", 0)
       .attr("y1", height)
-      .attr("y2", 27.5)
+      .attr("y2", 0)
     // .style("")
 
     // crossBar
@@ -179,8 +157,9 @@ class ElevationChart extends Component {
 
     crossBar
       .append("text")
-      .attr("x", 9)
-      .attr("dy", ".35em")
+      .attr("x", 10)
+      .attr("y", 15)
+      .attr("class", "crossBarText")
 
     svg
       .append("rect")
@@ -206,7 +185,7 @@ class ElevationChart extends Component {
         // "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"
         `translate(${xScale(d.x)}, 0)`
       )
-      crossBar.select("text").text(d.y)
+      crossBar.select("text").text(d.x.toFixed(1) + " m")
     }
   }
 
