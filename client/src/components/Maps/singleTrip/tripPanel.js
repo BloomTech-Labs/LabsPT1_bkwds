@@ -65,7 +65,6 @@ class TripPanel extends React.Component {
     if (prevState.markers !== this.state.markers) {
       this.getPathDistance()
       this.getElevationsAlongPath()
-      // this.getElevations()
     }
   }
 
@@ -99,43 +98,6 @@ class TripPanel extends React.Component {
         },
         (results, status) => {
           console.log("RESULTS:", results)
-          this.setState({
-            distances,
-            elevations: this.state.elevations.concat(
-              results.map(result => result)
-            )
-          })
-        }
-      )
-    }
-  }
-
-  getElevations = () => {
-    if (this.state.markers.length > 1) {
-      const elevator = new window.google.maps.ElevationService()
-      let latLngs = this.state.markers.map(marker => ({
-        lat: marker.getPosition().lat(),
-        lng: marker.getPosition().lng()
-      }))
-
-      const distances = latLngs
-        .map((latLng, i, arr) => {
-          if (i === arr.length - 1) return
-          return util.calcDistance(
-            latLng.lat,
-            latLng.lng,
-            arr[i + 1].lat,
-            arr[i + 1].lng
-          )
-        })
-        // TODO: turn into REDUCE so you don't have to pop
-        .slice(0, latLngs.length - 1)
-
-      console.log("DISTANCES:", distances)
-
-      elevator.getElevationForLocations(
-        { locations: latLngs },
-        (results, status) => {
           this.setState({
             distances,
             elevations: this.state.elevations.concat(
@@ -369,112 +331,107 @@ class TripPanel extends React.Component {
     const { elevations, isEditing, saveToggle, trip, tripDistance } = this.state
 
     return (
-      <div
-        style={{
-          position: "relative",
-          background: "white",
-          height: "500px"
-        }}
-      >
-        {/* <s.Panel>
-        <s.PanelHeader>
-          <s.TripTitleInput
-            type="text"
-            edit={isEditing}
-            value={trip.name || ""}
-            onChange={this.handleTitle}
-            disabled={isEditing === false}
-          />
-          {!saveToggle ? (
-            <s.EditButton onClick={() => this.handleEditToggle()}>
-              <EditIcon width="20px" height="20px" />
-            </s.EditButton>
-          ) : (
-            <s.SaveButton onClick={() => this.handleSave()}>
-              <SaveIcon width="20px" height="20px" />
-            </s.SaveButton>
-          )}
-        </s.PanelHeader>
-        <s.PanelSubheader>
-          <s.TripDetail>
-            <DistanceIcon width="25px" height="25px" />
-            {tripDistance}m
-          </s.TripDetail>
-          <s.TripDetail>
-            <ElevationIcon width="25px" height="25px" />
-            {elevations.length &&
-              (
-                elevations[0].elevation -
-                elevations[elevations.length - 1].elevation
-              ).toFixed(2)}
-            m
-          </s.TripDetail>
-        </s.PanelSubheader>
+      <div>
+        <s.Panel>
+          <s.PanelHeader>
+            <s.TripTitleInput
+              type="text"
+              edit={isEditing}
+              value={trip.name || ""}
+              onChange={this.handleTitle}
+              disabled={isEditing === false}
+            />
+            {!saveToggle ? (
+              <s.EditButton onClick={() => this.handleEditToggle()}>
+                <EditIcon width="20px" height="20px" />
+              </s.EditButton>
+            ) : (
+              <s.SaveButton onClick={() => this.handleSave()}>
+                <SaveIcon width="20px" height="20px" />
+              </s.SaveButton>
+            )}
+          </s.PanelHeader>
+          <s.PanelSubheader>
+            <s.TripDetail>
+              <DistanceIcon width="25px" height="25px" />
+              {tripDistance}m
+            </s.TripDetail>
+            <s.TripDetail>
+              <ElevationIcon width="25px" height="25px" />
+              {elevations.length &&
+                (
+                  elevations[0].elevation -
+                  elevations[elevations.length - 1].elevation
+                ).toFixed(2)}
+              m
+            </s.TripDetail>
+          </s.PanelSubheader>
 
-        <s.WaypointsHeader>
-          <h4>Waypoints</h4>
-          <s.AddButton
-            disabled={isEditing === false}
-            edit={isEditing}
-            onClick={() => this.addWaypoint()}
-          >
-            <AddIcon height="18px" width="18px" />
-          </s.AddButton>
-        </s.WaypointsHeader>
-        <s.WaypointList>
-          {trip.waypoints !== undefined &&
-            trip.waypoints.map(({ name }, i) => (
-              <Waypoint
-                key={name}
-                i={i}
-                name={name}
-                isEditing={isEditing}
-                handleDelete={this.handleDelete}
-                handleEdit={this.handleEdit}
-              />
-            ))}
-        </s.WaypointList>
-
-        <s.StartButton onClick={this.props.openModal}>Start Trip</s.StartButton>
-
-        <Modal isOpen={this.props.modalIsOpen}>
-          {() => (
-            <div className="startTrip-flow">
-              <div className="flow-header">
-                <h4>Activate Safety Feature</h4>
-                <div>
-                  Your emergency contact will receive a SMS alert containing
-                  your last known location
-                </div>
-                <br />
-                <div>
-                  The alert will not be sent if you mark your trip as completed
-                  by the specified time limit
-                </div>
-              </div>
-              <Form onSubmit={this.startingTrip({ trip })}>
-                <label>Time Limit</label>
-                <GhostInput
-                  placeholder="How many hours should we wait?"
-                  value={this.state.hours}
-                  name="hours"
-                  onChange={this.handleHoursInput}
+          <s.WaypointsHeader>
+            <h4>Waypoints</h4>
+            <s.AddButton
+              disabled={isEditing === false}
+              edit={isEditing}
+              onClick={() => this.addWaypoint()}
+            >
+              <AddIcon height="18px" width="18px" />
+            </s.AddButton>
+          </s.WaypointsHeader>
+          <s.WaypointList>
+            {trip.waypoints !== undefined &&
+              trip.waypoints.map(({ name }, i) => (
+                <Waypoint
+                  key={name}
+                  i={i}
+                  name={name}
+                  isEditing={isEditing}
+                  handleDelete={this.handleDelete}
+                  handleEdit={this.handleEdit}
                 />
-                <div className="dual-buttons">
-                  <Button className="btn-primary">Activate</Button>
-                  <Button
-                    className="btn-secondary"
-                    onClick={() => this.setState({ disableSafety: true })}
-                  >
-                    No Thanks
-                  </Button>
-                </div>
-              </Form>
-            </div>
-          )}
-        </Modal>
+              ))}
+          </s.WaypointList>
 
-      </s.Panel> */}
+          <s.StartButton onClick={this.props.openModal}>
+            Start Trip
+          </s.StartButton>
+
+          <Modal isOpen={this.props.modalIsOpen}>
+            {() => (
+              <div className="startTrip-flow">
+                <div className="flow-header">
+                  <h4>Activate Safety Feature</h4>
+                  <div>
+                    Your emergency contact will receive a SMS alert containing
+                    your last known location
+                  </div>
+                  <br />
+                  <div>
+                    The alert will not be sent if you mark your trip as
+                    completed by the specified time limit
+                  </div>
+                </div>
+                <Form onSubmit={this.startingTrip({ trip })}>
+                  <label>Time Limit</label>
+                  <GhostInput
+                    placeholder="How many hours should we wait?"
+                    value={this.state.hours}
+                    name="hours"
+                    onChange={this.handleHoursInput}
+                  />
+                  <div className="dual-buttons">
+                    <Button className="btn-primary">Activate</Button>
+                    <Button
+                      className="btn-secondary"
+                      onClick={() => this.setState({ disableSafety: true })}
+                    >
+                      No Thanks
+                    </Button>
+                  </div>
+                </Form>
+              </div>
+            )}
+          </Modal>
+        </s.Panel>
         <ElevationChart
           distances={this.state.distances}
           elevations={elevations}

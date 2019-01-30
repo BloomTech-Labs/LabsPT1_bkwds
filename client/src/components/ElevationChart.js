@@ -6,9 +6,9 @@ import * as d3 from "d3"
 const metersToMiles = m => (m * 0.000621371).toFixed(1)
 const metersToFeet = m => (m * 3.28084).toFixed(0)
 
-const margin = { top: 50, right: 50, bottom: 50, left: 50 }
-const width = 749 - margin.left - margin.right
-const height = 250 - margin.top - margin.bottom
+const margin = { top: 0, right: 0, bottom: 15, left: 50 }
+const width = 750 - margin.left - margin.right
+const height = 155 - margin.top - margin.bottom
 
 const ElevationChartStyles = styled.div`
   /* DELETE */
@@ -17,9 +17,17 @@ const ElevationChartStyles = styled.div`
     display: inherit !important;
   }
 
-  position: absolute;
-  right: ${margin.right}px;
-  z-index: 1000;
+  .elevation-chart-wrapper {
+    border-radius: 0.5rem 0.5rem;
+    padding: 24px 0 8px 12px;
+    background: white;
+    position: absolute;
+    right: 1.5rem;
+    top: unset;
+    bottom: 0;
+    margin-bottom: 50px;
+    z-index: 5;
+  }
 
   text {
     font-size: 11px;
@@ -140,10 +148,10 @@ class ElevationChart extends Component {
     const svg = d3
       .select("#elevationChart")
       .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+      .attr("width", 750)
+      .attr("height", 155)
       // MOVE 2 ATTRS INTO RESPONSIFY FUNCTION!
-      .attr("viewBox", "0 0 " + width + " " + height)
+      .attr("viewBox", "0 0 " + width + " " + 160)
       .attr("preserveAspectRatio", "xMinYMid")
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`)
@@ -276,9 +284,8 @@ class ElevationChart extends Component {
 
     return (
       <ElevationChartStyles>
-        <div>
-          Elevation Chart:
-          {data.length > 0 && <div id="elevationChart" />}
+        <div className="elevation-chart-wrapper">
+          <div>{data.length > 0 && <div id="elevationChart" />}</div>
         </div>
       </ElevationChartStyles>
     )
