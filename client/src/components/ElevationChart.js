@@ -6,9 +6,12 @@ import * as d3 from "d3"
 const margin = { top: 0, right: 0, bottom: 15, left: 50 }
 const width = 750 - margin.left - margin.right
 const height = 155 - margin.top - margin.bottom
-const xAxisTicks = 7
+const xAxisTicks = 8
 const yAxisTicks = 6
+
 export const numOfSamples = 100
+export const metersToMiles = m => m * 0.000621371
+export const metersToFeet = m => m * 3.28084
 
 function fromLatLngToPoint(latLng, map) {
   var topRight = map
@@ -25,9 +28,6 @@ function fromLatLngToPoint(latLng, map) {
   )
   return point
 }
-
-const metersToMiles = m => (m * 0.000621371).toFixed(1)
-const metersToFeet = m => (m * 3.28084).toFixed(0)
 
 const makeXGridlines = xScale => d3.axisBottom(xScale).ticks(xAxisTicks)
 const makeYGridlines = yScale => d3.axisLeft(yScale).ticks(yAxisTicks)
@@ -105,14 +105,24 @@ class ElevationChart extends Component {
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale).ticks(xAxisTicks))
+      .call(
+        d3
+          .axisBottom(xScale)
+          .ticks(xAxisTicks)
+          .tickFormat(d => d3.format(".1f")(metersToMiles(d)) + " mi")
+      )
 
     const yScale = d3
       .scaleLinear()
       .domain([d3.min(data, co => co.y), d3.max(data, co => co.y)])
       .range([height, 0])
 
-    svg.append("g").call(d3.axisLeft(yScale).ticks(yAxisTicks))
+    svg.append("g").call(
+      d3
+        .axisLeft(yScale)
+        .ticks(yAxisTicks)
+        .tickFormat(d => d3.format(",.0f")(metersToFeet(d)) + " ft")
+    )
 
     // make X grid:
     svg
@@ -244,7 +254,7 @@ class ElevationChart extends Component {
       })
       .on("mousemove", mousemove)
 
-    // NEEDS TO BE A FUNCTION FOR ACCESS TO THIS!
+    // NEEDS TO BE A FUNCTION EXPRESSION FOR ACCESS TO "THIS"!
     function mousemove() {
       const x0 = xScale.invert(d3.mouse(this)[0])
       const i = bisect(data, x0, 1)

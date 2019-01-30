@@ -32,7 +32,7 @@ import Waypoint from "./Waypoint"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
-import { numOfSamples } from "../../ElevationChart"
+import { numOfSamples, metersToFeet, metersToMiles } from "../../ElevationChart"
 
 class TripPanel extends React.Component {
   state = {
@@ -355,16 +355,16 @@ class TripPanel extends React.Component {
           <s.PanelSubheader>
             <s.TripDetail>
               <DistanceIcon width="25px" height="25px" />
-              {tripDistance}m
+              {metersToMiles(tripDistance).toFixed(2)}mi
             </s.TripDetail>
             <s.TripDetail>
               <ElevationIcon width="25px" height="25px" />
               {elevations.length &&
-                (
+                metersToFeet(
                   elevations[0].elevation -
-                  elevations[elevations.length - 1].elevation
+                    elevations[elevations.length - 1].elevation
                 ).toFixed(2)}
-              m
+              ft
             </s.TripDetail>
           </s.PanelSubheader>
 
