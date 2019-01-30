@@ -11,9 +11,32 @@ const ElevationChartStyles = styled.div`
   position: absolute;
   right: ${margin.right}px;
   z-index: 1000;
-  svg {
-    /* height: ${height + margin.top + margin.bottom}px;
-    width: ${width + margin.left + margin.right}px; */
+
+  text {
+    font-size: 11px;
+    stroke: none;
+    fill: #999;
+  }
+
+  path.domain {
+    fill: none;
+    stroke: #aaa;
+  }
+
+  g.tick {
+    line {
+      color: #999;
+    }
+  }
+
+  .focusChart circle {
+    fill: none;
+    stroke: steelblue;
+  }
+
+  .chartOverlay {
+    fill: none;
+    pointer-events: all;
   }
 `
 
@@ -28,38 +51,19 @@ class ElevationChart extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.state
     const { distances, elevations } = this.props
-
     const cumulativeDistances = distances.reduce(
-      (acc, curr) => {
-        return acc.concat(acc[acc.length - 1] + curr)
-      },
+      (acc, curr) => acc.concat(acc[acc.length - 1] + curr),
       [0]
     )
 
-    console.log("CUMULATIVE DISTANCES:", cumulativeDistances)
-
     if (distances.length && !prevProps.distances.length) {
-      console.log("CREATING DATA OBJ!")
-      // const newData = [
-      //   { x: 0, y: 54 },
-      //   { x: 1, y: 72 },
-      //   { x: 10, y: 50 },
-      //   { x: 92, y: 12 }
-      // ]
-      const newData = [
-        { x: 0, y: 1588 },
-        { x: 3631, y: 1631 },
-        { x: 5528, y: 1618 },
-        { x: 9995, y: 1602 },
-        { x: 12081, y: 1626 }
-      ]
-      console.log("NEW DATA:", newData)
-
+      const newData = elevations.reduce((acc, curr, i) => {
+        return acc.concat({ x: cumulativeDistances[i], y: curr.elevation })
+      }, [])
       this.setState({ data: newData })
     }
 
     if (data.length && !prevState.data.length) {
-      console.log("RENDERING CHART")
       this.drawChart()
     }
   }
@@ -67,6 +71,10 @@ class ElevationChart extends Component {
   drawChart = () => {
     const { data } = this.state
     console.log("DRAWING CHART, DATA:", data)
+
+    const bisect = d3.bisector(function(d) {
+      return d.x
+    }).left
 
     const svg = d3
       .select("#elevationChart")
@@ -103,7 +111,7 @@ class ElevationChart extends Component {
       .x(d => xScale(d.x))
       .y0(yScale(yScale.domain()[0]))
       .y1(d => yScale(d.y))
-    // .curve(d3.curveCatmullRom.alpha(0.25))
+      .curve(d3.curveCatmullRom.alpha(0.005))
 
     svg
       .selectAll(".elevationChartLine")
@@ -117,6 +125,44 @@ class ElevationChart extends Component {
       .style("stroke-width", 1)
       .style("fill", "#787979")
       .style("fill-opacity", 0.05)
+
+    var focus = svg
+      .append("g")
+      .attr("class", "focusChart")
+      .style("display", "none")
+
+    focus.append("circle").attr("r", 4.5)
+
+    focus
+      .append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em")
+
+    svg
+      .append("rect")
+      .attr("class", "chartOverlay")
+      .attr("width", width)
+      .attr("height", height)
+      .on("mouseover", function() {
+        focus.style("display", null)
+      })
+      .on("mouseout", function() {
+        focus.style("display", "none")
+      })
+      .on("mousemove", mousemove)
+
+    function mousemove() {
+      var x0 = xScale.invert(d3.mouse(this)[0]),
+        i = bisect(data, x0, 1),
+        d0 = data[i - 1],
+        d1 = data[i],
+        d = x0 - d0.x > d1.x - x0 ? d1 : d0
+      focus.attr(
+        "transform",
+        "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"
+      )
+      focus.select("text").text(d.y)
+    }
   }
 
   render() {
