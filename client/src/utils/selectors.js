@@ -84,18 +84,16 @@ export const filterOutTripById = id => ({ [id]: filtered, ...rest }) => {
 }
 
 export const normalizeErrorMsg = payload => {
-  if (payload && payload.response) {
+  if (payload && payload.response && payload.response.data) {
     const { data } = payload.response
-    return data && typeof data === "string"
-      ? data
-      : typeof data.msg === "string" && data.msg.length < 50
-      ? data.msg
-      : "Request failed, please try again."
-  } else {
-    console.error(
-      "Normalize error message failed:",
-      JSON.stringify(payload, null, 2)
-    )
-    // do something else with the Error object
+    if (data && typeof data === "string") return data
+    if (data.msg && typeof data.msg === "string" && data.msg.length < 50)
+      return data.msg
+    return `Normalize error message failed: ${JSON.stringify(data, null, 2)}`
   }
+  return `Error cannot be detected: ${JSON.stringify(
+    payload.response,
+    null,
+    2
+  )}`
 }
