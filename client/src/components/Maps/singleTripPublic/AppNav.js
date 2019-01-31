@@ -5,7 +5,6 @@ import * as s from "../../../styles/AppNav.styles"
 
 class AppNav extends Component {
   render() {
-    const {} = this.props
     return (
       <div>
         <s.NavStyles>
