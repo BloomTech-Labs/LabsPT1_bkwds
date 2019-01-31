@@ -57,23 +57,13 @@ class ActiveTripPanel extends React.Component {
                 <div>
                   {waypoint.complete ? (
                     <Button
-                      onClick={() =>
-                        this.props.toggleWaypoint(
-                          waypoint.id,
-                          waypoint.complete
-                        )
-                      }
+                      onClick={() => this.props.toggleWaypoint(waypoint.id)}
                     >
                       <i className="fa fa-check" />
                     </Button>
                   ) : (
                     <Button
-                      onClick={() =>
-                        this.props.toggleWaypoint(
-                          waypoint.id,
-                          waypoint.complete
-                        )
-                      }
+                      onClick={() => this.props.toggleWaypoint(waypoint.id)}
                     >
                       <i className="fa fa-times" />
                     </Button>
