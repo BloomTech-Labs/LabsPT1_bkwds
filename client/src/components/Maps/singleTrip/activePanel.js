@@ -57,10 +57,6 @@ class ActiveTripPanel extends React.Component {
       completeIndex - 1,
       completeIndex + 2
     )
-    console.log(completeIndex)
-    console.log("completed ", completed)
-    console.log("active", active)
-    console.log("current", current)
     const completePath = completed.map(waypoint => {
       return { lat: waypoint.lat, lng: waypoint.lon }
     })
@@ -91,10 +87,6 @@ class ActiveTripPanel extends React.Component {
       strokeOpacity: 1.0,
       strokeWeight: 2
     })
-
-    // const currentPolyLine = new window.google.maps.Polyline({
-    //   path:
-    // })
 
     completePolyline.setMap(window.map)
     activePolyline.setMap(window.map)
