@@ -360,7 +360,6 @@ class TripPanel extends React.Component {
       saveToggle,
       trip,
       tripDistance,
-      menuToggled,
       waypointsMenuToggled,
       graphMenuToggled
     } = this.state
@@ -419,6 +418,8 @@ class TripPanel extends React.Component {
               <i className="fa fa-play" />
             </Button>
           </div>
+
+          <AddButton addWaypoint={this.addWaypoint} />
 
           <div className="mobile-toggles">
             <div className="mobile-trip-header">
@@ -605,6 +606,7 @@ TripPanel.propTypes = {
   editTrip: PropTypes.func.isRequired,
   startTrip: PropTypes.func.isRequired,
   trip: TripPropTypes,
+  mapRef: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
