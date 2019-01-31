@@ -5,6 +5,7 @@ export const TripCardStyles = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
   width: 100%;
 
   a {
@@ -19,6 +20,7 @@ export const TripCardStyles = styled.div`
   .container {
     display: flex;
     justify-content: flex-start;
+    justify-self: center;
     flex-wrap: wrap;
     max-width: 100%;
     height: 100%;
@@ -33,17 +35,15 @@ export const TripCardStyles = styled.div`
     justify-content: flex-start;
     align-self: center;
     border-radius: 0.25rem;
+    border: none;
     height: 400px;
     width: 380px;
     max-height: 100%;
     max-width: 100%;
-    margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 0 10px 20px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0.0625rem 0px,
       rgba(0, 0, 5, 0.1) 0px 0.0625rem 0.125rem,
       rgba(0, 0, 0, 0.05) 0px 0.3125rem 0.9375rem;
-
     transition: transform 0.22s ease-out 0s, box-shadow;
 
     @media (max-width: 55.875em) {
@@ -77,6 +77,7 @@ export const TripCardStyles = styled.div`
   .card-image {
     display: flex;
     width: 100%;
+    height: 231px;
     justify-content: center;
     align-items: center;
     overflow: hidden;
