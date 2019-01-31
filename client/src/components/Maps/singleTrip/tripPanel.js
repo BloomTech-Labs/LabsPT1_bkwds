@@ -58,6 +58,7 @@ class TripPanel extends React.Component {
     this.props.closeModal()
     setTimeout(() => {
       this.renderWaypoints()
+      this.props.drawPolyline(this.state.markers)
     }, 500)
   }
 
@@ -119,7 +120,7 @@ class TripPanel extends React.Component {
       this.getElevationsAlongPath()
     })
     const waypoint = {
-      name: `Checkpoint ${index}`,
+      name: `Checkpoint ${index + 1}`,
       tripId: this.props.trip.id,
       order: index + 1,
       lat: marker.getPosition().lat(),
@@ -180,10 +181,13 @@ class TripPanel extends React.Component {
         title: waypoint.name,
         label
       })
-      marker.setMap(window.map)
-      marker.addListener("dragend", ({ latLng }) => {
+      // marker.setMap(window.map)
+      marker.addListener("dragend", ev => {
+        console.log("dragend Called on marker", i)
         const updatedWaypoints = waypoints.map((item, index) =>
-          index === i ? { ...item, lat: latLng.lat(), lon: latLng.lng() } : item
+          index === i
+            ? { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
+            : item
         )
         this.setState({
           trip: { ...this.state.trip, waypoints: updatedWaypoints }
@@ -193,13 +197,13 @@ class TripPanel extends React.Component {
       })
       markers.push(marker)
     })
-
     this.setState({ markers })
   }
 
   handleEditToggle = () => {
     this.setState({ isEditing: true, saveToggle: true }, () => {
       this.toggleDraggable()
+      window.polyline.setMap(null)
     })
   }
 
@@ -238,6 +242,7 @@ class TripPanel extends React.Component {
   }
 
   handleEdit = (e, i) => {
+    console.log(i)
     const mapped = this.state.trip.waypoints.map((item, index) => {
       if (index === i) {
         return { ...item, name: e.target.value }
@@ -263,6 +268,7 @@ class TripPanel extends React.Component {
     this.setState({ saveToggle: false, isEditing: false }, () => {
       this.toggleDraggable()
       this.props.editTrip(this.state.trip)
+      this.props.drawPolyline(this.state.markers)
     })
   }
 
@@ -594,6 +600,7 @@ const mapDispatchToProps = {
 TripPanel.propTypes = {
   editTrip: PropTypes.func.isRequired,
   startTrip: PropTypes.func.isRequired,
+  drawPolyline: PropTypes.func.isRequired,
   trip: TripPropTypes,
   mapRef: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,

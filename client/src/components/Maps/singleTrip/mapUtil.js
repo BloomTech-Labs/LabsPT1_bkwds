@@ -15,8 +15,6 @@ export const calcDistance = (fromLat, fromLng, toLat, toLng) => {
 //   return window.google.maps.geometry.spherical.computeLength(G_LatLngs)
 // }
 
-//TODO - add elev_service to window?
-//Returns an Elevation Object with a location(LatLng obhect),elevation,and resolution properties
 export const getElevations = latLngArr => {
   let elevations
   const elev_service = new window.google.maps.ElevationService()

@@ -51,9 +51,7 @@ class TripPictures extends Component {
               type="button"
               onClick={() => this.setState({ isOpen: true })}
             >
-              <div className="imageThumb">
-                <img key={picture} src={picture} />
-              </div>
+              <img key={picture} src={picture} />
             </ImageThumbnails>
           )
         })}
@@ -93,7 +91,6 @@ class TripPictures extends Component {
   }
 }
 
-//I have no clue what this does -VM//
 TripPictures.propTypes = {
   trip: TripPropTypes,
   id: PropTypes.string.isRequired,
