@@ -30,15 +30,16 @@ class Trips extends Component {
   renderTrips = () => {
     const { loading, trips } = this.props
 
-    return trips.map(trip =>
-      trip.isArchived ? null : (
-        <TripCard
-          archived={false}
-          key={trip.id}
-          loading={loading}
-          trip={trip}
-        />
-      )
+    return trips.map(
+      trip =>
+        trip.isArchived || (
+          <TripCard
+            archived={false}
+            key={trip.id}
+            loading={loading}
+            trip={trip}
+          />
+        )
     )
   }
 

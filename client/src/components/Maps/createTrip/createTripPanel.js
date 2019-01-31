@@ -7,6 +7,7 @@ import "react-dates/lib/css/_datepicker.css"
 import * as s from "../../../styles/CreateTripPanel.styles"
 import { Button } from "../../../styles/theme/styledComponents"
 import Autocomplete from "../Autocomplete"
+import MobileMapPanel from "../../MobileMapPanel"
 
 class CreateTripPanel extends React.Component {
   constructor(props) {
@@ -16,9 +17,7 @@ class CreateTripPanel extends React.Component {
       startDate: null,
       endDate: null,
       focusedInput: null,
-      query: "",
-      searchToggled: false,
-      menuToggled: false
+      query: ""
     }
     this.inputRef = React.createRef()
   }
@@ -43,21 +42,6 @@ class CreateTripPanel extends React.Component {
   handleSearch = event => {
     this.setState({ query: event.target.value })
   }
-
-  // searchAutoComplete = () => {
-  //   const autoComplete = new window.google.maps.places.Autocomplete(
-  //     this.inputRef.current
-  //   )
-  //   autoComplete.addListener("place_changed", () => {
-  //     let place = autoComplete.getPlace()
-  //     if (place.geometry !== undefined) {
-  //       window.map.panTo({
-  //         lat: place.geometry.location.lat(),
-  //         lng: place.geometry.location.lng()
-  //       })
-  //     }
-  //   })
-  // }
 
   handleTitle = e => {
     e.persist()
@@ -91,25 +75,26 @@ class CreateTripPanel extends React.Component {
         searchToggled={searchToggled}
         className="CreateTripPanelStyles"
       >
-        <div className="mobile-create-trip-panel">
-          <Button
-            onClick={this.toggleSearch}
-            className={`btn-neutral ${searchToggled ? "active-button" : ""}`}
-          >
-            <i id="down-angle" className="fas fa-search" />
-          </Button>
+        <MobileMapPanel>
+          <div className="mobile-panel">
+            <Button
+              onClick={this.toggleSearch}
+              className={`btn-neutral ${searchToggled ? "active-button" : ""}`}
+            >
+              <i id="down-angle" className="fas fa-search" />
+            </Button>
 
-          <Button
-            onClick={this.toggleMenu}
-            className={`btn-neutral ${menuToggled ? "active-button" : ""}`}
-          >
-            <i id="" className="fas fa-cog" />
-          </Button>
-
-          <Button onClick={this.props.saveTrip} className={"btn-neutral"}>
-            <i id="" className="fas fa-floppy-o" />
-          </Button>
-        </div>
+            <Button
+              onClick={this.toggleMenu}
+              className={`btn-neutral ${menuToggled ? "active-button" : ""}`}
+            >
+              <i id="" className="fas fa-cog" />
+            </Button>
+            <Button onClick={this.props.saveTrip} className={"btn-neutral"}>
+              <i id="" className="fas fa-floppy-o" />
+            </Button>
+          </div>
+        </MobileMapPanel>
 
         <Autocomplete
           google={window.google}

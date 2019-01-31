@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
 import moment from "moment"
 import { toast } from "react-toastify"
@@ -106,6 +107,7 @@ class DashboardHome extends Component {
     const { user, modalIsOpen } = this.props
     return (
       <s.DashboardStyles>
+        <Link to="/public/5c4a641525115e070c500191">Public Trip</Link>
         {user.displayName && <h1>Hi, {user.displayName}!</h1>}
         {!user.displayName && <h1>Welcome {user.email}!</h1>}
         <div>Last login: {moment(user.lastLogin).format("LLL")}</div>
