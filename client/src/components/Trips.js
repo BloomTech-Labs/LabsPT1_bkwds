@@ -7,7 +7,6 @@ import { getTrips } from "../redux/actions/trips"
 import { TripPropTypes } from "./propTypes"
 import TripCard from "./TripCard"
 import AddTripButton from "./AddTripButton"
-import { getTripsArray } from "../utils/selectors"
 import * as s from "../styles/TripCard.styles"
 
 class Trips extends Component {
@@ -31,15 +30,16 @@ class Trips extends Component {
   renderTrips = () => {
     const { loading, trips } = this.props
 
-    return trips.map(trip =>
-      trip.isArchived ? null : (
-        <TripCard
-          archived={false}
-          key={trip.id}
-          loading={loading}
-          trip={trip}
-        />
-      )
+    return trips.map(
+      trip =>
+        trip.isArchived && (
+          <TripCard
+            archived={false}
+            key={trip.id}
+            loading={loading}
+            trip={trip}
+          />
+        )
     )
   }
 
@@ -54,11 +54,6 @@ class Trips extends Component {
               className="AddTripButton"
               text={trips.length ? "Add New Trip" : "Add Your First Trip"}
             />
-            {trips.map(trip => {
-              if (!trip.isArchived) {
-                return <TripCard key={trip.id} trip={trip} archived={false} />
-              } else return null
-            })}
             {loading ? this.renderPlaceholders() : this.renderTrips()}
           </div>
         </s.TripCardStyles>
