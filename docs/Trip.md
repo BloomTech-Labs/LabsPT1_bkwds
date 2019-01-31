@@ -310,3 +310,141 @@ Returns all waypoints associated with that trip
 ```
 
 ---
+
+## Get all public trips
+
+Returns all trips that are public
+
+**URL**: `/api/public/trips
+
+**Method**: `GET`
+
+**Token required**: NO
+
+**Success Response**:
+
+- **Status Code**: `200 OK`
+
+**Example Content**
+
+```
+[
+  {
+    "id": "5c37e56bd2664c30b6a5bbe2",
+    "userId": "5c1529fd5069560a28ffe082",
+    "name": "TestTrip",
+    "lat": 234.245,
+    "lon": 123.34,
+    "start": "2019-01-10T05:02:12.031Z",
+    "end": "2019-01-10T05:02:12.031Z",
+    "isArchived": false,
+    "inProgress": false,
+    "complete: false,
+    "isPublic": true,
+    "waypoints": [
+      {
+        "id": "5c37e646d2664c30b6a5bbe7",
+        "tripId": "5c37e56bd2664c30b6a5bbe2",
+        "order": 1,
+        "name": "CheckPoint1",
+        "lat": {
+          "$numberDecimal": "123.1"
+        },
+        "lon": {
+          "$numberDecimal": "67"
+        },
+        "start": "2019-01-11T00:41:42.412Z",
+        "end": "2019-01-10T05:02:12.031Z",
+        "complete": false
+      },
+      {
+        "id": "5c37e64dd2664c30b6a5bbe8",
+        "tripId": "5c37e56bd2664c30b6a5bbe2",
+        "order": 2,
+        "name": "CheckPoint2",
+        "lat": {
+          "$numberDecimal": "123.1"
+        },
+        "lon": {
+          "$numberDecimal": "67"
+        },
+        "start": "2019-01-11T00:41:49.192Z",
+        "end": "2019-01-10T05:02:12.031Z",
+        "complete": false
+      }
+    ]
+  }
+]
+```
+
+---
+
+## Get a single trip
+
+Get a single public trip by ID
+
+**URL**: `/api/public/trips/:id
+
+**Method**: `GET`
+
+**Token required**: YES
+
+**Required URL Params**:
+
+- **id** - `ObjectId`
+
+**Success Response**:
+
+- **Status Code**: `200 OK`
+
+**Example Content**
+
+```
+{
+  "id": "5c37e56bd2664c30b6a5bbe2",
+  "userId": "5c1529fd5069560a28ffe082",
+  "name": "TestTrip",
+  "lat": 234.245,
+  "lon": 123.34,
+  "start": "2019-01-10T05:02:12.031Z",
+  "end": "2019-01-10T05:02:12.031Z",
+  "isArchived": false,
+  "inProgress": false,
+  "complete": false,
+  "isPublic": true,
+  "waypoints": [
+    {
+      "id": "5c37e646d2664c30b6a5bbe7",
+      "tripId": "5c37e56bd2664c30b6a5bbe2",
+      "order": 1,
+      "name": "CheckPoint1",
+      "lat": {
+        "$numberDecimal": "123.1"
+      },
+      "lon": {
+        "$numberDecimal": "67"
+      },
+      "start": "2019-01-11T00:41:42.412Z",
+      "end": "2019-01-10T05:02:12.031Z",
+      "complete": false
+    },
+    {
+      "id": "5c37e64dd2664c30b6a5bbe8",
+      "tripId": "5c37e56bd2664c30b6a5bbe2",
+      "order": 2,
+      "name": "CheckPoint2",
+      "lat": {
+        "$numberDecimal": "123.1"
+      },
+      "lon": {
+        "$numberDecimal": "67"
+      },
+      "start": "2019-01-11T00:41:49.192Z",
+      "end": "2019-01-10T05:02:12.031Z",
+      "complete": false
+    }
+  ]
+}
+```
+
+---

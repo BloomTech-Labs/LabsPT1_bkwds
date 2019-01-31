@@ -3,8 +3,6 @@ import * as tripController from "./trip.controller"
 
 export const tripRouter = express.Router()
 
-// tripRouter.param("id", tripController.findByParam)
-
 tripRouter
   .route("/")
   .get(tripController.getAllTrips)
