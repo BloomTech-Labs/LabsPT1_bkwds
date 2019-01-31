@@ -397,6 +397,7 @@ const mapDispatchToProps = {
 TripPanel.propTypes = {
   editTrip: PropTypes.func.isRequired,
   startTrip: PropTypes.func.isRequired,
+  drawPolyline: PropTypes.func.isRequired,
   trip: TripPropTypes,
   modalIsOpen: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
