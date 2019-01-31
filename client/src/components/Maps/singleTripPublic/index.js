@@ -5,6 +5,7 @@ import { MapWrapper } from "../../../styles/CreateTrip.styles"
 import TripPanel from "../singleTrip/tripPanel"
 import ActiveTripPanel from "./activePanel"
 import styled from "styled-components"
+import AppNav from "./AppNav"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip } from "../../../redux/actions/trips"
@@ -14,7 +15,6 @@ const PublicTripStyles = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  margin-left: -50px;
   ${media.tablet`
   margin-left: 0;
 `}
@@ -93,6 +93,7 @@ class PublicTrip extends React.Component {
     if (this.props.trip !== null) {
       return (
         <PublicTripStyles>
+          <AppNav />
           <MapWrapper>
             {!this.props.trip.inProgress ? (
               <TripPanel drawPolyline={this.drawPolyline} />

@@ -1,22 +1,21 @@
 import React from "react"
 import ContentLoader from "react-content-loader"
 
-export const TripCardLoader = props => (
+export const TripCardLoader = () => (
   <ContentLoader
     rtl
-    height={475}
-    width={399}
+    height={398}
+    width={378}
     speed={4}
     primaryColor="#f3f3f3"
     secondaryColor="#ecebeb"
-    {...props}
   >
-    <rect x="1" y="-2" rx="5" ry="5" width="378" height="231.51" />
-    <circle cx="322.3" cy="235.03" r="40" />
-    <rect x="20.94" y="248.67" rx="0" ry="0" width="93" height="18" />
-    <rect x="20.94" y="277.67" rx="0" ry="0" width="171" height="20" />
-    <rect x="19.94" y="303.67" rx="0" ry="0" width="173" height="20" />
-    <rect x="19.94" y="341.67" rx="0" ry="0" width="79.8" height="39" />
+    <rect x="216.63" y="250.61" rx="3" ry="3" width="140" height="13.82" />
+    <rect x="155.73" y="281.61" rx="3" ry="3" width="201.4" height="7.81" />
+    <rect x="156.59" y="299.61" rx="3" ry="3" width="201" height="6.91" />
+    <rect x="-16.17" y="0.39" rx="0" ry="0" width="422.56" height="228.4" />
+    <rect x="275.63" y="335.61" rx="0" ry="0" width="79.8" height="37" />
+    <circle cx="57.83" cy="234.81" r="37.2" />
   </ContentLoader>
 )
 
