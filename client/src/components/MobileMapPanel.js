@@ -20,6 +20,7 @@ const MobileMapPanelStyles = styled.div`
       flex-direction: column;
       width: 50px;
       height: 100vh;
+      overflow: hidden;
       background-color: ${props => props.theme.offWhite};
       box-shadow: 2px 2px 2px rgba(0,0,0,0.15);
 

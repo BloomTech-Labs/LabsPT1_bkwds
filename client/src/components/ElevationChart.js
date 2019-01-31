@@ -49,13 +49,6 @@ class ElevationChart extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.group("ELEVATION CHART UPDATE")
-    // console.log("ELEVATION CHART PREV PROPS:", prevProps)
-    // console.log("ELEVATION CHART CURRENT PROPS:", this.props)
-    // console.log("ELEVATION CHART PREV STATE:", prevState)
-    // console.log("ELEVATION CHART CURRENT STATE", this.state)
-    // console.groupEnd("ELEVATION CHART UPDATE")
-
     const { data } = this.state
     const { distances, elevations } = this.props
     const startDistance = 0
@@ -105,10 +98,7 @@ class ElevationChart extends Component {
   }
 
   drawChart = () => {
-    console.log("DRAWING CHART LOLOL\n\n")
-
     const { data } = this.state
-
     const bisect = d3.bisector(function(d) {
       return d.x
     }).left

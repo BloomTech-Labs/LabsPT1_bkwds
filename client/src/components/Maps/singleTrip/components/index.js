@@ -30,7 +30,9 @@ export const TripPanelStyles = styled.div`
     }
   }
 
-  .mobile-edit-waypoints {
+  #plus-icon {
+    z-index: 3;
+    bottom: 80px;
   }
 `
 

@@ -60,13 +60,6 @@ class TripPanel extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.group("TRIP PANEL UPDATE")
-    // console.log("TRIP PANEL PREV PROPS:", prevProps)
-    // console.log("TRIP PANEL CURRENT PROPS:", this.props)
-    // console.log("TRIP PANEL PREV STATE:", prevState)
-    // console.log("TRIP PANEL CURRENT STATE", this.state)
-    // console.groupEnd("TRIP PANEL UPDATE")
-
     if (prevState.markers !== this.state.markers) {
       this.getPathDistance()
       this.getElevationsAlongPath()
@@ -420,7 +413,6 @@ class TripPanel extends React.Component {
           </div>
 
           <AddButton addWaypoint={this.addWaypoint} />
-
           <div className="mobile-toggles">
             <div className="mobile-trip-header">
               <s.PanelHeader>
@@ -471,11 +463,6 @@ class TripPanel extends React.Component {
                 </div>
               )}
             </div>
-
-            {/* <div className="mobile-view-graph">
-            </div> */}
-
-            <div className="mobile-start-trip" />
           </div>
         </MobileMapPanel>
 
