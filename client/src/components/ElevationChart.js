@@ -257,7 +257,7 @@ class ElevationChart extends Component {
       .style("margin-left", "-12.5px")
       .style("margin-top", "-12.5px")
       .style("position", "absolute")
-      // z-index of 4 so the blip hides behind the trip panel
+      // z-index of 4 necessary so the Blip hides behind panels
       .style("z-index", 4)
       .style("width", "20px")
       .style("height", "20px")

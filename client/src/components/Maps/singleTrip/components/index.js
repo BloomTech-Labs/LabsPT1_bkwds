@@ -31,13 +31,6 @@ export const TripPanelStyles = styled.div`
   }
 
   .mobile-edit-waypoints {
-    & div:first-of-type {
-      height: 50px;
-      margin: 0;
-      margin-left: 1.5rem;
-    }
-  }
-
   }
 `
 
