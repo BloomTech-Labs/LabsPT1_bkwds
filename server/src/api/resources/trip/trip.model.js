@@ -46,6 +46,10 @@ export const schema = {
     type: Boolean,
     default: false
   },
+  isPublic: {
+    type: Boolean,
+    default: false
+  },
   waypoints: [{ type: ObjectId, ref: "Waypoint" }]
 }
 
@@ -66,6 +70,7 @@ tripSchema.set("toJSON", {
       inProgress: ret.inProgress,
       complete: ret.complete,
       timeLimit: ret.timeLimit,
+      isPublic: ret.isPublic,
       waypoints: ret.waypoints
     }
     return retJson
