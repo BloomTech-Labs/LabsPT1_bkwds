@@ -34,6 +34,11 @@ class SingleTripMap extends React.Component {
     tripId: ""
   }
 
+  constructor(props) {
+    super(props)
+    this.mapRef = React.createRef()
+  }
+
   componentDidMount() {
     this.props.getSingleTrip(this.props.tripId)
     window.elevation = new window.google.maps.ElevationService()
@@ -59,10 +64,11 @@ class SingleTripMap extends React.Component {
   // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = center => {
     window.map = new window.google.maps.Map(
-      document.getElementById("Tripmap"),
+      // document.getElementById("Tripmap"),
+      this.mapRef.current,
       {
         center: center,
-        zoom: 18,
+        zoom: 12,
         disableDefaultUI: true
       }
     )
@@ -99,13 +105,17 @@ class SingleTripMap extends React.Component {
         <SingleTripMapStyles>
           <MapWrapper>
             {!this.props.trip.inProgress ? (
-              <TripPanel drawPolyline={this.drawPolyline} />
+              <TripPanel
+                drawPolyline={this.drawPolyline}
+                mapRef={this.mapRef}
+              />
             ) : (
               <ActiveTripPanel />
             )}
             <div
               style={{ width: "100%", height: "100%", position: "absolute" }}
               id="Tripmap"
+              ref={this.mapRef}
             />
           </MapWrapper>
         </SingleTripMapStyles>

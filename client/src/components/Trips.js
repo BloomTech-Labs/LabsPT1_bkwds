@@ -32,7 +32,7 @@ class Trips extends Component {
 
     return trips.map(
       trip =>
-        trip.isArchived && (
+        trip.isArchived || (
           <TripCard
             archived={false}
             key={trip.id}

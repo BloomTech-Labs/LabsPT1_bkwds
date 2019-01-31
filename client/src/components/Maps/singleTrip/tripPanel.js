@@ -11,6 +11,8 @@ import {
   startTrip,
   addTripSafetyTimeLimit
 } from "../../../redux/actions/trips"
+import ElevationChart from "../../ElevationChart"
+import AddButton from "../../icons/AddButton"
 
 import {
   Form,
@@ -28,21 +30,26 @@ import * as util from "./mapUtil"
 import * as s from "./components"
 import { SERVER_URI } from "../../../config"
 import Waypoint from "./Waypoint"
+import MobileMapPanel from "../../MobileMapPanel"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
+import { numOfSamples, metersToFeet, metersToMiles } from "../../ElevationChart"
 import TripPictures from "../../TripPictures"
 
 class TripPanel extends React.Component {
   state = {
+    disableSafety: false,
+    distances: [],
+    elevations: [],
+    hours: "",
     isEditing: false,
+    markers: [],
     saveToggle: false,
     trip: {},
-    markers: [],
-    elevation: null,
     tripDistance: null,
-    disableSafety: false,
-    hours: "",
+    waypointsMenuToggled: false,
+    graphMenuToggled: false,
     tripPics: null
   }
 
@@ -54,11 +61,40 @@ class TripPanel extends React.Component {
     }, 500)
   }
 
-  //Use Andrews Elevation Implementation
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.markers !== this.state.markers) {
-      // this.getPathElevation()
       this.getPathDistance()
+      this.getElevationsAlongPath()
+    }
+  }
+
+  getElevationsAlongPath = () => {
+    if (this.state.markers.length > 1) {
+      const elevator = new window.google.maps.ElevationService()
+      let latLngs = this.state.markers.map(marker => ({
+        lat: marker.getPosition().lat(),
+        lng: marker.getPosition().lng()
+      }))
+
+      const distances = latLngs.reduce((acc, curr, i, arr) => {
+        if (i === arr.length - 1) return acc
+        return acc.concat(
+          util.calcDistance(curr.lat, curr.lng, arr[i + 1].lat, arr[i + 1].lng)
+        )
+      }, [])
+
+      elevator.getElevationAlongPath(
+        {
+          path: latLngs,
+          samples: numOfSamples
+        },
+        results => {
+          this.setState({
+            distances,
+            elevations: results.map(result => result)
+          })
+        }
+      )
     }
   }
 
@@ -80,6 +116,7 @@ class TripPanel extends React.Component {
       })
       this.setState({ trip: { ...this.state.trip, waypoints } })
       this.getPathDistance()
+      this.getElevationsAlongPath()
     })
     const waypoint = {
       name: `Checkpoint ${index}`,
@@ -96,7 +133,6 @@ class TripPanel extends React.Component {
   }
 
   renderWaypoints = () => {
-    console.log("rw called")
     const { maps } = window.google
     const { waypoints } = this.state.trip
     const markers = []
@@ -153,6 +189,7 @@ class TripPanel extends React.Component {
           trip: { ...this.state.trip, waypoints: updatedWaypoints }
         })
         this.getPathDistance()
+        this.getElevationsAlongPath()
       })
       markers.push(marker)
     })
@@ -278,67 +315,222 @@ class TripPanel extends React.Component {
     return true
   }
 
+  toggleWaypointsMenu = () => {
+    if (!this.state.waypointsMenuToggled) {
+      this.setState({
+        waypointsMenuToggled: true,
+        graphMenuToggled: false
+      })
+    } else {
+      this.setState({
+        waypointsMenuToggled: false
+      })
+    }
+  }
+
+  toggleGraphMenu = () => {
+    if (!this.state.graphMenuToggled) {
+      this.setState({
+        graphMenuToggled: true,
+        waypointsMenuToggled: false
+      })
+    } else {
+      this.setState({
+        graphMenuToggled: false
+      })
+    }
+  }
+
+  closeAllToggles = () => {
+    this.setState({
+      graphMenuToggled: false,
+      waypointsMenuToggled: false
+    })
+  }
+
   render() {
-    const { elevation, isEditing, saveToggle, trip, tripDistance } = this.state
+    const {
+      elevations,
+      isEditing,
+      saveToggle,
+      trip,
+      tripDistance,
+      waypointsMenuToggled,
+      graphMenuToggled
+    } = this.state
 
     return (
-      <s.Panel>
-        <s.PanelHeader>
-          <s.TripTitleInput
-            type="text"
-            edit={isEditing}
-            value={trip.name || ""}
-            onChange={this.handleTitle}
-            disabled={isEditing === false}
-          />
-          {!saveToggle ? (
-            <s.EditButton onClick={() => this.handleEditToggle()}>
-              <EditIcon width="20px" height="20px" />
-            </s.EditButton>
-          ) : (
-            <s.SaveButton onClick={() => this.handleSave()}>
-              <SaveIcon width="20px" height="20px" />
-            </s.SaveButton>
-          )}
-        </s.PanelHeader>
-        <s.PanelSubheader>
-          <s.TripDetail>
-            <DistanceIcon width="25px" height="25px" />
-            {tripDistance}m
-          </s.TripDetail>
-          <s.TripDetail>
-            <ElevationIcon width="25px" height="25px" />
-            {elevation}m
-          </s.TripDetail>
-        </s.PanelSubheader>
-        <s.WaypointsHeader>
-          <h4>Waypoints</h4>
-          <s.AddButton
-            disabled={isEditing === false}
-            edit={isEditing}
-            onClick={() => this.addWaypoint()}
-          >
-            <AddIcon height="18px" width="18px" />
-          </s.AddButton>
-        </s.WaypointsHeader>
-        <s.WaypointList>
-          {trip.waypoints !== undefined &&
-            trip.waypoints.map(({ name }, i) => (
-              <Waypoint
-                key={name}
-                i={i}
-                name={name}
-                isEditing={isEditing}
-                handleDelete={this.handleDelete}
-                handleEdit={this.handleEdit}
-              />
-            ))}
-        </s.WaypointList>
-        <TripPictures />
+      <s.TripPanelStyles>
+        <MobileMapPanel>
+          <div className="mobile-panel">
+            {isEditing ? (
+              <Button
+                onClick={this.handleSave}
+                className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+              >
+                <i className="fa fa-floppy-o" />
+              </Button>
+            ) : (
+              <Button
+                onClick={this.handleEditToggle}
+                className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+              >
+                <EditIcon width="20px" height="20px" />
+              </Button>
+            )}
 
-        <s.StartButton onClick={this.props.openModal}>Start Trip</s.StartButton>
+            <Button
+              onClick={this.closeAllToggles}
+              className={`btn-neutral ${
+                !waypointsMenuToggled && !graphMenuToggled
+                  ? "active-button"
+                  : ""
+              }`}
+            >
+              <i className="fa fa-map" />
+            </Button>
 
-        {/* Safety Modal - Appears when StartButton is clicked */}
+            <Button
+              onClick={this.toggleWaypointsMenu}
+              className={`btn-neutral ${
+                waypointsMenuToggled ? "active-button" : ""
+              }`}
+            >
+              <i className="fa fa-map-marker" />
+            </Button>
+
+            <Button
+              onClick={this.toggleGraphMenu}
+              className={`btn-neutral ${
+                graphMenuToggled ? "active-button" : ""
+              }`}
+            >
+              {/* <ChartIcon /> */}
+              <i className="fa fa-area-chart" />
+            </Button>
+
+            <Button onClick={this.props.openModal} className={`btn-neutral`}>
+              <i className="fa fa-play" />
+            </Button>
+          </div>
+
+          <AddButton addWaypoint={this.addWaypoint} />
+          <div className="mobile-toggles">
+            <div className="mobile-trip-header">
+              <s.PanelHeader>
+                <s.TripTitleInput
+                  type="text"
+                  edit={isEditing}
+                  value={trip.name || ""}
+                  onChange={this.handleTitle}
+                  disabled={isEditing === false}
+                />
+                <div className="trip-detail-wrapper">
+                  <s.TripDetail>
+                    <DistanceIcon width="25px" height="25px" />
+                    {metersToMiles(tripDistance).toFixed(2)}mi
+                  </s.TripDetail>
+                  <s.TripDetail>
+                    <ElevationIcon width="25px" height="25px" />
+                    {elevations.length &&
+                      metersToFeet(
+                        elevations[elevations.length - 1].elevation -
+                          elevations[0].elevation
+                      ).toFixed(2)}
+                    ft
+                  </s.TripDetail>
+                </div>
+              </s.PanelHeader>
+            </div>
+
+            <div className="mobile-edit-trip">
+              {waypointsMenuToggled && (
+                <div className="mobile-edit-waypoints">
+                  <s.WaypointsHeader>
+                    <h4>Waypoints</h4>
+                  </s.WaypointsHeader>
+                  <s.WaypointList>
+                    {trip.waypoints !== undefined &&
+                      trip.waypoints.map(({ name }, i) => (
+                        <Waypoint
+                          key={name}
+                          i={i}
+                          name={name}
+                          isEditing={isEditing}
+                          handleDelete={this.handleDelete}
+                          handleEdit={this.handleEdit}
+                        />
+                      ))}
+                  </s.WaypointList>
+                </div>
+              )}
+            </div>
+          </div>
+        </MobileMapPanel>
+
+        <s.Panel className="hide-mobile">
+          <s.PanelHeader>
+            <s.TripTitleInput
+              type="text"
+              edit={isEditing}
+              value={trip.name || ""}
+              onChange={this.handleTitle}
+              disabled={isEditing === false}
+            />
+            {!saveToggle ? (
+              <s.EditButton onClick={() => this.handleEditToggle()}>
+                <EditIcon width="20px" height="20px" />
+              </s.EditButton>
+            ) : (
+              <s.SaveButton onClick={() => this.handleSave()}>
+                <SaveIcon width="20px" height="20px" />
+              </s.SaveButton>
+            )}
+          </s.PanelHeader>
+          <s.PanelSubheader>
+            <s.TripDetail>
+              <DistanceIcon width="25px" height="25px" />
+              {metersToMiles(tripDistance).toFixed(2)}mi
+            </s.TripDetail>
+            <s.TripDetail>
+              <ElevationIcon width="25px" height="25px" />
+              {elevations.length &&
+                metersToFeet(
+                  elevations[elevations.length - 1].elevation -
+                    elevations[0].elevation
+                ).toFixed(2)}
+              ft
+            </s.TripDetail>
+          </s.PanelSubheader>
+
+          <s.WaypointsHeader>
+            <h4>Waypoints</h4>
+            <s.AddButton
+              disabled={isEditing === false}
+              edit={isEditing}
+              onClick={() => this.addWaypoint()}
+            >
+              <AddIcon height="18px" width="18px" />
+            </s.AddButton>
+          </s.WaypointsHeader>
+          <s.WaypointList>
+            {trip.waypoints !== undefined &&
+              trip.waypoints.map(({ name }, i) => (
+                <Waypoint
+                  key={name}
+                  i={i}
+                  name={name}
+                  isEditing={isEditing}
+                  handleDelete={this.handleDelete}
+                  handleEdit={this.handleEdit}
+                />
+              ))}
+          </s.WaypointList>
+          <TripPictures />
+          <s.StartButton onClick={this.props.openModal}>
+            Start Trip
+          </s.StartButton>
+        </s.Panel>
         <Modal isOpen={this.props.modalIsOpen}>
           {() => (
             <div className="startTrip-flow">
@@ -375,7 +567,13 @@ class TripPanel extends React.Component {
             </div>
           )}
         </Modal>
-      </s.Panel>
+        <ElevationChart
+          distances={this.state.distances}
+          elevations={elevations}
+          mapRef={this.props.mapRef}
+          toggle={graphMenuToggled}
+        />
+      </s.TripPanelStyles>
     )
   }
 }
@@ -397,6 +595,7 @@ TripPanel.propTypes = {
   editTrip: PropTypes.func.isRequired,
   startTrip: PropTypes.func.isRequired,
   trip: TripPropTypes,
+  mapRef: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,

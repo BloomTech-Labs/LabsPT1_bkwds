@@ -2,10 +2,6 @@ import styled from "styled-components"
 import { media } from "./theme/mixins"
 
 export const CreateTripPanelStyles = styled.div`
-  .mobile-create-trip-panel {
-    display: none;
-  }
-
   .panel-input-wrapper {
     margin: 0.25rem 1.25rem;
     input {
@@ -58,67 +54,16 @@ export const CreateTripPanelStyles = styled.div`
   }
 
   ${media.tablet`
-    .mobile-create-trip-panel {
-      position: absolute;
-      z-index: 6;
-      display: flex;
-      flex-direction: column;
-      width: 50px;
-      height: 100vh;
-      background-color: ${props => props.theme.offWhite};
-      box-shadow: 2px 2px 2px rgba(0,0,0,0.15);
-
-      button {
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 0;
-        margin: 0;
-      }
-      i {
-        font-size: 1.5rem;
-        color: ${props => props.theme.midGray};
-      }
-
-    }
-  `}
-
-  ${media.tablet`
     .hide-mobile {
       display: none;
     }
   `}
-
-  .btn-neutral {
-    &:focus {
-      background-color: ${props => props.theme.offWhite};
-      border-color: ${props => props.theme.offWhite};
-      color: midGray;
-    }
-  }
-
-  .active-button {
-    background-color: ${props => props.theme.primary};
-    border-color: ${props => props.theme.primary};
-    color: white;
-    i {
-      font-size: 1.5rem;
-      color: white;
-    }
-    &:hover,
-    &:focus {
-      background-color: ${props => props.theme.primary};
-      border-color: ${props => props.theme.primary};
-      color: white;
-    }
-  }
 `
 
 export const Panel = styled.div`
   max-width: 360px;
   min-width: 320px;
-  border-radius: 0.5rem;
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   background: white;
