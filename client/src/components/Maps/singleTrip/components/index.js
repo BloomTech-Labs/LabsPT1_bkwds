@@ -15,12 +15,10 @@ export const TripPanelStyles = styled.div`
 
   .mobile-trip-header {
     height: 50px;
-    /* border-bottom: 1px solid ${props => props.theme.midGray}; */
     display: flex;
     & :first-child {
       display: flex;
       flex-grow: 1;
-      padding: 0 1.25rem;
       height: 50px;
     }
     input {
@@ -38,6 +36,8 @@ export const TripPanelStyles = styled.div`
       margin: 0;
       margin-left: 1.5rem;
     }
+  }
+
   }
 `
 

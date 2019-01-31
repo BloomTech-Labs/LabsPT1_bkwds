@@ -447,6 +447,7 @@ class TripPanel extends React.Component {
                 </div>
               </s.PanelHeader>
             </div>
+
             <div className="mobile-edit-trip">
               {waypointsMenuToggled && (
                 <div className="mobile-edit-waypoints">
@@ -470,7 +471,8 @@ class TripPanel extends React.Component {
               )}
             </div>
 
-            <div className="mobile-view-graph" />
+            {/* <div className="mobile-view-graph">
+            </div> */}
 
             <div className="mobile-start-trip" />
           </div>
@@ -576,11 +578,12 @@ class TripPanel extends React.Component {
             )}
           </Modal>
         </s.Panel>
-        {/* <ElevationChart
+        <ElevationChart
           distances={this.state.distances}
           elevations={elevations}
           mapRef={this.props.mapRef}
-        /> */}
+          toggle={graphMenuToggled}
+        />
       </s.TripPanelStyles>
     )
   }

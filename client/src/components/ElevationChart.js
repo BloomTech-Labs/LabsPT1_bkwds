@@ -307,8 +307,9 @@ class ElevationChart extends Component {
 
   render() {
     const { data } = this.state
+    const { toggle } = this.props
     return (
-      <s.ElevationChartStyles>
+      <s.ElevationChartStyles toggle={toggle}>
         <div className="elevation-chart-wrapper">
           {data.length > 0 && <div id="elevationChart" />}
         </div>
@@ -320,7 +321,8 @@ class ElevationChart extends Component {
 ElevationChart.propTypes = {
   elevations: PropTypes.array.isRequired,
   distances: PropTypes.array.isRequired,
-  mapRef: PropTypes.object.isRequired
+  mapRef: PropTypes.object.isRequired,
+  toggle: PropTypes.bool.isRequired
 }
 
 export default ElevationChart

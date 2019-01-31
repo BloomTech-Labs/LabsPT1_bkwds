@@ -1,6 +1,13 @@
 import styled from "styled-components"
+import { media } from "../styles/theme/mixins"
 
 export const ElevationChartStyles = styled.div`
+  display: block;
+
+  ${media.tablet`
+    display: ${props => (props.toggle ? "block" : "none")};
+  `}
+
   .elevation-chart-wrapper {
     border-radius: 2px 2px 0 0;
     padding: 24px 0 8px 12px;
