@@ -31,7 +31,7 @@ import Waypoint from "./Waypoint"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
-import TripPictures from "../../UploadPics"
+import TripPictures from "../../TripPictures"
 
 class TripPanel extends React.Component {
   state = {

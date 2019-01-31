@@ -3,10 +3,26 @@ import { uploadPics } from "../redux/actions/trips"
 import { connect } from "react-redux"
 import { TripPropTypes } from "./propTypes"
 import PropTypes from "prop-types"
+import styled from "styled-components"
+import Lightbox from "react-image-lightbox"
+import "react-image-lightbox/style.css"
+
+const ImageThumbnails = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: auto;
+  width: 25%;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`
 
 class TripPictures extends Component {
   state = {
-    tripPics: ""
+    tripPics: "",
+    photoIndex: 0,
+    isOpen: false
   }
 
   upload = e => {
@@ -24,11 +40,40 @@ class TripPictures extends Component {
 
   render() {
     const { tripPics } = this.props
+    const { photoIndex, isOpen } = this.state
+
     return (
       <div>
         {tripPics.map(picture => {
-          return <img key={picture} src={picture} />
+          return (
+            <ImageThumbnails
+              type="button"
+              onClick={() => this.setState({ isOpen: true })}
+            >
+              <img key={picture} src={picture} />
+            </ImageThumbnails>
+          )
         })}
+        {isOpen && (
+          <Lightbox
+            mainSrc={tripPics[photoIndex]}
+            nextSrc={tripPics[(photoIndex + 1) % tripPics.length]}
+            prevSrc={
+              tripPics[(photoIndex + tripPics.length - 1) % tripPics.length]
+            }
+            onCloseRequest={() => this.setState({ isOpen: false })}
+            onMovePrevRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + tripPics.length - 1) % tripPics.length
+              })
+            }
+            onMoveNextRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + 1) % tripPics.length
+              })
+            }
+          />
+        )}
         <h4>
           Upload Your Pics:
           {/* <form >     */}

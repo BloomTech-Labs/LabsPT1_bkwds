@@ -7,7 +7,7 @@ const NavigationMenu = styled.div`
   grid-template-columns: 1fr 500px;
   height: 50px;
   width: 100%;
-  margin-top: 42px;s
+  margin-top: 42px;
 `
 
 const Img = styled.img`
