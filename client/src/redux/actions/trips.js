@@ -257,7 +257,7 @@ export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
     })
 }
 
-export const toggleWaypoint = (waypointId, isCompleted) => dispatch => {
+export const toggleWaypoint = waypointId => dispatch => {
   return axios
     .put(`${SERVER_URI}/waypoints/${waypointId}`, {
       complete: true,
