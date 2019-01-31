@@ -6,30 +6,144 @@ import PropTypes from "prop-types"
 import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
+import marker from "../../icons/orange-marker.svg"
+import startMarker from "../../icons/green-marker.svg"
+import endMarker from "../../icons/black-marker.svg"
 
 class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startPosition: {},
-      currentPosition: {},
-      endPosition: {}
+      polylines: null,
+      markers: []
     }
   }
 
   componentDidMount() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.setState({
-          startPosition: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }
-        })
-      })
-    } else {
-      console.log("Geolocation Not available")
+    setTimeout(() => {
+      this.renderWaypoints()
+      this.drawPolylines()
+    }, 500)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.waypoints !== this.props.waypoints) {
+      this.renderWaypoints()
+      this.drawPolylines()
     }
+  }
+
+  drawPolylines = () => {
+    if (this.state.polylines !== null) {
+      this.state.polylines.active.setMap(null)
+      this.state.polylines.complete.setMap(null)
+      this.state.polylines.current.setMap(null)
+    }
+
+    let completeIndex = 0
+    for (let i = 0; i < this.props.waypoints.length; i++) {
+      if (!this.props.waypoints[i].complete) {
+        completeIndex = i
+        break
+      }
+    }
+
+    const completed = this.props.waypoints.slice(0, completeIndex)
+    const active = this.props.waypoints.slice(
+      completeIndex,
+      this.props.waypoints.length + 1
+    )
+    const current = this.props.waypoints.slice(
+      completeIndex - 1,
+      completeIndex + 2
+    )
+    const completePath = completed.map(waypoint => {
+      return { lat: waypoint.lat, lng: waypoint.lon }
+    })
+
+    const activePath = active.map(waypoint => {
+      return { lat: waypoint.lat, lng: waypoint.lon }
+    })
+
+    const currentPath = current.map(waypoint => {
+      return { lat: waypoint.lat, lng: waypoint.lon }
+    })
+    const completePolyline = new window.google.maps.Polyline({
+      path: completePath,
+      strokeColor: "#FF0000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    })
+
+    const currentPolyline = new window.google.maps.Polyline({
+      path: currentPath,
+      strokeColor: "#008000",
+      stokeOpacity: 1.0,
+      stokeWeight: 2
+    })
+    const activePolyline = new window.google.maps.Polyline({
+      path: activePath,
+      strokeColor: "#000000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    })
+
+    completePolyline.setMap(window.map)
+    activePolyline.setMap(window.map)
+    currentPolyline.setMap(window.map)
+    this.setState({
+      polylines: {
+        active: activePolyline,
+        complete: completePolyline,
+        current: currentPolyline
+      }
+    })
+  }
+
+  renderWaypoints = () => {
+    let markers = []
+    const baseIcon = {
+      anchor: new window.google.maps.Point(15, 30),
+      scaledSize: new window.google.maps.Size(30, 30),
+      labelOrigin: new window.google.maps.Point(15, 13)
+    }
+    const icons = {
+      start: {
+        url: startMarker,
+        ...baseIcon
+      },
+      end: {
+        url: endMarker,
+        ...baseIcon
+      },
+      marker: {
+        url: marker,
+        ...baseIcon
+      }
+    }
+    this.props.waypoints.map((item, i) => {
+      const icon =
+        i === 0
+          ? icons.start
+          : i === this.props.waypoints.length - 1
+          ? icons.end
+          : icons.marker
+
+      let center = { lat: item.lat, lng: item.lon }
+      const marker = new window.google.maps.Marker({
+        position: center,
+        map: window.map,
+        icon,
+        title: item.name,
+        label: {
+          text: `${i + 1}`,
+          color: "white",
+          fontFamily: "Wals",
+          fontWeight: "bold"
+        }
+      })
+      markers.push(marker)
+    })
   }
 
   render() {

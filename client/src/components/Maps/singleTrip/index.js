@@ -44,8 +44,8 @@ class SingleTripMap extends React.Component {
     window.elevation = new window.google.maps.ElevationService()
   }
 
-  componentDidUpdate(nextProps) {
-    if (nextProps.trip !== this.props.trip) {
+  componentDidUpdate(prevProps) {
+    if (this.props.trip !== prevProps.trip && prevProps.trip == null) {
       this.renderMap({ lat: this.props.trip.lat, lng: this.props.trip.lon })
     }
   }
@@ -74,10 +74,10 @@ class SingleTripMap extends React.Component {
     )
   }
 
-  drawPolyline = waypoints => {
-    const path = waypoints.map(w => ({
-      lat: w.lat,
-      lng: w.lon
+  drawPolyline = markers => {
+    const path = markers.map(marker => ({
+      lat: marker.getPosition().lat(),
+      lng: marker.getPosition().lng()
     }))
 
     const polyline = new window.google.maps.Polyline({
@@ -89,7 +89,7 @@ class SingleTripMap extends React.Component {
         {
           icon: dashSymbol,
           offset: 0,
-          repeat: "20px"
+          repeat: "15px"
         }
       ]
     })
