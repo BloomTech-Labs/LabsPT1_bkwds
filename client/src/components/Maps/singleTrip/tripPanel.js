@@ -29,6 +29,7 @@ import * as util from "./mapUtil"
 import * as s from "./components"
 import { SERVER_URI } from "../../../config"
 import Waypoint from "./Waypoint"
+import MobileMapPanel from "../../MobileMapPanel"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
@@ -36,6 +37,8 @@ import { numOfSamples, metersToFeet, metersToMiles } from "../../ElevationChart"
 
 class TripPanel extends React.Component {
   state = {
+    // one of: edit, waypoints, chart, start
+    activeButton: null,
     disableSafety: false,
     distances: [],
     elevations: [],
@@ -44,7 +47,9 @@ class TripPanel extends React.Component {
     markers: [],
     saveToggle: false,
     trip: {},
-    tripDistance: null
+    tripDistance: null,
+    waypointsMenuToggled: false,
+    graphMenuToggled: false
   }
 
   componentDidMount() {
@@ -316,11 +321,86 @@ class TripPanel extends React.Component {
     return true
   }
 
+  toggleWaypointsMenu = () => {
+    if (!this.state.waypointsMenuToggled) {
+      this.setState({
+        waypointsMenuToggled: true,
+        graphMenuToggled: false
+      })
+    } else {
+      this.setState({
+        waypointsMenuToggled: false
+      })
+    }
+  }
+
+  toggleGraphMenu = () => {
+    if (!this.state.graphMenuToggled) {
+      this.setState({
+        graphMenuToggled: true,
+        waypointsMenuToggled: false
+      })
+    } else {
+      this.setState({
+        graphMenuToggled: false
+      })
+    }
+  }
+
   render() {
-    const { elevations, isEditing, saveToggle, trip, tripDistance } = this.state
+    const {
+      activeButton,
+      elevations,
+      isEditing,
+      saveToggle,
+      trip,
+      tripDistance,
+      menuToggled,
+      waypointsMenuToggled,
+      graphMenuToggled
+    } = this.state
 
     return (
       <div>
+        <MobileMapPanel>
+          {isEditing ? (
+            <Button
+              onClick={this.handleSave}
+              className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+            >
+              <i className="fa fa-floppy-o" />
+            </Button>
+          ) : (
+            <Button
+              onClick={this.handleEditToggle}
+              className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+            >
+              <EditIcon width="20px" height="20px" />
+            </Button>
+          )}
+
+          <Button
+            onClick={this.toggleWaypointsMenu}
+            className={`btn-neutral ${
+              waypointsMenuToggled ? "active-button" : ""
+            }`}
+          >
+            <i className="fa fa-map-marker" />
+          </Button>
+
+          <Button
+            onClick={this.toggleGraphMenu}
+            className={`btn-neutral ${graphMenuToggled ? "active-button" : ""}`}
+          >
+            {/* <ChartIcon /> */}
+            <i className="fa fa-area-chart" />
+          </Button>
+
+          <Button onClick={this.props.openModal} className={`btn-neutral`}>
+            <i className="fa fa-play" />
+          </Button>
+        </MobileMapPanel>
+
         <s.Panel>
           <s.PanelHeader>
             <s.TripTitleInput
@@ -421,11 +501,11 @@ class TripPanel extends React.Component {
             )}
           </Modal>
         </s.Panel>
-        <ElevationChart
+        {/* <ElevationChart
           distances={this.state.distances}
           elevations={elevations}
           mapRef={this.props.mapRef}
-        />
+        /> */}
       </div>
     )
   }
