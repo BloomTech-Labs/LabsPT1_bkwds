@@ -26,8 +26,6 @@ class ActiveTripPanel extends React.Component {
     }, 500)
   }
 
-  componentWillUnmount() {}
-
   componentDidUpdate(prevProps) {
     if (prevProps.waypoints !== this.props.waypoints) {
       this.renderWaypoints()
@@ -39,6 +37,7 @@ class ActiveTripPanel extends React.Component {
     if (this.state.polylines !== null) {
       this.state.polylines.active.setMap(null)
       this.state.polylines.complete.setMap(null)
+      this.state.polylines.current.setMap(null)
     }
 
     let completeIndex = 0
@@ -51,10 +50,13 @@ class ActiveTripPanel extends React.Component {
 
     const completed = this.props.waypoints.slice(0, completeIndex)
     const active = this.props.waypoints.slice(
-      completeIndex - 1,
-      this.props.waypoints.length
+      completeIndex,
+      this.props.waypoints.length + 1
     )
-    const current = this.props.waypoints.slice(completeIndex, completeIndex + 1)
+    const current = this.props.waypoints.slice(
+      completeIndex - 1,
+      completeIndex + 2
+    )
     console.log(completeIndex)
     console.log("completed ", completed)
     console.log("active", active)
@@ -66,6 +68,10 @@ class ActiveTripPanel extends React.Component {
     const activePath = active.map(waypoint => {
       return { lat: waypoint.lat, lng: waypoint.lon }
     })
+
+    const currentPath = current.map(waypoint => {
+      return { lat: waypoint.lat, lng: waypoint.lon }
+    })
     const completePolyline = new window.google.maps.Polyline({
       path: completePath,
       strokeColor: "#FF0000",
@@ -74,7 +80,7 @@ class ActiveTripPanel extends React.Component {
     })
 
     const currentPolyline = new window.google.maps.Polyline({
-      path: currentPolyline,
+      path: currentPath,
       strokeColor: "#008000",
       stokeOpacity: 1.0,
       stokeWeight: 2
@@ -92,10 +98,12 @@ class ActiveTripPanel extends React.Component {
 
     completePolyline.setMap(window.map)
     activePolyline.setMap(window.map)
+    currentPolyline.setMap(window.map)
     this.setState({
       polylines: {
         active: activePolyline,
-        complete: completePolyline
+        complete: completePolyline,
+        current: currentPolyline
       }
     })
   }
