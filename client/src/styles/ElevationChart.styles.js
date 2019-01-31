@@ -2,10 +2,9 @@ import styled from "styled-components"
 import { media } from "../styles/theme/mixins"
 
 export const ElevationChartStyles = styled.div`
-  display: block;
-
+  visibility: visible;
   ${media.tablet`
-    display: ${props => (props.toggle ? "block" : "none")};
+    visibility: ${props => (props.toggle ? "visible" : "hidden")};
   `}
 
   .elevation-chart-wrapper {
@@ -17,6 +16,13 @@ export const ElevationChartStyles = styled.div`
     top: unset;
     bottom: 50px;
     z-index: 5;
+
+    ${media.tablet`
+      max-width: 100vw; 
+      z-index: 6;
+      right: 0;
+      left: 0;
+    `}
   }
 
   text {
