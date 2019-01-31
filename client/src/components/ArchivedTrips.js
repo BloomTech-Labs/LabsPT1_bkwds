@@ -9,59 +9,67 @@ import { getTripsArray } from "../utils/selectors"
 import { TripPropTypes } from "./propTypes"
 
 class ArchivedTrips extends Component {
+  static propTypes = {
+    getTrips: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
+    trips: PropTypes.arrayOf(TripPropTypes),
+    userId: PropTypes.string.isRequired
+  }
+
   state = {
     archivedExists: false
   }
 
   componentDidMount() {
-    this.props.getTrips(this.props.userId)
+    const { getTrips, userId } = this.props
+    getTrips(userId)
+  }
 
-    this.props.trips.forEach(trip => {
-      if (trip.isArchived) {
-        this.setState({ archivedExists: true })
-        return
-      }
-    })
+  componentDidUpdate(prevProps, prevState) {
+    const archivedExists = this.props.trips.some(trip => trip.isArchived)
+    if (!prevState.archivedExists && archivedExists) {
+      this.setState({ archivedExists })
+    }
+  }
+
+  renderPlaceholders = () =>
+    [...Array(6)].map((_, i) => <TripCard archived key={i} loading={true} />)
+
+  renderArchivedTrips = () => {
+    const { loading, trips } = this.props
+
+    return trips.map(trip =>
+      trip.isArchived ? (
+        <TripCard archived key={trip.id} loading={loading} trip={trip} />
+      ) : null
+    )
   }
 
   render() {
-    const { trips, loading } = this.props
+    const { loading } = this.props
     const { archivedExists } = this.state
+
     return (
       <s.TripCardStyles>
-        {loading ? (
-          "Loading..."
-        ) : (
-          <div className="container">
-            {archivedExists ? null : "No Archived Trips"}
-            {trips.map(trip => {
-              if (trip.isArchived) {
-                return <TripCard key={trip.id} trip={trip} archived={true} />
-              } else return null
-            })}
-          </div>
-        )}
+        <div className="container">
+          {loading
+            ? this.renderPlaceholders()
+            : archivedExists
+            ? this.renderArchivedTrips()
+            : "No Archived Trips"}
+        </div>
       </s.TripCardStyles>
     )
   }
 }
 
-ArchivedTrips.propTypes = {
-  userId: PropTypes.string.isRequired,
-  loading: PropTypes.bool,
-  getTrips: PropTypes.func.isRequired,
-  trips: PropTypes.arrayOf(TripPropTypes)
-}
-
 const mapStateToProps = state => ({
-  userId: state.auth.user.id,
+  loading: state.trips.pending,
   trips: getTripsArray(state),
-  loading: state.trips.loading
+  userId: state.auth.user.id
 })
-
-const mapDispatchToProps = { getTrips }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getTrips }
 )(ArchivedTrips)

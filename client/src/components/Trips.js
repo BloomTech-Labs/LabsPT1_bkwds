@@ -1,21 +1,51 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { getTrips } from "../redux/actions/trips"
 import PropTypes from "prop-types"
-import { TripPropTypes } from "./propTypes"
 
+import { getTripsArray } from "../utils/selectors"
+import { getTrips } from "../redux/actions/trips"
+import { TripPropTypes } from "./propTypes"
 import TripCard from "./TripCard"
-import * as s from "../styles/TripCard.styles"
 import AddTripButton from "./AddTripButton"
 import { getTripsArray } from "../utils/selectors"
+import * as s from "../styles/TripCard.styles"
 
 class Trips extends Component {
+  static propTypes = {
+    getTrips: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    trips: PropTypes.arrayOf(TripPropTypes),
+    userId: PropTypes.string
+  }
+
   componentDidMount() {
-    this.props.getTrips(this.props.userId)
+    const { getTrips, userId } = this.props
+    getTrips(userId)
+  }
+
+  renderPlaceholders = () =>
+    [...Array(5)].map((_, i) => (
+      <TripCard archived={false} key={i} loading={true} />
+    ))
+
+  renderTrips = () => {
+    const { loading, trips } = this.props
+
+    return trips.map(trip =>
+      trip.isArchived ? null : (
+        <TripCard
+          archived={false}
+          key={trip.id}
+          loading={loading}
+          trip={trip}
+        />
+      )
+    )
   }
 
   render() {
-    const { trips } = this.props
+    const { loading, trips } = this.props
+
     return (
       <div>
         <s.TripCardStyles>
@@ -29,6 +59,7 @@ class Trips extends Component {
                 return <TripCard key={trip.id} trip={trip} archived={false} />
               } else return null
             })}
+            {loading ? this.renderPlaceholders() : this.renderTrips()}
           </div>
         </s.TripCardStyles>
       </div>
@@ -36,21 +67,13 @@ class Trips extends Component {
   }
 }
 
-Trips.propTypes = {
-  getTrips: PropTypes.func.isRequired,
-  trips: PropTypes.arrayOf(TripPropTypes),
-  userId: PropTypes.string
-}
-
 const mapStateToProps = state => ({
   userId: state.auth.user.id,
   trips: getTripsArray(state),
-  loading: state.trips.loading
+  loading: state.trips.pending
 })
-
-const mapDispatchToProps = { getTrips }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getTrips }
 )(Trips)
