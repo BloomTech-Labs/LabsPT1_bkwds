@@ -76,22 +76,24 @@ class CreateTripPanel extends React.Component {
         className="CreateTripPanelStyles"
       >
         <MobileMapPanel>
-          <Button
-            onClick={this.toggleSearch}
-            className={`btn-neutral ${searchToggled ? "active-button" : ""}`}
-          >
-            <i id="down-angle" className="fas fa-search" />
-          </Button>
+          <div className="mobile-panel">
+            <Button
+              onClick={this.toggleSearch}
+              className={`btn-neutral ${searchToggled ? "active-button" : ""}`}
+            >
+              <i id="down-angle" className="fas fa-search" />
+            </Button>
 
-          <Button
-            onClick={this.toggleMenu}
-            className={`btn-neutral ${menuToggled ? "active-button" : ""}`}
-          >
-            <i id="" className="fas fa-cog" />
-          </Button>
-          <Button onClick={this.props.saveTrip} className={"btn-neutral"}>
-            <i id="" className="fas fa-floppy-o" />
-          </Button>
+            <Button
+              onClick={this.toggleMenu}
+              className={`btn-neutral ${menuToggled ? "active-button" : ""}`}
+            >
+              <i id="" className="fas fa-cog" />
+            </Button>
+            <Button onClick={this.props.saveTrip} className={"btn-neutral"}>
+              <i id="" className="fas fa-floppy-o" />
+            </Button>
+          </div>
         </MobileMapPanel>
 
         <Autocomplete

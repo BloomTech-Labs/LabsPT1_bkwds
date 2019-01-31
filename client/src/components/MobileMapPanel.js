@@ -10,6 +10,10 @@ const MobileMapPanelStyles = styled.div`
 
   ${media.tablet`
     .mobile-trip-panel {
+      display: block;
+    }
+
+    .mobile-panel {
       position: absolute;
       z-index: 6;
       display: flex;

@@ -12,6 +12,7 @@ import {
   addTripSafetyTimeLimit
 } from "../../../redux/actions/trips"
 import ElevationChart from "../../ElevationChart"
+import AddButton from "../../icons/AddButton"
 
 import {
   Form,
@@ -37,8 +38,6 @@ import { numOfSamples, metersToFeet, metersToMiles } from "../../ElevationChart"
 
 class TripPanel extends React.Component {
   state = {
-    // one of: edit, waypoints, chart, start
-    activeButton: null,
     disableSafety: false,
     distances: [],
     elevations: [],
@@ -347,9 +346,15 @@ class TripPanel extends React.Component {
     }
   }
 
+  closeAllToggles = () => {
+    this.setState({
+      graphMenuToggled: false,
+      waypointsMenuToggled: false
+    })
+  }
+
   render() {
     const {
-      activeButton,
       elevations,
       isEditing,
       saveToggle,
@@ -361,47 +366,117 @@ class TripPanel extends React.Component {
     } = this.state
 
     return (
-      <div>
+      <s.TripPanelStyles>
         <MobileMapPanel>
-          {isEditing ? (
+          <div className="mobile-panel">
+            {isEditing ? (
+              <Button
+                onClick={this.handleSave}
+                className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+              >
+                <i className="fa fa-floppy-o" />
+              </Button>
+            ) : (
+              <Button
+                onClick={this.handleEditToggle}
+                className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+              >
+                <EditIcon width="20px" height="20px" />
+              </Button>
+            )}
+
             <Button
-              onClick={this.handleSave}
-              className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+              onClick={this.closeAllToggles}
+              className={`btn-neutral ${
+                !waypointsMenuToggled && !graphMenuToggled
+                  ? "active-button"
+                  : ""
+              }`}
             >
-              <i className="fa fa-floppy-o" />
+              <i className="fa fa-map" />
             </Button>
-          ) : (
+
             <Button
-              onClick={this.handleEditToggle}
-              className={`btn-neutral ${isEditing ? "active-button" : ""}`}
+              onClick={this.toggleWaypointsMenu}
+              className={`btn-neutral ${
+                waypointsMenuToggled ? "active-button" : ""
+              }`}
             >
-              <EditIcon width="20px" height="20px" />
+              <i className="fa fa-map-marker" />
             </Button>
-          )}
 
-          <Button
-            onClick={this.toggleWaypointsMenu}
-            className={`btn-neutral ${
-              waypointsMenuToggled ? "active-button" : ""
-            }`}
-          >
-            <i className="fa fa-map-marker" />
-          </Button>
+            <Button
+              onClick={this.toggleGraphMenu}
+              className={`btn-neutral ${
+                graphMenuToggled ? "active-button" : ""
+              }`}
+            >
+              {/* <ChartIcon /> */}
+              <i className="fa fa-area-chart" />
+            </Button>
 
-          <Button
-            onClick={this.toggleGraphMenu}
-            className={`btn-neutral ${graphMenuToggled ? "active-button" : ""}`}
-          >
-            {/* <ChartIcon /> */}
-            <i className="fa fa-area-chart" />
-          </Button>
+            <Button onClick={this.props.openModal} className={`btn-neutral`}>
+              <i className="fa fa-play" />
+            </Button>
+          </div>
 
-          <Button onClick={this.props.openModal} className={`btn-neutral`}>
-            <i className="fa fa-play" />
-          </Button>
+          <div className="mobile-toggles">
+            <div className="mobile-trip-header">
+              <s.PanelHeader>
+                <s.TripTitleInput
+                  type="text"
+                  edit={isEditing}
+                  value={trip.name || ""}
+                  onChange={this.handleTitle}
+                  disabled={isEditing === false}
+                />
+                <div className="trip-detail-wrapper">
+                  <s.TripDetail>
+                    <DistanceIcon width="25px" height="25px" />
+                    {metersToMiles(tripDistance).toFixed(2)}mi
+                  </s.TripDetail>
+                  <s.TripDetail>
+                    <ElevationIcon width="25px" height="25px" />
+                    {elevations.length &&
+                      metersToFeet(
+                        elevations[elevations.length - 1].elevation -
+                          elevations[0].elevation
+                      ).toFixed(2)}
+                    ft
+                  </s.TripDetail>
+                </div>
+              </s.PanelHeader>
+            </div>
+            <div className="mobile-edit-trip">
+              {waypointsMenuToggled && (
+                <div className="mobile-edit-waypoints">
+                  <s.WaypointsHeader>
+                    <h4>Waypoints</h4>
+                  </s.WaypointsHeader>
+                  <s.WaypointList>
+                    {trip.waypoints !== undefined &&
+                      trip.waypoints.map(({ name }, i) => (
+                        <Waypoint
+                          key={name}
+                          i={i}
+                          name={name}
+                          isEditing={isEditing}
+                          handleDelete={this.handleDelete}
+                          handleEdit={this.handleEdit}
+                        />
+                      ))}
+                  </s.WaypointList>
+                </div>
+              )}
+            </div>
+
+            <div className="mobile-view-graph" />
+
+            <div className="mobile-start-trip" />
+          </div>
         </MobileMapPanel>
 
-        <s.Panel>
+        <s.Panel className="hide-mobile">
           <s.PanelHeader>
             <s.TripTitleInput
               type="text"
@@ -506,7 +581,7 @@ class TripPanel extends React.Component {
           elevations={elevations}
           mapRef={this.props.mapRef}
         /> */}
-      </div>
+      </s.TripPanelStyles>
     )
   }
 }
