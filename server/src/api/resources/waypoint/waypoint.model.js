@@ -35,6 +35,9 @@ export const schema = {
   complete: {
     type: Boolean,
     default: false
+  },
+  timeComplete: {
+    type: Date
   }
 }
 
@@ -51,7 +54,8 @@ waypointSchema.set("toJSON", {
       lon: ret.lon,
       start: ret.start,
       end: ret.end,
-      complete: ret.complete
+      complete: ret.complete,
+      timeComplete: ret.timeComplete
     }
     return retJson
   }
