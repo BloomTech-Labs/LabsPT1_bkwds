@@ -2,8 +2,9 @@ import React, { Component } from "react"
 import { uploadPics } from "../redux/actions/trips"
 import { connect } from "react-redux"
 import { TripPropTypes } from "./propTypes"
+import PropTypes from "prop-types"
 
-class UploadPics extends Component {
+class TripPictures extends Component {
   state = {
     tripPics: ""
   }
@@ -43,13 +44,14 @@ class UploadPics extends Component {
     )
   }
 }
+console.log(TripPropTypes, "PROPTYESVJ")
 
 //I have no clue what this does -VM//
-UploadPics.propTypes = {
+TripPictures.propTypes = {
   trip: TripPropTypes,
-  id: TripPropTypes,
-  tripPics: TripPropTypes,
-  uploadPics: TripPropTypes
+  id: PropTypes.string.isRequired,
+  tripPics: PropTypes.arrayOf(PropTypes.string),
+  uploadPics: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -62,4 +64,4 @@ const mapDispatchToProps = { uploadPics }
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UploadPics)
+)(TripPictures)
