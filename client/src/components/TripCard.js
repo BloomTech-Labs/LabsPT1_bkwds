@@ -8,7 +8,7 @@ import { TripPropTypes } from "./propTypes"
 import { STATIC_MAP_KEY } from "../config"
 
 import TripCardLoader from "./TripCardLoader"
-import { toggleArchive, repeatTrip } from "../redux/actions/trips"
+import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
@@ -16,6 +16,9 @@ import { Button } from "../styles/theme/styledComponents"
 const Card = ({
   archived,
   isArchivedTripRoute,
+  ispublic,
+  isPublicTripRoute,
+  togglePublic,
   repeatTrip,
   toggleArchive,
   trip,
@@ -45,6 +48,12 @@ const Card = ({
         >
           {archived ? "Unarchive" : "Archive"}
         </Button>
+        <Button
+          className={ispublic ? "btn-gray" : "btn-primary"}
+          onClick={() => togglePublic(trip.id, ispublic, userId)}
+        >
+          {ispublic ? "Public" : "Private"}
+        </Button>
         {isArchivedTripRoute && (
           <Button className="btn-tertiary" onClick={() => repeatTrip(trip)}>
             Repeat
@@ -73,16 +82,19 @@ TripCard.propTypes = {
   repeatTrip: PropTypes.func.isRequired,
   toggleArchive: PropTypes.func.isRequired,
   trip: TripPropTypes,
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  togglePublic: PropTypes.func.isRequired,
+  ispublic: PropTypes.bool.isRequired,
+  isPublicTripRoute: PropTypes.bool
 }
 
 const mapStateToProps = ({ auth, router, trips }) => ({
   userId: auth.user.id,
-  isArchivedTripRoute: router.location.pathname === "/app/trips/archived",
+  isPublicTripRoute: router.location.pathname === "/app/trips/explore",
   loading: trips.pending
 })
 
 export default connect(
   mapStateToProps,
-  { toggleArchive, repeatTrip }
+  { toggleArchive, repeatTrip, togglePublic }
 )(TripCard)

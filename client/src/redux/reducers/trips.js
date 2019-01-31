@@ -19,6 +19,9 @@ import {
   UPLOADING_TRIP_PIC,
   UPLOADING_TRIP_PIC_SUCCESS,
   UPLOADING_TRIP_PIC_ERROR,
+  TOGGLE_PUBLIC_TRIP,
+  TOGGLE_PUBLIC_TRIP_SUCCESS,
+  TOGGLE_PUBLIC_TRIP_ERROR,
   EDIT_TRIP,
   EDIT_TRIP_SUCCESS,
   EDIT_TRIP_ERROR,
@@ -187,5 +190,11 @@ export const tripReducer = (state = defaultState, action) => {
         pending: false,
         error: action.payload
       }
+    case TOGGLE_PUBLIC_TRIP:
+      return { ...state, pending: true }
+    case TOGGLE_PUBLIC_TRIP_SUCCESS:
+      return { ...state, pending: false, error: null }
+    case TOGGLE_PUBLIC_TRIP_ERROR:
+      return { ...state, pending: false, error: action.payload }
   }
 }

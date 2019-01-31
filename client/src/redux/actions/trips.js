@@ -19,6 +19,9 @@ import {
   TOGGLE_ARCHIVE_TRIP,
   TOGGLE_ARCHIVE_TRIP_SUCCESS,
   TOGGLE_ARCHIVE_TRIP_ERROR,
+  TOGGLE_PUBLIC_TRIP,
+  TOGGLE_PUBLIC_TRIP_SUCCESS,
+  TOGGLE_PUBLIC_TRIP_ERROR,
   REPEAT_TRIP,
   REPEAT_TRIP_SUCCESS,
   REPEAT_TRIP_ERROR,
@@ -288,5 +291,29 @@ export const uploadPics = (tripId, image) => dispatch => {
     })
     .catch(err => {
       dispatch({ type: UPLOADING_TRIP_PIC_ERROR, payload: err })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
+}
+
+export const togglePublic = (tripId, ispublic, user) => dispatch => {
+  dispatch({ type: TOGGLE_PUBLIC_TRIP })
+  axios
+    .put(`${SERVER_URI}/trips/${tripId}`, { isPublic: !ispublic })
+    .then(() => {
+      dispatch({ type: TOGGLE_PUBLIC_TRIP_SUCCESS })
+    })
+    .then(() => {
+      dispatch(getTrips(user))
+    })
+    .catch(err => {
+      dispatch({
+        type: TOGGLE_PUBLIC_TRIP_ERROR,
+        payload: normalizeErrorMsg(err)
+      })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }
