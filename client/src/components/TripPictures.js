@@ -8,10 +8,10 @@ import Lightbox from "react-image-lightbox"
 import "react-image-lightbox/style.css"
 
 const ImageThumbnails = styled.div`
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: auto;
-  width: 25%;
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  width: 15%;
   img {
     width: 100%;
     height: 100%;
@@ -20,7 +20,7 @@ const ImageThumbnails = styled.div`
 
 class TripPictures extends Component {
   state = {
-    tripPics: "",
+    tripPics: [],
     photoIndex: 0,
     isOpen: false
   }
@@ -50,7 +50,9 @@ class TripPictures extends Component {
               type="button"
               onClick={() => this.setState({ isOpen: true })}
             >
-              <img key={picture} src={picture} />
+              <div className="imageThumb">
+                <img key={picture} src={picture} />
+              </div>
             </ImageThumbnails>
           )
         })}
@@ -89,7 +91,6 @@ class TripPictures extends Component {
     )
   }
 }
-console.log(TripPropTypes, "PROPTYESVJ")
 
 //I have no clue what this does -VM//
 TripPictures.propTypes = {

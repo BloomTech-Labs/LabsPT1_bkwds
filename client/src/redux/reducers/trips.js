@@ -43,7 +43,8 @@ const defaultState = {
   pending: false,
   error: null,
   trips: {},
-  activeTrip: null
+  activeTrip: null,
+  tripPics: []
 }
 
 export const tripReducer = (state = defaultState, action) => {
@@ -139,7 +140,11 @@ export const tripReducer = (state = defaultState, action) => {
     case UPLOADING_TRIP_PIC:
       return { ...state, pending: true }
     case UPLOADING_TRIP_PIC_SUCCESS:
-      return { ...state, pending: false, activeTrip: action.payload }
+      return {
+        ...state,
+        pending: false,
+        activeTrip: { ...state.activeTrip, tripPics: action.payload }
+      }
     case UPLOADING_TRIP_PIC_ERROR:
       return { ...state, pending: false, error: action.payload }
 

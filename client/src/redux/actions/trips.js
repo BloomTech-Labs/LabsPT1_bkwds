@@ -23,6 +23,7 @@ import {
   REPEAT_TRIP_SUCCESS,
   REPEAT_TRIP_ERROR,
   UPLOADING_TRIP_PIC,
+  UPLOADING_TRIP_PIC_SUCCESS,
   UPLOADING_TRIP_PIC_ERROR,
   EDIT_TRIP,
   EDIT_TRIP_ERROR,
@@ -283,7 +284,7 @@ export const uploadPics = (tripId, image) => dispatch => {
     .put(`${SERVER_URI}/trips/upload/${tripId}`, { image })
     .then(res => {
       console.log(res, "RESTWO")
-      // dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS, payload: res.data })
+      dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS, payload: res.data.tripPics })
     })
     .catch(err => {
       dispatch({ type: UPLOADING_TRIP_PIC_ERROR, payload: err })
