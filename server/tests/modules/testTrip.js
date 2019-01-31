@@ -24,7 +24,7 @@ describe("Test Trip model and routes", () => {
       .then(response => {
         tripId = response.body[0].id
         expect(response.statusCode).toBe(200)
-        expect(response.body.length).toEqual(2)
+        expect(response.body.length).toEqual(4)
         done()
       })
   })

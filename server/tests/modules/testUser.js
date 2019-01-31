@@ -46,7 +46,6 @@ describe("Test User model and routes", () => {
         expect(response.statusCode).toBe(200)
         expect(response.body.id).toEqual(userID)
         expect(response.body.email).toBe("email@hotmail.com")
-        expect(response.body.trips.length).toEqual(1)
         done()
       })
   })
@@ -69,7 +68,7 @@ describe("Test User model and routes", () => {
       .set("Authorization", `Bearer ${token}`)
       .then(response => {
         expect(response.statusCode).toBe(200)
-        expect(response.body.length).toEqual(1)
+        expect(response.body.length).toEqual(3)
         expect(response.body[0].userId).toBe(userID)
         expect(response.body[0].name).toBe("tripOne")
         done()
