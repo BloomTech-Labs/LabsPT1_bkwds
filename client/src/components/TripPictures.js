@@ -47,6 +47,7 @@ class TripPictures extends Component {
         {tripPics.map(picture => {
           return (
             <ImageThumbnails
+              key={picture}
               type="button"
               onClick={() => this.setState({ isOpen: true })}
             >
