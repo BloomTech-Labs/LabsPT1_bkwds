@@ -173,6 +173,7 @@ const notAllowedToArchiveTrip = async params => {
   const user = await User.findOne({ _id: params.tempId })
     .populate("trips")
     .exec()
+  if (user.subscribed) return false
   let archivedTrips = user.trips.filter(trip => {
     if (trip.isArchived) return trip
   })
