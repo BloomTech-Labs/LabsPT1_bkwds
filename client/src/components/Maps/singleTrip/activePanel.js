@@ -9,13 +9,16 @@ import { toggleWaypoint } from "../../../redux/actions/trips"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
+import * as util from "./mapUtil"
 
 class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      velocity: 1.4,
       polylines: null,
-      markers: []
+      markers: [],
+      timeGaps: []
     }
   }
 
@@ -23,6 +26,7 @@ class ActiveTripPanel extends React.Component {
     setTimeout(() => {
       this.renderWaypoints()
       this.drawPolylines()
+      this.calcTimeGaps()
     }, 500)
   }
 
@@ -144,9 +148,51 @@ class ActiveTripPanel extends React.Component {
       })
       markers.push(marker)
     })
+    this.setState({ markers })
+  }
+
+  calcTimeGaps = () => {
+    const { velocity } = this.state
+
+    if (this.state.markers.length > 1) {
+      let latLngs = this.state.markers.map(marker => ({
+        lat: marker.getPosition().lat(),
+        lng: marker.getPosition().lng()
+      }))
+
+      const { timeGaps } = latLngs.reduce(
+        (acc, curr, i, arr) => {
+          if (i === arr.length - 1) return acc
+          const distances = acc.distances.concat(
+            util.calcDistance(
+              curr.lat,
+              curr.lng,
+              arr[i + 1].lat,
+              arr[i + 1].lng
+            )
+          )
+          const timeGaps = acc.timeGaps.concat(
+            util.calcTimeGap(distances[i], velocity)
+          )
+          return { distances, timeGaps }
+        },
+        { distances: [], timeGaps: [] }
+      )
+      this.setState({ timeGaps })
+    }
+  }
+
+  isLate = (checkinTime, targetGapTime, targetEndTime) => {
+    const unixRealEndTimeInSecond = moment(checkinTime).format("X")
+
+    const unixTargetEndTimeInSecond = moment(targetEndTime).format("X")
+
+    return unixRealEndTimeInSecond + targetEndTime > unixTargetEndTimeInSecond
   }
 
   render() {
+    const { timeGaps } = this.state
+    const { waypoints } = this.props
     return (
       <s.Panel>
         {/* <s.PanelHeader>{this.props.trip.name}</s.PanelHeader>
@@ -155,11 +201,25 @@ class ActiveTripPanel extends React.Component {
           {moment(this.props.trip.end).format("YYYY-MM-DD")}
         </s.DateLabel> */}
         <s.WaypointTracker>
-          {this.props.waypoints &&
-            this.props.waypoints.map(waypoint => (
+          {waypoints &&
+            waypoints.map((waypoint, i) => (
               <s.WaypointStepper key={waypoint.id}>
                 <div>
-                  <h4>{waypoint.name}</h4>
+                  <h4>
+                    {waypoint.name}{" "}
+                    {timeGaps.length > 0 &&
+                      i > 0 &&
+                      i <= timeGaps.length &&
+                      waypoints[i - 1] &&
+                      this.isLate(
+                        waypoints[i - 1].start,
+                        timeGaps[i - 1],
+                        waypoint.start
+                      ) &&
+                      !waypoint.complete && (
+                        <i className="fa fa-exclamation-circle" />
+                      )}
+                  </h4>
                   <div>
                     ETA: {moment(waypoint.start).format("YYYY-MM-DD HH:mm")}
                   </div>
