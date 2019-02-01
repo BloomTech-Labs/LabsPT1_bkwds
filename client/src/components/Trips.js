@@ -23,7 +23,7 @@ class Trips extends Component {
   }
 
   renderPlaceholders = () =>
-    [...Array(5)].map((_, i) => (
+    [...Array(this.props.trips.length)].map((_, i) => (
       <TripCard archived={false} key={i} loading={true} />
     ))
 
