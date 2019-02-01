@@ -169,7 +169,10 @@ export const deleteTrip = tripId => dispatch => {
 export const toggleArchive = (tripId, archived, user) => dispatch => {
   dispatch({ type: TOGGLE_ARCHIVE_TRIP })
   axios
-    .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: !archived })
+    .put(`${SERVER_URI}/trips/${tripId}`, {
+      isArchived: !archived,
+      tempId: user
+    })
     .then(() => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_SUCCESS })
     })

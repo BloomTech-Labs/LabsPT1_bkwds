@@ -58,7 +58,7 @@ export const getOneTrip = (req, res) => {
     })
 }
 
-export const updateTrip = (req, res) => {
+export const updateTrip = async (req, res) => {
   const id = req.params.id
   const update = req.body
 
@@ -68,6 +68,12 @@ export const updateTrip = (req, res) => {
       .send(
         "Waypoints cannot be modified from Trip model. Use Waypoint model instead"
       )
+
+  if ("isArchived" in update && "tempId" in update) {
+    if (await notAllowedToArchiveTrip(update))
+      return res.status(401).json("User has reached their archive limit of 50")
+    delete update.tempId
+  }
 
   Trip.findOneAndUpdate({ _id: id }, update)
     .then(oldTrip => {
@@ -159,5 +165,17 @@ const notAllowedToCreateNewTrip = async userId => {
   if (dateOne > delta && dateTwo > delta) {
     return true
   }
+  return false
+}
+
+const notAllowedToArchiveTrip = async params => {
+  if (!params.isArchived) return false // isArchive is false, User is trying to unarchive Trip
+  const user = await User.findOne({ _id: params.tempId })
+    .populate("trips")
+    .exec()
+  let archivedTrips = user.trips.filter(trip => {
+    if (trip.isArchived) return trip
+  })
+  if (archivedTrips >= 50) return true
   return false
 }
