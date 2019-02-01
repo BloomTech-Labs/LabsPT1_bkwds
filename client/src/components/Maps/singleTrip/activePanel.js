@@ -9,7 +9,6 @@ import { toggleWaypoint } from "../../../redux/actions/trips"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
-import { Link } from "react-router-dom"
 
 class ActiveTripPanel extends React.Component {
   constructor(props) {
@@ -149,8 +148,6 @@ class ActiveTripPanel extends React.Component {
   }
 
   render() {
-    // console.log(match.params.tripId)
-    // const publicId = ({ match })
     return (
       <s.Panel>
         {/* <s.PanelHeader>{this.props.trip.name}</s.PanelHeader>
@@ -158,7 +155,6 @@ class ActiveTripPanel extends React.Component {
           Start: {moment(this.props.trip.start).format("YYYY-MM-DD")} - End:{" "}
           {moment(this.props.trip.end).format("YYYY-MM-DD")}
         </s.DateLabel> */}
-        <Link to={`/public/${this.props.trip.id}`}>Share Trip</Link>
         <s.WaypointTracker>
           {this.props.waypoints &&
             this.props.waypoints.map(waypoint => (
