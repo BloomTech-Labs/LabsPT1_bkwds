@@ -33,7 +33,9 @@ class ArchivedTrips extends Component {
   }
 
   renderPlaceholders = () =>
-    [...Array(6)].map((_, i) => <TripCard archived key={i} loading={true} />)
+    this.props.trips
+      .filter(trip => trip.isArchived)
+      .map((_, i) => <TripCard archived={false} key={i} loading />)
 
   renderArchivedTrips = () => {
     const { loading, trips } = this.props
