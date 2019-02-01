@@ -8,16 +8,18 @@ import Lightbox from "react-image-lightbox"
 import "react-image-lightbox/style.css"
 import { Button } from "../styles/theme/styledComponents"
 
-const ImageThumbnails = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 1rem;
-  width: 15%;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`
+//let this here in case we want to go back to using thumbnails for imgs
+
+// const ImageThumbnails = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   margin: 1rem;
+//   width: 15%;
+//   img {
+//     width: 100%;
+//     height: 100%;
+//   }
+// `
 
 class TripPictures extends Component {
   state = {
@@ -37,9 +39,6 @@ class TripPictures extends Component {
         this.props.uploadPics(id, reader.result)
       }
       reader.readAsDataURL(e.target.files[0])
-      // this.setState({
-      //   theInputKey: "Success"
-      // });
     }
     e.target.value = null
   }
