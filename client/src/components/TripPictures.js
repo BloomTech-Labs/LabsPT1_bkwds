@@ -6,6 +6,7 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import Lightbox from "react-image-lightbox"
 import "react-image-lightbox/style.css"
+import { Button } from "../styles/theme/styledComponents"
 
 const ImageThumbnails = styled.div`
   display: flex;
@@ -22,39 +23,62 @@ class TripPictures extends Component {
   state = {
     tripPics: [],
     photoIndex: 0,
-    isOpen: false
+    isOpen: false,
+    theInputKey: ""
   }
 
   upload = e => {
+    e.preventDefault()
     const { id } = this.props
 
-    e.preventDefault()
     if (e.target.files && e.target.files[0]) {
       let reader = new FileReader()
       reader.onloadend = () => {
         this.props.uploadPics(id, reader.result)
       }
       reader.readAsDataURL(e.target.files[0])
+      // this.setState({
+      //   theInputKey: "Success"
+      // });
     }
+    e.target.value = null
   }
 
   render() {
+    let hack = {
+      opacity: 0
+    }
+
     const { tripPics } = this.props
     const { photoIndex, isOpen } = this.state
 
     return (
       <div>
-        {tripPics.map(picture => {
-          return (
-            <ImageThumbnails
-              key={picture}
-              type="button"
-              onClick={() => this.setState({ isOpen: true })}
-            >
-              <img key={picture} src={picture} />
-            </ImageThumbnails>
-          )
-        })}
+        {/* {tripPics.map(picture => { */}
+        {/* return ( */}
+        <div>
+          <h4>Upload Your Pics:</h4>
+          <Button>
+            <input
+              style={hack}
+              type="file"
+              onChange={e => this.upload(e)}
+              accept="image/png, image/jpeg"
+            />
+            Upload Pics
+          </Button>
+          <Button
+            // key={picture}
+            type="button"
+            onClick={() => this.setState({ isOpen: true })}
+          >
+            View Trip Pics
+            {/* <img key={picture} src={picture} /> */}
+          </Button>
+        </div>
+
+        {/* ) */}
+        {/* })} */}
         {isOpen && (
           <Lightbox
             mainSrc={tripPics[photoIndex]}
@@ -75,17 +99,6 @@ class TripPictures extends Component {
             }
           />
         )}
-        <h4>
-          Upload Your Pics:
-          {/* <form >     */}
-          <input
-            type="file"
-            onChange={this.upload}
-            accept="image/png, image/jpeg"
-          />
-          {/* <button type="submit" onSubmit={this.upload}>Upload</button> */}
-          {/* </form> */}
-        </h4>
       </div>
     )
   }

@@ -158,23 +158,8 @@ export const uploadPics = (req, res) => {
           res.status(200).json(newTrip)
         })
         .catch(() => {
-          res.status(404).json("Not Found")
-        })
-        .catch(error => {
-          console.log(error, "ERROR")
-          res.status(404).json(error)
+          res.status(500).json(err, "Not Found")
         })
     })
   })
-}
-
-export const renderPics = (req, res) => {
-  console.log(req, "RENDERPICS")
-  Trip.find({})
-    .then(pictures => {
-      res.status(200).json(pictures)
-    })
-    .catch(err => {
-      res.status(500).send(err)
-    })
 }

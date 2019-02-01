@@ -533,6 +533,7 @@ class TripPanel extends React.Component {
               ))}
           </s.WaypointList>
           <TripPictures />
+
           <s.StartButton onClick={this.props.openModal}>
             Start Trip
           </s.StartButton>
