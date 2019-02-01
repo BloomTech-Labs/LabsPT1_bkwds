@@ -145,25 +145,30 @@ export const repeatTrip = (req, res) => {
   createTrip(updatedRequest, res)
 }
 
-export const uploadPics = (req, res) => {
-  const { id, image } = req.params
+export const uploadPics = ({ body, params }, res) => {
+  const { id } = params
+  const { image } = body
 
-  cloudinary.v2.uploader.upload(image, (err, result) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({ err, message: "Unable to process the image" })
-    }
-    Trip.findOneAndUpdate(
-      { _id: id },
-      { $push: { tripPics: result.url } },
-      { returnOriginal: false }
-    )
-      .then(oldTrip => {
-        Trip.findOne({ _id: oldTrip.id })
-          .then(newTrip => res.status(200).json(newTrip))
-          .catch(() => res.status(500).json(err))
-      })
-      .catch(() => res.status(500).json(err))
-  })
+  if (image) {
+    cloudinary.v2.uploader.upload(image, (err, result) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ err, message: "Unable to process the image" })
+      }
+      Trip.findOneAndUpdate(
+        { _id: id },
+        { $push: { tripPics: result.url } },
+        { returnOriginal: false }
+      )
+        .then(oldTrip => {
+          Trip.findOne({ _id: oldTrip.id })
+            .then(newTrip => res.status(200).json(newTrip))
+            .catch(() => res.status(500).json(err))
+        })
+        .catch(() => res.status(500).json(err))
+    })
+  } else {
+    res.status(422).send("Must include an image")
+  }
 }
