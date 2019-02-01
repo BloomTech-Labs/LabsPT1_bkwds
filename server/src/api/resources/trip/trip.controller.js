@@ -1,3 +1,4 @@
+import moment from "moment"
 import { Trip } from "./trip.model"
 import { User } from "../user/user.model"
 import { Waypoint } from "../waypoint/waypoint.model"
@@ -12,7 +13,10 @@ export const getAllTrips = (req, res) => {
     })
 }
 
-export const createTrip = (req, res) => {
+export const createTrip = async (req, res) => {
+  if (await notAllowedToCreateNewTrip(req.body.userId)) {
+    return res.status(401).json("User has reached their monthly trip limit")
+  }
   const newTrip = new Trip({
     userId: req.body.userId,
     name: req.body.name,
@@ -136,4 +140,24 @@ export const repeatTrip = (req, res) => {
   }
   delete updatedRequest.body.id
   createTrip(updatedRequest, res)
+}
+
+const notAllowedToCreateNewTrip = async userId => {
+  const user = await User.findOne({ _id: userId })
+    .populate("trips")
+    .exec()
+  let trips = user.trips
+  if (user.subscribed) return false
+  if (trips.length <= 1) return false
+
+  trips = trips.slice(-2)
+  let dateOne = moment(trips[0].createdAt).format("LL")
+  let dateTwo = moment(trips[1].createdAt).format("LL")
+  let delta = moment()
+    .subtract(30, "days")
+    .format("LL")
+  if (dateOne > delta && dateTwo > delta) {
+    return true
+  }
+  return false
 }
