@@ -12,11 +12,13 @@ import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
+import { FaEyeSlash } from "react-icons/fa"
+import { FaEye } from "react-icons/fa"
 
 const Card = ({
   archived,
   isArchivedTripRoute,
-  ispublic,
+  isPublic,
   isPublicTripRoute,
   togglePublic,
   repeatTrip,
@@ -49,16 +51,22 @@ const Card = ({
           {archived ? "Unarchive" : "Archive"}
         </Button>
         <Button
-          className={ispublic ? "btn-gray" : "btn-primary"}
-          onClick={() => togglePublic(trip.id, ispublic, userId)}
+          className={
+            isPublic
+              ? "button is-white fa fa-ye"
+              : "button is-white fa fa-eye-slash"
+          }
+          onClick={() => togglePublic(trip.id, isPublic, userId)}
         >
-          {ispublic ? "Public" : "Private"}
+          {isPublic ? "Make Public!" : "Make Private"}
         </Button>
         {isArchivedTripRoute && (
           <Button className="btn-tertiary" onClick={() => repeatTrip(trip)}>
             Repeat
           </Button>
         )}
+        <FaEyeSlash />
+        <FaEye />
       </div>
       <Link to={`/app/trip/${trip.id}`}>
         <CardButton>
@@ -84,13 +92,15 @@ TripCard.propTypes = {
   trip: TripPropTypes,
   userId: PropTypes.string,
   togglePublic: PropTypes.func.isRequired,
-  ispublic: PropTypes.bool.isRequired,
+  isPublic: PropTypes.bool.isRequired,
   isPublicTripRoute: PropTypes.bool
 }
 
 const mapStateToProps = ({ auth, router, trips }) => ({
   userId: auth.user.id,
+  isArchivedTripRoute: router.location.pathname === "/app/trips/archived",
   isPublicTripRoute: router.location.pathname === "/app/trips/explore",
+
   loading: trips.pending
 })
 
