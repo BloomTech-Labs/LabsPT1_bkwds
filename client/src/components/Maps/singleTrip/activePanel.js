@@ -2,10 +2,21 @@ import React from "react"
 import * as s from "./components"
 import { connect } from "react-redux"
 import moment from "moment"
+import "react-step-progress-bar/styles.css"
+import Progress from "./Progress"
 import PropTypes from "prop-types"
+
 import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
+import "react-accessible-accordion/dist/fancy-example.css"
+
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTitle,
+  AccordionItemBody
+} from "react-accessible-accordion"
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
@@ -147,46 +158,53 @@ class ActiveTripPanel extends React.Component {
   }
 
   render() {
+    let style = {
+      top: 0,
+      position: "relative",
+      right: "1rem"
+    }
+    let container = {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
     return (
-      <s.Panel>
-        {/* <s.PanelHeader>{this.props.trip.name}</s.PanelHeader>
-        <s.DateLabel>
-          Start: {moment(this.props.trip.start).format("YYYY-MM-DD")} - End:{" "}
-          {moment(this.props.trip.end).format("YYYY-MM-DD")}
-        </s.DateLabel> */}
-        <s.WaypointTracker>
-          {this.props.waypoints &&
-            this.props.waypoints.map(waypoint => (
-              <s.WaypointStepper key={waypoint.id}>
-                <div>
-                  <h4>{waypoint.name}</h4>
-                  <div>
-                    ETA: {moment(waypoint.start).format("YYYY-MM-DD HH:mm")}
-                  </div>
-                  <div>
-                    Status: Checked In @{" "}
-                    {moment(waypoint.start).format("HH:mm")}
-                  </div>
-                </div>
-                <div>
-                  {waypoint.complete ? (
-                    <Button
-                      onClick={() => this.props.toggleWaypoint(waypoint.id)}
-                    >
-                      <i className="fa fa-check" />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => this.props.toggleWaypoint(waypoint.id)}
-                    >
-                      <i className="fa fa-times" />
-                    </Button>
-                  )}
-                </div>
-              </s.WaypointStepper>
-            ))}
-        </s.WaypointTracker>
-      </s.Panel>
+      <div>
+        <Progress
+          name={this.props.trip.name}
+          waypoints={this.props.waypoints}
+        />
+        <s.Panel>
+          <Accordion>
+            {this.props.waypoints &&
+              this.props.waypoints.map(waypoint => (
+                <AccordionItem>
+                  <AccordionItemTitle>
+                    <div style={container}>
+                      <h4>{waypoint.name}</h4>
+                      <div className="accordion__arrow" style={style} />
+                    </div>
+                  </AccordionItemTitle>
+                  <AccordionItemBody>
+                    {waypoint.complete ? (
+                      <Button
+                        onClick={() => this.props.toggleWaypoint(waypoint.id)}
+                      >
+                        <i className="fa fa-check" />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => this.props.toggleWaypoint(waypoint.id)}
+                      >
+                        <i className="fa fa-times" />
+                      </Button>
+                    )}
+                  </AccordionItemBody>
+                </AccordionItem>
+              ))}
+          </Accordion>
+        </s.Panel>
+      </div>
     )
   }
 }
