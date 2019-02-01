@@ -146,20 +146,24 @@ export const repeatTrip = (req, res) => {
 }
 
 export const uploadPics = (req, res) => {
-  const id = req.params.id
-  cloudinary.v2.uploader.upload(req.body.image, (err, result) => {
+  const { id, image } = req.params
+
+  cloudinary.v2.uploader.upload(image, (err, result) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ err, message: "Unable to process the image" })
+    }
     Trip.findOneAndUpdate(
       { _id: id },
       { $push: { tripPics: result.url } },
       { returnOriginal: false }
-    ).then(oldTrip => {
-      Trip.findOne({ _id: oldTrip.id })
-        .then(newTrip => {
-          res.status(200).json(newTrip)
-        })
-        .catch(() => {
-          res.status(500).json(err, "Not Found")
-        })
-    })
+    )
+      .then(oldTrip => {
+        Trip.findOne({ _id: oldTrip.id })
+          .then(newTrip => res.status(200).json(newTrip))
+          .catch(() => res.status(500).json(err))
+      })
+      .catch(() => res.status(500).json(err))
   })
 }
