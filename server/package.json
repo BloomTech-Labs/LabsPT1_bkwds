@@ -31,6 +31,7 @@
     "express": "4.16.4",
     "jsonwebtoken": "^8.4.0",
     "lodash.merge": "4.6.1",
+    "moment": "^2.24.0",
     "mongoose": "5.3.15",
     "nodemailer": "^5.1.1",
     "stripe": "^6.19.0",

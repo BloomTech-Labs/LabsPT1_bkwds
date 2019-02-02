@@ -1,3 +1,4 @@
+import moment from "moment"
 import { Trip } from "./trip.model"
 import { User } from "../user/user.model"
 import { Waypoint } from "../waypoint/waypoint.model"
@@ -19,7 +20,10 @@ export const getAllTrips = (req, res) => {
     })
 }
 
-export const createTrip = (req, res) => {
+export const createTrip = async (req, res) => {
+  if (await notAllowedToCreateNewTrip(req.body.userId)) {
+    return res.status(401).json("User has reached their monthly trip limit")
+  }
   const newTrip = new Trip({
     userId: req.body.userId,
     name: req.body.name,
@@ -61,7 +65,7 @@ export const getOneTrip = (req, res) => {
     })
 }
 
-export const updateTrip = (req, res) => {
+export const updateTrip = async (req, res) => {
   const id = req.params.id
   const update = req.body
 
@@ -71,6 +75,12 @@ export const updateTrip = (req, res) => {
       .send(
         "Waypoints cannot be modified from Trip model. Use Waypoint model instead"
       )
+
+  if ("isArchived" in update && "tempId" in update) {
+    if (await notAllowedToArchiveTrip(update))
+      return res.status(401).json("User has reached their archive limit of 50")
+    delete update.tempId
+  }
 
   Trip.findOneAndUpdate({ _id: id }, update)
     .then(oldTrip => {
@@ -171,4 +181,37 @@ export const uploadPics = ({ body, params }, res) => {
   } else {
     res.status(422).send("Must include an image")
   }
+}
+
+const notAllowedToCreateNewTrip = async userId => {
+  const user = await User.findOne({ _id: userId })
+    .populate("trips")
+    .exec()
+  let trips = user.trips
+  if (user.subscribed) return false
+  if (trips.length <= 1) return false
+
+  trips = trips.slice(-2)
+  let dateOne = moment(trips[0].createdAt).format("LL")
+  let dateTwo = moment(trips[1].createdAt).format("LL")
+  let delta = moment()
+    .subtract(30, "days")
+    .format("LL")
+  if (dateOne > delta && dateTwo > delta) {
+    return true
+  }
+  return false
+}
+
+const notAllowedToArchiveTrip = async params => {
+  if (!params.isArchived) return false // isArchive is false, User is trying to unarchive Trip
+  const user = await User.findOne({ _id: params.tempId })
+    .populate("trips")
+    .exec()
+  if (user.subscribed) return false
+  let archivedTrips = user.trips.filter(trip => {
+    if (trip.isArchived) return trip
+  })
+  if (archivedTrips >= 50) return true
+  return false
 }
