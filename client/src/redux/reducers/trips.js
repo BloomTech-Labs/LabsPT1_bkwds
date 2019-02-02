@@ -40,7 +40,8 @@ const defaultState = {
   pending: false,
   error: null,
   trips: {},
-  activeTrip: null
+  activeTrip: null,
+  public: false
 }
 
 export const tripReducer = (state = defaultState, action) => {
