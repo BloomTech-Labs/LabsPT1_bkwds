@@ -59,10 +59,10 @@ export const getTrips = userId => dispatch => {
 export const removeActiveTrip = () => {
   return { type: REMOVE_ACTIVE_TRIP }
 }
-export const getSingleTrip = (tripId, public = false) => dispatch => {
+export const getSingleTrip = (tripId, privacy = false) => dispatch => {
   axios
     .get(
-      public
+      privacy
         ? `${SERVER_URI}/public/trips/${tripId}`
         : `${SERVER_URI}/trips/${tripId}`
     )

@@ -41,7 +41,7 @@ const defaultState = {
   error: null,
   trips: {},
   activeTrip: null,
-  public: false
+  privacy: false
 }
 
 export const tripReducer = (state = defaultState, action) => {
