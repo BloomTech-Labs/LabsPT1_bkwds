@@ -16,6 +16,9 @@ import {
   REPEAT_TRIP,
   REPEAT_TRIP_SUCCESS,
   REPEAT_TRIP_ERROR,
+  UPLOADING_TRIP_PIC,
+  UPLOADING_TRIP_PIC_SUCCESS,
+  UPLOADING_TRIP_PIC_ERROR,
   EDIT_TRIP,
   EDIT_TRIP_SUCCESS,
   EDIT_TRIP_ERROR,
@@ -40,7 +43,8 @@ const defaultState = {
   pending: false,
   error: null,
   trips: {},
-  activeTrip: null
+  activeTrip: null,
+  tripPics: []
 }
 
 export const tripReducer = (state = defaultState, action) => {
@@ -132,6 +136,17 @@ export const tripReducer = (state = defaultState, action) => {
     // IMPLEMENT!
     case CREATING_WAYPOINT:
       return { ...state, pending: true }
+
+    case UPLOADING_TRIP_PIC:
+      return { ...state, pending: true }
+    case UPLOADING_TRIP_PIC_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        activeTrip: { ...state.activeTrip, tripPics: action.payload }
+      }
+    case UPLOADING_TRIP_PIC_ERROR:
+      return { ...state, pending: false, error: action.payload }
 
     case ADD_TRIP_TIME_LIMIT:
       return {

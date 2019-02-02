@@ -17,3 +17,6 @@ tripRouter
   .delete(tripController.deleteTrip)
 
 tripRouter.route("/:id/waypoints").get(tripController.populateWaypoints)
+
+tripRouter.route("/upload/:id").put(tripController.uploadPics)
+tripRouter.route("/pictures/:id").get(tripController.uploadPics)

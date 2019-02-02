@@ -81,6 +81,7 @@ class Features extends PureComponent {
               id="plan"
               onMouseEnter={this.handleMouseOver}
               className="features-content"
+              src="/images/iphonelist.png"
             >
               <h4>
                 Plan your trip<span className="accent">.</span>

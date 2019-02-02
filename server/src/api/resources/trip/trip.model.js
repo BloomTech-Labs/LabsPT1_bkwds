@@ -50,7 +50,8 @@ export const schema = {
     type: Boolean,
     default: false
   },
-  waypoints: [{ type: ObjectId, ref: "Waypoint" }]
+  waypoints: [{ type: ObjectId, ref: "Waypoint" }],
+  tripPics: [{ type: String }]
 }
 
 const tripSchema = new mongoose.Schema(schema, { timestamps: true })
@@ -71,7 +72,8 @@ tripSchema.set("toJSON", {
       complete: ret.complete,
       timeLimit: ret.timeLimit,
       isPublic: ret.isPublic,
-      waypoints: ret.waypoints
+      waypoints: ret.waypoints,
+      tripPics: ret.tripPics
     }
     return retJson
   }
