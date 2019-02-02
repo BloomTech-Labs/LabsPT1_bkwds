@@ -98,7 +98,6 @@ class ElevationChart extends Component {
   }
 
   destroyChart = () => {
-    console.log("DESTROYING CHART")
     d3.selectAll("#elevationChart > *").remove()
   }
 
@@ -110,7 +109,6 @@ class ElevationChart extends Component {
   }
 
   drawChart = () => {
-    console.log("DRAWING CHART")
     const { data } = this.state
     const bisect = d3.bisector(function(d) {
       return d.x
@@ -314,7 +312,7 @@ class ElevationChart extends Component {
     return (
       <s.ElevationChartStyles isHidden={isHidden} toggle={toggle}>
         <div className="elevation-chart-wrapper">
-          {isHidden && <ChartIcon height="32" width="32" />}
+          {isHidden && <ChartIcon height={32} width={32} />}
           <div className="chevron-wrapper" onClick={this.toggleChart}>
             <Chevron transform={isHidden ? "rotate(180deg)" : ""} />
           </div>
