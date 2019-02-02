@@ -49,6 +49,7 @@ class TripPanel extends React.Component {
     saveToggle: false,
     trip: {},
     tripDistance: null,
+    tripPicturesToggled: false,
     waypointsMenuToggled: false,
     graphMenuToggled: false,
     tripPics: null,
@@ -341,7 +342,8 @@ class TripPanel extends React.Component {
     if (!this.state.waypointsMenuToggled) {
       this.setState({
         waypointsMenuToggled: true,
-        graphMenuToggled: false
+        graphMenuToggled: false,
+        tripPicturesToggled: false
       })
     } else {
       this.setState({
@@ -354,6 +356,7 @@ class TripPanel extends React.Component {
     if (!this.state.graphMenuToggled) {
       this.setState({
         graphMenuToggled: true,
+        tripPicturesToggled: false,
         waypointsMenuToggled: false
       })
     } else {
@@ -363,9 +366,24 @@ class TripPanel extends React.Component {
     }
   }
 
+  togglePicturesMenu = () => {
+    if (!this.state.tripPicturesToggled) {
+      this.setState({
+        tripPicturesToggled: true,
+        graphMenuToggled: false,
+        waypointsMenuToggled: false
+      })
+    } else {
+      this.setState({
+        tripPicturesToggled: false
+      })
+    }
+  }
+
   closeAllToggles = () => {
     this.setState({
       graphMenuToggled: false,
+      tripPicturesToggled: false,
       waypointsMenuToggled: false
     })
   }
@@ -379,6 +397,7 @@ class TripPanel extends React.Component {
       tripDistance,
       waypointsMenuToggled,
       graphMenuToggled,
+      tripPicturesToggled,
       timeGaps
     } = this.state
     return (
@@ -404,7 +423,9 @@ class TripPanel extends React.Component {
             <Button
               onClick={this.closeAllToggles}
               className={`btn-neutral ${
-                !waypointsMenuToggled && !graphMenuToggled
+                !waypointsMenuToggled &&
+                !graphMenuToggled &&
+                !tripPicturesToggled
                   ? "active-button"
                   : ""
               }`}
@@ -429,6 +450,15 @@ class TripPanel extends React.Component {
             >
               {/* <ChartIcon /> */}
               <i className="fa fa-area-chart" />
+            </Button>
+
+            <Button
+              onClick={this.togglePicturesMenu}
+              className={`btn-neutral ${
+                tripPicturesToggled ? "active-button" : ""
+              }`}
+            >
+              <i className="fa fa-picture-o" />
             </Button>
 
             <Button onClick={this.props.openModal} className={`btn-neutral`}>
@@ -554,7 +584,6 @@ class TripPanel extends React.Component {
                 </div>
               ))}
           </s.WaypointList>
-          <TripPictures />
 
           <s.StartButton onClick={this.props.openModal}>
             Start Trip
@@ -596,12 +625,16 @@ class TripPanel extends React.Component {
             </div>
           )}
         </Modal>
-        <ElevationChart
-          distances={this.state.distances}
-          elevations={elevations}
-          mapRef={this.props.mapRef}
-          toggle={graphMenuToggled}
-        />
+
+        <div className="">
+          <TripPictures toggle={tripPicturesToggled} />
+          <ElevationChart
+            distances={this.state.distances}
+            elevations={elevations}
+            mapRef={this.props.mapRef}
+            toggle={graphMenuToggled}
+          />
+        </div>
       </s.TripPanelStyles>
     )
   }
