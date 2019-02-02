@@ -47,7 +47,7 @@ export const TripPicturesStyles = styled.div`
   }
 
   .trip-pictures-header {
-    /* display: flex; */
+    margin-bottom: 0.5rem;
   }
 
   .upload-button {
