@@ -281,12 +281,10 @@ export const toggleWaypoint = waypointId => dispatch => {
 }
 
 export const uploadPics = (tripId, image) => dispatch => {
-  console.log(image, "RES Action")
   dispatch({ type: UPLOADING_TRIP_PIC })
   axios
     .put(`${SERVER_URI}/trips/upload/${tripId}`, { image })
     .then(res => {
-      console.log(res, "RESTWO")
       dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS, payload: res.data.tripPics })
     })
     .catch(err => {

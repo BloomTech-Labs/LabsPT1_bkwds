@@ -626,15 +626,13 @@ class TripPanel extends React.Component {
           )}
         </Modal>
 
-        <div className="">
-          <TripPictures toggle={tripPicturesToggled} />
-          <ElevationChart
-            distances={this.state.distances}
-            elevations={elevations}
-            mapRef={this.props.mapRef}
-            toggle={graphMenuToggled}
-          />
-        </div>
+        <ElevationChart
+          distances={this.state.distances}
+          elevations={elevations}
+          mapRef={this.props.mapRef}
+          toggle={graphMenuToggled}
+        />
+        <TripPictures toggle={tripPicturesToggled} />
       </s.TripPanelStyles>
     )
   }

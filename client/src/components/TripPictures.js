@@ -40,10 +40,6 @@ class TripPictures extends Component {
   }
 
   render() {
-    let hack = {
-      opacity: 0
-    }
-
     const { toggle, tripPics } = this.props
     const { photoIndex, isOpen, isHidden } = this.state
 
@@ -54,32 +50,25 @@ class TripPictures extends Component {
           <div className="chevron-wrapper" onClick={this.togglePictures}>
             <Chevron transform={isHidden ? "rotate(180deg)" : ""} />
           </div>
+
           <div className="trip-pictures">
             <div className="trip-pictures-header">
-              <h4>Upload Your Pics:</h4>
-              <Button>
+              <Button className="upload-button">
                 <input
-                  style={hack}
                   type="file"
-                  onChange={e => this.upload(e)}
+                  onChange={this.upload}
                   accept="image/png, image/jpeg"
                 />
-                Upload Pics
-              </Button>
-              <Button
-                type="button"
-                onClick={() => this.setState({ isOpen: true })}
-              >
-                View Trip Pics
+                Upload New Pic
               </Button>
             </div>
-          </div>
-          <div className="trip-picture-list">
-            {tripPics.map((url, i) => (
-              <s.ImageThumbnails key={i}>
-                <img src={url} />
-              </s.ImageThumbnails>
-            ))}
+            <div className="trip-picture-list">
+              {tripPics.map((url, i) => (
+                <s.ImageThumbnails key={i}>
+                  <img src={url} />
+                </s.ImageThumbnails>
+              ))}
+            </div>
           </div>
 
           {isOpen && (
