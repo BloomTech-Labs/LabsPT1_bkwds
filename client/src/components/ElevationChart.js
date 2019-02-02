@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import * as d3 from "d3"
 
 import Chevron from "./icons/ChevronSvg"
+import ChartIcon from "./icons/ChartSvg"
 import * as s from "../styles/ElevationChart.styles"
 
 const margin = { top: 0, right: 0, bottom: 15, left: 50 }
@@ -313,6 +314,7 @@ class ElevationChart extends Component {
     return (
       <s.ElevationChartStyles isHidden={isHidden} toggle={toggle}>
         <div className="elevation-chart-wrapper">
+          {isHidden && <ChartIcon height="32" width="32" />}
           <div className="chevron-wrapper" onClick={this.toggleChart}>
             <Chevron transform={isHidden ? "rotate(180deg)" : ""} />
           </div>

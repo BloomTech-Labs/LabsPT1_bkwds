@@ -1,20 +1,31 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { media } from "../styles/theme/mixins"
+
+const isHiddenStyles = css`
+  #elevationChart {
+    height: 0;
+    svg {
+      margin-top: 1rem;
+    }
+  }
+
+  .elevation-chart-wrapper {
+    padding: 12px 12px 8px 12px;
+    width: 90px;
+    span.chevron-icon {
+      top: 0.35rem;
+      right: 0.5rem;
+      height: 2.25rem;
+      width: 2.25rem;
+    }
+  }
+`
 
 export const ElevationChartStyles = styled.div`
   visibility: visible;
   ${media.tablet`
     visibility: ${props => (props.toggle ? "visible" : "hidden")};
   `}
-
-  .isHidden {
-    visibility: hidden;
-  }
-
-  /* "Hide" elevation chart on desktop when chevron is clicked: */
-  #elevationChart {
-    height: ${({ isHidden }) => (isHidden ? "0" : "inherit")};
-  }
 
   .elevation-chart-wrapper {
     border-radius: 2px 2px 0 0;
@@ -29,10 +40,6 @@ export const ElevationChartStyles = styled.div`
     .chevron-wrapper {
       cursor: pointer;
       width: 50px;
-
-      ${media.tablet`
-        /* visibility: hidden; */
-      `}
     }
 
     span.chevron-icon {
@@ -124,4 +131,6 @@ export const ElevationChartStyles = styled.div`
   .elevationChartGrid path {
     stroke-width: 0;
   }
+
+  ${props => props.isHidden && isHiddenStyles}
 `
