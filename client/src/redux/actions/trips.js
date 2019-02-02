@@ -22,6 +22,9 @@ import {
   REPEAT_TRIP,
   REPEAT_TRIP_SUCCESS,
   REPEAT_TRIP_ERROR,
+  UPLOADING_TRIP_PIC,
+  UPLOADING_TRIP_PIC_SUCCESS,
+  UPLOADING_TRIP_PIC_ERROR,
   EDIT_TRIP,
   EDIT_TRIP_ERROR,
   EDIT_TRIP_SUCCESS,
@@ -271,5 +274,19 @@ export const toggleWaypoint = waypointId => dispatch => {
       toast.error(normalizeErrorMsg(err), {
         position: toast.POSITION.BOTTOM_RIGHT
       })
+    })
+}
+
+export const uploadPics = (tripId, image) => dispatch => {
+  console.log(image, "RES Action")
+  dispatch({ type: UPLOADING_TRIP_PIC })
+  axios
+    .put(`${SERVER_URI}/trips/upload/${tripId}`, { image })
+    .then(res => {
+      console.log(res, "RESTWO")
+      dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS, payload: res.data.tripPics })
+    })
+    .catch(err => {
+      dispatch({ type: UPLOADING_TRIP_PIC_ERROR, payload: err })
     })
 }

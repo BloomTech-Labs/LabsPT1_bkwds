@@ -35,6 +35,7 @@ import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
 import { numOfSamples, metersToFeet, metersToMiles } from "../../ElevationChart"
+import TripPictures from "../../TripPictures"
 
 class TripPanel extends React.Component {
   state = {
@@ -50,6 +51,7 @@ class TripPanel extends React.Component {
     tripDistance: null,
     waypointsMenuToggled: false,
     graphMenuToggled: false,
+    tripPics: null,
     timeGaps: []
   }
 
@@ -552,6 +554,7 @@ class TripPanel extends React.Component {
                 </div>
               ))}
           </s.WaypointList>
+          <TripPictures />
 
           <s.StartButton onClick={this.props.openModal}>
             Start Trip

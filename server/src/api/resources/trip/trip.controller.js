@@ -1,6 +1,13 @@
 import { Trip } from "./trip.model"
 import { User } from "../user/user.model"
 import { Waypoint } from "../waypoint/waypoint.model"
+import cloudinary from "cloudinary"
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY
+})
 
 export const getAllTrips = (req, res) => {
   Trip.find({})
@@ -136,4 +143,32 @@ export const repeatTrip = (req, res) => {
   }
   delete updatedRequest.body.id
   createTrip(updatedRequest, res)
+}
+
+export const uploadPics = ({ body, params }, res) => {
+  const { id } = params
+  const { image } = body
+
+  if (image) {
+    cloudinary.v2.uploader.upload(image, (err, result) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ err, message: "Unable to process the image" })
+      }
+      Trip.findOneAndUpdate(
+        { _id: id },
+        { $push: { tripPics: result.url } },
+        { returnOriginal: false }
+      )
+        .then(oldTrip => {
+          Trip.findOne({ _id: oldTrip.id })
+            .then(newTrip => res.status(200).json(newTrip))
+            .catch(() => res.status(500).json(err))
+        })
+        .catch(() => res.status(500).json(err))
+    })
+  } else {
+    res.status(422).send("Must include an image")
+  }
 }
