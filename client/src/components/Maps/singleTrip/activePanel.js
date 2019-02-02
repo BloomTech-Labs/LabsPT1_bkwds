@@ -14,6 +14,7 @@ import * as util from "./mapUtil"
 class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       velocity: 1.4,
       polylines: null,
