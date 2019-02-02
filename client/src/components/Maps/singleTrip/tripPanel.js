@@ -562,7 +562,7 @@ class TripPanel extends React.Component {
         </s.Panel>
         <Modal isOpen={this.props.modalIsOpen}>
           {() => (
-            <div className="startTrip-flow">
+            <div className="modal-inner startTrip-flow">
               <div className="flow-header">
                 <h4>Activate Safety Feature</h4>
                 <div>

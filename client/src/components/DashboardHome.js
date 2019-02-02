@@ -124,13 +124,16 @@ class DashboardHome extends Component {
               <div>
                 <Modal isOpen={modalIsOpen}>
                   {() => (
-                    <div className="onboarding-flow">
-                      <CloseModalIcon onClick={this.props.closeModal}>
+                    <div className="modal-inner onboarding-flow">
+                      <CloseModalIcon
+                        className="close-modal-button"
+                        onClick={this.props.closeModal}
+                      >
                         x
                       </CloseModalIcon>
                       <div className="flow-header">
                         {this.state.firstTimeLogin && (
-                          <p>Welcome, first timer!</p>
+                          <h6>Welcome, first timer!</h6>
                         )}
                         <h4>Create your profile</h4>
                         <div>
@@ -168,8 +171,6 @@ class DashboardHome extends Component {
                           onChange={this.handleChange("contactNumber")}
                           placeholder="Phone ( e.g. 5125551234 )"
                         />
-                        <div>{formattedAddress}</div>
-                        <div>{location.lat && location.lat + location.lng}</div>
                         <div className="text-align-right">
                           <Button className="btn-primary">Save</Button>
                         </div>
