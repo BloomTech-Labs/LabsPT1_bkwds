@@ -62,7 +62,7 @@ export const removeActiveTrip = () => {
 export const getSingleTrip = (tripId, privacy = false) => dispatch => {
   axios
     .get(
-      privacy
+      visibility
         ? `${SERVER_URI}/public/trips/${tripId}`
         : `${SERVER_URI}/trips/${tripId}`
     )

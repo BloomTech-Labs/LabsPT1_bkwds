@@ -27,7 +27,9 @@ import {
   ADD_TRIP_TIME_LIMIT_ERROR,
   TOGGLE_WAYPOINT_SUCCESS,
   TOGGLE_WAYPOINT_ERROR,
-  REMOVE_ACTIVE_TRIP
+  REMOVE_ACTIVE_TRIP,
+  TOGGLE_VISIBILITY_OFF,
+  TOGGLE_VISIBILITY_ON
 } from "../actions/types"
 
 import {
@@ -172,6 +174,16 @@ export const tripReducer = (state = defaultState, action) => {
         ...state,
         pending: false,
         error: action.payload
+      }
+    case TOGGLE_VISIBILITY_ON:
+      return {
+        ...state,
+        visibility: true
+      }
+    case TOGGLE_VISIBILITY_OFF:
+      return {
+        ...state,
+        visibility: false
       }
   }
 }
