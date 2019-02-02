@@ -7,6 +7,15 @@ export const ElevationChartStyles = styled.div`
     visibility: ${props => (props.toggle ? "visible" : "hidden")};
   `}
 
+  .isHidden {
+    visibility: hidden;
+  }
+
+  /* "Hide" elevation chart on desktop when chevron is clicked: */
+  #elevationChart {
+    height: ${({ isHidden }) => (isHidden ? "0" : "inherit")};
+  }
+
   .elevation-chart-wrapper {
     border-radius: 2px 2px 0 0;
     padding: 24px 0 8px 12px;
@@ -16,6 +25,27 @@ export const ElevationChartStyles = styled.div`
     top: unset;
     bottom: 50px;
     z-index: 5;
+
+    .chevron-wrapper {
+      cursor: pointer;
+      width: 50px;
+
+      ${media.tablet`
+        /* visibility: hidden; */
+      `}
+    }
+
+    span.chevron-icon {
+      position: absolute;
+      top: 0.125rem;
+      right: 1.25rem;
+      height: 1.5rem;
+      width: 1.5rem;
+
+      ${media.tablet`
+        visibility: hidden;
+      `}
+    }
 
     ${media.tablet`
       max-width: 100vw; 

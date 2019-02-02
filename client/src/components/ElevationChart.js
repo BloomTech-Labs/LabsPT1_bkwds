@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import * as d3 from "d3"
+
+import Chevron from "./icons/ChevronSvg"
 import * as s from "../styles/ElevationChart.styles"
 
 const margin = { top: 0, right: 0, bottom: 15, left: 50 }
@@ -44,7 +46,8 @@ class ElevationChart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: []
+      data: [],
+      isHidden: false
     }
   }
 
@@ -94,10 +97,19 @@ class ElevationChart extends Component {
   }
 
   destroyChart = () => {
+    console.log("DESTROYING CHART")
     d3.selectAll("#elevationChart > *").remove()
   }
 
+  toggleChart = () => {
+    const { isHidden } = this.state
+    this.setState({
+      isHidden: !isHidden
+    })
+  }
+
   drawChart = () => {
+    console.log("DRAWING CHART")
     const { data } = this.state
     const bisect = d3.bisector(function(d) {
       return d.x
@@ -296,11 +308,14 @@ class ElevationChart extends Component {
   }
 
   render() {
-    const { data } = this.state
+    const { data, isHidden } = this.state
     const { toggle } = this.props
     return (
-      <s.ElevationChartStyles toggle={toggle}>
+      <s.ElevationChartStyles isHidden={isHidden} toggle={toggle}>
         <div className="elevation-chart-wrapper">
+          <div className="chevron-wrapper" onClick={this.toggleChart}>
+            <Chevron transform={isHidden ? "rotate(180deg)" : ""} />
+          </div>
           {data.length > 0 && <div id="elevationChart" />}
         </div>
       </s.ElevationChartStyles>
