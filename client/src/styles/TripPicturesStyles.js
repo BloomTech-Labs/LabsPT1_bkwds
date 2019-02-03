@@ -9,11 +9,12 @@ export const TripPicturesStyles = styled.div`
 
   position: absolute;
   top: unset;
-  bottom: 250px;
+  bottom: 254px;
   z-index: 5;
   right: 0;
 
   ${media.tablet`
+    bottom: 50px;
     left: 0;
     padding-left: 50px;
   `}
@@ -40,6 +41,7 @@ export const TripPicturesStyles = styled.div`
     ${media.tablet`
       width: 100%;
       padding: 0.75rem 0.75rem 0;
+      height: 200px;
     `}
   }
   .chevron-wrapper {
