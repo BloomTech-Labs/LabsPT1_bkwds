@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { media } from "../../../../styles/theme/mixins"
 
 export const TripPanelStyles = styled.div`
@@ -17,6 +17,7 @@ export const TripPanelStyles = styled.div`
     height: 50px;
     display: flex;
     & :first-child {
+      margin-top: 0;
       display: flex;
       flex-grow: 1;
       height: 50px;
@@ -28,6 +29,10 @@ export const TripPanelStyles = styled.div`
     .trip-detail-wrapper {
       display: flex;
     }
+  }
+
+  .panel-wrapper {
+    height: 345px;
   }
 
   .waypoint-wrapper {
@@ -43,6 +48,14 @@ export const TripPanelStyles = styled.div`
     height: 40px;
   }
 
+  span.chevron-icon {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
   #plus-icon {
     z-index: 3;
     bottom: 80px;
@@ -52,7 +65,7 @@ export const TripPanelStyles = styled.div`
 export const Panel = styled.div`
   max-width: 360px;
   min-width: 320px;
-  border-radius: 2px;
+  border-radius: 0 0 0 2px;
   display: flex;
   flex-direction: column;
   background: white;
@@ -62,6 +75,30 @@ export const Panel = styled.div`
   width: 30%;
   height: 45%;
   z-index: 5;
+
+  ${props => props.isHidden && isHiddenStyles}
+`
+
+const isHiddenStyles = css`
+  width: 60px;
+  min-width: unset;
+  .panel-wrapper {
+    visibility: hidden;
+  }
+  span.chevron-icon {
+    top: 0.35rem;
+    left: 0.525rem;
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  .marker-icon-wrapper {
+    position: absolute;
+    bottom: 12px;
+    left: 1.25rem;
+    i {
+      font-size: 2rem;
+    }
+  }
 `
 
 export const WaypointLabel = styled.label`
@@ -69,10 +106,14 @@ export const WaypointLabel = styled.label`
 `
 
 export const PanelHeader = styled.div`
-  padding: 1rem;
+  margin: 1.375rem 0 0 0;
   align-items: center;
   justify-content: space-between;
   display: flex;
+  padding: 1rem 1rem 0;
+  ${media.tablet`
+    padding: 1rem;
+  `}
 `
 
 export const TripDetail = styled.div`
@@ -135,11 +176,15 @@ export const DeleteButton = styled.button`
   border: none;
 `
 export const WaypointList = styled.div`
+  height: 124px;
   overflow: scroll;
+  ${media.tablet`
+    height: 100%;
+  `}
 `
 
 export const WaypointsHeader = styled.div`
-  margin: 0 1rem 1rem 1rem;
+  margin: 0 1rem 0.5rem 1rem;
   align-items: center;
   color: #808080;
   display: flex;

@@ -46,7 +46,7 @@ export const ElevationChartStyles = styled.div`
 
     .chart-icon-wrapper {
       position: absolute;
-      bottom: 8px;
+      bottom: 12px;
     }
 
     span.chevron-icon {
