@@ -30,6 +30,19 @@ export const TripPanelStyles = styled.div`
     }
   }
 
+  .waypoint-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1rem;
+  }
+
+  .trip-actions-wrapper {
+    margin: 0 1rem 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+  }
+
   #plus-icon {
     z-index: 3;
     bottom: 80px;
@@ -44,15 +57,15 @@ export const Panel = styled.div`
   flex-direction: column;
   background: white;
   position: absolute;
-  right: 1.5rem;
-  top: 1.5rem;
+  right: 0;
+  top: 0;
   width: 30%;
   height: 45%;
   z-index: 5;
 `
 
 export const WaypointLabel = styled.label`
-  margin: 0 1rem;
+  margin: 0 1rem 0 0;
 `
 
 export const PanelHeader = styled.div`
@@ -86,9 +99,9 @@ export const DateLabel = styled.label`
 
 export const Waypoint = styled.div`
   align-items: center;
-  width: 90%;
+  width: 65%;
   display: flex;
-  margin: 0.5rem auto;
+  /* margin: 0.5rem auto; */
 `
 export const WaypointInput = styled.input`
   box-sizing: border-box;
@@ -147,20 +160,20 @@ export const SaveButton = styled.button`
   border: none;
   padding: 0;
 `
+
 export const AddButton = styled.button`
   visibility: ${props => (!props.edit ? "hidden" : "visible")};
   border: 0;
   background: transparent;
 `
-export const StartButton = styled.button`
+
+export const TripButton = styled.button`
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
   background: #45569e;
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
   color: white;
-  width: 100px;
+  width: 145px;
   border-radius: 5px;
+  border: 0;
 `
 
 export const WaypointTracker = styled.ul`

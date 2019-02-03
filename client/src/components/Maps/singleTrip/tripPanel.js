@@ -93,7 +93,7 @@ class TripPanel extends React.Component {
             )
           )
           const timeGaps = acc.timeGaps.concat(
-            util.calcTimeGap(distances[i], velocity)
+            util.calcTimeGap(distances[i], velocity).toFixed(1)
           )
           return { distances, timeGaps }
         },
@@ -448,7 +448,6 @@ class TripPanel extends React.Component {
                 graphMenuToggled ? "active-button" : ""
               }`}
             >
-              {/* <ChartIcon /> */}
               <i className="fa fa-area-chart" />
             </Button>
 
@@ -504,7 +503,7 @@ class TripPanel extends React.Component {
                   <s.WaypointList>
                     {trip.waypoints !== undefined &&
                       trip.waypoints.map(({ name }, i) => (
-                        <div key={name}>
+                        <div key={name} className="waypoint-wrapper">
                           <Waypoint
                             key={name}
                             i={i}
@@ -513,7 +512,12 @@ class TripPanel extends React.Component {
                             handleDelete={this.handleDelete}
                             handleEdit={this.handleEdit}
                           />
-                          <div>| {timeGaps[i]} minutes</div>
+
+                          {timeGaps.length > 0
+                            ? i === 0
+                              ? "0min"
+                              : `${timeGaps[i - 1]}min`
+                            : null}
                         </div>
                       ))}
                   </s.WaypointList>
@@ -558,6 +562,14 @@ class TripPanel extends React.Component {
             </s.TripDetail>
           </s.PanelSubheader>
 
+          <div className="trip-actions-wrapper">
+            <s.TripButton onClick={this.props.openModal}>
+              Start Trip
+            </s.TripButton>
+            <s.TripButton onClick={this.props.openModal}>
+              Mark Complete
+            </s.TripButton>
+          </div>
           <s.WaypointsHeader>
             <h4>Waypoints</h4>
             <s.AddButton
@@ -568,10 +580,11 @@ class TripPanel extends React.Component {
               <AddIcon height="18px" width="18px" />
             </s.AddButton>
           </s.WaypointsHeader>
+
           <s.WaypointList>
             {trip.waypoints !== undefined &&
               trip.waypoints.map(({ name }, i) => (
-                <div key={name}>
+                <div key={name} className="waypoint-wrapper">
                   <Waypoint
                     key={name}
                     i={i}
@@ -580,14 +593,14 @@ class TripPanel extends React.Component {
                     handleDelete={this.handleDelete}
                     handleEdit={this.handleEdit}
                   />
-                  <div>| {timeGaps[i]} minutes</div>
+                  {timeGaps.length > 0
+                    ? i === 0
+                      ? "0min"
+                      : `${timeGaps[i - 1]}min`
+                    : null}
                 </div>
               ))}
           </s.WaypointList>
-
-          <s.StartButton onClick={this.props.openModal}>
-            Start Trip
-          </s.StartButton>
         </s.Panel>
         <Modal isOpen={this.props.modalIsOpen}>
           {() => (
@@ -626,13 +639,13 @@ class TripPanel extends React.Component {
           )}
         </Modal>
 
+        {/* <TripPictures toggle={tripPicturesToggled} /> */}
         <ElevationChart
           distances={this.state.distances}
           elevations={elevations}
           mapRef={this.props.mapRef}
           toggle={graphMenuToggled}
         />
-        <TripPictures toggle={tripPicturesToggled} />
       </s.TripPanelStyles>
     )
   }

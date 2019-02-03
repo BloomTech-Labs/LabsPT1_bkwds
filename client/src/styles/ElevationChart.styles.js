@@ -3,20 +3,18 @@ import { media } from "../styles/theme/mixins"
 
 const isHiddenStyles = css`
   #elevationChart {
-    height: 0;
-    svg {
-      margin-top: 1rem;
-    }
+    visibility: hidden;
   }
 
   .elevation-chart-wrapper {
     padding: 12px 12px 8px 12px;
-    width: 90px;
+    width: 60px;
+    height: 187px;
     span.chevron-icon {
       top: 0.35rem;
-      right: 0.5rem;
-      height: 2.25rem;
-      width: 2.25rem;
+      left: 0.525rem;
+      height: 2.5rem;
+      width: 2.5rem;
     }
   }
 `
@@ -25,6 +23,9 @@ export const ElevationChartStyles = styled.div`
   visibility: visible;
   ${media.tablet`
     visibility: ${props => (props.toggle ? "visible" : "hidden")};
+    .elevation-chart-wrapper {
+      z-index: ${props => (props.toggle ? -1 : "inherit")};
+    }
   `}
 
   .elevation-chart-wrapper {
@@ -33,20 +34,25 @@ export const ElevationChartStyles = styled.div`
     background: white;
 
     position: absolute;
-    right: 1.5rem;
+    right: 0;
     top: unset;
     bottom: 50px;
     z-index: 5;
 
-    .chevron-wrapper {
+    .chevron-icon-wrapper {
       cursor: pointer;
       width: 50px;
+    }
+
+    .chart-icon-wrapper {
+      position: absolute;
+      bottom: 8px;
     }
 
     span.chevron-icon {
       position: absolute;
       top: 0.125rem;
-      right: 1.25rem;
+      left: 0.5rem;
       height: 1.5rem;
       width: 1.5rem;
 
@@ -57,7 +63,7 @@ export const ElevationChartStyles = styled.div`
 
     ${media.tablet`
       max-width: 100vw; 
-      z-index: 6;
+      z-index: ${props => (props.toggle ? 6 : -1)};
       right: 0;
       left: 0;
     `}

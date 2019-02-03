@@ -312,9 +312,15 @@ class ElevationChart extends Component {
     return (
       <s.ElevationChartStyles isHidden={isHidden} toggle={toggle}>
         <div className="elevation-chart-wrapper">
-          {isHidden && <ChartIcon height={32} width={32} />}
-          <div className="chevron-wrapper" onClick={this.toggleChart}>
-            <Chevron transform={isHidden ? "rotate(180deg)" : ""} />
+          {isHidden && (
+            <div className="chart-icon-wrapper">
+              <ChartIcon height={32} width={32} />
+            </div>
+          )}
+          <div className="chevron-icon-wrapper" onClick={this.toggleChart}>
+            <Chevron
+              transform={isHidden ? "rotate(90deg)" : "rotate(270deg)"}
+            />
           </div>
           {data.length > 0 && <div id="elevationChart" />}
         </div>
