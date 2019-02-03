@@ -59,7 +59,7 @@ export const getTrips = userId => dispatch => {
 export const removeActiveTrip = () => {
   return { type: REMOVE_ACTIVE_TRIP }
 }
-export const getSingleTrip = (tripId, privacy = false) => dispatch => {
+export const getSingleTrip = (tripId, visibility = false) => dispatch => {
   axios
     .get(
       visibility

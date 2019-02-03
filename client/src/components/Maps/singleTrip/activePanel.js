@@ -204,8 +204,7 @@ ActiveTripPanel.propTypes = {
 
 const mapStateToProps = ({ trips }) => ({
   trip: trips.activeTrip,
-  waypoints: trips.activeTrip && trips.activeTrip.waypoints,
-  privacy: trips.privacy
+  waypoints: trips.activeTrip && trips.activeTrip.waypoints
 })
 
 export default connect(
