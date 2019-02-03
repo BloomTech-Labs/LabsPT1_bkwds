@@ -51,8 +51,8 @@ export const ElevationChartStyles = styled.div`
 
     span.chevron-icon {
       position: absolute;
-      top: 0.125rem;
-      left: 0.5rem;
+      top: 0.25rem;
+      left: 0.75rem;
       height: 1.5rem;
       width: 1.5rem;
 

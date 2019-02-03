@@ -69,7 +69,7 @@ export const WaypointLabel = styled.label`
 `
 
 export const PanelHeader = styled.div`
-  padding: 1.25rem;
+  padding: 1rem;
   align-items: center;
   justify-content: space-between;
   display: flex;
@@ -84,7 +84,7 @@ export const TripDetail = styled.div`
   }
 `
 export const PanelSubheader = styled.div`
-  padding: 0.75rem 1.25rem 1.25rem 1.25rem;
+  padding: 0.5rem 1.25rem 1.25rem 1.25rem;
   display: flex;
 `
 
@@ -171,7 +171,7 @@ export const TripButton = styled.button`
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
   background: #45569e;
   color: white;
-  width: 145px;
+  width: 140px;
   border-radius: 5px;
   border: 0;
 `

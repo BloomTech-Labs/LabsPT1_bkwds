@@ -48,7 +48,9 @@ class TripPictures extends Component {
         <div className="trip-pictures-wrapper">
           {isHidden && <i className="fa fa-picture-o" />}
           <div className="chevron-wrapper" onClick={this.togglePictures}>
-            <Chevron transform={isHidden ? "rotate(180deg)" : ""} />
+            <Chevron
+              transform={isHidden ? "rotate(90deg)" : "rotate(270deg)"}
+            />
           </div>
 
           <div className="trip-pictures">

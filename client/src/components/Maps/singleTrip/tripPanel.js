@@ -639,7 +639,7 @@ class TripPanel extends React.Component {
           )}
         </Modal>
 
-        {/* <TripPictures toggle={tripPicturesToggled} /> */}
+        <TripPictures toggle={tripPicturesToggled} />
         <ElevationChart
           distances={this.state.distances}
           elevations={elevations}
