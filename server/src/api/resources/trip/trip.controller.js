@@ -37,7 +37,10 @@ export const createTrip = async (req, res) => {
   newTrip
     .save()
     .then(trip => {
-      User.p({ _id: req.body.userId }, { $addToSet: { trips: trip.id } })
+      User.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $addToSet: { trips: trip.id } }
+      )
         .then(() => {
           res.status(201).json(trip)
         })
