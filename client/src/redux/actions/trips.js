@@ -297,19 +297,20 @@ export const uploadPics = (tripId, image) => dispatch => {
     })
 }
 
-export const togglePublic = (tripId, isPublic, user) => dispatch => {
-  console.log(isPublic, "TRIPID")
+export const togglePublic = (tripId, user) => (dispatch, getState) => {
+  const isPublic = getState().trips.trips[tripId].isPublic
   dispatch({ type: TOGGLE_PUBLIC_TRIP })
   axios
     .put(`${SERVER_URI}/trips/${tripId}`, { isPublic: !isPublic })
     .then(res => {
       console.log(res.data, "TRIPID")
 
-      dispatch({ type: TOGGLE_PUBLIC_TRIP_SUCCESS, payload: res.data.isPublic })
+      dispatch({ type: TOGGLE_PUBLIC_TRIP_SUCCESS, payload: res.data })
     })
-    .then(() => {
-      dispatch(getTrips(user))
-    })
+    // .then(() => {
+    //   dispatch(getTrips(user))
+
+    // })
     .catch(err => {
       dispatch({
         type: TOGGLE_PUBLIC_TRIP_ERROR,

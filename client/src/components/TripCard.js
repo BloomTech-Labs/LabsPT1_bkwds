@@ -12,8 +12,7 @@ import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
-import { FaEyeSlash } from "react-icons/fa"
-import { FaEye } from "react-icons/fa"
+import PublicToggle from "./PublicToggle"
 
 const Card = ({
   archived,
@@ -51,22 +50,17 @@ const Card = ({
           {archived ? "Unarchive" : "Archive"}
         </Button>
         <Button
-          className={
-            isPublic
-              ? "button is-white fa fa-ye"
-              : "button is-white fa fa-eye-slash"
-          }
-          onClick={() => togglePublic(trip.id, isPublic, userId)}
+          className={isPublic}
+          onClick={() => togglePublic(trip.id, userId)}
         >
           {isPublic ? "Make Public!" : "Make Private"}
         </Button>
+        {/* <PublicToggle trip={trip}/> */}
         {isArchivedTripRoute && (
           <Button className="btn-tertiary" onClick={() => repeatTrip(trip)}>
             Repeat
           </Button>
         )}
-        <FaEyeSlash />
-        <FaEye />
       </div>
       <Link to={`/app/trip/${trip.id}`}>
         <CardButton>
@@ -90,16 +84,16 @@ TripCard.propTypes = {
   repeatTrip: PropTypes.func.isRequired,
   toggleArchive: PropTypes.func.isRequired,
   trip: TripPropTypes,
-  userId: PropTypes.string,
-  togglePublic: PropTypes.func.isRequired,
-  isPublic: PropTypes.bool.isRequired,
-  isPublicTripRoute: PropTypes.bool
+  userId: PropTypes.string
+  // togglePublic: PropTypes.func.isRequired,
+  // isPublic: PropTypes.bool.isRequired,
+  // isPublicTripRoute: PropTypes.bool
 }
 
 const mapStateToProps = ({ auth, router, trips }) => ({
   userId: auth.user.id,
   isArchivedTripRoute: router.location.pathname === "/app/trips/archived",
-  isPublicTripRoute: router.location.pathname === "/app/trips/explore",
+  // isPublicTripRoute: router.location.pathname === "/app/trips/explore",
 
   loading: trips.pending
 })

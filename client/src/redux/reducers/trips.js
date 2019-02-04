@@ -47,8 +47,7 @@ const defaultState = {
   error: null,
   trips: {},
   activeTrip: null,
-  tripPics: [],
-  isPublic: false
+  tripPics: []
 }
 
 export const tripReducer = (state = defaultState, action) => {
@@ -198,7 +197,7 @@ export const tripReducer = (state = defaultState, action) => {
       return {
         ...state,
         pending: false,
-        trips: { ...state.trips, isPublic: action.payload }
+        trips: { ...state.trips, [action.payload.id]: action.payload }
       }
     case TOGGLE_PUBLIC_TRIP_ERROR:
       return { ...state, pending: false, error: action.payload }
