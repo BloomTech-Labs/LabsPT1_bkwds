@@ -8,7 +8,7 @@ import { TripPropTypes } from "./propTypes"
 import { STATIC_MAP_KEY } from "../config"
 
 import TripCardLoader from "./TripCardLoader"
-import { togglePublic } from "../redux/actions/trips"
+// import { repeatTrip } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 // import { Button } from "../styles/theme/styledComponents"
@@ -66,7 +66,6 @@ const mapStateToProps = ({ auth, router, trips }) => ({
 })
 
 export default connect(
-  mapStateToProps,
+  mapStateToProps
   // TODO add repeatTrip
-  { togglePublic }
 )(PublicTripCard)
