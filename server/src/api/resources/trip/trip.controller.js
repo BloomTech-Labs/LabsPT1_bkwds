@@ -1,3 +1,4 @@
+import moment from "moment"
 import { Trip } from "./trip.model"
 import { User } from "../user/user.model"
 import { Waypoint } from "../waypoint/waypoint.model"
@@ -19,7 +20,10 @@ export const getAllTrips = (req, res) => {
     })
 }
 
-export const createTrip = (req, res) => {
+export const createTrip = async (req, res) => {
+  if (await notAllowedToCreateNewTrip(req.body.userId)) {
+    return res.status(401).json("User has reached their monthly trip limit")
+  }
   const newTrip = new Trip({
     userId: req.body.userId,
     name: req.body.name,
@@ -33,10 +37,7 @@ export const createTrip = (req, res) => {
   newTrip
     .save()
     .then(trip => {
-      User.findOneAndUpdate(
-        { _id: req.body.userId },
-        { $addToSet: { trips: trip.id } }
-      )
+      User.p({ _id: req.body.userId }, { $addToSet: { trips: trip.id } })
         .then(() => {
           res.status(201).json(trip)
         })
@@ -61,7 +62,7 @@ export const getOneTrip = (req, res) => {
     })
 }
 
-export const updateTrip = (req, res) => {
+export const updateTrip = async (req, res) => {
   const id = req.params.id
   const update = req.body
 
@@ -71,6 +72,12 @@ export const updateTrip = (req, res) => {
       .send(
         "Waypoints cannot be modified from Trip model. Use Waypoint model instead"
       )
+
+  if ("isArchived" in update && "tempId" in update) {
+    if (await notAllowedToArchiveTrip(update))
+      return res.status(401).json("User has reached their archive limit of 50")
+    delete update.tempId
+  }
 
   Trip.findOneAndUpdate({ _id: id }, update)
     .then(oldTrip => {
@@ -145,36 +152,63 @@ export const repeatTrip = (req, res) => {
   createTrip(updatedRequest, res)
 }
 
-export const uploadPics = (req, res) => {
-  const id = req.params.id
-  cloudinary.v2.uploader.upload(req.body.image, (err, result) => {
-    Trip.findOneAndUpdate(
-      { _id: id },
-      { $push: { tripPics: result.url } },
-      { returnOriginal: false }
-    ).then(oldTrip => {
-      Trip.findOne({ _id: oldTrip.id })
-        .then(newTrip => {
-          res.status(200).json(newTrip)
+export const uploadPics = ({ body, params }, res) => {
+  const { id } = params
+  const { image } = body
+
+  if (image) {
+    cloudinary.v2.uploader.upload(image, (err, result) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ err, message: "Unable to process the image" })
+      }
+      Trip.findOneAndUpdate(
+        { _id: id },
+        { $push: { tripPics: result.url } },
+        { returnOriginal: false }
+      )
+        .then(oldTrip => {
+          Trip.findOne({ _id: oldTrip.id })
+            .then(newTrip => res.status(200).json(newTrip))
+            .catch(() => res.status(500).json(err))
         })
-        .catch(() => {
-          res.status(404).json("Not Found")
-        })
-        .catch(error => {
-          console.log(error, "ERROR")
-          res.status(404).json(error)
-        })
+        .catch(() => res.status(500).json(err))
     })
-  })
+  } else {
+    res.status(422).send("Must include an image")
+  }
 }
 
-export const renderPics = (req, res) => {
-  console.log(req, "RENDERPICS")
-  Trip.find({})
-    .then(pictures => {
-      res.status(200).json(pictures)
-    })
-    .catch(err => {
-      res.status(500).send(err)
-    })
+const notAllowedToCreateNewTrip = async userId => {
+  const user = await User.findOne({ _id: userId })
+    .populate("trips")
+    .exec()
+  let trips = user.trips
+  if (user.subscribed) return false
+  if (trips.length <= 1) return false
+
+  trips = trips.slice(-2)
+  let dateOne = moment(trips[0].createdAt).format("LL")
+  let dateTwo = moment(trips[1].createdAt).format("LL")
+  let delta = moment()
+    .subtract(30, "days")
+    .format("LL")
+  if (dateOne > delta && dateTwo > delta) {
+    return true
+  }
+  return false
+}
+
+const notAllowedToArchiveTrip = async params => {
+  if (!params.isArchived) return false // isArchive is false, User is trying to unarchive Trip
+  const user = await User.findOne({ _id: params.tempId })
+    .populate("trips")
+    .exec()
+  if (user.subscribed) return false
+  let archivedTrips = user.trips.filter(trip => {
+    if (trip.isArchived) return trip
+  })
+  if (archivedTrips >= 50) return true
+  return false
 }

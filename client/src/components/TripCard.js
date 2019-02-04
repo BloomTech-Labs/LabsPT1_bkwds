@@ -12,7 +12,7 @@ import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
-import PublicToggle from "./PublicToggle"
+import PublicToggle from "./PublicTrips"
 
 const Card = ({
   archived,

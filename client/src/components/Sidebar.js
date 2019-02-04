@@ -71,6 +71,11 @@ const menuItems = [
     displayName: "Register",
     icon: "fa-heart",
     to: "/register"
+  },
+  {
+    displayName: "Explore",
+    icon: "fa-heart",
+    to: "/app/trips/explore"
   }
 ]
 

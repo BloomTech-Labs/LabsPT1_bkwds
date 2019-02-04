@@ -4,11 +4,11 @@ import PropTypes from "prop-types"
 
 import TripCard from "./TripCard"
 import * as s from "../styles/TripCard.styles"
-import { getTrips } from "../redux/actions/trips"
+import { getPublicTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 import { TripPropTypes } from "./propTypes"
 
-class ArchivedTrips extends Component {
+class PublicTrips extends Component {
   static propTypes = {
     getTrips: PropTypes.func.isRequired,
     loading: PropTypes.bool,
@@ -17,23 +17,26 @@ class ArchivedTrips extends Component {
   }
 
   state = {
-    archivedExists: false
+    publicExists: false
   }
 
   componentDidMount() {
-    const { getTrips, userId } = this.props
-    getTrips(userId)
+    const { getPublicTrips, userId } = this.props
+    getPublicTrips()
+    console.log("MEEE")
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const archivedExists = this.props.trips.some(trip => trip.isArchived)
-    if (!prevState.archivedExists && archivedExists) {
-      this.setState({ archivedExists })
+    const publicExists = this.props.trips.some(trip => trip.isPublic)
+    if (!prevState.publicExists && publicExists) {
+      this.setState({ publicExists })
     }
   }
 
   renderPlaceholders = () =>
-    [...Array(6)].map((_, i) => <TripCard key={i} loading={true} />)
+    this.props.trips
+      .filter(trip => trip.isPublic)
+      .map((_, i) => <TripCard key={i} loading />)
 
   renderArchivedTrips = () => {
     const { loading, trips } = this.props
@@ -47,16 +50,16 @@ class ArchivedTrips extends Component {
 
   render() {
     const { loading } = this.props
-    const { archivedExists } = this.state
+    const { publicExists } = this.state
 
     return (
       <s.TripCardStyles>
         <div className="container">
           {loading
             ? this.renderPlaceholders()
-            : archivedExists
+            : publicExists
             ? this.renderArchivedTrips()
-            : "No Archived Trips"}
+            : "No Public Trips"}
         </div>
       </s.TripCardStyles>
     )
@@ -71,5 +74,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getTrips }
-)(ArchivedTrips)
+  { getPublicTrips }
+)(PublicTrips)

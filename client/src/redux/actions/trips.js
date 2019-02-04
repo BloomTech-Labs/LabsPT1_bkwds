@@ -62,6 +62,24 @@ export const getTrips = userId => dispatch => {
       })
     })
 }
+
+export const getPublicTrips = () => dispatch => {
+  // If token, set token as Authorization header on all axios requests:
+  dispatch({ type: LOADING_TRIPS })
+  return axios
+    .get(`${SERVER_URI}/public/trips`)
+    .then(res => {
+      dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
+      console.log(res, "RESSSSS")
+    })
+    .catch(err => {
+      dispatch({ type: LOADING_TRIPS_ERROR, payload: normalizeErrorMsg(err) })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
+}
+
 export const removeActiveTrip = () => {
   return { type: REMOVE_ACTIVE_TRIP }
 }
@@ -175,7 +193,10 @@ export const deleteTrip = tripId => dispatch => {
 export const toggleArchive = (tripId, archived, user) => dispatch => {
   dispatch({ type: TOGGLE_ARCHIVE_TRIP })
   axios
-    .put(`${SERVER_URI}/trips/${tripId}`, { isArchived: !archived })
+    .put(`${SERVER_URI}/trips/${tripId}`, {
+      isArchived: !archived,
+      tempId: user
+    })
     .then(() => {
       dispatch({ type: TOGGLE_ARCHIVE_TRIP_SUCCESS })
     })
