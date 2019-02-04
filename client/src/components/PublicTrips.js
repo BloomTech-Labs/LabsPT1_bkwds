@@ -10,7 +10,7 @@ import { TripPropTypes } from "./propTypes"
 
 class PublicTrips extends Component {
   static propTypes = {
-    getTrips: PropTypes.func.isRequired,
+    getPublicTrips: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     trips: PropTypes.arrayOf(TripPropTypes),
     userId: PropTypes.string.isRequired
@@ -21,7 +21,7 @@ class PublicTrips extends Component {
   }
 
   componentDidMount() {
-    const { getPublicTrips, userId } = this.props
+    const { getPublicTrips } = this.props
     getPublicTrips()
   }
 
