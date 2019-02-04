@@ -10,6 +10,8 @@ import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
 import { Link } from "react-router-dom"
+import Modal from "../../Modals/Modal"
+import { openModal, closeModal } from "../../../redux/actions/modal"
 
 class ActiveTripPanel extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class ActiveTripPanel extends React.Component {
     this.state = {
       polylines: null,
       markers: []
+      // title: "Share Trip"
     }
   }
 
@@ -101,6 +104,11 @@ class ActiveTripPanel extends React.Component {
       }
     })
   }
+  // changeTitle = () => {
+  //   console.log(this.props.trip.id)
+  //   this.setState({ title: `/public/${this.props.trip.id}` });
+  //   this.props.getSingleTrip(this.props.trip.id, 'public/');
+  // };
 
   renderWaypoints = () => {
     let markers = []
@@ -147,7 +155,6 @@ class ActiveTripPanel extends React.Component {
       markers.push(marker)
     })
   }
-
   render() {
     // console.log(match.params.tripId)
     // const publicId = ({ match })
@@ -158,7 +165,9 @@ class ActiveTripPanel extends React.Component {
           Start: {moment(this.props.trip.start).format("YYYY-MM-DD")} - End:{" "}
           {moment(this.props.trip.end).format("YYYY-MM-DD")}
         </s.DateLabel> */}
-        <Link to={`/public/${this.props.trip.id}`}>Share Trip</Link>
+        <button>
+          <Link to={`/public/${this.props.trip.id}`}>Share Trip</Link>
+        </button>
         <s.WaypointTracker>
           {this.props.waypoints &&
             this.props.waypoints.map(waypoint => (

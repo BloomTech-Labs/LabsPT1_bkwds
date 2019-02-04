@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import moment from "moment"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "../../propTypes"
-
+import { getSingleTrip } from "../../../redux/actions/trips"
 class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)
@@ -16,6 +16,7 @@ class ActiveTripPanel extends React.Component {
   }
 
   componentDidMount() {
+    this.props.getSingleTrip(this.props.trip.id, "public/")
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
         this.setState({
@@ -62,7 +63,8 @@ class ActiveTripPanel extends React.Component {
 
 ActiveTripPanel.propTypes = {
   trip: TripPropTypes,
-  waypoints: PropTypes.array.isRequired
+  waypoints: PropTypes.array.isRequired,
+  getSingleTrip: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ trips }) => ({
@@ -70,4 +72,12 @@ const mapStateToProps = ({ trips }) => ({
   waypoints: trips.activeTrip && trips.activeTrip.waypoints
 })
 
-export default connect(mapStateToProps)(ActiveTripPanel)
+const mapDispatchToProps = {
+  getSingleTrip
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  { getSingleTrip }
+)(ActiveTripPanel)
