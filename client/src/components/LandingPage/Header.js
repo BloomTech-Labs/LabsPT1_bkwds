@@ -150,7 +150,7 @@ class Header extends PureComponent {
               <Link to="/login">Log in</Link>
             </li>
             <li className="links">
-              <Link to="/register">Sign up</Link>
+              <Link to="/login">Log in</Link>
             </li>
           </Menu>
         </HeaderContainer>

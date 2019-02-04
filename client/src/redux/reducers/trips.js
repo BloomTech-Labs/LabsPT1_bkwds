@@ -193,7 +193,6 @@ export const tripReducer = (state = defaultState, action) => {
     case TOGGLE_PUBLIC_TRIP:
       return { ...state, pending: true }
     case TOGGLE_PUBLIC_TRIP_SUCCESS:
-      console.log(action.payload, "PAY:PD")
       return {
         ...state,
         pending: false,

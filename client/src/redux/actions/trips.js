@@ -302,12 +302,10 @@ export const toggleWaypoint = waypointId => dispatch => {
 }
 
 export const uploadPics = (tripId, image) => dispatch => {
-  console.log(image, "RES Action")
   dispatch({ type: UPLOADING_TRIP_PIC })
   axios
     .put(`${SERVER_URI}/trips/upload/${tripId}`, { image })
     .then(res => {
-      console.log(res, "RESTWO")
       dispatch({ type: UPLOADING_TRIP_PIC_SUCCESS, payload: res.data.tripPics })
     })
     .catch(err => {
@@ -318,20 +316,14 @@ export const uploadPics = (tripId, image) => dispatch => {
     })
 }
 
-export const togglePublic = (tripId, user) => (dispatch, getState) => {
+export const togglePublic = tripId => (dispatch, getState) => {
   const isPublic = getState().trips.trips[tripId].isPublic
   dispatch({ type: TOGGLE_PUBLIC_TRIP })
   axios
     .put(`${SERVER_URI}/trips/${tripId}`, { isPublic: !isPublic })
     .then(res => {
-      console.log(res.data, "TRIPID")
-
       dispatch({ type: TOGGLE_PUBLIC_TRIP_SUCCESS, payload: res.data })
     })
-    // .then(() => {
-    //   dispatch(getTrips(user))
-
-    // })
     .catch(err => {
       dispatch({
         type: TOGGLE_PUBLIC_TRIP_ERROR,

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
-import TripCard from "./TripCard"
+import PublicTripCard from "./PublicTripCard"
 import * as s from "../styles/TripCard.styles"
 import { getPublicTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
@@ -23,7 +23,6 @@ class PublicTrips extends Component {
   componentDidMount() {
     const { getPublicTrips, userId } = this.props
     getPublicTrips()
-    console.log("MEEE")
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -36,14 +35,14 @@ class PublicTrips extends Component {
   renderPlaceholders = () =>
     this.props.trips
       .filter(trip => trip.isPublic)
-      .map((_, i) => <TripCard key={i} loading />)
+      .map((_, i) => <PublicTripCard key={i} loading />)
 
   renderArchivedTrips = () => {
     const { loading, trips } = this.props
 
     return trips.map(trip =>
       trip.isPublic ? (
-        <TripCard key={trip.id} loading={loading} trip={trip} />
+        <PublicTripCard key={trip.id} loading={loading} trip={trip} />
       ) : null
     )
   }
