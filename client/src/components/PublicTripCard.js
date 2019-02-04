@@ -13,7 +13,7 @@ import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 // import { Button } from "../styles/theme/styledComponents"
 
-const Card = ({ trip }) => (
+const Card = ({ repeatTrip, trip }) => (
   <>
     <div className="card-image">
       <img
@@ -53,7 +53,7 @@ const PublicTripCard = props => (
 
 PublicTripCard.propTypes = {
   loading: PropTypes.bool.isRequired,
-  //   repeatTrip: PropTypes.func.isRequired,
+  repeatTrip: PropTypes.func.isRequired,
   trip: TripPropTypes,
   userId: PropTypes.string
 }
