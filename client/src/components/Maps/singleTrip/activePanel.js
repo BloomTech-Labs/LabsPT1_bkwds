@@ -164,7 +164,9 @@ class ActiveTripPanel extends React.Component {
           {moment(this.props.trip.end).format("YYYY-MM-DD")}
         </s.DateLabel> */}
         <button>
-          <Link to={`/public/${this.props.trip.id}`}>Share Trip</Link>
+          <Link target="_blank" to={`/public/${this.props.trip.id}`}>
+            Share Trip
+          </Link>
         </button>
         <s.WaypointTracker>
           {this.props.waypoints &&

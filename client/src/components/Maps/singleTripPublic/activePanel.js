@@ -16,7 +16,7 @@ class ActiveTripPanel extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSingleTrip(this.props.trip.id, "public/")
+    // this.props.getSingleTrip(this.props.trip.id, "public/")
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
         this.setState({
@@ -63,8 +63,8 @@ class ActiveTripPanel extends React.Component {
 
 ActiveTripPanel.propTypes = {
   trip: TripPropTypes,
-  waypoints: PropTypes.array.isRequired,
-  getSingleTrip: PropTypes.func.isRequired
+  waypoints: PropTypes.array.isRequired
+  // getSingleTrip: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ trips }) => ({
@@ -72,12 +72,12 @@ const mapStateToProps = ({ trips }) => ({
   waypoints: trips.activeTrip && trips.activeTrip.waypoints
 })
 
-const mapDispatchToProps = {
-  getSingleTrip
-}
+// const mapDispatchToProps = {
+//   getSingleTrip
+// }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  { getSingleTrip }
+  mapStateToProps
+  // mapDispatchToProps,
+  // { getSingleTrip }
 )(ActiveTripPanel)
