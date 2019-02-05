@@ -13,7 +13,7 @@ import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
 // import { Button } from "../styles/theme/styledComponents"
 
-const Card = ({ repeatTrip, trip }) => (
+const Card = ({ trip }) => (
   <>
     <div className="card-image">
       <img
@@ -27,7 +27,6 @@ const Card = ({ repeatTrip, trip }) => (
     </div>
     <div className="card-content">
       <h5>{trip.name}</h5>
-      <div>Start: {moment(trip.start).format("LL")}</div>
       <div>Start: {moment(trip.start).format("LL")}</div>
       <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
       <div className="card-cta">
@@ -53,7 +52,7 @@ const PublicTripCard = props => (
 
 PublicTripCard.propTypes = {
   loading: PropTypes.bool.isRequired,
-  repeatTrip: PropTypes.func.isRequired,
+  //   repeatTrip: PropTypes.func.isRequired,
   trip: TripPropTypes,
   userId: PropTypes.string
 }

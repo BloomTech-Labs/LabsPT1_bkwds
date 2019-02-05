@@ -238,6 +238,9 @@ class ElevationChart extends Component {
 
     infoBoxGrade.append("tspan").attr("class", "infoBoxGradeValue")
 
+    console.log(this.props, "ELEVATION CHART PROPS")
+    console.log(this.props.mapRef, "MAPREF")
+
     const mapId = this.props.mapRef.current.id
 
     const blip = d3
