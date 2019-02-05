@@ -16,7 +16,6 @@ import { Button } from "../styles/theme/styledComponents"
 const Card = ({
   archived,
   isArchivedTripRoute,
-  isPublic,
   togglePublic,
   repeatTrip,
   toggleArchive,
