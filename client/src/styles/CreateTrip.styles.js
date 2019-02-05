@@ -4,6 +4,8 @@ import { media } from "./theme/mixins"
 export const MapWrapper = Styled.div`
   position:relative;
   margin-left: -50px;
+  overflow-x: hidden;
+  overflow-y: hidden;
   ${media.tablet`
     margin-left: 0;
   `}

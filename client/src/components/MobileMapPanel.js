@@ -82,7 +82,7 @@ const MobileMapPanel = ({ children }) => (
 )
 
 MobileMapPanel.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.any
 }
 
 export default MobileMapPanel

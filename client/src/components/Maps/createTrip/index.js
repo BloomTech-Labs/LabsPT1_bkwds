@@ -26,6 +26,7 @@ class CreateTripMap extends React.Component {
       {
         center: userCenter ? userCenter : { lat: 39.0997, lng: -94.5786 },
         zoom: 11,
+        gestureHandling: "greedy",
         disableDefaultUI: true
       }
     )
@@ -156,10 +157,7 @@ class CreateTripMap extends React.Component {
     return (
       <MapWrapper>
         <CreateTripPanel {...props} />
-        <div
-          id="createTripMap"
-          style={{ width: "100%", height: "100%", position: "absolute" }}
-        />
+        <div id="createTripMap" style={{ width: "100%", height: "100%" }} />
         <AddButton addWaypoint={this.addWaypoint} />
       </MapWrapper>
     )
