@@ -10,8 +10,6 @@ import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
 import { Link } from "react-router-dom"
-import Modal from "../../Modals/Modal"
-import { openModal, closeModal } from "../../../redux/actions/modal"
 
 class ActiveTripPanel extends React.Component {
   constructor(props) {
