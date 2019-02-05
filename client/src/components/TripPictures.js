@@ -103,6 +103,7 @@ class TripPictures extends Component {
 TripPictures.propTypes = {
   trip: TripPropTypes,
   id: PropTypes.string.isRequired,
+  toggle: PropTypes.bool.isRequired,
   tripPics: PropTypes.arrayOf(PropTypes.string),
   uploadPics: PropTypes.func.isRequired
 }
