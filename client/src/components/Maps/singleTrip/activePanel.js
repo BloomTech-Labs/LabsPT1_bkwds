@@ -9,6 +9,7 @@ import PropTypes from "prop-types"
 import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
+import MobileMapPanel from "../../MobileMapPanel"
 import "react-accessible-accordion/dist/fancy-example.css"
 
 import {
@@ -26,7 +27,8 @@ class ActiveTripPanel extends React.Component {
     super(props)
     this.state = {
       polylines: null,
-      markers: []
+      markers: [],
+      mobileWaypointToggle: false
     }
   }
 
@@ -157,6 +159,10 @@ class ActiveTripPanel extends React.Component {
     })
   }
 
+  toggleWaypointList = () => {
+    this.setState({ mobileWaypointToggle: !this.state.mobileWaypointToggle })
+  }
+
   render() {
     let style = {
       top: 0,
@@ -174,14 +180,26 @@ class ActiveTripPanel extends React.Component {
           name={this.props.trip.name}
           waypoints={this.props.waypoints}
         />
-        <s.Panel>
+        <MobileMapPanel>
+          <div className="mobile-panel">
+            <Button
+              onClick={this.toggleWaypointList}
+              className={`btn-neutral ${
+                this.state.mobileWaypointToggle ? "active-button" : ""
+              }`}
+            >
+              <i className="fa fa-map-marker" />
+            </Button>
+          </div>
+        </MobileMapPanel>
+        <s.ActivePanel>
           <Accordion>
             {this.props.waypoints &&
-              this.props.waypoints.map(waypoint => (
-                <AccordionItem>
+              this.props.waypoints.map((waypoint, i) => (
+                <AccordionItem key={i}>
                   <AccordionItemTitle>
                     <div style={container}>
-                      <h4>{waypoint.name}</h4>
+                      <h4 style={{ fontSize: "1.25rem" }}>{waypoint.name}</h4>
                       <div className="accordion__arrow" style={style} />
                     </div>
                   </AccordionItemTitle>
@@ -203,7 +221,7 @@ class ActiveTripPanel extends React.Component {
                 </AccordionItem>
               ))}
           </Accordion>
-        </s.Panel>
+        </s.ActivePanel>
       </div>
     )
   }

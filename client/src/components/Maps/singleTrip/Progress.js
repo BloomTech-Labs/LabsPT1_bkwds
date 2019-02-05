@@ -1,20 +1,27 @@
 import React from "react"
 import Styled from "styled-components"
 import { ProgressBar, Step } from "react-step-progress-bar"
+import { media } from "../../../styles/theme/mixins"
 
 const ProgressPanel = Styled.div`
     background:#f4f4f4;
     position:absolute;
-    height:12rem;
     width:75%;
-    bottom:0;
+    max-width:700px;
     z-index:4;
     left:0;
+    height:110px;
     right:0;
-    border-radius:1rem;
+    height:100[x]
     margin-left:auto;
     margin-right:auto;
-
+    ${media.tablet`
+        top:0;
+        left:75px;
+        height:10%;
+        max-height:110px;
+        min-height:4rem;
+  `}
 `
 const PanelHeader = Styled.h4`
     padding:.25rem 2rem;
@@ -35,7 +42,6 @@ const StepContainer = Styled.div`
     border-radius:50%;
 `
 let calcPercentage = waypoints => {
-  console.log(waypoints)
   let index = 0
   let val = 100 / waypoints.length
 
@@ -46,7 +52,6 @@ let calcPercentage = waypoints => {
     }
     index = waypoints.length
   }
-  console.log(val * index)
   return val * index
 }
 const Progress = props => {
@@ -62,7 +67,7 @@ const Progress = props => {
           >
             {props.waypoints.map((_, i) => {
               return (
-                <Step>
+                <Step key={i}>
                   {({ accomplished }) => (
                     <StepContainer accomplished={accomplished}>
                       {console.log(accomplished)}
