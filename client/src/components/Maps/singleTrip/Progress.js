@@ -17,10 +17,11 @@ const ProgressPanel = Styled.div`
     margin-right:auto;
     ${media.tablet`
         top:0;
-        left:75px;
+        left:50px;
         height:10%;
         max-height:110px;
         min-height:4rem;
+        width: calc(100% - 50px);
   `}
 `
 const PanelHeader = Styled.h4`
