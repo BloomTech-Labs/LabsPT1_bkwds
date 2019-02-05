@@ -31,7 +31,8 @@ class ActiveTripPanel extends React.Component {
       velocity: 1.4,
       polylines: null,
       markers: [],
-      timeGaps: []
+      timeGaps: [],
+      mobileWaypointToggle: false
     }
   }
 
@@ -238,6 +239,75 @@ class ActiveTripPanel extends React.Component {
               <i className="fa fa-map-marker" />
             </Button>
           </div>
+          {this.state.mobileWaypointToggle ? (
+            <s.MobileActivePanel>
+              <Accordion>
+                {this.props.waypoints &&
+                  this.props.waypoints.map((waypoint, i) => (
+                    <AccordionItem key={i}>
+                      <AccordionItemTitle>
+                        <div style={container}>
+                          <h4 style={{ fontSize: "1.25rem" }}>
+                            {waypoint.name}
+                          </h4>
+                          {timeGaps.length > 0 &&
+                            i > 0 &&
+                            i <= timeGaps.length &&
+                            waypoints[i - 1] &&
+                            this.isLate(
+                              waypoints[i - 1].start,
+                              timeGaps[i - 1],
+                              waypoint.start
+                            ) &&
+                            !waypoint.complete && (
+                              <i className="fa fa-exclamation-circle" />
+                            )}
+                          <div className="accordion__arrow" style={style} />
+                        </div>
+                      </AccordionItemTitle>
+                      <AccordionItemBody>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between"
+                          }}
+                        >
+                          <div>
+                            <div>
+                              ETA:{" "}
+                              {moment(waypoint.start).format(
+                                "YYYY-MM-DD HH:mm"
+                              )}
+                            </div>
+                            <div>
+                              Status: Checked In @{" "}
+                              {moment(waypoint.start).format("HH:mm")}
+                            </div>
+                          </div>
+                          {waypoint.complete ? (
+                            <Button
+                              onClick={() =>
+                                this.props.toggleWaypoint(waypoint.id)
+                              }
+                            >
+                              <i className="fa fa-check" />
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() =>
+                                this.props.toggleWaypoint(waypoint.id)
+                              }
+                            >
+                              <i className="fa fa-times" />
+                            </Button>
+                          )}
+                        </div>
+                      </AccordionItemBody>
+                    </AccordionItem>
+                  ))}
+              </Accordion>
+            </s.MobileActivePanel>
+          ) : null}
         </MobileMapPanel>
         <s.ActivePanel>
           <Accordion>

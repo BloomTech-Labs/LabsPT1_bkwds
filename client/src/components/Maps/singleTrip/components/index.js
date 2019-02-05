@@ -68,6 +68,17 @@ export const ActivePanel = styled.div`
   display:none;
 `}
 `
+
+export const MobileActivePanel = styled(ActivePanel)`
+  ${media.tablet`
+    display:block;
+    top:120px;
+    left:50px;
+    right:0;
+    margin-left:0;
+    margin-right:0;
+`}
+`
 export const MobileButton = styled.button`
   display: none;
   ${media.tablet`
