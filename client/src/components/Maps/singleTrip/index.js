@@ -69,6 +69,7 @@ class SingleTripMap extends React.Component {
       {
         center: center,
         zoom: 12,
+        gestureHandling: "greedy",
         disableDefaultUI: true
       }
     )
