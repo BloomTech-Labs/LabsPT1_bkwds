@@ -37,7 +37,7 @@ class PublicTrips extends Component {
       .filter(trip => trip.isPublic)
       .map((_, i) => <PublicTripCard key={i} loading />)
 
-  renderArchivedTrips = () => {
+  renderPublicTrips = () => {
     const { loading, trips } = this.props
 
     return trips.map(trip =>
@@ -50,17 +50,23 @@ class PublicTrips extends Component {
   render() {
     const { loading } = this.props
     const { publicExists } = this.state
-
+    const title = {
+      paddingLeft: "20px"
+    }
     return (
-      <s.TripCardStyles>
-        <div className="container">
-          {loading
-            ? this.renderPlaceholders()
-            : publicExists
-            ? this.renderArchivedTrips()
-            : "No Public Trips"}
-        </div>
-      </s.TripCardStyles>
+      <div>
+        <h1 style={title}>Explore</h1>
+
+        <s.TripCardStyles>
+          <div className="container">
+            {loading
+              ? this.renderPlaceholders()
+              : publicExists
+              ? this.renderPublicTrips()
+              : "No Public Trips"}
+          </div>
+        </s.TripCardStyles>
+      </div>
     )
   }
 }
