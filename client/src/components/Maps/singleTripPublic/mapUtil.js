@@ -17,6 +17,11 @@ export const calcDistance = (fromLat, fromLng, toLat, toLng) => {
 
 //TODO - add elev_service to window?
 //Returns an Elevation Object with a location(LatLng obhect),elevation,and resolution properties
+
+export const calcTimeGap = (distance, velocity) => {
+  return distance / (velocity * 60)
+}
+
 export const getElevations = latLngArr => {
   let elevations
   const elev_service = new window.google.maps.ElevationService()

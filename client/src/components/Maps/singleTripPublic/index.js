@@ -38,9 +38,12 @@ class PublicTrip extends React.Component {
     window.elevation = new window.google.maps.ElevationService()
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.trip !== prevProps.trip && prevProps.trip == null) {
-      this.renderMap({ lat: this.props.trip.lat, lng: this.props.trip.lon })
+  componentDidUpdate(nextProps) {
+    if (nextProps.trip !== this.props.trip) {
+      this.renderMap({
+        lat: this.props.trip.lat,
+        lng: this.props.trip.lon
+      })
     }
   }
 

@@ -15,6 +15,10 @@ export const calcDistance = (fromLat, fromLng, toLat, toLng) => {
 //   return window.google.maps.geometry.spherical.computeLength(G_LatLngs)
 // }
 
+export const calcTimeGap = (distance, velocity) => {
+  return distance / (velocity * 60)
+}
+
 export const getElevations = latLngArr => {
   let elevations
   const elev_service = new window.google.maps.ElevationService()
