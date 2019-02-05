@@ -10,7 +10,8 @@ export const TripPropTypes = PropTypes.shape({
   name: PropTypes.string.isRequired,
   start: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
-  waypoints: PropTypes.array.isRequired
+  waypoints: PropTypes.array.isRequired,
+  tripPics: PropTypes.arrayOf(PropTypes.string).isRequired
 })
 
 export const getDefaultTripProps = overrides => {

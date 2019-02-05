@@ -40,7 +40,10 @@ class PublicTrip extends React.Component {
 
   componentDidUpdate(nextProps) {
     if (nextProps.trip !== this.props.trip) {
-      this.renderMap({ lat: this.props.trip.lat, lng: this.props.trip.lon })
+      this.renderMap({
+        lat: this.props.trip.lat,
+        lng: this.props.trip.lon
+      })
     }
   }
 

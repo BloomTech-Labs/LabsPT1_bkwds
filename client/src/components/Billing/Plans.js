@@ -169,7 +169,7 @@ const Plans = ({ isSubscribed }) => (
         <h2>$0</h2>
         <span className="plans-monthly">per month</span>
         <span>
-          Unlimited
+          2 per month
           <span className="plans-mobile">&nbsp;number of trips</span>
         </span>
         <span>
@@ -177,9 +177,18 @@ const Plans = ({ isSubscribed }) => (
           <span className="plans-mobile">&nbsp;archived trips</span>
         </span>
         <span>1 photo per trip</span>
-        <span className="plans-spacer">&nbsp;</span>
-        <span className="plans-spacer">&nbsp;</span>
-        <span className="plans-spacer">&nbsp;</span>
+        <span>
+          <i className="fa fa-check" />
+          <span className="plans-spacer">&nbsp;</span>
+        </span>
+        <span>
+          <i className="fa fa-check" />
+          <span className="plans-spacer">&nbsp;</span>
+        </span>
+        <span>
+          <i className="fa fa-check" />
+          <span className="plans-spacer">&nbsp;</span>
+        </span>
         <span className="plans-current">
           {isSubscribed ? "Free" : "Current plan"}
         </span>

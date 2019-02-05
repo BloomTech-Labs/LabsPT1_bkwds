@@ -35,10 +35,12 @@ import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
 import { numOfSamples, metersToFeet, metersToMiles } from "../../ElevationChart"
+import TripPictures from "../../TripPictures"
 
 class TripPanel extends React.Component {
   state = {
     disableSafety: false,
+    velocity: 1.4,
     distances: [],
     elevations: [],
     hours: "",
@@ -48,7 +50,9 @@ class TripPanel extends React.Component {
     trip: {},
     tripDistance: null,
     waypointsMenuToggled: false,
-    graphMenuToggled: false
+    graphMenuToggled: false,
+    tripPics: null,
+    timeGaps: []
   }
 
   componentDidMount() {
@@ -68,6 +72,7 @@ class TripPanel extends React.Component {
   }
 
   getElevationsAlongPath = () => {
+    const { velocity } = this.state
     if (this.state.markers.length > 1) {
       const elevator = new window.google.maps.ElevationService()
       let latLngs = this.state.markers.map(marker => ({
@@ -75,12 +80,24 @@ class TripPanel extends React.Component {
         lng: marker.getPosition().lng()
       }))
 
-      const distances = latLngs.reduce((acc, curr, i, arr) => {
-        if (i === arr.length - 1) return acc
-        return acc.concat(
-          util.calcDistance(curr.lat, curr.lng, arr[i + 1].lat, arr[i + 1].lng)
-        )
-      }, [])
+      const { distances, timeGaps } = latLngs.reduce(
+        (acc, curr, i, arr) => {
+          if (i === arr.length - 1) return acc
+          const distances = acc.distances.concat(
+            util.calcDistance(
+              curr.lat,
+              curr.lng,
+              arr[i + 1].lat,
+              arr[i + 1].lng
+            )
+          )
+          const timeGaps = acc.timeGaps.concat(
+            util.calcTimeGap(distances[i], velocity)
+          )
+          return { distances, timeGaps }
+        },
+        { distances: [], timeGaps: [] }
+      )
 
       elevator.getElevationAlongPath(
         {
@@ -89,6 +106,7 @@ class TripPanel extends React.Component {
         },
         results => {
           this.setState({
+            timeGaps,
             distances,
             elevations: results.map(result => result)
           })
@@ -360,9 +378,9 @@ class TripPanel extends React.Component {
       trip,
       tripDistance,
       waypointsMenuToggled,
-      graphMenuToggled
+      graphMenuToggled,
+      timeGaps
     } = this.state
-
     return (
       <s.TripPanelStyles>
         <MobileMapPanel>
@@ -456,14 +474,17 @@ class TripPanel extends React.Component {
                   <s.WaypointList>
                     {trip.waypoints !== undefined &&
                       trip.waypoints.map(({ name }, i) => (
-                        <Waypoint
-                          key={name}
-                          i={i}
-                          name={name}
-                          isEditing={isEditing}
-                          handleDelete={this.handleDelete}
-                          handleEdit={this.handleEdit}
-                        />
+                        <div key={name}>
+                          <Waypoint
+                            key={name}
+                            i={i}
+                            name={name}
+                            isEditing={isEditing}
+                            handleDelete={this.handleDelete}
+                            handleEdit={this.handleEdit}
+                          />
+                          <div>| {timeGaps[i]} minutes</div>
+                        </div>
                       ))}
                   </s.WaypointList>
                 </div>
@@ -520,16 +541,20 @@ class TripPanel extends React.Component {
           <s.WaypointList>
             {trip.waypoints !== undefined &&
               trip.waypoints.map(({ name }, i) => (
-                <Waypoint
-                  key={name}
-                  i={i}
-                  name={name}
-                  isEditing={isEditing}
-                  handleDelete={this.handleDelete}
-                  handleEdit={this.handleEdit}
-                />
+                <div key={name}>
+                  <Waypoint
+                    key={name}
+                    i={i}
+                    name={name}
+                    isEditing={isEditing}
+                    handleDelete={this.handleDelete}
+                    handleEdit={this.handleEdit}
+                  />
+                  <div>| {timeGaps[i]} minutes</div>
+                </div>
               ))}
           </s.WaypointList>
+          <TripPictures />
 
           <s.StartButton onClick={this.props.openModal}>
             Start Trip
