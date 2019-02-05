@@ -1,6 +1,7 @@
 import React from "react"
 import * as s from "./components"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 import moment from "moment"
 import "react-step-progress-bar/styles.css"
 import Progress from "./Progress"
@@ -371,6 +372,11 @@ class ActiveTripPanel extends React.Component {
                 </AccordionItem>
               ))}
           </Accordion>
+          <Button>
+            <Link target="_blank" to={`/public/${this.props.trip.id}`}>
+              Share Trip
+            </Link>
+          </Button>
         </s.ActivePanel>
       </div>
     )
