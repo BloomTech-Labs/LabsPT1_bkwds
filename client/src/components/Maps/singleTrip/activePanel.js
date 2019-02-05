@@ -263,26 +263,36 @@ class ActiveTripPanel extends React.Component {
                     </div>
                   </AccordionItemTitle>
                   <AccordionItemBody>
-                    <div>
-                      ETA: {moment(waypoint.start).format("YYYY-MM-DD HH:mm")}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between"
+                      }}
+                    >
+                      <div>
+                        <div>
+                          ETA:{" "}
+                          {moment(waypoint.start).format("YYYY-MM-DD HH:mm")}
+                        </div>
+                        <div>
+                          Status: Checked In @{" "}
+                          {moment(waypoint.start).format("HH:mm")}
+                        </div>
+                      </div>
+                      {waypoint.complete ? (
+                        <Button
+                          onClick={() => this.props.toggleWaypoint(waypoint.id)}
+                        >
+                          <i className="fa fa-check" />
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => this.props.toggleWaypoint(waypoint.id)}
+                        >
+                          <i className="fa fa-times" />
+                        </Button>
+                      )}
                     </div>
-                    <div>
-                      Status: Checked In @{" "}
-                      {moment(waypoint.start).format("HH:mm")}
-                    </div>
-                    {waypoint.complete ? (
-                      <Button
-                        onClick={() => this.props.toggleWaypoint(waypoint.id)}
-                      >
-                        <i className="fa fa-check" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => this.props.toggleWaypoint(waypoint.id)}
-                      >
-                        <i className="fa fa-times" />
-                      </Button>
-                    )}
                   </AccordionItemBody>
                 </AccordionItem>
               ))}

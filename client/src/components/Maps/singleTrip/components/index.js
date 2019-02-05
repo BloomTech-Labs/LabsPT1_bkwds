@@ -65,12 +65,7 @@ export const ActivePanel = styled.div`
   height: 400px;
   overflow: scroll;
   ${media.tablet`
-  top:unset;
-  bottom: -260px;
-  right:0;
-  left:0;
-  margin-left:auto;
-  margin-right:auto;
+  display:none;
 `}
 `
 export const MobileButton = styled.button`
