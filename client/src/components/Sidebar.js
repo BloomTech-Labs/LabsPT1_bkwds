@@ -15,7 +15,7 @@ let SidebarLink = ({ icon, displayName, pathname, to, toggleSidebar }) => (
     className={pathname === to ? "btn-inverted" : "btn-secondary"}
   >
     <Link to={to}>
-      <i className={`fa ${icon}`} />
+      <i className={`fas ${icon}`} />
     </Link>
     <Link to={to}>{displayName}</Link>
   </Button>
@@ -29,7 +29,7 @@ SidebarLink = connect(
 const menuItems = [
   {
     displayName: "Dashboard",
-    icon: "fa-tachometer",
+    icon: "fa-tachometer-alt",
     to: "/app/dashboard"
   },
   {
@@ -58,19 +58,9 @@ const menuItems = [
     to: "/app/settings"
   },
   {
-    displayName: "Landing Page",
-    icon: "fa-heart",
-    to: "/"
-  },
-  {
-    displayName: "Login",
-    icon: "fa-heart",
-    to: "/login"
-  },
-  {
-    displayName: "Register",
-    icon: "fa-heart",
-    to: "/register"
+    displayName: "Explore",
+    icon: "fa-globe-americas",
+    to: "/app/trips/explore"
   }
 ]
 

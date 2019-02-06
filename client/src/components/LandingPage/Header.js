@@ -147,10 +147,10 @@ class Header extends PureComponent {
               <button onClick={() => scrollTo("features")}>Features</button>
             </li>
             <li className="links">
-              <Link to="/login">Log in</Link>
+              <Link to="/register">Sign Up</Link>
             </li>
             <li className="links">
-              <Link to="/register">Sign up</Link>
+              <Link to="/login">Log in</Link>
             </li>
           </Menu>
         </HeaderContainer>
