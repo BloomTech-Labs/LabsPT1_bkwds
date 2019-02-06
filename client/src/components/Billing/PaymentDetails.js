@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { Elements } from "react-stripe-elements"
 import { connect } from "react-redux"
 import styled from "styled-components"
-import moment from "moment"
 import PropTypes from "prop-types"
 
 import {
