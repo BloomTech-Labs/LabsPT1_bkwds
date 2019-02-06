@@ -85,16 +85,11 @@ class PaymentDetails extends Component {
         <h4>Payment details</h4>
         <div className="detail">
           <div className="detail-text">
-            <span className="detail-bold">Total:</span>
-            <span>$10 /yr</span>
+            <span className="detail-bold">Pro Plan</span>
           </div>
           <div className="detail-text">
-            <span className="detail-bold">Next billing date:</span>
-            <span>
-              {moment()
-                .add(1, "year")
-                .format("MMM Do, YYYY")}
-            </span>
+            <span className="detail-bold">Total:</span>
+            <span>$10 /yr</span>
           </div>
         </div>
         <StripeProvider>
