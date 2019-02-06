@@ -1,5 +1,5 @@
 import React from "react"
-import { Switch } from "react-router-dom"
+import { Switch, Route } from "react-router-dom"
 
 import LandingPage from "./LandingPage/"
 import Dashboard from "./pages/Dashboard"
@@ -10,11 +10,12 @@ import PublicTrip from "./Maps/singleTripPublic"
 const Root = () => (
   <Switch>
     <CustomRoute path="/" exact component={LandingPage} />
-    <CustomRoute path="/app" protectedPath component={Dashboard} />
-    <CustomRoute
+    <Route
+      exact
       path="/public/:tripId"
       render={({ match }) => <PublicTrip tripId={match.params.tripId} />}
     />
+    <CustomRoute path="/app" protectedPath component={Dashboard} />
     <CustomRoute path="/" component={Pages} />
     <CustomRoute render={() => <div>404: Route not found</div>} />
     <Pages />

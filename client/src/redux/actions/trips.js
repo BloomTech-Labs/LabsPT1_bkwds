@@ -83,10 +83,19 @@ export const getPublicTrips = () => dispatch => {
 export const removeActiveTrip = () => {
   return { type: REMOVE_ACTIVE_TRIP }
 }
-export const getSingleTrip = tripId => dispatch => {
-  axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
-    dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
-  })
+
+export const getSingleTrip = (tripId, isPublic = "") => dispatch => {
+  const url = `${SERVER_URI}/${isPublic}trips/${tripId}`
+
+  axios
+    .get(url)
+    .then(res => {
+      console.log("res", res)
+      dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
+    })
+    .catch(err => {
+      console.log("err", err)
+    })
 }
 
 export const editTrip = trip => dispatch => {

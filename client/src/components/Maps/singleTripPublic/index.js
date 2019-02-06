@@ -33,7 +33,7 @@ class PublicTrip extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSingleTrip(this.props.tripId)
+    this.props.getSingleTrip(this.props.tripId, "public/")
     window.elevation = new window.google.maps.ElevationService()
   }
 
@@ -98,7 +98,6 @@ class PublicTrip extends React.Component {
           <AppNav />
           <MapWrapper>
             <ActiveTripPanel />
-
             <div
               style={{ width: "100%", height: "100%", position: "absolute" }}
               id="Tripmap"

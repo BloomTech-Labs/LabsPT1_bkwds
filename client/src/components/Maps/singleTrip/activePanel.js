@@ -1,6 +1,7 @@
 import React from "react"
 import * as s from "./components"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 import moment from "moment"
 import "react-step-progress-bar/styles.css"
 import Progress from "./Progress"
@@ -117,6 +118,11 @@ class ActiveTripPanel extends React.Component {
       }
     })
   }
+  // changeTitle = () => {
+  //   console.log(this.props.trip.id)
+  //   this.setState({ title: `/public/${this.props.trip.id}` });
+  //   this.props.getSingleTrip(this.props.trip.id, 'public/');
+  // };
 
   renderWaypoints = () => {
     let markers = []
@@ -207,7 +213,6 @@ class ActiveTripPanel extends React.Component {
   toggleWaypointList = () => {
     this.setState({ mobileWaypointToggle: !this.state.mobileWaypointToggle })
   }
-
   render() {
     const { timeGaps } = this.state
     const { waypoints } = this.props
@@ -367,6 +372,11 @@ class ActiveTripPanel extends React.Component {
                 </AccordionItem>
               ))}
           </Accordion>
+          <Button>
+            <Link target="_blank" to={`/public/${this.props.trip.id}`}>
+              Share Trip
+            </Link>
+          </Button>
         </s.ActivePanel>
       </div>
     )
