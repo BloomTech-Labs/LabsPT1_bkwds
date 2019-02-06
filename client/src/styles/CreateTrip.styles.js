@@ -4,6 +4,8 @@ import { media } from "./theme/mixins"
 export const MapWrapper = Styled.div`
   position:relative;
   margin-left: -50px;
+  overflow-x: hidden;
+  overflow-y: hidden;
   ${media.tablet`
     margin-left: 0;
   `}
@@ -17,7 +19,7 @@ export const MapWrapper = Styled.div`
       visibility: visible;
       cursor: pointer;
       right: 40px;
-      bottom: 40px;
+      bottom: 200px;
       background: white;
       border-radius: 50%;
       position: absolute;

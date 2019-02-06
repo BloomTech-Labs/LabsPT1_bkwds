@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { MapWrapper } from "../../../styles/CreateTrip.styles"
-import TripPanel from "../singleTrip/tripPanel"
 import ActiveTripPanel from "./activePanel"
 import styled from "styled-components"
 import AppNav from "./AppNav"
@@ -34,7 +33,7 @@ class PublicTrip extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSingleTrip(this.props.tripId)
+    this.props.getSingleTrip(this.props.tripId, "public/")
     window.elevation = new window.google.maps.ElevationService()
   }
 
@@ -98,11 +97,7 @@ class PublicTrip extends React.Component {
         <PublicTripStyles>
           <AppNav />
           <MapWrapper>
-            {!this.props.trip.inProgress ? (
-              <TripPanel drawPolyline={this.drawPolyline} />
-            ) : (
-              <ActiveTripPanel />
-            )}
+            <ActiveTripPanel />
             <div
               style={{ width: "100%", height: "100%", position: "absolute" }}
               id="Tripmap"

@@ -12,7 +12,6 @@ import {
 
 import AuthenticatedLinks from "./AuthenticatedLinks"
 import UnauthenticatedLinks from "./UnauthenticatedLinks"
-import GitHubSvg from "./icons/GitHubSvg"
 import UserSvg from "./icons/UserSvg"
 
 import { logout } from "../redux/actions/auth"
@@ -76,9 +75,7 @@ class AppNav extends Component {
                 />
               )}
             </div>
-            <div className="call-to-action">
-              <GitHubSvg width="32px" height="32px" />
-            </div>
+            <div className="call-to-action" />
             <div className="mobile-links-wrapper">
               <Dropdown
                 nav={true}

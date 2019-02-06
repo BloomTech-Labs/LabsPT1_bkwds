@@ -19,6 +19,9 @@ import {
   TOGGLE_ARCHIVE_TRIP,
   TOGGLE_ARCHIVE_TRIP_SUCCESS,
   TOGGLE_ARCHIVE_TRIP_ERROR,
+  TOGGLE_PUBLIC_TRIP,
+  TOGGLE_PUBLIC_TRIP_SUCCESS,
+  TOGGLE_PUBLIC_TRIP_ERROR,
   REPEAT_TRIP,
   REPEAT_TRIP_SUCCESS,
   REPEAT_TRIP_ERROR,
@@ -59,13 +62,40 @@ export const getTrips = userId => dispatch => {
       })
     })
 }
+
+export const getPublicTrips = () => dispatch => {
+  // If token, set token as Authorization header on all axios requests:
+  dispatch({ type: LOADING_TRIPS })
+  return axios
+    .get(`${SERVER_URI}/public/trips`)
+    .then(res => {
+      dispatch({ type: LOADING_TRIPS_SUCCESS, payload: res.data })
+      console.log(res, "RESSSSS")
+    })
+    .catch(err => {
+      dispatch({ type: LOADING_TRIPS_ERROR, payload: normalizeErrorMsg(err) })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
+}
+
 export const removeActiveTrip = () => {
   return { type: REMOVE_ACTIVE_TRIP }
 }
-export const getSingleTrip = tripId => dispatch => {
-  axios.get(`${SERVER_URI}/trips/${tripId}`).then(res => {
-    dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
-  })
+
+export const getSingleTrip = (tripId, isPublic = "") => dispatch => {
+  const url = `${SERVER_URI}/${isPublic}trips/${tripId}`
+
+  axios
+    .get(url)
+    .then(res => {
+      console.log("res", res)
+      dispatch({ type: GET_SINGLE_TRIP, payload: res.data })
+    })
+    .catch(err => {
+      console.log("err", err)
+    })
 }
 
 export const editTrip = trip => dispatch => {
@@ -289,5 +319,27 @@ export const uploadPics = (tripId, image) => dispatch => {
     })
     .catch(err => {
       dispatch({ type: UPLOADING_TRIP_PIC_ERROR, payload: err })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
+}
+
+export const togglePublic = tripId => (dispatch, getState) => {
+  const isPublic = getState().trips.trips[tripId].isPublic
+  dispatch({ type: TOGGLE_PUBLIC_TRIP })
+  axios
+    .put(`${SERVER_URI}/trips/${tripId}`, { isPublic: !isPublic })
+    .then(res => {
+      dispatch({ type: TOGGLE_PUBLIC_TRIP_SUCCESS, payload: res.data })
+    })
+    .catch(err => {
+      dispatch({
+        type: TOGGLE_PUBLIC_TRIP_ERROR,
+        payload: normalizeErrorMsg(err)
+      })
+      toast.error(normalizeErrorMsg(err), {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
     })
 }

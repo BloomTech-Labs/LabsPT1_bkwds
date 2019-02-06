@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Link } from "react-router-dom"
 import moment from "moment"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
@@ -8,14 +7,13 @@ import { TripPropTypes } from "./propTypes"
 import { STATIC_MAP_KEY } from "../config"
 
 import TripCardLoader from "./TripCardLoader"
-import { toggleArchive, repeatTrip } from "../redux/actions/trips"
-import { CardButton } from "../styles/theme/styledComponents"
-import ChevronSvg from "./icons/ChevronSvg"
+import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
 import { Button } from "../styles/theme/styledComponents"
 
 const Card = ({
   archived,
   isArchivedTripRoute,
+  togglePublic,
   repeatTrip,
   toggleArchive,
   trip,
@@ -40,10 +38,16 @@ const Card = ({
       <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
       <div className="card-cta">
         <Button
-          className={archived ? "btn-gray" : "btn-primary"}
+          className={archived ? "btn-gray" : "btn-tertiary"}
           onClick={() => toggleArchive(trip.id, archived, userId)}
         >
           {archived ? "Unarchive" : "Archive"}
+        </Button>
+        <Button
+          className={`btn-tertiary ${trip.isPublic ? "btn-gray" : ""}`}
+          onClick={() => togglePublic(trip.id, userId)}
+        >
+          {trip.isPublic ? "Make Private" : "Share!"}
         </Button>
         {isArchivedTripRoute && (
           <Button className="btn-tertiary" onClick={() => repeatTrip(trip)}>
@@ -51,11 +55,6 @@ const Card = ({
           </Button>
         )}
       </div>
-      <Link to={`/app/trip/${trip.id}`}>
-        <CardButton>
-          <ChevronSvg width="2rem" height="2rem" transform="rotate(-90deg)" />
-        </CardButton>
-      </Link>
     </div>
   </>
 )
@@ -79,10 +78,11 @@ TripCard.propTypes = {
 const mapStateToProps = ({ auth, router, trips }) => ({
   userId: auth.user.id,
   isArchivedTripRoute: router.location.pathname === "/app/trips/archived",
+
   loading: trips.pending
 })
 
 export default connect(
   mapStateToProps,
-  { toggleArchive, repeatTrip }
+  { toggleArchive, repeatTrip, togglePublic }
 )(TripCard)

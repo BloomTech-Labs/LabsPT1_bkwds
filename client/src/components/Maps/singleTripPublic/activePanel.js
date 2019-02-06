@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import moment from "moment"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "../../propTypes"
-
 class ActiveTripPanel extends React.Component {
   constructor(props) {
     super(props)

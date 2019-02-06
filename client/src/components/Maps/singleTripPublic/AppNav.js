@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import GitHubSvg from "../../icons/GitHubSvg"
 import * as s from "../../../styles/AppNav.styles"
 
 const AppNav = () => (
@@ -15,9 +14,7 @@ const AppNav = () => (
       </div>
       <div className="appnav-right">
         <div className="navlinks-wrapper" />
-        <div className="call-to-action">
-          <GitHubSvg width="32px" height="32px" />
-        </div>
+        <div className="call-to-action" />
       </div>
     </s.NavStyles>
   </div>

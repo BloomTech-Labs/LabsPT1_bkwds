@@ -16,6 +16,7 @@ import ArchivedTrips from "../ArchivedTrips"
 import DashboardHome from "../DashboardHome"
 import Settings from "../Settings"
 import EditTrip from "../EditTrip"
+import PublicTrips from "../PublicTrips"
 
 import CustomRoute from "../../utils/CustomRoute"
 
@@ -70,6 +71,11 @@ const dashboardRoutes = [
     path: "/upgrade",
     name: "Upgrade",
     component: Plans
+  },
+  {
+    path: "/trips/explore",
+    name: "PublicTrips",
+    component: PublicTrips
   }
 ]
 

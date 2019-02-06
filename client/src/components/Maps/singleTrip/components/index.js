@@ -101,6 +101,46 @@ const isHiddenStyles = css`
   }
 `
 
+export const ActivePanel = styled.div`
+  position: absolute;
+  z-index: 2;
+  top: 8rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  max-width: 380px;
+  min-width: 320px;
+  background: white;
+  height: 400px;
+  overflow: scroll;
+  ${media.tablet`
+  display:none;
+`}
+`
+
+export const MobileActivePanel = styled(ActivePanel)`
+  ${media.tablet`
+    display:block;
+    top:120px;
+    left:50px;
+    right:0;
+    margin-left:0;
+    margin-right:0;
+`}
+`
+export const MobileButton = styled.button`
+  display: none;
+  ${media.tablet`
+  width:50px;
+  display:block;
+  height:50px;
+  border-radius:50%;
+  background:white;
+  position:absolute;
+`}
+`
+
 export const WaypointLabel = styled.label`
   margin: 0 1rem 0 0;
 `

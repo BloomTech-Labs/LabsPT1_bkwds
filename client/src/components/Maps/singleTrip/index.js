@@ -68,7 +68,8 @@ class SingleTripMap extends React.Component {
       this.mapRef.current,
       {
         center: center,
-        zoom: 12,
+        zoom: 14,
+        gestureHandling: "greedy",
         disableDefaultUI: true
       }
     )

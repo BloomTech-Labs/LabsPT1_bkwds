@@ -68,6 +68,10 @@ const MobileMapPanelStyles = styled.div`
     .hide-mobile {
       display: none;
     }
+    #plus-icon {
+      z-index: 1;
+      bottom: 255px;
+    }
   `}
 `
 
@@ -78,7 +82,7 @@ const MobileMapPanel = ({ children }) => (
 )
 
 MobileMapPanel.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.any
 }
 
 export default MobileMapPanel
