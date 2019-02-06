@@ -123,7 +123,7 @@ class LandingNav extends React.Component {
                   }}
                 >
                   <div className="mobile-bottom-cta-text">
-                    <h2>Starting at $10/year</h2>
+                    <h2>Starting at $9.99/year</h2>
                     <p>3 plans available</p>
                   </div>
                   <Button>Choose your plan</Button>
@@ -144,7 +144,7 @@ class LandingNav extends React.Component {
                   }}
                 >
                   <div className="tablet-bottom-cta-text">
-                    <h2>Starting at $10/year</h2>
+                    <h2>Starting at $9.99/year</h2>
                     <p>3 plans available</p>
                   </div>
                   <Button>Choose your plan</Button>

@@ -194,7 +194,7 @@ const Plans = ({ isSubscribed }) => (
         </span>
       </FreeColumn>
       <PaidColumn>
-        <h2>$10</h2>
+        <h2>$9.99</h2>
         <span className="plans-monthly">per month</span>
         <span>
           Unlimited
