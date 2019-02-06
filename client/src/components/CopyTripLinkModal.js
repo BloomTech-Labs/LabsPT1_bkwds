@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import { Button } from "../styles/theme/styledComponents"
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import { CopyToClipboard } from "react-copy-to-clipboard"
+import PropTypes from "prop-types"
+import { TripPropTypes } from "./propTypes"
 
 class CopyTripLinkModal extends Component {
   constructor(props) {
@@ -74,6 +76,12 @@ class CopyTripLinkModal extends Component {
       </div>
     )
   }
+}
+
+CopyTripLinkModal.propTypes = {
+  trip: TripPropTypes,
+  waypoints: PropTypes.array.isRequired,
+  handleTogglePublic: PropTypes.func.isRequired
 }
 
 export default CopyTripLinkModal
