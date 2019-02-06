@@ -594,6 +594,8 @@ class TripPanel extends React.Component {
                 Start Trip
               </s.TripButton>
 
+              {/* <TripPictures toggle={tripPicturesToggled} /> */}
+
               <s.AddButton
                 disabled={isEditing === false}
                 edit={isEditing}
@@ -716,7 +718,6 @@ class TripPanel extends React.Component {
           )}
         </Modal>
 
-        {/* <TripPictures toggle={tripPicturesToggled} /> */}
         <ElevationChart
           distances={this.state.distances}
           elevations={elevations}
