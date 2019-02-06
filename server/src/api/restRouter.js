@@ -5,7 +5,6 @@ import { waypointRouter } from "./resources/waypoint"
 import { protect, register, login, changePassword } from "./modules/auth"
 import { subscribeRouter } from "./resources/subscribe"
 import { emailRouter } from "./resources/email"
-import { sendSMSAlert } from "./modules/twilio"
 import { publicRouter } from "./modules/public"
 
 export const restRouter = express.Router()
@@ -23,7 +22,6 @@ restRouter.use("/waypoints", protect, waypointRouter)
 // Service routes
 restRouter.use("/subscribe", protect, subscribeRouter)
 restRouter.use("/reset_password", emailRouter)
-restRouter.route("/send_sms").post(protect, sendSMSAlert)
 
 // Public route
 restRouter.use("/public", publicRouter)
