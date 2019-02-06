@@ -65,16 +65,16 @@ const ModalWrapper = styled.div`
     }
   }
 
+  button.close-modal-button {
+    right: 2rem;
+    top: 2rem;
+  }
+
   ${media.tablet`
     max-height: 100vh;
     margin-left: 1rem;
     margin-right: 1rem;
     height: 700px;
-
-    button.close-modal-button {
-      right: 2rem;
-      top: 2rem;
-    }
   `}
 
   ${media.phone`
