@@ -6,6 +6,7 @@ import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
 import { STATIC_MAP_KEY } from "../config"
 import CopyTripLinkModal from "./CopyTripLinkModal"
+import PropTypes from "prop-types"
 
 import TripCardLoader from "./TripCardLoader"
 import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
