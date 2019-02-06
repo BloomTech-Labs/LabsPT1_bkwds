@@ -92,7 +92,8 @@ TripCard.propTypes = {
   repeatTrip: PropTypes.func.isRequired,
   toggleArchive: PropTypes.func.isRequired,
   trip: TripPropTypes,
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  togglePublic: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ auth, router, trips }) => ({

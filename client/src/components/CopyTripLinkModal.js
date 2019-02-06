@@ -44,11 +44,7 @@ class CopyTripLinkModal extends Component {
           {" "}
           {this.props.trip.isPublic ? "Make Private" : "Share!"}
         </Button>
-        <Modal
-          isOpen={this.state.modal}
-          toggle={this.toggle}
-          className={this.props.className}
-        >
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>
             Click on the link below to copy
           </ModalHeader>
