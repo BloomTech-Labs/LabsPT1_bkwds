@@ -14,8 +14,8 @@ import ChevronSvg from "./icons/ChevronSvg"
 import { Button } from "../styles/theme/styledComponents"
 
 class Card extends Component {
-  handleTogglePublic = () => {
-    this.props.togglePublic(this.props.trip.id)
+  handleTogglePublic = tripId => {
+    this.props.togglePublic(tripId)
   }
 
   render() {
@@ -93,7 +93,8 @@ TripCard.propTypes = {
   toggleArchive: PropTypes.func.isRequired,
   trip: TripPropTypes,
   userId: PropTypes.string,
-  togglePublic: PropTypes.func.isRequired
+  togglePublic: PropTypes.func.isRequired,
+  tripId: PropTypes.string
 }
 
 const mapStateToProps = ({ auth, router, trips }) => ({
