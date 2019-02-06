@@ -25,11 +25,21 @@ const ProgressPanel = Styled.div`
   `}
 `
 const PanelHeader = Styled.h4`
-    padding:.25rem 2rem;
+    padding: .5rem 2rem;
+        ${media.tablet`
+      padding: .25rem 2rem 0rem 1rem;
+
+  `}
+          ${media.phone`
+      padding: .25rem 1rem 0rem 1rem;
+
+  `}
+    
 `
 const ProgressBarContainer = Styled.div`
-    width:95%;
+    width:85%;
     margin: 1rem auto;
+
 `
 
 const StepContainer = Styled.div`

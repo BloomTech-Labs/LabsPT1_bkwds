@@ -39,7 +39,7 @@ const Nav = () => {
         <NavLink to="/features">Features</NavLink>
         <Link to="/about">About</Link>
         <Link to="/login">Log in</Link>
-        <Link to="/login">Sign up</Link>
+        <Link to="/register">Sign up</Link>
       </Menu>
     </NavigationMenu>
   )
