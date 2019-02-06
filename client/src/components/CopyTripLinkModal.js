@@ -80,7 +80,6 @@ class CopyTripLinkModal extends Component {
 
 CopyTripLinkModal.propTypes = {
   trip: TripPropTypes,
-  waypoints: PropTypes.array.isRequired,
   handleTogglePublic: PropTypes.func.isRequired
 }
 
