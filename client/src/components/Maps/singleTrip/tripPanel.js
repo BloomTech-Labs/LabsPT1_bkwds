@@ -543,8 +543,7 @@ const mapDispatchToProps = {
   editTrip,
   startTrip,
   openModal,
-  closeModal,
-  addTripSafetyTimeLimit
+  closeModal
 }
 
 TripPanel.propTypes = {
