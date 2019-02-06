@@ -4,7 +4,6 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
-import PropTypes from "prop-types"
 
 class CopyTripLinkModal extends Component {
   constructor(props) {
