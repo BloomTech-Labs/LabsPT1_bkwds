@@ -68,6 +68,10 @@ const MobileMapPanelStyles = styled.div`
     .hide-mobile {
       display: none;
     }
+    #plus-icon {
+      z-index: 1;
+      bottom: 255px;
+    }
   `}
 `
 

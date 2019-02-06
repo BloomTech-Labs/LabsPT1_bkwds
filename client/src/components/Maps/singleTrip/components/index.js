@@ -29,11 +29,6 @@ export const TripPanelStyles = styled.div`
       display: flex;
     }
   }
-
-  #plus-icon {
-    z-index: 3;
-    bottom: 80px;
-  }
 `
 
 export const Panel = styled.div`
