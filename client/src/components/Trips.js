@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
 
 import { getTripsArray } from "../utils/selectors"
@@ -33,12 +34,14 @@ class Trips extends Component {
     return trips.map(
       trip =>
         trip.isArchived || (
-          <TripCard
-            archived={false}
-            key={trip.id}
-            loading={loading}
-            trip={trip}
-          />
+          <Link to={`/app/trip/${trip.id}`}>
+            <TripCard
+              archived={false}
+              key={trip.id}
+              loading={loading}
+              trip={trip}
+            />
+          </Link>
         )
     )
   }
