@@ -32,7 +32,8 @@ export const TripPanelStyles = styled.div`
   }
 
   .panel-wrapper {
-    height: 345px;
+    /* height: 345px; */
+    background: white;
   }
 
   .waypoint-wrapper {
@@ -60,10 +61,21 @@ export const TripPanelStyles = styled.div`
     z-index: 3;
     bottom: 80px;
   }
+
+  /* BOOTSTRAP OVERRIDES */
+  .accordion__title {
+    padding: 10px 15px;
+    h4 {
+      margin-bottom: 0;
+    }
+  }
+  .accordion__body {
+    padding: 8px 0 5px 10px;
+  }
 `
 
 export const Panel = styled.div`
-  max-width: 360px;
+  max-width: 340px;
   min-width: 320px;
   border-radius: 0 0 0 2px;
   display: flex;
@@ -216,7 +228,8 @@ export const DeleteButton = styled.button`
   border: none;
 `
 export const WaypointList = styled.div`
-  height: 124px;
+  /* height: 124px; */
+  height: 300px;
   overflow: scroll;
   ${media.tablet`
     height: 100%;

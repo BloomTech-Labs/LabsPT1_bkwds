@@ -3,6 +3,15 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import axios from "axios"
 import { toast } from "react-toastify"
+import moment from "moment"
+
+import "react-accessible-accordion/dist/fancy-example.css"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTitle,
+  AccordionItemBody
+} from "react-accessible-accordion"
 
 import Modal from "../../Modals/Modal"
 import { openModal, closeModal } from "../../../redux/actions/modal"
@@ -584,12 +593,7 @@ class TripPanel extends React.Component {
               <s.TripButton onClick={this.props.openModal}>
                 Start Trip
               </s.TripButton>
-              <s.TripButton onClick={this.props.openModal}>
-                Mark Complete
-              </s.TripButton>
-            </div>
-            <s.WaypointsHeader>
-              <h4>Waypoints</h4>
+
               <s.AddButton
                 disabled={isEditing === false}
                 edit={isEditing}
@@ -597,9 +601,62 @@ class TripPanel extends React.Component {
               >
                 <AddIcon height="18px" width="18px" />
               </s.AddButton>
-            </s.WaypointsHeader>
+            </div>
 
-            <s.WaypointList>
+            {/* NEW STUFF */}
+            <Accordion>
+              {trip.waypoints &&
+                trip.waypoints.map((waypoint, i) => (
+                  <AccordionItem key={i}>
+                    <AccordionItemTitle>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between"
+                        }}
+                      >
+                        <h4 style={{ fontSize: "1.25rem" }}>{waypoint.name}</h4>
+
+                        <div
+                          className="accordion__arrow"
+                          style={{
+                            top: 0,
+                            position: "relative",
+                            right: "1rem"
+                          }}
+                        />
+                      </div>
+                    </AccordionItemTitle>
+                    <AccordionItemBody>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between"
+                        }}
+                      >
+                        <div key={waypoint.name} className="waypoint-wrapper">
+                          <Waypoint
+                            key={waypoint.name}
+                            i={i}
+                            name={waypoint.name}
+                            isEditing={isEditing}
+                            handleDelete={this.handleDelete}
+                            handleEdit={this.handleEdit}
+                          />
+                          {timeGaps.length > 0
+                            ? i === 0
+                              ? "0min"
+                              : `${timeGaps[i - 1]}min`
+                            : null}
+                        </div>
+                      </div>
+                    </AccordionItemBody>
+                  </AccordionItem>
+                ))}
+            </Accordion>
+
+            {/* <s.WaypointList>
               {trip.waypoints !== undefined &&
                 trip.waypoints.map(({ name }, i) => (
                   <div key={name} className="waypoint-wrapper">
@@ -618,7 +675,7 @@ class TripPanel extends React.Component {
                       : null}
                   </div>
                 ))}
-            </s.WaypointList>
+            </s.WaypointList> */}
           </div>
         </s.Panel>
 
@@ -659,7 +716,7 @@ class TripPanel extends React.Component {
           )}
         </Modal>
 
-        <TripPictures toggle={tripPicturesToggled} />
+        {/* <TripPictures toggle={tripPicturesToggled} /> */}
         <ElevationChart
           distances={this.state.distances}
           elevations={elevations}

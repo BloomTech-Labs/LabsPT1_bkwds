@@ -21,6 +21,11 @@ const isHiddenStyles = css`
 
 export const ElevationChartStyles = styled.div`
   visibility: visible;
+
+  /* These 2 lines are necessary for centering the chart in the middle of the screen */
+  display: flex;
+  justify-content: center;
+
   ${media.tablet`
     visibility: ${props => (props.toggle ? "visible" : "hidden")};
     .elevation-chart-wrapper {
@@ -30,13 +35,14 @@ export const ElevationChartStyles = styled.div`
 
   .elevation-chart-wrapper {
     border-radius: 2px 2px 0 0;
-    padding: 24px 0 8px 12px;
+    /* padding: 24px 0 8px 12px; */
+    padding: 16px 0 8px 12px;
     background: white;
 
     position: absolute;
-    right: 0;
-    top: unset;
-    bottom: 50px;
+    right: unset;
+    bottom: unset;
+    top: 0;
     z-index: 5;
 
     .chevron-icon-wrapper {

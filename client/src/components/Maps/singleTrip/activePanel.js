@@ -11,14 +11,15 @@ import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
 import MobileMapPanel from "../../MobileMapPanel"
-import "react-accessible-accordion/dist/fancy-example.css"
 
+import "react-accessible-accordion/dist/fancy-example.css"
 import {
   Accordion,
   AccordionItem,
   AccordionItemTitle,
   AccordionItemBody
 } from "react-accessible-accordion"
+
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
@@ -398,58 +399,3 @@ export default connect(
   mapStateToProps,
   { toggleWaypoint }
 )(ActiveTripPanel)
-
-//   <s.Panel>
-//     {/* {/* <s.PanelHeader>{this.props.trip.name}</s.PanelHeader>
-//     <s.DateLabel>
-//       Start: {moment(this.props.trip.start).format("YYYY-MM-DD")} - End:{" "}
-//       {moment(this.props.trip.end).format("YYYY-MM-DD")}
-//     </s.DateLabel> */}
-//     <s.WaypointTracker>
-//       {waypoints &&
-//         waypoints.map((waypoint, i) => (
-//           <s.WaypointStepper key={waypoint.id}>
-//             <div>
-//               <h4>
-//                 {waypoint.name}{" "}
-//                 {timeGaps.length > 0 &&
-//                   i > 0 &&
-//                   i <= timeGaps.length &&
-//                   waypoints[i - 1] &&
-//                   this.isLate(
-//                     waypoints[i - 1].start,
-//                     timeGaps[i - 1],
-//                     waypoint.start
-//                   ) &&
-//                   !waypoint.complete && (
-//                     <i className="fa fa-exclamation-circle" />
-//                   )}
-//               </h4>
-//               <div>
-//                 ETA: {moment(waypoint.start).format("YYYY-MM-DD HH:mm")}
-//               </div>
-//               <div>
-//                 Status: Checked In @{" "}
-//                 {moment(waypoint.start).format("HH:mm")}
-//               </div>
-//             </div>
-//             <div>
-//               {waypoint.complete ? (
-//                 <Button
-//                   onClick={() => this.props.toggleWaypoint(waypoint.id)}
-//                 >
-//                   <i className="fa fa-check" />
-//                 </Button>
-//               ) : (
-//                 <Button
-//                   onClick={() => this.props.toggleWaypoint(waypoint.id)}
-//                 >
-//                   <i className="fa fa-times" />
-//                 </Button>
-//               )}
-//             </div>
-//           </s.WaypointStepper>
-//         ))}
-//     </s.WaypointTracker>
-//   </s.Panel>
-// ) }
