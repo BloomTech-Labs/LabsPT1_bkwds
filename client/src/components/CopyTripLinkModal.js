@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, CloseModalIcon } from "../styles/theme/styledComponents"
+import { Button } from "../styles/theme/styledComponents"
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import PropTypes from "prop-types"
