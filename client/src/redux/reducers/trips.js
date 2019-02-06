@@ -28,9 +28,6 @@ import {
   START_TRIP_SUCCESS,
   START_TRIP,
   START_TRIP_ERROR,
-  ADD_TRIP_TIME_LIMIT,
-  ADD_TRIP_TIME_LIMIT_SUCCESS,
-  ADD_TRIP_TIME_LIMIT_ERROR,
   TOGGLE_WAYPOINT_SUCCESS,
   TOGGLE_WAYPOINT_ERROR,
   REMOVE_ACTIVE_TRIP
@@ -150,24 +147,6 @@ export const tripReducer = (state = defaultState, action) => {
       }
     case UPLOADING_TRIP_PIC_ERROR:
       return { ...state, pending: false, error: action.payload }
-
-    case ADD_TRIP_TIME_LIMIT:
-      return {
-        ...state,
-        pending: true
-      }
-    case ADD_TRIP_TIME_LIMIT_SUCCESS:
-      return {
-        ...state,
-        pending: false,
-        trips: { ...state.trips, [action.payload.id]: action.payload }
-      }
-    case ADD_TRIP_TIME_LIMIT_ERROR:
-      return {
-        ...state,
-        pending: false,
-        error: action.payload
-      }
     case TOGGLE_WAYPOINT_SUCCESS:
       const waypointIndex = state.activeTrip.waypoints.findIndex(
         waypoint => waypoint.id === action.payload.id
