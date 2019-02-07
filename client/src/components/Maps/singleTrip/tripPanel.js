@@ -592,6 +592,7 @@ class TripPanel extends React.Component {
                 disabled={isEditing === false}
                 edit={isEditing}
                 onClick={() => this.addWaypoint()}
+                style={{ marginTop: "-105px" }}
               >
                 <AddIcon height="18px" width="18px" />
               </s.AddButton>
