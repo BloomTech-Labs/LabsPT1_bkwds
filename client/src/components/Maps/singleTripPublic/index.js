@@ -91,6 +91,7 @@ class PublicTrip extends React.Component {
     if (this.props.trip !== null) {
       return (
         <PublicTripStyles>
+          <AppNav />
           <MapWrapper>
             <ActiveTripPanel />
             <div
