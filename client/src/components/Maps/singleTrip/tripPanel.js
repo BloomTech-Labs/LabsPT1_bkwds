@@ -246,7 +246,9 @@ class TripPanel extends React.Component {
       axios
         .delete(`${SERVER_URI}/waypoints/${this.state.trip.waypoints[i].id}`)
         .then(() => {
-          toast("Waypoint Deleted")
+          toast.success("Waypoint Deleted", {
+            position: toast.POSITION.BOTTOM_RIGHT
+          })
         })
     }
     this.setState({ trip: { ...this.state.trip, waypoints: reOrder } })
