@@ -467,15 +467,6 @@ class TripPanel extends React.Component {
               <i className="fa fa-area-chart" />
             </Button>
 
-            <Button
-              onClick={this.togglePicturesMenu}
-              className={`btn-neutral ${
-                tripPicturesToggled ? "active-button" : ""
-              }`}
-            >
-              <i className="fa fa-picture-o" />
-            </Button>
-
             <Button onClick={this.props.openModal} className={`btn-neutral`}>
               <i className="fa fa-play" />
             </Button>
