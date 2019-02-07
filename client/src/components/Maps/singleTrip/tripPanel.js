@@ -594,8 +594,6 @@ class TripPanel extends React.Component {
                 Start Trip
               </s.TripButton>
 
-              {/* <TripPictures toggle={tripPicturesToggled} /> */}
-
               <s.AddButton
                 disabled={isEditing === false}
                 edit={isEditing}
@@ -606,66 +604,14 @@ class TripPanel extends React.Component {
             </div>
 
             {/* NEW STUFF */}
-            <Accordion>
+            <div>
               {trip.waypoints &&
                 trip.waypoints.map((waypoint, i) => (
-                  <AccordionItem key={i}>
-                    <AccordionItemTitle>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between"
-                        }}
-                      >
-                        <h4 style={{ fontSize: "1.25rem" }}>{waypoint.name}</h4>
-
-                        <div
-                          className="accordion__arrow"
-                          style={{
-                            top: 0,
-                            position: "relative",
-                            right: "1rem"
-                          }}
-                        />
-                      </div>
-                    </AccordionItemTitle>
-                    <AccordionItemBody>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between"
-                        }}
-                      >
-                        <div key={waypoint.name} className="waypoint-wrapper">
-                          <Waypoint
-                            key={waypoint.name}
-                            i={i}
-                            name={waypoint.name}
-                            isEditing={isEditing}
-                            handleDelete={this.handleDelete}
-                            handleEdit={this.handleEdit}
-                          />
-                          {timeGaps.length > 0
-                            ? i === 0
-                              ? "0min"
-                              : `${timeGaps[i - 1]}min`
-                            : null}
-                        </div>
-                      </div>
-                    </AccordionItemBody>
-                  </AccordionItem>
-                ))}
-            </Accordion>
-
-            {/* <s.WaypointList>
-              {trip.waypoints !== undefined &&
-                trip.waypoints.map(({ name }, i) => (
-                  <div key={name} className="waypoint-wrapper">
+                  <div key={waypoint.name} className="waypoint-wrapper">
                     <Waypoint
-                      key={name}
+                      key={waypoint.name}
                       i={i}
-                      name={name}
+                      name={waypoint.name}
                       isEditing={isEditing}
                       handleDelete={this.handleDelete}
                       handleEdit={this.handleEdit}
@@ -677,7 +623,7 @@ class TripPanel extends React.Component {
                       : null}
                   </div>
                 ))}
-            </s.WaypointList> */}
+            </div>
           </div>
         </s.Panel>
 
