@@ -14,7 +14,7 @@ const SingleTripMapStyles = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  margin-left: ${props => (props.publicView ? "0" : "50px")};
+  margin-left: ${props => (props.publicView ? "0" : "-50px")};
   ${media.tablet`
    margin-left: 0;
  `}
