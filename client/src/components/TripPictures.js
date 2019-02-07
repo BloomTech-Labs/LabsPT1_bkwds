@@ -5,7 +5,6 @@ import Lightbox from "react-image-lightbox"
 import "react-image-lightbox/style.css"
 
 import { Button } from "../styles/theme/styledComponents"
-import Chevron from "./icons/ChevronSvg"
 import * as s from "../styles/TripPicturesStyles"
 import { uploadPics } from "../redux/actions/trips"
 import { TripPropTypes } from "./propTypes"
