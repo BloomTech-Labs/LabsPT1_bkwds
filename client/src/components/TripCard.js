@@ -46,12 +46,14 @@ const Card = ({
         >
           {archived ? "Unarchive" : "Archive"}
         </Button>
-        <Button
-          className={`btn-tertiary ${trip.isPublic ? "btn-gray" : ""}`}
-          onClick={() => togglePublic(trip.id, userId)}
-        >
-          {trip.isPublic ? "Make Private" : "Share!"}
-        </Button>
+        {!isArchivedTripRoute && (
+          <Button
+            className={`btn-tertiary ${trip.isPublic ? "btn-gray" : ""}`}
+            onClick={() => togglePublic(trip.id, userId)}
+          >
+            {trip.isPublic ? "Make Private" : "Share!"}
+          </Button>
+        )}
         {isArchivedTripRoute && (
           <Button className="btn-tertiary" onClick={() => repeatTrip(trip)}>
             Repeat
