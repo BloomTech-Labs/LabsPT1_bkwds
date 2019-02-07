@@ -289,7 +289,8 @@ class ActiveTripPanel extends React.Component {
                                 {moment(waypoint.start).format("HH:mm")}
                               </div>
                             </div>
-                            {waypoint.complete ? (
+                            {waypoint.complete &&
+                            this.props.isPublic !== true ? (
                               <Button
                                 onClick={() =>
                                   this.props.toggleWaypoint(waypoint.id)
