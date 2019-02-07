@@ -86,7 +86,7 @@ const TripCard = props => (
   </div>
 )
 
-TripCard.propTypes = {
+Card.propTypes = {
   archived: PropTypes.bool.isRequired,
   isArchivedTripRoute: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
