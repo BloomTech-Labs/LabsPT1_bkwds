@@ -17,17 +17,6 @@ describe("Test sending SMS alert with Twilio", () => {
     token = response.body.token
     return done()
   })
-  // test("Send SMS alert", done => {
-  //   request(app)
-  //     .post(`/api/send_sms`)
-  //     .send({ userId, tripId })
-  //     .set("Authorization", `Bearer ${token}`)
-  //     .then(response => {
-  //       expect(response.statusCode).toBe(202)
-  //       expect(response.text).toBe("Safety alert timer started")
-  //       done()
-  //     })
-  // })
   test("Do not send alert if time limit is not set", done => {
     request(app)
       .post(`/api/send_sms`)

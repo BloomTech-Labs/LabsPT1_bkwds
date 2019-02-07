@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import {
   Dropdown,
@@ -7,7 +8,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap"
-
+import { logout } from "../redux/actions/auth"
 import * as s from "../styles/Dropdown.styles"
 import ChevronSvg from "./icons/ChevronSvg"
 import { UserPropTypes } from "./propTypes"
@@ -29,6 +30,11 @@ class NavDropdown extends Component {
 
   onMouseLeave = () => {
     this.setState({ dropdownOpen: false })
+  }
+
+  handleLogout = e => {
+    e.preventDefault()
+    this.props.logout()
   }
 
   render() {
@@ -54,12 +60,6 @@ class NavDropdown extends Component {
             </DropdownItem>
             <DropdownItem divider />
             <DropdownItem>
-              <Link to="/billing/invoices" className="dropdown-list-item">
-                Invoices
-              </Link>
-            </DropdownItem>
-            <DropdownItem divider />
-            <DropdownItem>
               <Link to="/billing" className="dropdown-list-item">
                 Billing
               </Link>
@@ -70,6 +70,12 @@ class NavDropdown extends Component {
                 Your Profile
               </Link>
             </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem>
+              <a href="/logout" onClick={this.handleLogout}>
+                Log out
+              </a>
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </s.DropdownStyles>
@@ -78,9 +84,16 @@ class NavDropdown extends Component {
 }
 
 NavDropdown.propTypes = {
-  user: UserPropTypes.isRequired
+  user: UserPropTypes.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({ user: state.auth.user })
 
-export default connect(mapStateToProps)(NavDropdown)
+const mapDispatchToProps = {
+  logout
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavDropdown)

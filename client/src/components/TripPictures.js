@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import Lightbox from "react-image-lightbox"
 import "react-image-lightbox/style.css"
 
+
 import { Button } from "../styles/theme/styledComponents"
 import * as s from "../styles/TripPicturesStyles"
 import { uploadPics } from "../redux/actions/trips"

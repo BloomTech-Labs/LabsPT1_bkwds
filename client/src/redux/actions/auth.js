@@ -71,7 +71,6 @@ export const updateUserInStore = ({
 export const logout = () => dispatch => {
   // log out backwoods
   localStorage.removeItem("token")
-
   // unlink third-party account
   authRef
     .signOut()

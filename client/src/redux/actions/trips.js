@@ -150,11 +150,6 @@ export const startTrip = trip => dispatch => {
     })
 }
 
-// export const editTrip = tripId => dispatch => {
-//   dispatch({ type: GET_SINGLE_TRIP, payload: tripId })
-//   dispatch(push("/app/trip/edit/" + tripId))
-// }
-
 export const createTrip = (trip, markers) => dispatch => {
   dispatch({ type: CREATING_TRIP })
   axios
@@ -273,7 +268,6 @@ export const addTripSafetyTimeLimit = (trip, hours) => dispatch => {
     .put(`${SERVER_URI}/trips/${trip.id}`, { timeLimit: hours })
     .then(response => {
       dispatch({ type: ADD_TRIP_TIME_LIMIT_SUCCESS, payload: response.data })
-      // TODO CONNECT TO SMS ENDPOINT
       axios
         .post(`${SERVER_URI}/send_sms`, {
           userId: trip.userId,

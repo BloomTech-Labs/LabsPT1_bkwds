@@ -68,7 +68,6 @@ class DashboardHome extends Component {
     if (formattedAddress) update.formattedAddress = formattedAddress
 
     if (contactName) {
-      //TODO add input validation for phone number
       if (this.validateContactNumber(contactNumber)) {
         let contactInfo = {
           name: contactName,
