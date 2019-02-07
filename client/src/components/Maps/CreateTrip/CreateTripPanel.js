@@ -7,7 +7,7 @@ import "react-dates/lib/css/_datepicker.css"
 import * as s from "../../../styles/CreateTripPanel.styles"
 import { Button } from "../../../styles/theme/styledComponents"
 import Autocomplete from "../Autocomplete"
-import MobileMapPanel from "../../MobileMapPanel"
+import MobileMapPanel from "../MobileMapPanel"
 
 class CreateTripPanel extends React.Component {
   constructor(props) {

@@ -6,7 +6,6 @@ import DeleteIcon from "../../icons/DeleteIcon"
 
 const Waypoint = ({ i, isEditing, handleDelete, handleEdit, name }) => (
   <s.Waypoint key={i}>
-    {/* <s.WaypointLabel>{i + 1}</s.WaypointLabel> */}
     <s.WaypointInput
       type="text"
       disabled={isEditing === false}

@@ -3,14 +3,14 @@ import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import moment from "moment"
 import "react-step-progress-bar/styles.css"
-import { Progress } from "./Progress"
 import PropTypes from "prop-types"
 
+import { Progress } from "./Progress"
 import * as s from "./components"
 import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
-import MobileMapPanel from "../../MobileMapPanel"
+import MobileMapPanel from "../MobileMapPanel"
 
 import "react-accessible-accordion/dist/fancy-example.css"
 import {
