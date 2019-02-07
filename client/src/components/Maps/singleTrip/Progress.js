@@ -24,6 +24,19 @@ const ProgressPanel = Styled.div`
         width: calc(100% - 50px);
   `}
 `
+const MobileProgressPanel = Styled(ProgressPanel)`
+${media.tablet`
+        top:0;
+        left:50px;
+        height:10%;
+        max-height:110px;
+        min-height:4rem;
+        width: calc(100% - 50px);
+
+`}
+
+`
+
 const PanelHeader = Styled.h4`
     padding: .5rem 2rem;
         ${media.tablet`
@@ -65,7 +78,7 @@ let calcPercentage = waypoints => {
   }
   return val * index
 }
-const Progress = props => {
+export const Progress = props => {
   if (props.waypoints) {
     return (
       <ProgressPanel>
@@ -97,4 +110,21 @@ const Progress = props => {
   }
 }
 
-export default Progress
+export const mobileProgress = props => {
+  if (props.waypoints) {
+    return (
+      <MobileProgressPanel>
+        <PanelHeader>{props.name}</PanelHeader>
+        <ProgressBarContainer>
+          <ProgressBar
+            filledBackground="linear-gradient(to right,#73c8a9, #373b44)"
+            percent={calcPercentage(props.waypoints)}
+            height=".75rem"
+          />
+        </ProgressBarContainer>
+      </MobileProgressPanel>
+    )
+  } else {
+    return null
+  }
+}
