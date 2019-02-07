@@ -39,8 +39,8 @@ class ActiveTripPanel extends React.Component {
 
   componentDidMount() {
     setTimeout(() => {
-      // this.renderWaypoints()
-      // this.drawPolylines()
+      this.renderWaypoints()
+      this.drawPolylines()
       this.calcTimeGaps()
     }, 500)
   }
