@@ -9,9 +9,6 @@ import { STATIC_MAP_KEY } from "../config"
 
 import TripCardLoader from "./TripCardLoader"
 import { togglePublic } from "../redux/actions/trips"
-import { CardButton } from "../styles/theme/styledComponents"
-import ChevronSvg from "./icons/ChevronSvg"
-// import { Button } from "../styles/theme/styledComponents"
 
 const Card = ({ trip }) => (
   <>
@@ -44,7 +41,6 @@ const PublicTripCard = props => (
 
 PublicTripCard.propTypes = {
   loading: PropTypes.bool.isRequired,
-  //   repeatTrip: PropTypes.func.isRequired,
   trip: TripPropTypes,
   userId: PropTypes.string
 }
@@ -58,6 +54,5 @@ const mapStateToProps = ({ auth, router, trips }) => ({
 
 export default connect(
   mapStateToProps,
-  // TODO add repeatTrip
   { togglePublic }
 )(PublicTripCard)
