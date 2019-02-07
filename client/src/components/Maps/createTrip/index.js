@@ -3,7 +3,7 @@ import axios from "axios"
 import { connect } from "react-redux"
 import { toast } from "react-toastify"
 
-import CreateTripPanel from "./createTripPanel"
+import CreateTripPanel from "./CreateTripPanel"
 import { MapWrapper } from "../../../styles/CreateTrip.styles"
 import AddButton from "../../icons/AddButton.js"
 import mapMarker from "../../icons/orange-marker.svg"
