@@ -38,11 +38,13 @@ export const ElevationChartStyles = styled.div`
     padding: 24px 0 8px 12px;
     /* padding: 16px 0 8px 12px; */
     background: white;
-
     position: absolute;
-    right: 340px;
+    /* right: 340px;
     bottom: unset;
-    top: 0;
+    top: 0; */
+    top: unset;
+    bottom: 50px;
+    left: 50px;
     z-index: 5;
 
     .chevron-icon-wrapper {
