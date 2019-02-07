@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 
 import PublicTripCard from "./PublicTripCard"
 import * as s from "../styles/TripCard.styles"
+import { ExploreHeader } from "../styles/Explore.styles"
 import { getPublicTrips } from "../redux/actions/trips"
 import { getTripsArray } from "../utils/selectors"
 import { TripPropTypes } from "./propTypes"
@@ -50,12 +51,10 @@ class PublicTrips extends Component {
   render() {
     const { loading } = this.props
     const { publicExists } = this.state
-    const title = {
-      paddingLeft: "20px"
-    }
+
     return (
       <div>
-        <h1 style={title}>Explore</h1>
+        <ExploreHeader>Explore other trips</ExploreHeader>
 
         <s.TripCardStyles>
           <div className="container">
