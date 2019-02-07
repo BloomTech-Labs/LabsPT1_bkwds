@@ -36,12 +36,8 @@ export const ElevationChartStyles = styled.div`
   .elevation-chart-wrapper {
     border-radius: 2px 2px 0 0;
     padding: 24px 0 8px 12px;
-    /* padding: 16px 0 8px 12px; */
     background: white;
     position: absolute;
-    /* right: 340px;
-    bottom: unset;
-    top: 0; */
     top: unset;
     bottom: 50px;
     left: 50px;
