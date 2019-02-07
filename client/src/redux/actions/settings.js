@@ -18,6 +18,11 @@ if (token) {
 }
 
 export const updateUserWithMsg = (userId, values, msg) => dispatch => {
+  if (!axios.defaults.headers.common["Authorization"]) {
+    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+      "token"
+    )
+  }
   dispatch({ type: INI_UPDATE_SETTINGS })
   axios
     .put(`${SERVER_URI}/users/${userId}`, { ...values })

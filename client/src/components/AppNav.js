@@ -44,7 +44,7 @@ class AppNav extends Component {
     const { pathname } = location
     const isHomeOrAuthPath = isProtectedPath(pathname, protectedPaths)
     return (
-      <div style={{ zIndex: 5 }}>
+      <div style={{ zIndex: 7 }}>
         <s.NavStyles>
           <div className="appnav-left">
             <HamburgerSpring

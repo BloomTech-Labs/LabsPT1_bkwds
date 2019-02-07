@@ -1,5 +1,4 @@
 import React from "react"
-import * as s from "./components"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import moment from "moment"
@@ -7,18 +6,20 @@ import "react-step-progress-bar/styles.css"
 import { Progress } from "./Progress"
 import PropTypes from "prop-types"
 
+import * as s from "./components"
 import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
 import MobileMapPanel from "../../MobileMapPanel"
-import "react-accessible-accordion/dist/fancy-example.css"
 
+import "react-accessible-accordion/dist/fancy-example.css"
 import {
   Accordion,
   AccordionItem,
   AccordionItemTitle,
   AccordionItemBody
 } from "react-accessible-accordion"
+
 import marker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
@@ -118,11 +119,6 @@ class ActiveTripPanel extends React.Component {
       }
     })
   }
-  // changeTitle = () => {
-  //   console.log(this.props.trip.id)
-  //   this.setState({ title: `/public/${this.props.trip.id}` });
-  //   this.props.getSingleTrip(this.props.trip.id, 'public/');
-  // };
 
   renderWaypoints = () => {
     let markers = []

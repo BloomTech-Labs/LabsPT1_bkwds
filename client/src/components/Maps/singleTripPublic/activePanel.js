@@ -32,11 +32,6 @@ class ActiveTripPanel extends React.Component {
   render() {
     return (
       <s.Panel>
-        {/* <s.PanelHeader>{this.props.trip.name}</s.PanelHeader>
-        <s.DateLabel>
-          Start: {moment(this.props.trip.start).format("YYYY-MM-DD")} - End:{" "}
-          {moment(this.props.trip.end).format("YYYY-MM-DD")}
-        </s.DateLabel> */}
         <s.WaypointTracker>
           {this.props.waypoints &&
             this.props.waypoints.map(waypoint => (

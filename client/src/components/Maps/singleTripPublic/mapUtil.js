@@ -6,18 +6,6 @@ export const calcDistance = (fromLat, fromLng, toLat, toLng) => {
   )
 }
 
-// Input: array of objects with lat: Number, lng:Number properties
-// Return: distance between input pairs in meters
-// export const calcTotalDistance = latLngArray => {
-//   let G_LatLngs = latLngArray.map(latLng => {
-//     return window.google.maps.LatLng(latLng.lat, latLng.lng)
-//   })
-//   return window.google.maps.geometry.spherical.computeLength(G_LatLngs)
-// }
-
-//TODO - add elev_service to window?
-//Returns an Elevation Object with a location(LatLng obhect),elevation,and resolution properties
-
 export const calcTimeGap = (distance, velocity) => {
   return distance / (velocity * 60)
 }
