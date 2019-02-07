@@ -15,31 +15,23 @@ import ChevronSvg from "./icons/ChevronSvg"
 
 const Card = ({ trip }) => (
   <>
-    <div className="card-image">
-      <img
-        src={
-          trip.image
-            ? `${trip.image}${STATIC_MAP_KEY}`
-            : "https://staticmapmaker.com/img/google.png"
-        }
-        alt="Static Map"
-      />
-    </div>
+    <Link to={`/public/${trip.id}`}>
+      <div className="card-image">
+        <img
+          src={
+            trip.image
+              ? `${trip.image}${STATIC_MAP_KEY}`
+              : "https://staticmapmaker.com/img/google.png"
+          }
+          alt="Static Map"
+        />
+      </div>
+    </Link>
     <div className="card-content">
       <h5>{trip.name}</h5>
       <div>Start: {moment(trip.start).format("LL")}</div>
       <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
-      <div className="card-cta">
-        {/* TESTS ARE FAILING FOR repeatTrip */}
-        {/* <Button className="btn-tertiary" onClick={() => repeatTrip(trip)}>
-          Repeat
-        </Button> */}
-      </div>
-      <Link to={`/public/${trip.id}`}>
-        <CardButton>
-          <ChevronSvg width="2rem" height="2rem" transform="rotate(-90deg)" />
-        </CardButton>
-      </Link>
+      <div className="card-cta" />
     </div>
   </>
 )
