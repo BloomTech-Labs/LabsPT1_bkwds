@@ -40,7 +40,7 @@ export const ElevationChartStyles = styled.div`
     background: white;
 
     position: absolute;
-    right: unset;
+    right: 340px;
     bottom: unset;
     top: 0;
     z-index: 5;
@@ -72,6 +72,8 @@ export const ElevationChartStyles = styled.div`
       z-index: ${props => (props.toggle ? 6 : -1)};
       right: 0;
       left: 0;
+      top: unset;
+      bottom: 50px;
     `}
   }
 

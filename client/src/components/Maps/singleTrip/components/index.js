@@ -76,7 +76,7 @@ export const TripPanelStyles = styled.div`
 
 export const Panel = styled.div`
   max-width: 340px;
-  min-width: 320px;
+  min-width: 340px;
   border-radius: 0 0 0 2px;
   display: flex;
   flex-direction: column;
@@ -84,9 +84,10 @@ export const Panel = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  width: 30%;
+  width: 340px;
   height: 45%;
-  z-index: 5;
+  z-index: 6;
+  box-shadow: 0 0 0.625rem 0 rgba(0, 0, 0, 0.1);
 
   ${props => props.isHidden && isHiddenStyles}
 `
