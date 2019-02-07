@@ -7,6 +7,7 @@ import { TripPropTypes } from "./propTypes"
 import { STATIC_MAP_KEY } from "../config"
 
 import TripCardLoader from "./TripCardLoader"
+import { Link } from "react-router-dom"
 import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
 import { Button } from "../styles/theme/styledComponents"
 
@@ -20,18 +21,20 @@ const Card = ({
   userId
 }) => (
   <>
-    <div className="card-image">
-      <img
-        className={archived ? "grayscale" : ""}
-        src={
-          trip.image
-            ? `${trip.image}${STATIC_MAP_KEY}`
-            : "https://staticmapmaker.com/img/google.png"
-        }
-        alt="Static Map"
-      />
-      {archived && <div className="text-overlay">ARCHIVED</div>}
-    </div>
+    <Link to={`/app/trip/${trip.id}`}>
+      <div className="card-image">
+        <img
+          className={archived ? "grayscale" : ""}
+          src={
+            trip.image
+              ? `${trip.image}${STATIC_MAP_KEY}`
+              : "https://staticmapmaker.com/img/google.png"
+          }
+          alt="Static Map"
+        />
+        {archived && <div className="text-overlay">ARCHIVED</div>}
+      </div>
+    </Link>
     <div className="card-content">
       <h5>{trip.name}</h5>
       <div>Start: {moment(trip.start).format("LL")}</div>
