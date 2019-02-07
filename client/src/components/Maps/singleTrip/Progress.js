@@ -1,6 +1,7 @@
 import React from "react"
 import Styled from "styled-components"
 import { ProgressBar, Step } from "react-step-progress-bar"
+import PropTypes from "prop-types"
 import { media } from "../../../styles/theme/mixins"
 
 const ProgressPanel = Styled.div`
@@ -122,4 +123,9 @@ export const MobileProgress = props => {
       </ProgressBarContainer>
     </MobileProgressPanel>
   )
+}
+
+MobileProgress.prototype = {
+  name: PropTypes.string,
+  waypoints: PropTypes.array
 }

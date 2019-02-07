@@ -132,7 +132,11 @@ SingleTripMap.propTypes = {
   removeActiveTrip: PropTypes.func.isRequired,
   isSidebarOpen: PropTypes.bool.isRequired,
   trip: TripPropTypes,
+  isPublic: PropTypes.bool.isRequired,
   tripId: PropTypes.string.isRequired
+}
+SingleTripMap.defaultProps = {
+  isPublic: false
 }
 
 const mapStateToProps = state => ({
