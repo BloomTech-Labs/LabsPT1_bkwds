@@ -47,11 +47,11 @@ class TripPictures extends Component {
       <s.TripPicturesStyles isHidden={isHidden} toggle={toggle}>
         <div className="trip-pictures-wrapper">
           {isHidden && <i className="fa fa-picture-o" />}
-          <div className="chevron-wrapper" onClick={this.togglePictures}>
+          {/* <div className="chevron-wrapper" onClick={this.togglePictures}>
             <Chevron
               transform={isHidden ? "rotate(90deg)" : "rotate(270deg)"}
             />
-          </div>
+          </div> */}
 
           <div className="trip-pictures">
             <div className="trip-pictures-header">
@@ -67,7 +67,10 @@ class TripPictures extends Component {
             <div className="trip-picture-list">
               {tripPics.map((url, i) => (
                 <s.ImageThumbnails key={i}>
-                  <img src={url} />
+                  <img
+                    src={url}
+                    onClick={() => this.setState({ isOpen: true })}
+                  />
                 </s.ImageThumbnails>
               ))}
             </div>

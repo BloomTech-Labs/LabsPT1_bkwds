@@ -590,7 +590,10 @@ class TripPanel extends React.Component {
             </s.PanelSubheader>
 
             <div className="trip-actions-wrapper">
-              <s.TripButton onClick={this.props.openModal}>
+              <s.TripButton
+                onClick={this.props.openModal}
+                style={{ height: "38px" }}
+              >
                 Start Trip
               </s.TripButton>
 
@@ -602,6 +605,8 @@ class TripPanel extends React.Component {
                 <AddIcon height="18px" width="18px" />
               </s.AddButton>
             </div>
+
+            <TripPictures toggle={tripPicturesToggled} />
 
             {/* NEW STUFF */}
             <div>

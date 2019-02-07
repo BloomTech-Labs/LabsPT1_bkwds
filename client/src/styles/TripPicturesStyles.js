@@ -7,11 +7,12 @@ export const TripPicturesStyles = styled.div`
     visibility: ${props => (props.toggle ? "visible" : "hidden")};
   `}
 
-  position: absolute;
+  position: relative;
+  /*
   top: unset;
   bottom: 254px;
   z-index: 5;
-  right: 0;
+  right: 0; */
 
   ${media.tablet`
     bottom: 50px;
@@ -34,10 +35,12 @@ export const TripPicturesStyles = styled.div`
   .trip-pictures-wrapper {
     display: flex;
     flex-direction: column;
-    height: 150px;
-    width: 500px;
+    height: 75px;
     max-width: 100vw;
-    padding: 1.5rem 0.75rem 0;
+    padding: 0 12px 10px;
+    /* height: 150px; */
+    /* width: 500px; */
+    /* padding: 1.5rem 0.75rem 0; */
     ${media.tablet`
       width: 100%;
       padding: 0.75rem 0.75rem 0;
@@ -52,6 +55,11 @@ export const TripPicturesStyles = styled.div`
     margin-bottom: 0.5rem;
     padding-right: 0.25rem;
     text-align: right;
+
+    /* NEW STYLES */
+    position: absolute;
+    top: -56px;
+    right: 15px;
   }
 
   .upload-button {
