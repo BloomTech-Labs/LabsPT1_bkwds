@@ -1,13 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { MapWrapper } from "../../../styles/CreateTrip.styles"
-import TripPanel from "../singleTrip/tripPanel"
-import ActiveTripPanel from "./activePanel"
 import styled from "styled-components"
 
 import { TripPropTypes, getDefaultTripProps } from "../../propTypes"
 import { getSingleTrip, removeActiveTrip } from "../../../redux/actions/trips"
+import ActiveTripPanel from "./ActivePanel"
+import TripPanel from "./TripPanel"
+import { MapWrapper } from "../../../styles/CreateTrip.styles"
 import { media } from "../../../styles/theme/mixins"
 
 const SingleTripMapStyles = styled.div`
@@ -15,8 +15,6 @@ const SingleTripMapStyles = styled.div`
   height: 100%;
   position: absolute;
   margin-left: ${props => (props.publicView ? "0" : "-50px")};
-  margin-left: -50px;
-  left: 50px;
   ${media.tablet`
    margin-left: 0;
  `}
