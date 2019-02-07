@@ -394,7 +394,8 @@ class ActiveTripPanel extends React.Component {
 ActiveTripPanel.propTypes = {
   trip: TripPropTypes,
   waypoints: PropTypes.array.isRequired,
-  toggleWaypoint: PropTypes.func.isRequired
+  toggleWaypoint: PropTypes.func.isRequired,
+  isPublic: Proptypes.bool
 }
 
 const mapStateToProps = ({ trips }) => ({
