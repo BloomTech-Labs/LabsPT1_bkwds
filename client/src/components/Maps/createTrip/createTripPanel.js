@@ -116,12 +116,12 @@ class CreateTripPanel extends React.Component {
             <div className="desktop-create-trip-panel">
               <s.Panel menuToggled={menuToggled}>
                 <s.PanelHeader className="hide-mobile">
-                  Create Your Trip
+                  Create your trip
                 </s.PanelHeader>
                 <div className="trip-title-wrapper panel-input-wrapper">
                   <s.TripTitleInput
                     menuToggled={menuToggled}
-                    placeholder="Enter Trip Name"
+                    placeholder="Trip Name"
                     onChange={this.handleTitle}
                     value={title}
                     ref={this.focusedInputRef}
@@ -134,13 +134,12 @@ class CreateTripPanel extends React.Component {
                   <s.SearchCenterInput
                     ref={this.inputRef}
                     searchToggled={searchToggled}
-                    placeholder="Enter Location OR drag map"
+                    placeholder="Location"
                     value={this.state.query}
                     onChange={this.handleSearch}
                   />
                 </s.SearchWrapper>
 
-                <s.DateLabel className="hide-mobile">Trip Date</s.DateLabel>
                 <s.DateRangeStyle menuToggled={menuToggled}>
                   <DateRangePicker
                     numberOfMonths={1}
@@ -159,33 +158,30 @@ class CreateTripPanel extends React.Component {
                   />
                 </s.DateRangeStyle>
                 <s.WaypointAddAction>
-                  <s.DateLabel className="hide-mobile">
-                    Locate each waypoint
-                  </s.DateLabel>
                   <s.WaypointButton
                     className="hide-mobile"
                     onClick={this.handleAddWaypoints}
                   >
-                    + Waypoint
+                    Add checkpoint
                   </s.WaypointButton>
+                  <s.SaveButton
+                    className={
+                      title && startDate && endDate && numberOfWaypoints !== 0
+                        ? ""
+                        : "disabledButton"
+                    }
+                    menuToggled={menuToggled}
+                    onClick={() =>
+                      title &&
+                      startDate &&
+                      endDate &&
+                      numberOfWaypoints !== 0 &&
+                      this.props.saveTrip()
+                    }
+                  >
+                    Create trip
+                  </s.SaveButton>
                 </s.WaypointAddAction>
-                <s.SaveButton
-                  className={
-                    title && startDate && endDate && numberOfWaypoints !== 0
-                      ? ""
-                      : "disabledButton"
-                  }
-                  menuToggled={menuToggled}
-                  onClick={() =>
-                    title &&
-                    startDate &&
-                    endDate &&
-                    numberOfWaypoints !== 0 &&
-                    this.props.saveTrip()
-                  }
-                >
-                  Create Trip
-                </s.SaveButton>
               </s.Panel>
             </div>
           )}
