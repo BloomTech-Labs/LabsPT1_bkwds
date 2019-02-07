@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import * as d3 from "d3"
 
-import Chevron from "./icons/ChevronSvg"
 import ChartIcon from "./icons/ChartSvg"
 import * as s from "../styles/ElevationChart.styles"
 
