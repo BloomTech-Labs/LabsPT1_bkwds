@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { media } from "../../../../styles/theme/mixins"
 
 export const TripPanelStyles = styled.div`
@@ -17,6 +17,7 @@ export const TripPanelStyles = styled.div`
     height: 50px;
     display: flex;
     & :first-child {
+      margin-top: 0;
       display: flex;
       flex-grow: 1;
       height: 50px;
@@ -29,21 +30,88 @@ export const TripPanelStyles = styled.div`
       display: flex;
     }
   }
+
+  .panel-wrapper {
+    /* height: 345px; */
+    background: white;
+  }
+
+  .waypoint-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1rem;
+  }
+
+  .trip-actions-wrapper {
+    margin: 0 1rem 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+  }
+
+  span.chevron-icon {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  #plus-icon {
+    z-index: 3;
+    bottom: 80px;
+  }
+
+  /* BOOTSTRAP OVERRIDES */
+  .accordion__title {
+    padding: 10px 15px;
+    h4 {
+      margin-bottom: 0;
+    }
+  }
+  .accordion__body {
+    padding: 8px 0 5px 10px;
+  }
 `
 
 export const Panel = styled.div`
-  max-width: 360px;
-  min-width: 320px;
-  border-radius: 2px;
+  max-width: 340px;
+  min-width: 340px;
+  border-radius: 0 0 0 2px;
   display: flex;
   flex-direction: column;
   background: white;
   position: absolute;
-  right: 1.5rem;
-  top: 1.5rem;
-  width: 30%;
+  right: 0;
+  top: 0;
+  width: 340px;
   height: 45%;
-  z-index: 5;
+  z-index: 6;
+  box-shadow: 0 0 0.625rem 0 rgba(0, 0, 0, 0.1);
+
+  ${props => props.isHidden && isHiddenStyles}
+`
+
+const isHiddenStyles = css`
+  width: 60px;
+  min-width: unset;
+  .panel-wrapper {
+    visibility: hidden;
+  }
+  span.chevron-icon {
+    top: 0.35rem;
+    left: 0.525rem;
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  .marker-icon-wrapper {
+    position: absolute;
+    bottom: 12px;
+    left: 1.25rem;
+    i {
+      font-size: 2rem;
+    }
+  }
 `
 
 export const ActivePanel = styled.div`
@@ -87,14 +155,18 @@ export const MobileButton = styled.button`
 `
 
 export const WaypointLabel = styled.label`
-  margin: 0 1rem;
+  margin: 0 1rem 0 0;
 `
 
 export const PanelHeader = styled.div`
-  padding: 1.25rem;
+  margin: 1.375rem 0 0 0;
   align-items: center;
   justify-content: space-between;
   display: flex;
+  padding: 1rem 1rem 0;
+  ${media.tablet`
+    padding: 1rem;
+  `}
 `
 
 export const TripDetail = styled.div`
@@ -106,7 +178,7 @@ export const TripDetail = styled.div`
   }
 `
 export const PanelSubheader = styled.div`
-  padding: 0.75rem 1.25rem 1.25rem 1.25rem;
+  padding: 0.5rem 1.25rem 1.25rem 1.25rem;
   display: flex;
 `
 
@@ -121,9 +193,9 @@ export const DateLabel = styled.label`
 
 export const Waypoint = styled.div`
   align-items: center;
-  width: 90%;
+  width: 65%;
   display: flex;
-  margin: 0.5rem auto;
+  /* margin: 0.5rem auto; */
 `
 export const WaypointInput = styled.input`
   box-sizing: border-box;
@@ -157,11 +229,16 @@ export const DeleteButton = styled.button`
   border: none;
 `
 export const WaypointList = styled.div`
+  /* height: 124px; */
+  height: 300px;
   overflow: scroll;
+  ${media.tablet`
+    height: 100%;
+  `}
 `
 
 export const WaypointsHeader = styled.div`
-  margin: 0 1rem 1rem 1rem;
+  margin: 0 1rem 0.5rem 1rem;
   align-items: center;
   color: #808080;
   display: flex;
@@ -182,20 +259,20 @@ export const SaveButton = styled.button`
   border: none;
   padding: 0;
 `
+
 export const AddButton = styled.button`
   visibility: ${props => (!props.edit ? "hidden" : "visible")};
   border: 0;
   background: transparent;
 `
-export const StartButton = styled.button`
+
+export const TripButton = styled.button`
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
   background: #45569e;
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
   color: white;
-  width: 100px;
+  width: 140px;
   border-radius: 5px;
+  border: 0;
 `
 
 export const WaypointTracker = styled.ul`

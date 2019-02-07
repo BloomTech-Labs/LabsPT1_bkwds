@@ -13,6 +13,7 @@ import {
 } from "../../../redux/actions/trips"
 import ElevationChart from "../../ElevationChart"
 import AddButton from "../../icons/AddButton"
+import ChevronIcon from "../../icons/ChevronSvg"
 
 import {
   Form,
@@ -47,8 +48,10 @@ class TripPanel extends React.Component {
     isEditing: false,
     markers: [],
     saveToggle: false,
+    panelHidden: false,
     trip: {},
     tripDistance: null,
+    tripPicturesToggled: false,
     waypointsMenuToggled: false,
     graphMenuToggled: false,
     tripPics: null,
@@ -92,7 +95,7 @@ class TripPanel extends React.Component {
             )
           )
           const timeGaps = acc.timeGaps.concat(
-            util.calcTimeGap(distances[i], velocity)
+            util.calcTimeGap(distances[i], velocity).toFixed(1)
           )
           return { distances, timeGaps }
         },
@@ -266,6 +269,10 @@ class TripPanel extends React.Component {
     })
   }
 
+  togglePanel = () => {
+    this.setState({ panelHidden: !this.state.panelHidden })
+  }
+
   handleEdit = (e, i) => {
     console.log(i)
     const mapped = this.state.trip.waypoints.map((item, index) => {
@@ -350,7 +357,8 @@ class TripPanel extends React.Component {
     if (!this.state.waypointsMenuToggled) {
       this.setState({
         waypointsMenuToggled: true,
-        graphMenuToggled: false
+        graphMenuToggled: false,
+        tripPicturesToggled: false
       })
     } else {
       this.setState({
@@ -363,6 +371,7 @@ class TripPanel extends React.Component {
     if (!this.state.graphMenuToggled) {
       this.setState({
         graphMenuToggled: true,
+        tripPicturesToggled: false,
         waypointsMenuToggled: false
       })
     } else {
@@ -372,9 +381,24 @@ class TripPanel extends React.Component {
     }
   }
 
+  togglePicturesMenu = () => {
+    if (!this.state.tripPicturesToggled) {
+      this.setState({
+        tripPicturesToggled: true,
+        graphMenuToggled: false,
+        waypointsMenuToggled: false
+      })
+    } else {
+      this.setState({
+        tripPicturesToggled: false
+      })
+    }
+  }
+
   closeAllToggles = () => {
     this.setState({
       graphMenuToggled: false,
+      tripPicturesToggled: false,
       waypointsMenuToggled: false
     })
   }
@@ -388,6 +412,8 @@ class TripPanel extends React.Component {
       tripDistance,
       waypointsMenuToggled,
       graphMenuToggled,
+      tripPicturesToggled,
+      panelHidden,
       timeGaps
     } = this.state
     return (
@@ -413,7 +439,9 @@ class TripPanel extends React.Component {
             <Button
               onClick={this.closeAllToggles}
               className={`btn-neutral ${
-                !waypointsMenuToggled && !graphMenuToggled
+                !waypointsMenuToggled &&
+                !graphMenuToggled &&
+                !tripPicturesToggled
                   ? "active-button"
                   : ""
               }`}
@@ -482,7 +510,7 @@ class TripPanel extends React.Component {
                   <s.WaypointList>
                     {trip.waypoints !== undefined &&
                       trip.waypoints.map(({ name }, i) => (
-                        <div key={name}>
+                        <div key={name} className="waypoint-wrapper">
                           <Waypoint
                             key={name}
                             i={i}
@@ -491,7 +519,12 @@ class TripPanel extends React.Component {
                             handleDelete={this.handleDelete}
                             handleEdit={this.handleEdit}
                           />
-                          <div>| {timeGaps[i]} minutes</div>
+
+                          {timeGaps.length > 0
+                            ? i === 0
+                              ? "0min"
+                              : `${timeGaps[i - 1]}min`
+                            : null}
                         </div>
                       ))}
                   </s.WaypointList>
@@ -501,76 +534,103 @@ class TripPanel extends React.Component {
           </div>
         </MobileMapPanel>
 
-        <s.Panel className="hide-mobile">
-          <s.PanelHeader>
-            <s.TripTitleInput
-              type="text"
-              edit={isEditing}
-              value={trip.name || ""}
-              onChange={this.handleTitle}
-              disabled={isEditing === false}
+        <s.Panel isHidden={panelHidden} className="hide-mobile">
+          {panelHidden && (
+            <div className="marker-icon-wrapper">
+              <i className="fa fa-map-marker" />
+            </div>
+          )}
+          <div className="chevron-icon-wrapper" onClick={this.togglePanel}>
+            <ChevronIcon
+              transform={panelHidden ? "rotate(90deg)" : "rotate(270deg)"}
             />
-            {!saveToggle ? (
-              <s.EditButton onClick={() => this.handleEditToggle()}>
-                <EditIcon width="20px" height="20px" />
-              </s.EditButton>
-            ) : (
-              <s.SaveButton onClick={() => this.handleSave()}>
-                <SaveIcon width="20px" height="20px" />
-              </s.SaveButton>
-            )}
-          </s.PanelHeader>
-          <s.PanelSubheader>
-            <s.TripDetail>
-              <DistanceIcon width="25px" height="25px" />
-              {metersToMiles(tripDistance).toFixed(2)}mi
-            </s.TripDetail>
-            <s.TripDetail>
-              <ElevationIcon width="25px" height="25px" />
-              {elevations.length &&
-                metersToFeet(
-                  elevations[elevations.length - 1].elevation -
-                    elevations[0].elevation
-                ).toFixed(2)}
-              ft
-            </s.TripDetail>
-          </s.PanelSubheader>
+          </div>
+          <div className="panel-wrapper">
+            <s.PanelHeader>
+              <s.TripTitleInput
+                type="text"
+                edit={isEditing}
+                value={trip.name || ""}
+                onChange={this.handleTitle}
+                disabled={isEditing === false}
+              />
+              {!saveToggle ? (
+                <s.EditButton onClick={() => this.handleEditToggle()}>
+                  <EditIcon width="20px" height="20px" />
+                </s.EditButton>
+              ) : (
+                <s.SaveButton onClick={() => this.handleSave()}>
+                  <SaveIcon width="20px" height="20px" />
+                </s.SaveButton>
+              )}
+            </s.PanelHeader>
+            <s.PanelSubheader>
+              <s.TripDetail>
+                <DistanceIcon width="25px" height="25px" />
+                {metersToMiles(tripDistance).toFixed(2)}mi
+              </s.TripDetail>
+              <s.TripDetail>
+                <ElevationIcon width="25px" height="25px" />
+                {elevations.length &&
+                  metersToFeet(
+                    elevations[elevations.length - 1].elevation -
+                      elevations[0].elevation
+                  ).toFixed(2)}
+                ft
+              </s.TripDetail>
+            </s.PanelSubheader>
 
-          <s.WaypointsHeader>
-            <h4>Waypoints</h4>
-            <s.AddButton
-              disabled={isEditing === false}
-              edit={isEditing}
-              onClick={() => this.addWaypoint()}
-            >
-              <AddIcon height="18px" width="18px" />
-            </s.AddButton>
-          </s.WaypointsHeader>
-          <s.WaypointList>
-            {trip.waypoints !== undefined &&
-              trip.waypoints.map(({ name }, i) => (
-                <div key={name}>
-                  <Waypoint
-                    key={name}
-                    i={i}
-                    name={name}
-                    isEditing={isEditing}
-                    handleDelete={this.handleDelete}
-                    handleEdit={this.handleEdit}
-                  />
-                  <div>| {timeGaps[i]} minutes</div>
-                </div>
-              ))}
-          </s.WaypointList>
-          <TripPictures />
+            <div className="trip-actions-wrapper">
+              <s.TripButton
+                onClick={this.props.openModal}
+                style={{ height: "38px" }}
+              >
+                Start Trip
+              </s.TripButton>
 
-          <s.StartButton onClick={this.props.openModal}>
-            Start Trip
-          </s.StartButton>
+              <s.AddButton
+                disabled={isEditing === false}
+                edit={isEditing}
+                onClick={() => this.addWaypoint()}
+                style={{ marginTop: "-105px" }}
+              >
+                <AddIcon height="18px" width="18px" />
+              </s.AddButton>
+            </div>
+
+            <TripPictures
+              isHidden={panelHidden}
+              toggle={tripPicturesToggled}
+              style={{}}
+            />
+
+            {/* NEW STUFF */}
+            <div>
+              {trip.waypoints &&
+                trip.waypoints.map((waypoint, i) => (
+                  <div key={waypoint.name} className="waypoint-wrapper">
+                    <Waypoint
+                      key={waypoint.name}
+                      i={i}
+                      name={waypoint.name}
+                      isEditing={isEditing}
+                      handleDelete={this.handleDelete}
+                      handleEdit={this.handleEdit}
+                    />
+                    {timeGaps.length > 0
+                      ? i === 0
+                        ? "0min"
+                        : `${timeGaps[i - 1]}min`
+                      : null}
+                  </div>
+                ))}
+            </div>
+          </div>
         </s.Panel>
+
         <Modal isOpen={this.props.modalIsOpen}>
           {() => (
-            <div className="startTrip-flow">
+            <div className="modal-inner startTrip-flow">
               <div className="flow-header">
                 <h4>Activate Safety Feature</h4>
                 <div>
@@ -604,6 +664,7 @@ class TripPanel extends React.Component {
             </div>
           )}
         </Modal>
+
         <ElevationChart
           distances={this.state.distances}
           elevations={elevations}

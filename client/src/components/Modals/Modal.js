@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { flexCenterMixin } from "../../styles/theme/mixins"
+import { flexCenterMixin, media } from "../../styles/theme/mixins"
 
 const ModalContainer = styled.div`
   ${flexCenterMixin};
@@ -26,29 +26,26 @@ const ModalWrapper = styled.div`
   justify-content: space-evenly;
   top: calc(50% - (66% / 2));
 
-  .onboarding-flow {
+  .modal-inner {
     z-index: 101;
     max-width: 630px;
-    max-height: 590px;
     padding: 2rem;
-    height: 650px;
-  }
-
-  .startTrip-flow {
-    z-index: 101;
-    max-width: 630px;
-    max-height: 590px;
-    padding: 2rem;
+    height: 700px;
+    max-height: 100vh;
+    ${flexCenterMixin};
+    flex-direction: column;
+    align-items: unset;
   }
 
   .flow-header {
-    padding: 0px 30px 0 30px;
+    padding: 3.25rem 1.75rem 0;
     margin-bottom: 24px;
     h4 {
       font-size: 2rem;
       font-weight: 600;
     }
   }
+
   .text-align-right {
     text-align: right;
     button {
@@ -67,6 +64,42 @@ const ModalWrapper = styled.div`
       padding-right: 3.5rem;
     }
   }
+
+  button.close-modal-button {
+    right: 2rem;
+    top: 2rem;
+  }
+
+  ${media.tablet`
+    max-height: 100vh;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    height: 700px;
+  `}
+
+  ${media.phone`
+    height: 530px;
+    div, p {
+      font-size: 0.825rem;
+    }
+    .modal-inner {
+      max-height: 100vh;
+      padding: 1rem;
+      button.close-modal-button {
+        right: 1.5rem;
+        top: 0.25rem;
+        font-size: 2.25rem;
+      }
+    }
+    .flow-header {
+      padding: 2.75rem 1rem 0 1rem;
+      h4 {
+        font-size: 1.525rem;
+        text-align: center;
+      }
+    }
+    
+  `}
 `
 
 const Modal = ({ children, isOpen }) => (
