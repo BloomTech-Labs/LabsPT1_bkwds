@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { media } from "./theme/mixins"
 
 export const TripCardStyles = styled.div`
   display: flex;
