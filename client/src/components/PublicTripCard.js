@@ -9,31 +9,26 @@ import { STATIC_MAP_KEY } from "../config"
 
 import TripCardLoader from "./TripCardLoader"
 import { togglePublic } from "../redux/actions/trips"
-import { CardButton } from "../styles/theme/styledComponents"
-import ChevronSvg from "./icons/ChevronSvg"
 
 const Card = ({ trip }) => (
   <>
-    <div className="card-image">
-      <img
-        src={
-          trip.image
-            ? `${trip.image}${STATIC_MAP_KEY}`
-            : "https://staticmapmaker.com/img/google.png"
-        }
-        alt="Static Map"
-      />
-    </div>
+    <Link to={`/public/${trip.id}`}>
+      <div className="card-image">
+        <img
+          src={
+            trip.image
+              ? `${trip.image}${STATIC_MAP_KEY}`
+              : "https://staticmapmaker.com/img/google.png"
+          }
+          alt="Static Map"
+        />
+      </div>
+    </Link>
     <div className="card-content">
       <h5>{trip.name}</h5>
       <div>Start: {moment(trip.start).format("LL")}</div>
       <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
       <div className="card-cta" />
-      <Link to={`/public/${trip.id}`}>
-        <CardButton>
-          <ChevronSvg width="2rem" height="2rem" transform="rotate(-90deg)" />
-        </CardButton>
-      </Link>
     </div>
   </>
 )

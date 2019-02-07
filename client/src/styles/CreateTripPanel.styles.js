@@ -3,8 +3,9 @@ import { media } from "./theme/mixins"
 
 export const CreateTripPanelStyles = styled.div`
   .panel-input-wrapper {
-    margin: 0.25rem 1.25rem;
+    margin: 0.25rem 0;
     input {
+      padding: 0 0.25rem;
       width: 100%;
     }
     ${media.tablet`
@@ -63,15 +64,16 @@ export const CreateTripPanelStyles = styled.div`
 export const Panel = styled.div`
   max-width: 360px;
   min-width: 320px;
+  width: 100%;
+  height: 45%;
   border-radius: 2px;
+  padding: 20px 25px;
   display: flex;
   flex-direction: column;
   background: white;
   position: absolute;
   right: 1.5rem;
   top: 1.5rem;
-  width: 30%;
-  height: 45%;
   z-index: 5;
 
   ${media.tablet`
@@ -92,12 +94,11 @@ export const Panel = styled.div`
 `
 
 export const ButtonGroup = styled.div`
+  flex: 1;
   display: flex;
-  justify-content: space-around;
-  position: absolute;
-  bottom: 1rem;
-  width: 95%;
-  margin: 0 auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
 
   ${media.tablet`
     display: ${props => (props.menuToggled ? "flex" : "none")};
@@ -113,8 +114,15 @@ export const SaveButton = styled.button`
   width: 105px;
   border-radius: 4px;
   background: ${props => props.theme.primaryDark};
-  border-color: ${props => props.theme.primaryDark};
+  border: none;
   cursor: pointer;
+  width: 100%;
+  flex: 1;
+  margin-top: 15px;
+
+  &.disabledButton {
+    background-color: grey;
+  }
 
   ${media.tablet`
     /* display: ${props => (props.menuToggled ? "flex" : "none")}; */
@@ -129,10 +137,18 @@ export const SaveButton = styled.button`
   `}
 `
 
+export const WaypointAddAction = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+`
+
 export const WaypointButton = styled.button`
   color: white;
   background: ${props => props.theme.primaryDark};
-  border-color: ${props => props.theme.primaryDark};
+  border: none;
   cursor: pointer;
   border-radius: 4px;
   width: 105px;
@@ -140,11 +156,10 @@ export const WaypointButton = styled.button`
 
 export const PanelHeader = styled.h2`
   font-size: 1.5rem;
-  padding: 0.5rem;
 `
 
 export const DateLabel = styled.label`
-  margin: 0.25rem 1.25rem;
+  margin: 0.25rem 0;
   color: #808080;
 
   ${media.tablet`
@@ -198,7 +213,7 @@ export const SearchWrapper = styled.div`
 
 export const SearchCenterInput = styled.input`
   /* display: none; */
-  margin: 0.25rem auto 1.25rem auto;
+  margin: 0.25rem auto;
   width: 85%;
   border: 0;
   outline: 0;
@@ -232,6 +247,33 @@ export const DateRangeStyle = styled.div`
     justify-content: center;
     align-content: center;
   `}
+  .DateRangePicker {
+    width: 100%;
+    margin: 0;
+    & > div {
+      width: 100%;
+      & > div {
+        width: 100%;
+      }
+    }
+  }
+  .DateRangePickerInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    & input {
+      font-family: Wals;
+      font-size: 16px;
+      text-align: center;
+      border-bottom: none;
+      font-weight: 400;
+    }
+    & input:focus,
+    & input:active {
+      border-bottom: 2px solid ${props => props.theme.primaryDark};
+    }
+  }
 `
 
 export const Toggle = styled.div`
