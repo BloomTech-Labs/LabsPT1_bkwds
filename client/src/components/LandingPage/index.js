@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import Hero from "./Hero"
 import Features from "./Features"
-import LandingPageContent from "./LandingPageContent"
+import Plans from "./Plans"
 import FooterContent from "./FooterContent"
 import Footer from "./Footer"
 import { fontDeclarations } from "../../styles/theme/mixins"
@@ -21,7 +21,7 @@ const LandingPage = () => (
   <LandingPageContainer>
     <Hero />
     <Features />
-    <LandingPageContent />
+    <Plans />
     <FooterContent />
     <Footer />
   </LandingPageContainer>
