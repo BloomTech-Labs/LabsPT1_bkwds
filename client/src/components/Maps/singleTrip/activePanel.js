@@ -1,5 +1,4 @@
 import React from "react"
-import * as s from "./components"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import moment from "moment"
@@ -7,6 +6,7 @@ import "react-step-progress-bar/styles.css"
 import { Progress } from "./Progress"
 import PropTypes from "prop-types"
 
+import * as s from "./components"
 import { TripPropTypes } from "../../propTypes"
 import { Button } from "../../../styles/theme/styledComponents"
 import { toggleWaypoint } from "../../../redux/actions/trips"
