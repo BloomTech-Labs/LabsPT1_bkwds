@@ -125,7 +125,7 @@ export const MobileProgress = props => {
   )
 }
 
-MobileProgress.prototype = {
+MobileProgress.propTypes = {
   name: PropTypes.string,
   waypoints: PropTypes.array
 }
