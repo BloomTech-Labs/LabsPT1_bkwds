@@ -118,11 +118,6 @@ class ActiveTripPanel extends React.Component {
       }
     })
   }
-  // changeTitle = () => {
-  //   console.log(this.props.trip.id)
-  //   this.setState({ title: `/public/${this.props.trip.id}` });
-  //   this.props.getSingleTrip(this.props.trip.id, 'public/');
-  // };
 
   renderWaypoints = () => {
     let markers = []

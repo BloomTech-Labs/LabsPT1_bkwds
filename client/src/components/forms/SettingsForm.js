@@ -10,7 +10,6 @@ import { CustomInputWithError, CustomButtonWithError } from "./customInputs"
 import { updateEmail, updatePassword } from "../../redux/actions/settings"
 import { settingsValidations as validate } from "./formValidations"
 import { authFormErrorsMixin } from "../../styles/theme/mixins"
-// import { UserPropTypes } from "../propTypes"
 
 const SettingsFormStyles = styled.div`
   ${authFormErrorsMixin};
@@ -87,7 +86,6 @@ const SettingsForm = ({
 )
 
 SettingsForm.propTypes = {
-  // TODO: Fix Redux issue where user is being stored differently on state
   user: UserPropTypes.isRequired,
   updateEmail: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
