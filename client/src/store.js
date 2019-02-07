@@ -17,7 +17,6 @@ export const history = createBrowserHistory()
 const composeEnhancers = composeWithDevTools({ trace: true })
 const middleware = [thunk, logger, routerMiddleware(history)]
 
-// TODO: put in redux/reducers/index.js & import instead
 const createRootReducer = history =>
   combineReducers({
     auth: authReducer,

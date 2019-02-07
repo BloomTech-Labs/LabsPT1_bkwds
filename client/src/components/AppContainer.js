@@ -37,7 +37,6 @@ const AppContainer = ({ pathname, children, isLoggedIn }) => {
       <GlobalStyles />
       <div className={mainWrapperClassList.join(" ")}>
         <AppNav />
-        {/* {showBreadcrumbs ? <Breadcrumbs /> : null} */}
         {showSidebar ? (
           <div className="main-content with-sidebar">
             <Sidebar id="sidebar" />

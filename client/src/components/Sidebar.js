@@ -8,7 +8,6 @@ import { Button } from "../styles/theme/styledComponents"
 import { toggleSidebar } from "../redux/actions/navigation"
 import * as s from "../styles/Sidebar.styles"
 
-// TODO: add window.innerWidth to state?
 let SidebarLink = ({ icon, displayName, pathname, to, toggleSidebar }) => (
   <Button
     onClick={window.innerWidth < 769 ? toggleSidebar : () => null}

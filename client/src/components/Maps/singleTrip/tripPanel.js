@@ -197,7 +197,6 @@ class TripPanel extends React.Component {
         title: waypoint.name,
         label
       })
-      // marker.setMap(window.map)
       marker.addListener("dragend", ev => {
         console.log("dragend Called on marker", i)
         const updatedWaypoints = waypoints.map((item, index) =>
@@ -427,7 +426,6 @@ class TripPanel extends React.Component {
                 graphMenuToggled ? "active-button" : ""
               }`}
             >
-              {/* <ChartIcon /> */}
               <i className="fa fa-area-chart" />
             </Button>
 

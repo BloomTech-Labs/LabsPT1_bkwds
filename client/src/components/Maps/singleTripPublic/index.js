@@ -51,10 +51,6 @@ class PublicTrip extends React.Component {
     return true
   }
 
-  //At page change remove active trip/ set null so successive page changes don't have
-  // stale activeTrip data
-  //Attaches Map to div
-  // TODO? Store users last zoom level for UX improvment - otherwise default to 9
   renderMap = center => {
     window.map = new window.google.maps.Map(
       document.getElementById("Tripmap"),
@@ -95,7 +91,6 @@ class PublicTrip extends React.Component {
     if (this.props.trip !== null) {
       return (
         <PublicTripStyles>
-          <AppNav />
           <MapWrapper>
             <ActiveTripPanel />
             <div

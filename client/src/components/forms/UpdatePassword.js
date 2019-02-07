@@ -14,13 +14,8 @@ class UpdatePassword extends Component {
     submitted: false
   }
 
-  // componentDidMount() {
-  //   console.log("RESET PASSWORD PROPS:", this.props)
-  // }
-
   handleChange = key => e => {
     this.setState({ [key]: e.target.value })
-    // console.log(this.state)
   }
 
   updatePassword = e => {
@@ -28,13 +23,8 @@ class UpdatePassword extends Component {
     const { userId, token } = this.props
     const { password } = this.state
 
-    // console.log("IN RESET PASSWORD SUBMIT!")
-    // console.log("THIS.STATE:", this.state)
-    // console.log("THIS.PROPS:", this.props)
-
     axios
       .post(
-        // TODO: put password on REQ.BODY so it's harder to intercept
         `${SERVER_URI}/reset_password/receive_new_password/${userId}/${token}`,
         { password }
       )

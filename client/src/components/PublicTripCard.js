@@ -11,7 +11,6 @@ import TripCardLoader from "./TripCardLoader"
 import { togglePublic } from "../redux/actions/trips"
 import { CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
-// import { Button } from "../styles/theme/styledComponents"
 
 const Card = ({ trip }) => (
   <>
@@ -29,12 +28,7 @@ const Card = ({ trip }) => (
       <h5>{trip.name}</h5>
       <div>Start: {moment(trip.start).format("LL")}</div>
       <div>End:&nbsp;&nbsp;&nbsp;{moment(trip.end).format("LL")}</div>
-      <div className="card-cta">
-        {/* TESTS ARE FAILING FOR repeatTrip */}
-        {/* <Button className="btn-tertiary" onClick={() => repeatTrip(trip)}>
-          Repeat
-        </Button> */}
-      </div>
+      <div className="card-cta" />
       <Link to={`/public/${trip.id}`}>
         <CardButton>
           <ChevronSvg width="2rem" height="2rem" transform="rotate(-90deg)" />
@@ -52,7 +46,6 @@ const PublicTripCard = props => (
 
 PublicTripCard.propTypes = {
   loading: PropTypes.bool.isRequired,
-  //   repeatTrip: PropTypes.func.isRequired,
   trip: TripPropTypes,
   userId: PropTypes.string
 }
@@ -66,6 +59,5 @@ const mapStateToProps = ({ auth, router, trips }) => ({
 
 export default connect(
   mapStateToProps,
-  // TODO add repeatTrip
   { togglePublic }
 )(PublicTripCard)

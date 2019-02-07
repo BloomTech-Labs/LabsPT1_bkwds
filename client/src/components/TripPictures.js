@@ -3,23 +3,9 @@ import { uploadPics } from "../redux/actions/trips"
 import { connect } from "react-redux"
 import { TripPropTypes } from "./propTypes"
 import PropTypes from "prop-types"
-// import styled from "styled-components"
 import Lightbox from "react-image-lightbox"
 import "react-image-lightbox/style.css"
 import { Button } from "../styles/theme/styledComponents"
-
-//let this here in case we want to go back to using thumbnails for imgs
-
-// const ImageThumbnails = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   margin: 1rem;
-//   width: 15%;
-//   img {
-//     width: 100%;
-//     height: 100%;
-//   }
-// `
 
 class TripPictures extends Component {
   state = {
@@ -53,8 +39,6 @@ class TripPictures extends Component {
 
     return (
       <div>
-        {/* {tripPics.map(picture => { */}
-        {/* return ( */}
         <div>
           <h4>Upload Your Pics:</h4>
           <Button>
@@ -66,18 +50,11 @@ class TripPictures extends Component {
             />
             Upload Pics
           </Button>
-          <Button
-            // key={picture}
-            type="button"
-            onClick={() => this.setState({ isOpen: true })}
-          >
+          <Button type="button" onClick={() => this.setState({ isOpen: true })}>
             View Trip Pics
-            {/* <img key={picture} src={picture} /> */}
           </Button>
         </div>
 
-        {/* ) */}
-        {/* })} */}
         {isOpen && (
           <Lightbox
             mainSrc={tripPics[photoIndex]}
