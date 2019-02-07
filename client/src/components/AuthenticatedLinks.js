@@ -14,11 +14,6 @@ class AuthenticatedLinks extends Component {
     return (
       <s.AuthenticatedLinksStyles>
         <Dropdown />
-        <li>
-          <a href="/logout" onClick={this.handleLogout}>
-            Log out
-          </a>
-        </li>
       </s.AuthenticatedLinksStyles>
     )
   }

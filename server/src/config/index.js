@@ -32,7 +32,6 @@ switch (env) {
     envConfig = require("./prod").config
     break
   default:
-  //envConfig = require("./dev").config
 }
 
 export default merge(baseConfig, envConfig)

@@ -5,7 +5,7 @@ import LandingPage from "./LandingPage/"
 import Dashboard from "./pages/Dashboard"
 import CustomRoute from "../utils/CustomRoute"
 import Pages from "./pages/Pages"
-import PublicTrip from "./Maps/singleTripPublic"
+import ActiveTrip from "./Maps/singleTrip"
 
 const Root = () => (
   <Switch>
@@ -13,7 +13,9 @@ const Root = () => (
     <Route
       exact
       path="/public/:tripId"
-      render={({ match }) => <PublicTrip tripId={match.params.tripId} />}
+      render={({ match }) => (
+        <ActiveTrip tripId={match.params.tripId} isPublic={true} />
+      )}
     />
     <CustomRoute path="/app" protectedPath component={Dashboard} />
     <CustomRoute path="/" component={Pages} />
