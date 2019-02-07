@@ -3,15 +3,6 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import axios from "axios"
 import { toast } from "react-toastify"
-import moment from "moment"
-
-import "react-accessible-accordion/dist/fancy-example.css"
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemTitle,
-  AccordionItemBody
-} from "react-accessible-accordion"
 
 import Modal from "../../Modals/Modal"
 import { openModal, closeModal } from "../../../redux/actions/modal"
