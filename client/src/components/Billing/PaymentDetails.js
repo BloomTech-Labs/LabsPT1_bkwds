@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { Elements } from "react-stripe-elements"
 import { connect } from "react-redux"
 import styled from "styled-components"
-import moment from "moment"
 import PropTypes from "prop-types"
 
 import {
@@ -89,7 +88,7 @@ class PaymentDetails extends Component {
           </div>
           <div className="detail-text">
             <span className="detail-bold">Total:</span>
-            <span>$10 /yr</span>
+            <span>$9.99 /yr</span>
           </div>
         </div>
         <StripeProvider>

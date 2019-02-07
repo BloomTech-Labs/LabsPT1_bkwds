@@ -167,6 +167,7 @@ class ActiveTripPanel extends React.Component {
         }
       })
       markers.push(marker)
+      return null
     })
     this.setState({ markers })
   }
