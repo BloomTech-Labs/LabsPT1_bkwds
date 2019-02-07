@@ -90,6 +90,7 @@ export const TripPicturesStyles = styled.div`
 `
 
 const isHiddenStyles = css`
+  visibility: hidden !important;
   .trip-pictures-wrapper {
     height: 150px;
     padding: 12px 12px 8px 12px;

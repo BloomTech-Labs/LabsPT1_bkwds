@@ -14,15 +14,7 @@ class TripPictures extends Component {
   state = {
     photoIndex: 0,
     isOpen: false,
-    theInputKey: "",
-    isHidden: false
-  }
-
-  togglePictures = () => {
-    const { isHidden } = this.state
-    this.setState({
-      isHidden: !isHidden
-    })
+    theInputKey: ""
   }
 
   upload = e => {
@@ -40,19 +32,12 @@ class TripPictures extends Component {
   }
 
   render() {
-    const { toggle, tripPics } = this.props
-    const { photoIndex, isOpen, isHidden } = this.state
+    const { toggle, tripPics, isHidden } = this.props
+    const { photoIndex, isOpen } = this.state
 
     return (
       <s.TripPicturesStyles isHidden={isHidden} toggle={toggle}>
         <div className="trip-pictures-wrapper">
-          {isHidden && <i className="fa fa-picture-o" />}
-          {/* <div className="chevron-wrapper" onClick={this.togglePictures}>
-            <Chevron
-              transform={isHidden ? "rotate(90deg)" : "rotate(270deg)"}
-            />
-          </div> */}
-
           <div className="trip-pictures">
             <div className="trip-pictures-header">
               <Button className="upload-button">
@@ -106,6 +91,7 @@ class TripPictures extends Component {
 TripPictures.propTypes = {
   trip: TripPropTypes,
   id: PropTypes.string.isRequired,
+  isHidden: PropTypes.bool.isRequired,
   toggle: PropTypes.bool.isRequired,
   tripPics: PropTypes.arrayOf(PropTypes.string),
   uploadPics: PropTypes.func.isRequired

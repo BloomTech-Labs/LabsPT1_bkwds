@@ -317,11 +317,11 @@ class ElevationChart extends Component {
               <ChartIcon height={32} width={32} />
             </div>
           )}
-          <div className="chevron-icon-wrapper" onClick={this.toggleChart}>
+          {/* <div className="chevron-icon-wrapper" onClick={this.toggleChart}>
             <Chevron
               transform={isHidden ? "rotate(90deg)" : "rotate(270deg)"}
             />
-          </div>
+          </div> */}
           {data.length > 0 && <div id="elevationChart" />}
         </div>
       </s.ElevationChartStyles>

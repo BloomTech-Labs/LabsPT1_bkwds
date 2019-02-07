@@ -597,7 +597,11 @@ class TripPanel extends React.Component {
               </s.AddButton>
             </div>
 
-            <TripPictures toggle={tripPicturesToggled} />
+            <TripPictures
+              isHidden={panelHidden}
+              toggle={tripPicturesToggled}
+              style={{}}
+            />
 
             {/* NEW STUFF */}
             <div>
