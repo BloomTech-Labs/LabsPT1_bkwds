@@ -50,12 +50,12 @@ class CopyTripLinkModal extends Component {
           </ModalHeader>
           <ModalBody>
             <CopyToClipboard
-              text={`bkwks.co/public/${this.props.trip.id}`}
+              text={`bkwds.co/public/${this.props.trip.id}`}
               onCopy={() => {
                 this.handlePopupStatus()
               }}
             >
-              <div>{`bkwks.co/public/${this.props.trip.id}`}</div>
+              <div>{`bkwds.co/public/${this.props.trip.id}`}</div>
             </CopyToClipboard>
           </ModalBody>
           <ModalFooter>
