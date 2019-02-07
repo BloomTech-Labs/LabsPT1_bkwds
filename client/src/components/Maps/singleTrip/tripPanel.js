@@ -31,7 +31,7 @@ import * as s from "./components"
 import { SERVER_URI } from "../../../config"
 import Waypoint from "./Waypoint"
 import MobileMapPanel from "../../MobileMapPanel"
-import marker from "../../icons/orange-marker.svg"
+import mapMarker from "../../icons/orange-marker.svg"
 import startMarker from "../../icons/green-marker.svg"
 import endMarker from "../../icons/black-marker.svg"
 import { numOfSamples, metersToFeet, metersToMiles } from "../../ElevationChart"
@@ -116,6 +116,13 @@ class TripPanel extends React.Component {
   }
 
   addWaypoint = () => {
+    const { maps } = window.google
+    const icon = {
+      url: mapMarker,
+      anchor: new maps.Point(15, 30),
+      scaledSize: new maps.Size(30, 30),
+      labelOrigin: new maps.Point(15, 13)
+    }
     const index = this.state.markers.length
     const marker = new window.google.maps.Marker({
       position: window.map.getCenter(),
@@ -123,7 +130,8 @@ class TripPanel extends React.Component {
       draggable: true,
       title: (index + 1).toString(),
       label: (index + 1).toString(),
-      index: index
+      index: index,
+      icon: icon
     })
     marker.addListener("dragend", ev => {
       const waypoints = this.state.trip.waypoints.map((item, i) => {
@@ -168,7 +176,7 @@ class TripPanel extends React.Component {
         ...baseIcon
       },
       marker: {
-        url: marker,
+        url: mapMarker,
         ...baseIcon
       }
     }
