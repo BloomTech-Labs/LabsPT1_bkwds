@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, CloseModalIcon } from "../styles/theme/styledComponents"
+import { Button } from "../styles/theme/styledComponents"
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import PropTypes from "prop-types"
@@ -62,7 +62,7 @@ class CopyTripLinkModal extends Component {
             {this.state.copied ? "Copied. Please confirm public trip!" : ""}
             <span> </span>
             <Button className="btn-primary" onClick={this.handlePublic}>
-              Make Public
+              {this.props.trip.isPublic ? "Make Private" : "Make Public!"}
             </Button>{" "}
             <Button className="btn-gray" onClick={this.toggle}>
               Cancel

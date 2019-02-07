@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { Link } from "react-router-dom"
 import moment from "moment"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
@@ -8,10 +7,10 @@ import { STATIC_MAP_KEY } from "../config"
 import CopyTripLinkModal from "./CopyTripLinkModal"
 
 import TripCardLoader from "./TripCardLoader"
+import { Link } from "react-router-dom"
 import { toggleArchive, repeatTrip, togglePublic } from "../redux/actions/trips"
-import { CardButton } from "../styles/theme/styledComponents"
+import { Button, CardButton } from "../styles/theme/styledComponents"
 import ChevronSvg from "./icons/ChevronSvg"
-import { Button } from "../styles/theme/styledComponents"
 
 class Card extends Component {
   handleTogglePublic = tripId => {
@@ -30,18 +29,20 @@ class Card extends Component {
 
     return (
       <>
-        <div className="card-image">
-          <img
-            className={archived ? "grayscale" : ""}
-            src={
-              trip.image
-                ? `${trip.image}${STATIC_MAP_KEY}`
-                : "https://staticmapmaker.com/img/google.png"
-            }
-            alt="Static Map"
-          />
-          {archived && <div className="text-overlay">ARCHIVED</div>}
-        </div>
+        <Link to={`/app/trip/${trip.id}`}>
+          <div className="card-image">
+            <img
+              className={archived ? "grayscale" : ""}
+              src={
+                trip.image
+                  ? `${trip.image}${STATIC_MAP_KEY}`
+                  : "https://staticmapmaker.com/img/google.png"
+              }
+              alt="Static Map"
+            />
+            {archived && <div className="text-overlay">ARCHIVED</div>}
+          </div>
+        </Link>
         <div className="card-content">
           <h5>{trip.name}</h5>
           <div>Start: {moment(trip.start).format("LL")}</div>

@@ -9,7 +9,7 @@ export const TripCardStyles = styled.div`
   width: 100%;
 
   a {
-    text-decoration: underline;
+    text-decoration: none;
   }
 
   button {

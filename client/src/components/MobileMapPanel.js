@@ -63,16 +63,6 @@ const MobileMapPanelStyles = styled.div`
       color: white;
     }
   }
-
-  ${media.tablet`
-    .hide-mobile {
-      display: none;
-    }
-    #plus-icon {
-      z-index: 1;
-      bottom: 255px;
-    }
-  `}
 `
 
 const MobileMapPanel = ({ children }) => (
