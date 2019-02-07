@@ -395,7 +395,7 @@ ActiveTripPanel.propTypes = {
   trip: TripPropTypes,
   waypoints: PropTypes.array.isRequired,
   toggleWaypoint: PropTypes.func.isRequired,
-  isPublic: Proptypes.bool
+  isPublic: PropTypes.bool
 }
 
 const mapStateToProps = ({ trips }) => ({
