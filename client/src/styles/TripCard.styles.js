@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { media } from "./theme/mixins"
 
 export const TripCardStyles = styled.div`
   display: flex;
@@ -82,9 +81,10 @@ export const TripCardStyles = styled.div`
     align-items: center;
     overflow: hidden;
 
-    ${media.tablet`
+    @media (max-width: 55.875em) {
+      height: 131px;
       width: 100%;
-    `}
+    }
 
     img {
       transition: all 1.86s ease;

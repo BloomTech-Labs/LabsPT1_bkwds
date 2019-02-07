@@ -1,6 +1,7 @@
 import React from "react"
 import Styled from "styled-components"
 import { ProgressBar, Step } from "react-step-progress-bar"
+import PropTypes from "prop-types"
 import { media } from "../../../styles/theme/mixins"
 
 const ProgressPanel = Styled.div`
@@ -12,18 +13,27 @@ const ProgressPanel = Styled.div`
     left:0;
     height:110px;
     right:0;
-    height:100[x]
+    height:100px;
     margin-left:auto;
     margin-right:auto;
     ${media.tablet`
+       display:none;
+  `}
+`
+const MobileProgressPanel = Styled(ProgressPanel)`
+  display:none;
+${media.tablet`
+        display:block;
         top:0;
         left:50px;
         height:10%;
         max-height:110px;
         min-height:4rem;
         width: calc(100% - 50px);
-  `}
+`}
+
 `
+
 const PanelHeader = Styled.h4`
     padding: .5rem 2rem;
         ${media.tablet`
@@ -65,36 +75,57 @@ let calcPercentage = waypoints => {
   }
   return val * index
 }
-const Progress = props => {
+export const Progress = props => {
   if (props.waypoints) {
     return (
-      <ProgressPanel>
-        <PanelHeader>{props.name}</PanelHeader>
-        <ProgressBarContainer>
-          <ProgressBar
-            filledBackground="linear-gradient(to right,#73c8a9, #373b44)"
-            percent={calcPercentage(props.waypoints)}
-            height=".75rem"
-          >
-            {props.waypoints.map((_, i) => {
-              return (
-                <Step key={i}>
-                  {({ accomplished }) => (
-                    <StepContainer accomplished={accomplished}>
-                      {console.log(accomplished)}
-                      {i + 1}
-                    </StepContainer>
-                  )}
-                </Step>
-              )
-            })}
-          </ProgressBar>
-        </ProgressBarContainer>
-      </ProgressPanel>
+      <div>
+        <MobileProgress name={props.name} waypoints={props.waypoints} />
+        <ProgressPanel>
+          <PanelHeader>{props.name}</PanelHeader>
+          <ProgressBarContainer>
+            <ProgressBar
+              filledBackground="linear-gradient(to right,#73c8a9, #373b44)"
+              percent={calcPercentage(props.waypoints)}
+              height=".75rem"
+            >
+              {props.waypoints.map((_, i) => {
+                return (
+                  <Step key={i}>
+                    {({ accomplished }) => (
+                      <StepContainer accomplished={accomplished}>
+                        {console.log(accomplished)}
+                        {i + 1}
+                      </StepContainer>
+                    )}
+                  </Step>
+                )
+              })}
+            </ProgressBar>
+          </ProgressBarContainer>
+        </ProgressPanel>
+      </div>
     )
   } else {
     return null
   }
 }
 
-export default Progress
+export const MobileProgress = props => {
+  return (
+    <MobileProgressPanel>
+      <PanelHeader>{props.name}</PanelHeader>
+      <ProgressBarContainer>
+        <ProgressBar
+          filledBackground="linear-gradient(to right,#73c8a9, #373b44)"
+          percent={calcPercentage(props.waypoints)}
+          height=".75rem"
+        />
+      </ProgressBarContainer>
+    </MobileProgressPanel>
+  )
+}
+
+MobileProgress.propTypes = {
+  name: PropTypes.string,
+  waypoints: PropTypes.array
+}

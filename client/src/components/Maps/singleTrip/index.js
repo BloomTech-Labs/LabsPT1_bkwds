@@ -13,10 +13,10 @@ import { media } from "../../../styles/theme/mixins"
 const SingleTripMapStyles = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  position: absolute;
+  margin-left: ${props => (props.publicView ? "0" : "-50px")};
   margin-left: -50px;
+  left: 50px;
   ${media.tablet`
    margin-left: 0;
  `}
@@ -105,7 +105,7 @@ class SingleTripMap extends React.Component {
   render() {
     if (this.props.trip !== null) {
       return (
-        <SingleTripMapStyles>
+        <SingleTripMapStyles publicView={this.props.isPublic}>
           <MapWrapper>
             {!this.props.trip.inProgress ? (
               <TripPanel
@@ -113,7 +113,7 @@ class SingleTripMap extends React.Component {
                 mapRef={this.mapRef}
               />
             ) : (
-              <ActiveTripPanel />
+              <ActiveTripPanel isPublic={this.props.isPublic} />
             )}
             <div
               style={{ width: "100%", height: "100%", position: "absolute" }}
@@ -134,7 +134,11 @@ SingleTripMap.propTypes = {
   removeActiveTrip: PropTypes.func.isRequired,
   isSidebarOpen: PropTypes.bool.isRequired,
   trip: TripPropTypes,
+  isPublic: PropTypes.bool.isRequired,
   tripId: PropTypes.string.isRequired
+}
+SingleTripMap.defaultProps = {
+  isPublic: false
 }
 
 const mapStateToProps = state => ({
