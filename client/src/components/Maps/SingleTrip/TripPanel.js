@@ -67,6 +67,13 @@ class TripPanel extends React.Component {
     }, 500)
   }
 
+  componentWillUnmount() {
+    window.polyline.setMap(null)
+    this.state.markers.forEach(marker => {
+      marker.setMap(null)
+    })
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.markers !== this.state.markers) {
       this.getPathDistance()
