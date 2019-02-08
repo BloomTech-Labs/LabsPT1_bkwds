@@ -129,7 +129,7 @@ class CreateTripPanel extends React.Component {
                 </div>
                 <s.SearchWrapper
                   searchToggled={searchToggled}
-                  className="panel-input-wrapper"
+                  className="panel-input-wrapper hide-mobile"
                 >
                   <s.SearchCenterInput
                     ref={this.inputRef}

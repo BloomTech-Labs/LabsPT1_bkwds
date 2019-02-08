@@ -17,6 +17,15 @@ export const CreateTripPanelStyles = styled.div`
     `}
   }
 
+  .trip-title-wrapper {
+    ${media.tablet`
+      margin-top: 50px;
+      input {
+        height: 50px;
+      }
+    `}
+  }
+
   .DateRangePicker {
     display: flex;
     justify-self: center;
@@ -77,6 +86,8 @@ export const Panel = styled.div`
   z-index: 5;
 
   ${media.tablet`
+    /* HERE YA GO */
+    padding: 0;
     max-width: 100%;
     width: 100%;
     height: ${props => (props.menuToggled ? "100vh" : "50px")};
@@ -247,14 +258,18 @@ export const DateRangeStyle = styled.div`
     justify-content: center;
     align-content: center;
   `}
+
   .DateRangePicker {
     width: 100%;
     margin: 0;
     & > div {
       width: 100%;
-      & > div {
+      /* & > div {
         width: 100%;
-      }
+      } */
+      ${media.tablet`
+        width: unset;
+      `}
     }
   }
   .DateRangePickerInput {
@@ -268,6 +283,9 @@ export const DateRangeStyle = styled.div`
       text-align: center;
       border-bottom: none;
       font-weight: 400;
+      ${media.tablet`
+        height: 48px;
+      `}
     }
     & input:focus,
     & input:active {
