@@ -12,6 +12,7 @@ export const CreateTripPanelStyles = styled.div`
       margin: 0;
       input {
         text-align: left;
+        padding: 0;
         padding-left: 1rem;
       }
       position: absolute;
