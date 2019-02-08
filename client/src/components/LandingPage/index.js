@@ -25,7 +25,7 @@ const LandingPageContainer = styled.div`
     padding: 10px;
     font-size: 2rem;
     font-weight: 600;
-    color: black;
+    color: ${({ theme }) => theme.primary};
     outline: none;
   }
 
