@@ -37,7 +37,8 @@ export const TripPicturesStyles = styled.div`
     flex-direction: column;
     height: 75px;
     max-width: 100vw;
-    padding: 0 12px 10px;
+    border: 1px dashed lightgray;
+    margin: 0 18px 10px 16px;
     /* height: 150px; */
     /* width: 500px; */
     /* padding: 1.5rem 0.75rem 0; */

@@ -41,6 +41,7 @@ export const AddTripButtonStyles = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     justify-content: center;
     padding: 5rem 2.5rem;
     height: 100%;
