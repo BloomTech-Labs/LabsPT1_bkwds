@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 import { Switch } from "react-router-dom"
 import { MatchPropTypes } from "../propTypes"
 
-import SingleTrip from "../Maps/singleTrip"
+import SingleTrip from "../Maps/SingleTrip"
 import AppContainer from "../AppContainer"
 import NewTrip from "../NewTrip"
 import Trips from "../Trips"

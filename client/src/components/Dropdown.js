@@ -67,7 +67,7 @@ class NavDropdown extends Component {
             <DropdownItem divider />
             <DropdownItem>
               <Link to="/profile" className="dropdown-list-item">
-                Your Profile
+                Profile
               </Link>
             </DropdownItem>
             <DropdownItem divider />

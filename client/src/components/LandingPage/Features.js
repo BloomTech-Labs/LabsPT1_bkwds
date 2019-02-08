@@ -1,9 +1,24 @@
 import React, { PureComponent } from "react"
 import styled from "styled-components"
 
+import { media } from "../../styles/theme/mixins"
+
 const FeaturesContainer = styled.div`
   height: 100vh;
   padding: 3% 2% 2% 2%;
+
+  ${media.tablet`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 10% 2%;
+  `}
+
+  ${media.phone`
+    margin-bottom: 10%;
+  `}
 `
 
 const TitleContainer = styled.div`
@@ -18,6 +33,13 @@ const TitleContainer = styled.div`
   div {
     margin-top: 1rem;
   }
+
+  ${media.tablet`
+     h1 {
+       font-size: 1.75rem;
+       text-align: center;
+     }
+  `}
 `
 
 const Content = styled.div`
@@ -26,6 +48,15 @@ const Content = styled.div`
   height: 500px;
   width: 80%;
   margin: 0 10%;
+
+  ${media.tablet`
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 350px 1fr;
+    grid-gap: 5%;
+    width: 90%;
+    margin: 0;
+  `}
 `
 
 const Img = styled.img`
@@ -33,6 +64,19 @@ const Img = styled.img`
   flex-direction: column;
   justify-self: center;
   height: 100%;
+  -webkit-filter: drop-shadow(5px 10px 15px rgba(0, 0, 0, 0.35));
+  -moz-filter: drop-shadow(5px 10px 15px rgba(0, 0, 0, 0.35));
+  -ms-filter: drop-shadow(5px 10px 15px rgba(0, 0, 0, 0.35));
+  -o-filter: drop-shadow(5px 10px 15px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(5px 10px 15px rgba(0, 0, 0, 0.35));
+
+  ${media.tablet`
+    -webkit-filter: drop-shadow(2.5px 5px 7.5px rgba(0, 0, 0, 0.35));
+    -moz-filter: drop-shadow(2.5px 5px 7.5px rgba(0, 0, 0, 0.35));
+    -ms-filter: drop-shadow(2.5px 5px 7.5px rgba(0, 0, 0, 0.35));
+    -o-filter: drop-shadow(2.5px 5px 7.5px rgba(0, 0, 0, 0.35));
+    filter: drop-shadow(2.5px 5px 7.5px rgba(0, 0, 0, 0.35));
+  `}
 `
 
 const Description = styled.div`
@@ -57,6 +101,17 @@ const Description = styled.div`
     align-self: flex-start;
     margin-top: 0;
   }
+
+  ${media.tablet`
+    h4 {
+      font-size: 1.25rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+  `}
 `
 
 class Features extends PureComponent {
@@ -110,7 +165,7 @@ class Features extends PureComponent {
               className="features-content"
             >
               <h4>
-                Share and connect<span className="accent">.</span>
+                Share your trip<span className="accent">.</span>
               </h4>
               <p>
                 Connect with our growing community of climbers and hikers. Join
