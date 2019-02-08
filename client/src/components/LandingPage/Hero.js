@@ -73,7 +73,7 @@ const CallToAction = styled.div`
 `
 
 const Hero = () => (
-  <HeroContainer>
+  <HeroContainer id="hero">
     <Header />
     <CallToAction>
       <div className="wrapper">

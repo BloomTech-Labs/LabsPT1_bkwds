@@ -1,8 +1,9 @@
-import React, { PureComponent } from "react"
-import styled from "styled-components"
+import React from "react"
+import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-import { HamburgerSpring } from "react-animated-burgers"
+import styled from "styled-components"
 
+import { toggleSidebar } from "../../redux/actions/navigation"
 import { scrollTo } from "../../utils"
 import { media } from "../../styles/theme/mixins"
 
@@ -69,12 +70,10 @@ const Menu = styled.ul`
   }
 
   ${media.phone`
-    display: block;
-    visibility: visible;
+    display: none;
+    visibility: hidden;
 
     .links {
-      /* opacity: 1; */
-      /* transition: opacity ease-in-out 0.3s; */
       width: 100%;
       height: 54px;
       button {
@@ -85,67 +84,47 @@ const Menu = styled.ul`
   `}
 `
 
-const MobileMenu = styled.div`
+const HamburberMenu = styled.i`
   display: none;
-  grid-area: 🍔;
   visibility: hidden;
-  align-self: center;
-  justify-self: flex-end;
-  z-index: 2;
-
-  .🍔 {
-    outline: none;
-
-    span,
-    span::before,
-    span::after {
-      border-radius: 0;
-      height: 2px;
-    }
-  }
 
   ${media.phone`
     display: block;
     visibility: visible;
+    color: white;
+    align-self: center;
+    justify-self: flex-end;
+    margin-right: 10px;
   `}
 `
 
-class Header extends PureComponent {
-  state = {
-    isActive: false
-  }
+const Header = ({ isOpen, toggleSidebar }) => (
+  <>
+    <HeaderContainer>
+      <Logo src="/images/bkwdslogo.png" />
+      <Menu>
+        <li className="links">
+          <button onClick={() => scrollTo("features")}>Features</button>
+        </li>
+        <li className="links">
+          <Link to="/login">Log in</Link>
+        </li>
+        <li className="links">
+          <Link to="/register">Sign Up</Link>
+        </li>
+      </Menu>
+      <HamburberMenu
+        className="fas fa-bars"
+        onClick={() => toggleSidebar(isOpen)}
+      />
+    </HeaderContainer>
+  </>
+)
 
-  toggleBurger = () => this.setState(prev => ({ isActive: !prev.isActive }))
-
-  render() {
-    return (
-      <>
-        <HeaderContainer>
-          <Logo src="/images/bkwdslogo.png" />
-          <MobileMenu>
-            <HamburgerSpring
-              isActive={this.state.isActive}
-              toggleButton={this.toggleBurger}
-              className="🍔"
-              barColor="white"
-              buttonWidth={30}
-            />
-          </MobileMenu>
-          <Menu>
-            <li className="links">
-              <button onClick={() => scrollTo("features")}>Features</button>
-            </li>
-            <li className="links">
-              <Link to="/login">Log in</Link>
-            </li>
-            <li className="links">
-              <Link to="/register">Sign Up</Link>
-            </li>
-          </Menu>
-        </HeaderContainer>
-      </>
-    )
-  }
-}
-
-export default Header
+export default connect(
+  ({ navigation }) => ({
+    isOpen: navigation.isSidebarOpen,
+    menuState: navigation.menuState
+  }),
+  { toggleSidebar }
+)(Header)
