@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 
+import { media } from "../../styles/theme/mixins"
+
 const FooterContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -53,11 +55,29 @@ const FooterContainer = styled.div`
   .join {
     grid-area: join;
   }
+
+  ${media.tablet`
+    grid-template-columns: 1fr;
+    grid-template-rows: 114px repeat(4, 1fr);
+    grid-template-areas: "logo"
+      "menu"
+      "terms"
+      "social"
+      "join";
+
+    div {
+      margin-left: 40px;
+    }
+  `}
 `
 
 const Img = styled.img`
   width: 114px;
   margin-left: 90px;
+
+  ${media.tablet`
+    margin: 20px 0;
+  `}
 `
 
 const Footer = () => (
