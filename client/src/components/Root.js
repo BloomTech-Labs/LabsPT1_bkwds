@@ -5,7 +5,7 @@ import LandingPage from "./LandingPage/"
 import Dashboard from "./pages/Dashboard"
 import CustomRoute from "../utils/CustomRoute"
 import Pages from "./pages/Pages"
-import ActiveTrip from "./Maps/singleTrip"
+import ActiveTrip from "./Maps/SingleTrip"
 
 const Root = () => (
   <Switch>

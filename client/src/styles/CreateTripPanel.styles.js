@@ -5,7 +5,7 @@ export const CreateTripPanelStyles = styled.div`
   .panel-input-wrapper {
     margin: 0.25rem 0;
     input {
-      padding: 0 0.25rem;
+      padding: 0 0.25rem 11px;
       width: 100%;
     }
     ${media.tablet`
@@ -84,8 +84,12 @@ export const Panel = styled.div`
   max-width: 360px;
   min-width: 320px;
   width: 100%;
-  height: 45%;
-  border-radius: 2px;
+  height: 294px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0.3125rem 0.0625rem 0 rgba(0, 0, 0, 0.05),
+    0 0 0 0.0625rem rgba(0, 0, 0, 0.03), 0 0.0625rem 0 0 rgba(0, 0, 0, 0.05),
+    0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.01);
   padding: 20px 25px;
   display: flex;
   flex-direction: column;
@@ -105,12 +109,12 @@ export const Panel = styled.div`
     left: 50px;
     border-radius: 0;
     position: absolute;
+    box-shadow: none;
     background: ${props =>
       props.menuToggled ? "rgba(0,0,0,0.5)" : "transparent"};
     overflow-x: hidden;
     justify-content: ${props => (props.menuToggled ? "flex-start" : "center")};
     align-items: ${props => (props.menuToggled ? "space-between" : "center")};
-
   `}
 `
 
@@ -137,20 +141,16 @@ export const SaveButton = styled.button`
   background: ${props => props.theme.primaryDark};
   border: none;
   cursor: pointer;
-  width: 100%;
-  flex: 1;
-  margin-top: 15px;
+  height: 32px;
 
   &.disabledButton {
     background-color: grey;
   }
 
   ${media.tablet`
-    /* display: ${props => (props.menuToggled ? "flex" : "none")}; */
     display: none;
     justify-content: center;
     border-radius: 0;
-    /* background:  */
     height: 50px;
     padding: 0;
     width: 100%;
@@ -172,20 +172,12 @@ export const WaypointButton = styled.button`
   border: none;
   cursor: pointer;
   border-radius: 4px;
-  width: 105px;
+  height: 32px;
 `
 
 export const PanelHeader = styled.h2`
   font-size: 1.5rem;
-`
-
-export const DateLabel = styled.label`
-  margin: 0.25rem 0;
-  color: #808080;
-
-  ${media.tablet`
-    overflow-x: hidden;
-  `}
+  margin-bottom: 20px;
 `
 
 export const Waypoint = styled.div`
@@ -199,7 +191,7 @@ export const TripTitleInput = styled.input`
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 0.15rem solid black;
+  border-bottom: 1px solid #dbdbdb;
 
   ${media.tablet`
     display: ${props => (props.menuToggled ? "flex" : "none")};
@@ -239,7 +231,7 @@ export const SearchCenterInput = styled.input`
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 0.15rem solid black;
+  border-bottom: 1px solid #dbdbdb;
 
   ${media.tablet`
     text-align: center;
@@ -260,12 +252,12 @@ export const SearchCenterInput = styled.input`
 `
 
 export const DateRangeStyle = styled.div`
+  margin-top: 11px;
   ${media.tablet`
     display: ${props => (props.menuToggled ? "flex" : "none")};
     width: 85%;
     margin-top: 100px !important;
     border: 0;
-    margin: 0;
     justify-content: center;
     align-content: center;
   `}

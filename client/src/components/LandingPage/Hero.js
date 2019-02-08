@@ -2,14 +2,14 @@ import React from "react"
 import styled from "styled-components"
 
 import Header from "./Header"
-import ButtonCTA from "./Button"
+import Button from "./Button"
 import Typewriter from "./Typewriter"
 import { media } from "../../styles/theme/mixins"
 
 const HeroContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-image: url(./images/LPBackground.jpg);
+  background-image: url(/images/bg.jpg);
   background-size: cover;
   height: 100vh;
   width: 100%;
@@ -73,7 +73,7 @@ const CallToAction = styled.div`
 `
 
 const Hero = () => (
-  <HeroContainer>
+  <HeroContainer id="hero">
     <Header />
     <CallToAction>
       <div className="wrapper">
@@ -89,7 +89,7 @@ const Hero = () => (
           ]}
         />
         <div className="button-wrapper">
-          <ButtonCTA />
+          <Button />
         </div>
       </div>
     </CallToAction>

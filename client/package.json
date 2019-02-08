@@ -18,6 +18,7 @@
     "react": "^16.6.3",
     "react-accessible-accordion": "^2.4.5",
     "react-animated-burgers": "^1.2.6",
+    "react-burger-menu": "^2.6.3",
     "react-content-loader": "^4.0.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dates": "^18.3.1",
