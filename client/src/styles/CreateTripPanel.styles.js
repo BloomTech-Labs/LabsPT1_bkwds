@@ -14,12 +14,22 @@ export const CreateTripPanelStyles = styled.div`
         text-align: left;
         padding-left: 1rem;
       }
+      position: absolute;
+    `}
+  }
+
+  .trip-search-wrapper {
+    ${media.tablet`
+      width: 300px;
+      position: absolute;
+      left: 0;
     `}
   }
 
   .trip-title-wrapper {
     ${media.tablet`
       margin-top: 50px;
+      width: 300px;
       input {
         height: 50px;
       }
@@ -202,7 +212,7 @@ export const TripTitleInput = styled.input`
     justify-self: center;
     align-self: center;
     border: 0;
-    max-width: 286px;
+    max-width: 300px;
   `}
 `
 
@@ -253,6 +263,7 @@ export const DateRangeStyle = styled.div`
   ${media.tablet`
     display: ${props => (props.menuToggled ? "flex" : "none")};
     width: 85%;
+    margin-top: 100px !important;
     border: 0;
     margin: 0;
     justify-content: center;
@@ -268,7 +279,7 @@ export const DateRangeStyle = styled.div`
         width: 100%;
       } */
       ${media.tablet`
-        width: unset;
+        width: 300px;
       `}
     }
   }
