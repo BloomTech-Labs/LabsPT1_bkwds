@@ -5,11 +5,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 import { openModal, closeModal } from "../../../redux/actions/modal"
-import {
-  editTrip,
-  startTrip,
-  addTripSafetyTimeLimit
-} from "../../../redux/actions/trips"
+import { editTrip, startTrip } from "../../../redux/actions/trips"
 import ElevationChart from "../../ElevationChart"
 import AddButton from "../../icons/AddButton"
 import ChevronIcon from "../../icons/ChevronSvg"
@@ -622,8 +618,7 @@ const mapDispatchToProps = {
   editTrip,
   startTrip,
   openModal,
-  closeModal,
-  addTripSafetyTimeLimit
+  closeModal
 }
 
 TripPanel.propTypes = {
@@ -634,8 +629,7 @@ TripPanel.propTypes = {
   mapRef: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  addTripSafetyTimeLimit: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired
 }
 
 export default connect(
