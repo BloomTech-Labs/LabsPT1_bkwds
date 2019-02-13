@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-import Modal from "../../Modals/Modal"
 import { openModal, closeModal } from "../../../redux/actions/modal"
 import {
   editTrip,
@@ -15,11 +14,7 @@ import ElevationChart from "../../ElevationChart"
 import AddButton from "../../icons/AddButton"
 import ChevronIcon from "../../icons/ChevronSvg"
 
-import {
-  Form,
-  GhostInput,
-  Button
-} from "../../../styles/theme/styledComponents"
+import { Button } from "../../../styles/theme/styledComponents"
 
 import EditIcon from "../../icons/EditSvg"
 import { TripPropTypes } from "../../propTypes"
@@ -327,37 +322,9 @@ class TripPanel extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  startingTrip = trip => async e => {
+  startingTrip = trip => e => {
     e.preventDefault()
-    if (this.state.disableSafety) {
-      await this.props.closeModal()
-      await this.props.startTrip(trip.trip)
-    }
-
-    if (this.validateSafetyModalInput()) {
-      const { hours } = this.state
-      await this.props.addTripSafetyTimeLimit(trip.trip, hours)
-      await this.props.startTrip(trip.trip)
-    }
-  }
-
-  validateSafetyModalInput = () => {
-    let { hours } = this.state
-
-    if (hours === "") {
-      toast("Please enter a number")
-      return false
-    } else {
-      hours = Number(hours)
-    }
-
-    if (isNaN(hours)) {
-      toast("Please enter a number")
-      this.setState({ hours: "" })
-      return false
-    }
-    this.setState({ hours })
-    return true
+    this.props.startTrip(trip.trip)
   }
 
   toggleWaypointsMenu = () => {
@@ -589,7 +556,7 @@ class TripPanel extends React.Component {
 
             <div className="trip-actions-wrapper">
               <s.TripButton
-                onClick={this.props.openModal}
+                onClick={this.startingTrip({ trip })}
                 style={{ height: "38px" }}
               >
                 Start Trip
@@ -634,43 +601,6 @@ class TripPanel extends React.Component {
             </div>
           </div>
         </s.Panel>
-
-        <Modal isOpen={this.props.modalIsOpen}>
-          {() => (
-            <div className="modal-inner startTrip-flow">
-              <div className="flow-header">
-                <h4>Activate Safety Feature</h4>
-                <div>
-                  Your emergency contact will receive a SMS alert containing
-                  your last known location
-                </div>
-                <br />
-                <div>
-                  The alert will not be sent if you mark your trip as completed
-                  by the specified time limit
-                </div>
-              </div>
-              <Form onSubmit={this.startingTrip({ trip })}>
-                <label>Time Limit</label>
-                <GhostInput
-                  placeholder="How many hours should we wait?"
-                  value={this.state.hours}
-                  name="hours"
-                  onChange={this.handleHoursInput}
-                />
-                <div className="dual-buttons">
-                  <Button className="btn-primary">Activate</Button>
-                  <Button
-                    className="btn-secondary"
-                    onClick={() => this.setState({ disableSafety: true })}
-                  >
-                    No Thanks
-                  </Button>
-                </div>
-              </Form>
-            </div>
-          )}
-        </Modal>
 
         <ElevationChart
           distances={this.state.distances}
