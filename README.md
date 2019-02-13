@@ -367,3 +367,12 @@ Has a thriving community and offers the ability to directly style multiple compo
 - Find your Publishable and Secret keys. Use that data as follows.
 - .env in client folder `STRIPE_KEY_SERVER_PROD`=Secret Key `STRIPE_KEY_CLIENT_PROD`=Publishable key
 - .env in server folder `STRIPE_KEY_SERVER_PROD`= Secret Key
+
+### MLAB
+- Login or create a mlab account at mlab.com
+- Click Create New to create new deployment, choose plan type, and choose region
+- Add database name and submit order
+- Under Deployments list, select the created database
+- Go to User tab and add new user
+- Using the template uri below this text: `To connect using a driver via the standard MongoDB URI` to create `MONGO_URI` variable
+- It should be similar to: `mongodb://[NEW_USERNAME]:[NEW_USER_PASSWORD]@ds219432.mlab.com:19432/[DATABSE_NAME]`
