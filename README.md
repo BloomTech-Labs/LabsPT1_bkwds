@@ -20,6 +20,9 @@ Listed alphabetically:
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Backwoods App !Build Status](#backwoods-app-build-status)
+  - [Team](#team)
+  - [Table of Contents](#table-of-contents)
 - [Quick Start](#quick-start)
 - [Resources](#resources)
 - [Scripts](#scripts)
@@ -50,6 +53,7 @@ Listed alphabetically:
   - [Backend Dependencies](#backend-dependencies)
     - [BcryptJS](#bcryptjs)
     - [Cors](#cors)
+    - [D3](#d3)
     - [Dotenv](#dotenv)
     - [Express](#express)
     - [JSON Web Token](#json-web-token)
@@ -69,6 +73,11 @@ Listed alphabetically:
     - [Redux Thunk](#redux-thunk)
     - [Stripe](#stripe)
     - [Styled Components](#styled-components)
+  - [Setup](#setup)
+    - [Oauth with Google account\*](#oauth-with-google-account)
+    - [Google Maps](#google-maps)
+    - [Stripe](#stripe-1)
+    - [MLAB](#mlab)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -143,7 +152,7 @@ The app frontend is deployed on Netlify and the backend is deployed on Heroku.
 
 ### Frontend Deployment
 
-- [ ] TODO: John, can you flesh this section out?
+- Deploying is done via Netlify. For the build settings the base directory is `client`, build command is `yarn build`, publish directory is `client/build`
 
 ### Backend Deployment
 
@@ -346,7 +355,8 @@ Has a thriving community and offers the ability to directly style multiple compo
 
 ## Setup
 
-### Oauth with Google account*
+### Oauth with Google account\*
+
 - Go to `firebase.com` and sign in
 - Click Go to console
 - Add new project with project name and accept the terms
@@ -364,14 +374,27 @@ Has a thriving community and offers the ability to directly style multiple compo
 - Copy Project ID to create `REACT_APP_FIREBASE_AUTH_DOMAIN` as `<Project-ID>.firebase app.com`
 - Copy Project ID to create `REACT_APP_FIREBASE_DB_URL` as `https://<Project-ID>.firebaseio.com`
 
-*To prevent CORS warning*
+_To prevent CORS warning_
+
 - Go to `console.cloud.google.com` and sign in
 - On left sidebar, click APIs & services and go to Credentials tab
 - Under OAuth 2.0 Client IDs section, click the Web client
 - Under Authorized Javascript origins section, add the URI of your local client development, ie. `http://localhost:3000`
-- Click Save (edited) 
+- Click Save (edited)
+
+### Google Maps
+
+- We will create two keys, one for production and development
+- Login or create an account at https://cloud.google.com/maps-platform/
+- Select Maps and Places in Get Started Modal
+- On next page you will see secure credentials, which you will click on.
+- Under Key Restrictions enable HTTP referrers
+- For production enter your domain
+- for local/development add localhost or 127.0.0.1
+- Go to the source and under client/public index.html add `<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&libraries=places,geometry"></script>`
 
 ### Stripe
+
 - Login or create a stripe account at stripe.com
 - Under the Developers tab, select the Api keys sub tab.
 - Find your Publishable and Secret keys. Use that data as follows.
@@ -379,6 +402,7 @@ Has a thriving community and offers the ability to directly style multiple compo
 - .env in server folder `STRIPE_KEY_SERVER_PROD`= Secret Key
 
 ### MLAB
+
 - Login or create a mlab account at mlab.com
 - Click Create New to create new deployment, choose plan type, and choose region
 - Add database name and submit order
