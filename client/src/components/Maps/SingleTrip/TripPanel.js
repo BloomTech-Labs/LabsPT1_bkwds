@@ -437,7 +437,10 @@ class TripPanel extends React.Component {
               <i className="fa fa-area-chart" />
             </Button>
 
-            <Button onClick={this.props.openModal} className={`btn-neutral`}>
+            <Button
+              onClick={this.startingTrip({ trip })}
+              className={`btn-neutral`}
+            >
               <i className="fa fa-play" />
             </Button>
           </div>
