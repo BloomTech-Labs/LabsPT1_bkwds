@@ -53,6 +53,7 @@ class TripPictures extends Component {
                 <s.ImageThumbnails key={i}>
                   <img
                     src={url}
+                    alt=""
                     onClick={() => this.setState({ isOpen: true })}
                   />
                 </s.ImageThumbnails>
