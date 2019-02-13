@@ -343,3 +343,46 @@ A powerful, simple, and seamless payment commerce solution (Required by employer
 
 Has a thriving community and offers the ability to directly style multiple components within a file. The syntax used is familiar to JavaScript and improves code cleanliness and makes it easy to get up and going for those without a lot of css experience. Styled components are also very efficient, improving load time for users.
 [View Dependency](https://www.styled-components.com/docs/)
+
+## Setup
+
+### Oauth with Google account*
+- Go to `firebase.com` and sign in
+- Click Go to console
+- Add new project with project name and accept the terms
+- On left sidebar, click Authentication option
+- Click sign-in method tab
+- Click Google status to open settings modal
+- Toggle button to enable
+- Select support email
+- Click Save
+- Extra step for deployment: under Authorized domains section, add domain of deployed server and diet apps
+
+- From the side menu, click on Gear icon and Project settings
+- In General tab, under Project section
+- Copy Web API key for `REACT_APP_FIREBASE_API_KEY`
+- Copy Project ID to create `REACT_APP_FIREBASE_AUTH_DOMAIN` as `<Project-ID>.firebase app.com`
+- Copy Project ID to create `REACT_APP_FIREBASE_DB_URL` as `https://<Project-ID>.firebaseio.com`
+
+*To prevent CORS warning*
+- Go to `console.cloud.google.com` and sign in
+- On left sidebar, click APIs & services and go to Credentials tab
+- Under OAuth 2.0 Client IDs section, click the Web client
+- Under Authorized Javascript origins section, add the URI of your local client development, ie. `http://localhost:3000`
+- Click Save (edited) 
+
+### Stripe
+- Login or create a stripe account at stripe.com
+- Under the Developers tab, select the Api keys sub tab.
+- Find your Publishable and Secret keys. Use that data as follows.
+- .env in client folder `STRIPE_KEY_SERVER_PROD`=Secret Key `STRIPE_KEY_CLIENT_PROD`=Publishable key
+- .env in server folder `STRIPE_KEY_SERVER_PROD`= Secret Key
+
+### MLAB
+- Login or create a mlab account at mlab.com
+- Click Create New to create new deployment, choose plan type, and choose region
+- Add database name and submit order
+- Under Deployments list, select the created database
+- Go to User tab and add new user
+- Using the template uri below this text: `To connect using a driver via the standard MongoDB URI` to create `MONGO_URI` variable
+- It should be similar to: `mongodb://[NEW_USERNAME]:[NEW_USER_PASSWORD]@ds219432.mlab.com:19432/[DATABSE_NAME]`
