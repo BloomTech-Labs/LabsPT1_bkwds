@@ -360,3 +360,10 @@ Has a thriving community and offers the ability to directly style multiple compo
 - Under OAuth 2.0 Client IDs section, click the Web client
 - Under Authorized Javascript origins section, add the URI of your local client development, ie. `http://localhost:3000`
 - Click Save (edited) 
+
+### Stripe
+- Login or create a stripe account at stripe.com
+- Under the Developers tab, select the Api keys sub tab.
+- Find your Publishable and Secret keys. Use that data as follows.
+- .env in client folder `STRIPE_KEY_SERVER_PROD`=Secret Key `STRIPE_KEY_CLIENT_PROD`=Publishable key
+- .env in server folder `STRIPE_KEY_SERVER_PROD`= Secret Key
