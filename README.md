@@ -243,6 +243,16 @@ Bcrypt is an adaptive hash function which adjusts the cost of hashing, which mea
 Used to configure API security. This was used to allow for secure communication between the front-end and back-end servers.
 [View Dependency](https://github.com/expressjs/cors)
 
+### D3
+
+D3 is a JavaScript data-visualization library created by Mike Bostock while he worked at the New York Times. We used D3 in the project to draw the [Elevation Chart](https://github.com/Lambda-School-Labs/LabsPT1_bkwds/blob/master/client/src/components/ElevationChart.js). This React component is an area chart that plots a trip’s distance on the x-axis and its elevation on the y-axis.
+
+When a user hovers over the chart, an infobox appears showing the elevation at that particular point along the plotline. The [callback function](https://github.com/Lambda-School-Labs/LabsPT1_bkwds/blob/master/client/src/components/ElevationChart.js#L290) that fires on mousemove uses D3 selectors and formatting helper functions to manipulate the DOM, rendering the values and CSS dynamically depending on where on the component the user is hovering.
+
+In addition to the infobox, a [blip element is created](https://github.com/Lambda-School-Labs/LabsPT1_bkwds/blob/master/client/src/components/ElevationChart.js#L253). This is the blue dot that hovers over the plotline at the place where the user is hovering on the elevation chart. When the mouseover callback is called, the blip’s display is set to block and the position on the screen is set to the screen’s x and y position as returned by Google Map’s Elevation API.
+
+[View Dependency](https://d3js.org/)
+
 ### Dotenv
 
 Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
