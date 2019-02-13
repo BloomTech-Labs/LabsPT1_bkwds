@@ -350,9 +350,9 @@ Has a thriving community and offers the ability to directly style multiple compo
 
 - From the side menu, click on Gear icon and Project settings
 - In General tab, under Project section
-- Copy Web API key for `REACT-APP-FIREBASE-API-KEY`
-- Copy Project ID to create `REACT-APP-FIREBASE-AUTH-DOMAIN` as `<Project-ID>.firebase app.com`
-- Copy Project ID to create `REACT-APP-FIREBASE-DB-URL` as `https://<Project-ID>.firebaseio.com`
+- Copy Web API key for `REACT_APP_FIREBASE_API_KEY`
+- Copy Project ID to create `REACT_APP_FIREBASE_AUTH_DOMAIN` as `<Project-ID>.firebase app.com`
+- Copy Project ID to create `REACT_APP_FIREBASE_DB_URL` as `https://<Project-ID>.firebaseio.com`
 
 *To prevent CORS warning*
 - Go to `console.cloud.google.com` and sign in
