@@ -159,17 +159,6 @@ class DashboardHome extends Component {
                           placeholder="Search for location..."
                           ref={this.inputRef}
                         />
-                        <label>Emergency Contact Info</label>
-                        <GhostInput
-                          value={this.state.contactName}
-                          onChange={this.handleChange("contactName")}
-                          placeholder="Name"
-                        />
-                        <GhostInput
-                          value={this.state.contactNumber}
-                          onChange={this.handleChange("contactNumber")}
-                          placeholder="Phone ( e.g. 5125551234 )"
-                        />
                         <div className="text-align-right">
                           <Button className="btn-primary">Save</Button>
                         </div>

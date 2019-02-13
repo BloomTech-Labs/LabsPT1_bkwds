@@ -12,7 +12,6 @@ const MobileMenu = ({ isOpen }) => (
     outerContainerId="landing-page"
     pageWrapId="hero"
   >
-    <a>Features</a>
     <Link to="/login">Log in</Link>
     <Link to="/register">Sign Up</Link>
   </Menu>
