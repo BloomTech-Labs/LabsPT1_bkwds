@@ -350,9 +350,9 @@ Has a thriving community and offers the ability to directly style multiple compo
 
 - From the side menu, click on Gear icon and Project settings
 - In General tab, under Project section
-- Copy Web API key for `REACT_APP_FIREBASE_API_KEY`
-- Copy Project ID to create `REACT_APP_FIREBASE_AUTH_DOMAIN` as `<Project-ID>.firebase app.com`
-- Copy Project ID to create `REACT_APP_FIREBASE_DB_URL` as `https://<Project-ID>.firebaseio.com`
+- Copy Web API key for `REACT_APP_FIREBASE_API_KEY` in client folder
+- Copy Project ID to create `REACT_APP_FIREBASE_AUTH_DOMAIN` as `<Project-ID>.firebase app.com` in client folder
+- Copy Project ID to create `REACT_APP_FIREBASE_DB_URL` as `https://<Project-ID>.firebaseio.com` in client folder
 
 *To prevent CORS warning*
 - Go to `console.cloud.google.com` and sign in
@@ -374,5 +374,5 @@ Has a thriving community and offers the ability to directly style multiple compo
 - Add database name and submit order
 - Under Deployments list, select the created database
 - Go to User tab and add new user
-- Using the template uri below this text: `To connect using a driver via the standard MongoDB URI` to create `MONGO_URI` variable
+- Using the template uri below this text: `To connect using a driver via the standard MongoDB URI` to create `MONGO_URI` variable in server folder
 - It should be similar to: `mongodb://[NEW_USERNAME]:[NEW_USER_PASSWORD]@ds219432.mlab.com:19432/[DATABSE_NAME]`
