@@ -72,6 +72,20 @@ class TripPanel extends React.Component {
     }
   }
 
+  // positions is an array of either:
+  // 1. Google Maps marker objects; or
+  // 2. Objects of shape { lat: number, lon: number }
+  setMapBounds = positions => {
+    let bounds = new window.google.maps.LatLngBounds()
+    positions.forEach(p => {
+      const bound = p.position
+        ? { lat: p.position.lat(), lng: p.position.lng() }
+        : { lat: p.lat, lng: p.lon }
+      bounds.extend(bound)
+    })
+    window.map.fitBounds(bounds)
+  }
+
   getElevationsAlongPath = () => {
     const { velocity } = this.state
     if (this.state.markers.length > 1) {
@@ -182,6 +196,9 @@ class TripPanel extends React.Component {
       }
     }
 
+    // set map center when component first mounts:
+    this.setMapBounds(waypoints)
+
     waypoints.forEach((waypoint, i) => {
       const position = {
         lat: waypoint.lat,
@@ -207,7 +224,6 @@ class TripPanel extends React.Component {
         label
       })
       marker.addListener("dragend", ev => {
-        console.log("dragend Called on marker", i)
         const updatedWaypoints = waypoints.map((item, index) =>
           index === i
             ? { ...item, lat: ev.latLng.lat(), lon: ev.latLng.lng() }
@@ -272,7 +288,6 @@ class TripPanel extends React.Component {
   }
 
   handleEdit = (e, i) => {
-    console.log(i)
     const mapped = this.state.trip.waypoints.map((item, index) => {
       if (index === i) {
         return { ...item, name: e.target.value }
@@ -299,6 +314,7 @@ class TripPanel extends React.Component {
       this.toggleDraggable()
       this.props.editTrip(this.state.trip)
       this.props.drawPolyline(this.state.markers)
+      this.setMapBounds(this.state.markers)
     })
   }
 
