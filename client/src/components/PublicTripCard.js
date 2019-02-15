@@ -5,7 +5,7 @@ import moment from "moment"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
 
-import { STATIC_MAP_KEY } from "../config"
+import { MAPS_KEY } from "../config"
 
 import TripCardLoader from "./TripCardLoader"
 import { togglePublic } from "../redux/actions/trips"
@@ -17,7 +17,7 @@ const Card = ({ trip }) => (
         <img
           src={
             trip.image
-              ? `${trip.image}${STATIC_MAP_KEY}`
+              ? `${trip.image}${MAPS_KEY}`
               : "https://staticmapmaker.com/img/google.png"
           }
           alt="Static Map"

@@ -1,4 +1,5 @@
-import * as firebase from "firebase"
+import firebase from "firebase/app"
+import "firebase/auth"
 
 import { FirebaseConfig } from "../config/index"
 firebase.initializeApp(FirebaseConfig)
