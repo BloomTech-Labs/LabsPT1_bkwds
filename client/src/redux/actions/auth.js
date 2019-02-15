@@ -80,8 +80,7 @@ export const logout = () => dispatch => {
         position: toast.POSITION.BOTTOM_RIGHT
       })
     })
-    .catch(err => {
-      console.log(err)
+    .catch(() => {
       toast.error("Error when unlink your account", {
         position: toast.POSITION.BOTTOM_RIGHT
       })
@@ -94,7 +93,7 @@ export const addTokenToState = () => dispatch => {
   try {
     token = localStorage.getItem("token")
   } catch (e) {
-    console.log("ADD TOKEN TO STATE ERROR:", e)
+    console.warn("Error retrieving token from localStorage", e)
   }
   // If no token, bail out:
   if (!token) return

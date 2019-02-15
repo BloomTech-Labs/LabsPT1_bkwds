@@ -117,8 +117,7 @@ class DashboardHome extends Component {
           map={null}
           getFormattedAddress={this.retrieveFormattedAddress}
         >
-          {({ location, viewport, formattedAddress }) => {
-            console.log("RENDER ARGS:", location, viewport, formattedAddress)
+          {({ location, formattedAddress }) => {
             return (
               <div>
                 <Modal isOpen={modalIsOpen}>
