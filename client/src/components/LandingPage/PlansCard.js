@@ -82,7 +82,7 @@ const PlansCard = ({ price, title }) => (
   <Card>
     <h5>{title}</h5>
     <h2>
-      $<span className="bold">{price}</span>/mo.
+      $<span className="bold">{price}</span>/year
     </h2>
     <ul>
       <li>

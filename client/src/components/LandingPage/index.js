@@ -1,5 +1,7 @@
-import React from "react"
+import React, { Component } from "react"
 import styled from "styled-components"
+import axios from "axios"
+import { SERVER_URI } from "../../config"
 
 import MobileMenu from "./MobileMenu"
 import Hero from "./Hero"
@@ -13,7 +15,7 @@ const LandingPageContainer = styled.div`
   overflow: auto;
   height: 100%;
   ${fontDeclarations}
-  font-family: "Wals";
+  font-family: Wals, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -34,15 +36,23 @@ const LandingPageContainer = styled.div`
   }
 `
 
-const LandingPage = () => (
-  <LandingPageContainer id="landing-page">
-    <MobileMenu />
-    <Hero />
-    <Features />
-    <Plans />
-    <FooterContent />
-    <Footer />
-  </LandingPageContainer>
-)
+class LandingPage extends Component {
+  componentDidMount() {
+    // WAKE UP HEROKU SERVER ON INITIAL PAGE LOAD
+    axios.get(`${SERVER_URI}`)
+  }
+  render() {
+    return (
+      <LandingPageContainer id="landing-page">
+        <MobileMenu />
+        <Hero />
+        <Features />
+        <Plans />
+        <FooterContent />
+        <Footer />
+      </LandingPageContainer>
+    )
+  }
+}
 
 export default LandingPage
