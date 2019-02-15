@@ -126,6 +126,7 @@ export const fontDeclarations = css`
       url("/fonts/Wals-Regular.otf") format("opentype");
     font-weight: 400;
     font-style: normal;
+    font-display: fallback;
   }
   @font-face {
     font-family: "Wals";
@@ -133,6 +134,7 @@ export const fontDeclarations = css`
       url("/fonts/Wals-Regular-Oblique.otf") format("opentype");
     font-weight: 400;
     font-style: italic;
+    font-display: fallback;
   }
   @font-face {
     font-family: "Wals";
@@ -140,6 +142,7 @@ export const fontDeclarations = css`
       url("/fonts/Wals-Light.otf") format("opentype");
     font-weight: 300;
     font-style: normal;
+    font-display: fallback;
   }
   @font-face {
     font-family: "Wals";
@@ -147,6 +150,7 @@ export const fontDeclarations = css`
       url("/fonts/Wals-Light-Oblique.otf") format("opentype");
     font-weight: 300;
     font-style: italic;
+    font-display: fallback;
   }
   @font-face {
     font-family: "Wals";
@@ -154,6 +158,7 @@ export const fontDeclarations = css`
       url("/fonts/Wals-Medium.otf") format("opentype");
     font-weight: 500;
     font-style: normal;
+    font-display: fallback;
   }
   @font-face {
     font-family: "Wals";
@@ -161,12 +166,13 @@ export const fontDeclarations = css`
       url("/fonts/Wals-Medium-Oblique.otf") format("opentype");
     font-weight: 500;
     font-style: italic;
+    font-display: fallback;
   }
 `
 
 export const fontMixin = css`
   html * {
-    font-family: Wals;
+    font-family: Wals, sans-serif;
     /* @SET: 1rem === 16px */
     font-size: 16px;
     text-rendering: optimizeLegibility;
@@ -190,7 +196,7 @@ export const fontMixin = css`
   }
 
   h4 {
-    font-family: Wals;
+    font-family: Wals, sans-serif;
     font-weight: 500;
     font-size: 1.75rem;
     margin-bottom: 16px;

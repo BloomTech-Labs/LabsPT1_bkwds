@@ -63,9 +63,12 @@ const StepContainer = Styled.div`
     height:1.5rem;
     border-radius:50%;
 `
+
 let calcPercentage = waypoints => {
   let index = 0
-  let val = 100 / waypoints.length
+  // Need to subtract 1 so that we get the right percentage
+  // e.g. 4 waypoints should show a progress of 33% each step
+  let val = 100 / (waypoints.length - 1)
 
   for (let i = 0; i < waypoints.length; i++) {
     if (!waypoints[i].complete) {
@@ -76,6 +79,7 @@ let calcPercentage = waypoints => {
   }
   return val * index
 }
+
 export const Progress = props => {
   if (props.waypoints) {
     return (
@@ -94,7 +98,6 @@ export const Progress = props => {
                   <Step key={i}>
                     {({ accomplished }) => (
                       <StepContainer accomplished={accomplished}>
-                        {console.log(accomplished)}
                         {i + 1}
                       </StepContainer>
                     )}

@@ -28,10 +28,26 @@ const HeaderContainer = styled.div`
   `}
 `
 
-const Logo = styled.img`
-  grid-area: logo;
-  align-self: center;
-  width: 128px;
+const Logo = styled.div`
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: white;
+  position: absolute;
+  left: 98px;
+  top: 56px;
+  font-family: Wals;
+  letter-spacing: -0.0075rem;
+  span.logo-first-letter {
+    letter-spacing: -0.03rem;
+  }
+  span.logo-last-letter {
+    color: ${props => props.theme.primary};
+    font-size: 2.75rem;
+    margin-left: 1px;
+  }
+  span.logo-second-letter {
+    letter-spacing: 0.0825rem;
+  }
 `
 
 const Menu = styled.ul`
@@ -101,7 +117,12 @@ const HamburberMenu = styled.i`
 const Header = ({ isOpen, toggleSidebar }) => (
   <>
     <HeaderContainer>
-      <Logo src="/images/bkwdslogo.png" />
+      <Logo>
+        <span className="logo-first-letter">b</span>
+        <span className="logo-second-letter">k</span>
+        wds
+        <span className="logo-last-letter">.</span>
+      </Logo>
       <Menu>
         <li className="links">
           <button onClick={() => scrollTo("features")}>Features</button>
