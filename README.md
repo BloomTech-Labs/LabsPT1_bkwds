@@ -410,3 +410,8 @@ _To prevent CORS warning_
 - Go to User tab and add new user
 - Using the template uri below this text: `To connect using a driver via the standard MongoDB URI` to create `MONGO_URI` variable
 - It should be similar to: `mongodb://[NEW_USERNAME]:[NEW_USER_PASSWORD]@ds219432.mlab.com:19432/[DATABSE_NAME]`
+
+### Cloudinary
+- Login or create a cloudinary account at cloudinary.com
+- Click Dashboard tab
+- Create `CLOUDINARY_KEY`=API key and `CLOUDINARY_SECRET_KEY`=secret key
