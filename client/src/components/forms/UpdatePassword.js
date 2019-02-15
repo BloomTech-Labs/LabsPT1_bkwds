@@ -28,8 +28,8 @@ class UpdatePassword extends Component {
         `${SERVER_URI}/reset_password/receive_new_password/${userId}/${token}`,
         { password }
       )
-      .then(res => console.log("RESPONSE FROM SERVER TO CLIENT:", res))
-      .catch(err => console.log("SERVER ERROR TO CLIENT:", err))
+      .then(res => res)
+      .catch(err => console.warn("ERROR FROM SERVER UPDATING PASSWORD:", err))
     this.setState({ submitted: !this.state.submitted })
   }
 
