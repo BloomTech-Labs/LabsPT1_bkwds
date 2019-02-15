@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import moment from "moment"
 import PropTypes from "prop-types"
 import { TripPropTypes } from "./propTypes"
-import { STATIC_MAP_KEY } from "../config"
+import { MAPS_KEY } from "../config"
 import CopyTripLinkModal from "./CopyTripLinkModal"
 
 import TripCardLoader from "./TripCardLoader"
@@ -35,7 +35,7 @@ class Card extends Component {
               className={archived ? "grayscale" : ""}
               src={
                 trip.image
-                  ? `${trip.image}${STATIC_MAP_KEY}`
+                  ? `${trip.image}${MAPS_KEY}`
                   : "https://staticmapmaker.com/img/google.png"
               }
               alt="Static Map"
