@@ -5,7 +5,7 @@ import styled from "styled-components"
 import PropTypes from "prop-types"
 
 import {
-  closeCheckoutForm,
+  // closeCheckoutForm,
   openCheckoutForm
 } from "../../redux/actions/billing"
 import CheckoutForm from "../forms/CheckoutForm"
@@ -68,7 +68,7 @@ class PaymentDetails extends Component {
   }
 
   componentWillUnmount() {
-    this.props.closeCheckoutForm()
+    // this.props.closeCheckoutForm()
   }
 
   componentDidUpdate(prevProps) {
@@ -104,7 +104,7 @@ class PaymentDetails extends Component {
 
 PaymentDetails.propTypes = {
   pending: PropTypes.bool.isRequired,
-  closeCheckoutForm: PropTypes.func.isRequired,
+  // closeCheckoutForm: PropTypes.func.isRequired,
   openCheckoutForm: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
@@ -116,7 +116,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  closeCheckoutForm,
+  // closeCheckoutForm,
   openCheckoutForm
 }
 
