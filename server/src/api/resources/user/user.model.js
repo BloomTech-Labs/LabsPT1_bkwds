@@ -11,9 +11,8 @@ export const schema = {
     type: [Number]
   },
   customerId: {
-    sparse: true,
-    type: String,
-    unique: true
+    required: false,
+    type: String
   },
   displayName: {
     required: false,
@@ -53,9 +52,8 @@ export const schema = {
     type: Boolean
   },
   subscribeId: {
-    sparse: true,
-    type: String,
-    unique: true
+    required: false,
+    type: String
   },
   token: {
     type: String,
