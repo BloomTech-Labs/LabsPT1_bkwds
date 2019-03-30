@@ -12,7 +12,7 @@ export const schema = {
   },
   customerId: {
     required: false,
-    type: String,
+    type: String
   },
   displayName: {
     required: false,
@@ -53,7 +53,7 @@ export const schema = {
   },
   subscribeId: {
     required: false,
-    type: String,
+    type: String
   },
   token: {
     type: String,
