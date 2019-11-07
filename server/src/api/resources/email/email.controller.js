@@ -71,7 +71,7 @@ export const receiveNewPassword = (req, res) => {
 
     .then(user => {
       const secret = user.password + "-" + user.createdAt
-      const payload = jwt.decode(token, secret)
+      const payload = jwt.verify(token, secret)
       if (payload.userId === user.id) {
         bcrypt.genSalt(10, function(err, salt) {
           if (err) return
